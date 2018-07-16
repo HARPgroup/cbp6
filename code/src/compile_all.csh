@@ -43,8 +43,8 @@ make -f ICPRBmakefile
 make clean
 make -f quietmake
 
-cd ../../../../ 
 echo "... Compiling HSPF lib3.2 - done."
+cd $SRCDIR
 
 echo "... Compiling dsn library"
 cd lib/dsn/
