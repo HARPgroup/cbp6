@@ -15,9 +15,9 @@ current_path <- rstudioapi::getActiveDocumentContext()$path
 # Setting up output location
 split.location <- strsplit(current_path, split = '/')
 split.location <- as.vector(split.location[[1]])
-basepath.stop <- as.numeric(which(split.location == 'code'))
+basepath.stop <- as.numeric(which(split.location == 'GitHub'))
 basepath <- paste0(split.location[1:basepath.stop], collapse = "/")
-container <- paste0(basepath,"/DEQ_Model_vs_USGS_Comparison")
+container <- paste0(basepath,"/cbp6/code/DEQ_Model_vs_USGS_Comparison")
 
 # INPUTS ------------------------------------------------------------------
 # USGS Gage number
