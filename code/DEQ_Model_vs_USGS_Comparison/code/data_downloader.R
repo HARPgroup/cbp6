@@ -8,19 +8,26 @@
 library(dataRetrieval)
 library(lubridate)
 library(plyr)
+library(rstudioapi)
+
+# Setting active directory 
+# Setting working directory to the source file location
+current_path <- rstudioapi::getActiveDocumentContext()$path 
+
+# Setting up output location
+split.location <- strsplit(current_path, split = '/')
+split.location <- as.vector(split.location[[1]])
+basepath.stop <- as.numeric(which(split.location == 'DEQ_Model_vs_USGS_Comparison'))
+container <- paste0(split.location[1:basepath.stop], collapse = "/")
 
 # INPUTS ------------------------------------------------------------------
 
-# Address of "DEQ_Model_vs_USGS_Comparison" folder
-# Include "DEQ_Model_vs_USGS_Comparison" in address!
-container <- "C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\code\\DEQ_Model_vs_USGS_Comparison"
-
 # USGS Gage number
-siteNo <- "02041650"
+siteNo <- "02037500"
 
 # Model phase and scenario
-mod.phase <- "p6/p6_gb604/tmp" # should be "p6/p6_gb604/tmp" (phase 6) or "p532c-sova" (phase 5)
-mod.scenario <- "CFBASE30Y20180615" # should be "CFBASE30Y20180615" (phase 6) or "p532cal_062211"
+mod.phase <- "p532c-sova" # should be "p6/p6_gb604/tmp" (phase 6) or "p532c-sova" (phase 5)
+mod.scenario <- "p532cal_062211" # should be "CFBASE30Y20180615" (phase 6) or "p532cal_062211"
 
 # Start and end dates of data (Model: Has data from 1984-01-01 to 2005-12-31)
 start.date <- "1984-01-01"

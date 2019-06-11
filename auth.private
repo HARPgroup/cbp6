@@ -1,0 +1,7 @@
+#VAHydro-1.0 Authentication 
+username <- "kevin-dandrea"
+hash <- "kevin123"
+
+#VAHydro-2.0 Admin REST Authentication 
+rest_uname <- 'restws_p532'
+rest_pw <- 'H@rpRESTp532'
