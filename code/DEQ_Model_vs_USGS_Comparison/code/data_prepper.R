@@ -15,8 +15,9 @@ current_path <- rstudioapi::getActiveDocumentContext()$path
 # Setting up output location
 split.location <- strsplit(current_path, split = '/')
 split.location <- as.vector(split.location[[1]])
-basepath.stop <- as.numeric(which(split.location == 'DEQ_Model_vs_USGS_Comparison'))
-container <- paste0(split.location[1:basepath.stop], collapse = "/")
+basepath.stop <- as.numeric(which(split.location == 'code'))
+basepath <- paste0(split.location[1:basepath.stop], collapse = "/")
+container <- paste0(basepath,"/DEQ_Model_vs_USGS_Comparison")
 
 # INPUTS ------------------------------------------------------------------
 # USGS Gage number
@@ -26,8 +27,6 @@ siteNo <- "02037500"
 new.or.original <- "new"
 
 site <- "http://deq2.bse.vt.edu/d.bet"    #Specify the site of interest, either d.bet OR d.dh
-
-basepath="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\GitHub\\cbp6\\code";
 
 # SETUP
 
