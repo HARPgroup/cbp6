@@ -38,6 +38,8 @@ if (exists("container.master") == TRUE) {
   container <- container.master
   siteNo <- siteNo.master
   new.or.original <- new.or.original.master
+  mod.phase <- mod.phase.master
+  mod.scenario <- mod.scenario.master
 }
 
 # CREATING DIRECTORIES FOR DATA STORAGE

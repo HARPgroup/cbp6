@@ -6,14 +6,20 @@
 library(zoo)
 library(lubridate)
 
+# Setting active directory 
+# Setting working directory to the source file location
+current_path <- rstudioapi::getActiveDocumentContext()$path 
+
+# Setting up output location
+split.location <- strsplit(current_path, split = '/')
+split.location <- as.vector(split.location[[1]])
+basepath.stop <- as.numeric(which(split.location == 'DEQ_Model_vs_USGS_Comparison'))
+container <- paste0(split.location[1:basepath.stop], collapse = "/")
+
 # INPUTS ------------------------------------------------------------------
 
-# Address of "DEQ_Model_vs_USGS_Comparison" folder
-# Include "DEQ_Model_vs_USGS_Comparison" in address!
-container <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\GitHub\\cbp6\\code\\DEQ_Model_vs_USGS_Comparison"
-
 # USGS Gage number
-siteNo <- "02037000"
+siteNo <- "02037500"
 
 # Should new or original data be used?
 new.or.original <- "new"

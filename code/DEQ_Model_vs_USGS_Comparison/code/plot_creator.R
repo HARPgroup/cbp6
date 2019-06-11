@@ -10,11 +10,17 @@ library('scales')
 library('lubridate')
 library('IHA')
 
-# INPUTS ------------------------------------------------------------------
+# Setting active directory 
+# Setting working directory to the source file location
+current_path <- rstudioapi::getActiveDocumentContext()$path 
 
-# Address of "DEQ_Model_vs_USGS_Comparison" folder
-# Include "DEQ_Model_vs_USGS_Comparison" in address!
-container <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\GitHub\\cbp6\\code\\DEQ_Model_vs_USGS_Comparison"
+# Setting up output location
+split.location <- strsplit(current_path, split = '/')
+split.location <- as.vector(split.location[[1]])
+basepath.stop <- as.numeric(which(split.location == 'DEQ_Model_vs_USGS_Comparison'))
+container <- paste0(split.location[1:basepath.stop], collapse = "/")
+
+# INPUTS ------------------------------------------------------------------
 
 # USGS Gage number
 siteNo <- "02037000"
