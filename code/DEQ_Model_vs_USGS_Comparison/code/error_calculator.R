@@ -10,10 +10,10 @@ library(lubridate)
 
 # Address of "DEQ_Model_vs_USGS_Comparison" folder
 # Include "DEQ_Model_vs_USGS_Comparison" in address!
-container <- "C:\\Users\\FujitsuT\\Downloads\\HARP\\GitHub\\hydro-tools\\HARP-2018\\DEQ_Model_vs_USGS_Comparison_Northern"
+container <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\GitHub\\cbp6\\code\\DEQ_Model_vs_USGS_Comparison"
 
 # USGS Gage number
-siteNo <- "02039500"
+siteNo <- "02037000"
 
 # Should new or original data be used?
 new.or.original <- "new"
@@ -27,10 +27,10 @@ if (exists("container.master") == TRUE) {
 
 # LINKING MODEL SEGMENT ---------------------------------------------------
 
-gage.to.segment <- read.csv(file.path(container, "data", "Gage_To_Segment_Northern.csv"),
+gage.to.segment <- read.csv(file.path(container, "data", "Gage_To_Segment.csv"),
                             header = TRUE, sep = ',', stringsAsFactors = FALSE)
-gage.to.segment <- subset(gage.to.segment, gage.to.segment$gage_number == as.numeric(siteNo))
-RivSeg <- gage.to.segment$river_segment
+gage.to.segment <- subset(gage.to.segment, gage.to.segment$gage == as.numeric(siteNo))
+RivSeg <- gage.to.segment$segment
 
 # NEW OR ORIGINAL DATA SWITCH ---------------------------------------------
 

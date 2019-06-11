@@ -15,19 +15,19 @@ library(rmarkdown)
 
 # Address of "DEQ_Model_vs_USGS_Comparison" folder
 # Include "DEQ_Model_vs_USGS_Comparison" in address!
-container.master <- "C:\\Users\\FujitsuT\\Downloads\\HARP\\GitHub\\hydro-tools\\HARP-2018\\DEQ_Model_vs_USGS_Comparison_Northern"
+container.master <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\GitHub\\cbp6\\code\\DEQ_Model_vs_USGS_Comparison"
 
 # USGS Gage number
 # If "all" is inputted as siteNo.master, analysis will be run for ALL gages
 # stored in the Gage.To.Segment.csv file.
-siteNo.master <- "01660400"
+siteNo.master <- "02037000"
 
 # Should new or original data be used?
 new.or.original.master <- "new"
 
 # LINKING MODEL SEGMENT ---------------------------------------------------
 
-gage.to.segment <- read.csv(file.path(container.master, "data", "Gage_To_Segment_Northern.csv"),
+gage.to.segment <- read.csv(file.path(container.master, "data", "Gage_To_Segment.csv"),
                             header = TRUE, sep = ',', stringsAsFactors = FALSE)
 
 
@@ -37,7 +37,7 @@ if (siteNo.master == "all") {
   gage.list <- gage.to.segment$gage_number
   no.gages <- length(gage.list)
   for (i in 1:no.gages) {
-    gage.to.segment <- read.csv(file.path(container.master, "data", "Gage_To_Segment_Northern.csv"),
+    gage.to.segment <- read.csv(file.path(container.master, "data", "Gage_To_Segment.csv"),
                                 header = TRUE, sep = ',', stringsAsFactors = FALSE)
     siteNo.master <- paste0("0", as.character(gage.list[i]))
     gage.to.segment <- subset(gage.to.segment, gage.to.segment$gage_number == as.numeric(siteNo.master))
@@ -81,7 +81,7 @@ if (siteNo.master == "all") {
   rm(list=setdiff(ls(), c("container.master", "container.master.cont", "siteNo.master", "new.or.original.master", "RivSeg.master", "i", "gage.to.segment", "gage.list", "no.gages", "gage.to.segmentsub")))
   source(paste0(container.master,"\\code\\spatial_analysis.R"))
 } else {
-  gage.to.segment <- read.csv(file.path(container.master, "data", "Gage_To_Segment_Northern.csv"),
+  gage.to.segment <- read.csv(file.path(container.master, "data", "Gage_To_Segment.csv"),
                               header = TRUE, sep = ',', stringsAsFactors = FALSE)
   gage.to.segment <- subset(gage.to.segment, gage.to.segment$gage_number == as.numeric(siteNo.master))
   RivSeg.master <- gage.to.segment$river_segment
