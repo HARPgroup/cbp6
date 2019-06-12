@@ -12,12 +12,18 @@ library('IHA')
 
 # INPUTS ------------------------------------------------------------------
 
-# Address of "DEQ_Model_vs_USGS_Comparison" folder
-# Include "DEQ_Model_vs_USGS_Comparison" in address!
-container <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\GitHub\\cbp6\\code\\DEQ_Model_vs_USGS_Comparison"
+# Setting active directory 
+# Setting working directory to the source file location
+current_path <- rstudioapi::getActiveDocumentContext()$path 
+
+# Setting up output location
+split.location <- strsplit(current_path, split = '/')
+split.location <- as.vector(split.location[[1]])
+basepath.stop <- as.numeric(which(split.location == 'DEQ_Model_vs_Climate_Model'))
+container <- paste0(split.location[1:basepath.stop], collapse = "/")
 
 # USGS Gage number
-siteNo <- "02037000"
+SegID <- "PM7_4820_0001"
 
 # Should new or original data be used?
 new.or.original <- "new"
@@ -39,28 +45,22 @@ if (new.or.original == "new") {
   print("ERROR: neither new or original data specified")
 }
 
-# LINKING MODEL SEGMENT ---------------------------------------------------
-
-gage.to.segment <- read.csv(file.path(container, "data", "Gage_To_Segment.csv"),
-                            header = TRUE, sep = ',', stringsAsFactors = FALSE)
-gage.to.segment <- subset(gage.to.segment, gage.to.segment$gage == as.numeric(siteNo))
-RivSeg <- gage.to.segment$segment
-
 # CREATE FOLDER -----------------------------------------------------------
 
-dir.create(paste0(container,"\\results\\user's_results\\",siteNo, "_vs_", RivSeg, "\\Plots"), showWarnings = TRUE)
+dir.create(paste0(container,"\\results\\user's_results\\"), showWarnings = FALSE)
 
 # LOADING DATA ------------------------------------------------------------
 
-data <- read.csv(paste0(container, container.cont, "\\derived_data\\trimmed+area-adjusted_data\\",siteNo,"_vs_",RivSeg, " - Derived Data.csv"))
+data <- read.csv(paste0(container, container.cont, "\\derived_data\\trimmed+area-adjusted_data\\", SegID, "_", mod.scenario1, "_vs_", mod.scenario2," - Derived Data.csv"))
 
 # PLOTTING -----
 # Creates directory to store plots and tables
-dir.create(paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg), showWarnings = FALSE);
+dir.create(paste0(container,"\\results\\user's_results\\"), showWarnings = FALSE);
+dir.create(paste0(container,"\\results\\user's_results\\",SegID, "_",mod.scenario1, "_vs_", mod.scenario2), showWarnings = FALSE);
 
 # Creating names for plot legends
-name_USGS <- paste('Gage', siteNo);
-name_model <- paste('Model: River Seg.\n', RivSeg);
+name_model1 <- paste('Model1: ', mod.scenario1);
+name_model2 <- paste('Model2: ', mod.scenario2);
 
 # CREATE FUNCTIONS FOR PLOTTING  ------------------------------------------
 base_breaks <- function(n = 10){
@@ -73,8 +73,9 @@ scaleFUN <- function(x) sprintf("%.0f", x)
 
 # Basic hydrograph -----
 # Max/min for y axis scaling
-max <- max(c(max(data$gage.flow), max(data$model.flow)));
-min <- min(c(min(data$gage.flow), max(data$model.flow)));
+max <- max(c(max(data$Model1.Flow), max(data$Model2.Flow)));
+min <- min(c(min(data$Model1.Flow), max(data$Model2.Flow)));
+
 if (max > 10000){
   max <- 100000
 }else if (max > 1000){
@@ -107,16 +108,16 @@ if (min==100){
                                     labels=scaleFUN, limits=c(min,max))
 
 # Creating and exporting plot
-png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                    "\\plots\\Fig. 2 - Hydrograph.png"),
+png(filename=paste0(container,"\\results\\user's_results\\",SegID, "_",mod.scenario1, "_vs_", mod.scenario2,
+                    "\\Fig. 2 - Hydrograph.png"),
     width = 1400, height = 950, units = "px");
 
-df <- data.frame(as.Date(data$date), data$model.flow, data$gage.flow); 
-colnames(df) <- c('Date', 'Model', 'USGS')
+df <- data.frame(as.Date(data$Date), data$Model1.Flow, data$Model2.Flow); 
+colnames(df) <- c('Date', 'Model1', 'Model2')
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_line(aes(y=USGS, color=name_USGS), size=1) +
-  geom_line(aes(y=Model, color=name_model), size=1)+
+  geom_line(aes(y=Model1, color=name_model1), size=1) +
+  geom_line(aes(y=Model2, color=name_model2), size=1)+
   fixtheyscale+
   theme_bw()+ 
   theme(legend.position="top", 
@@ -139,29 +140,28 @@ myplot <- ggplot(df, aes(x=Date)) +
 print(myplot)
 dev.off()         
 
-
 # Setup for Residuals
-resid <- (data$model.flow - data$gage.flow)
-resid <- data.frame(data$date, resid)
+resid <- (data$Model2.Flow - data$Model1.Flow)
+resid <- data.frame(data$Date, resid)
 
 # Residuals plot for hydrograph
 
-zeroline <- rep_len(0, length(data$date)) 
+zeroline <- rep_len(0, length(data$Date)) 
 quantresid <- data.frame(signif(quantile(resid$resid), digits=3))
 min <- min(resid$resid)
 max <- max(resid$resid)
 names(quantresid) <- c('Percentiles')
 
-png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                    "\\plots\\Fig. 3 - Residuals.png"),
+png(filename=paste0(container,"\\results\\user's_results\\",SegID, "_",mod.scenario1, "_vs_", mod.scenario2,
+                    "\\Fig. 3 - Residuals.png"),
     width = 1400, height = 950, units = "px");
 
-df <- data.frame(as.Date(resid$data.date), resid$resid, zeroline); 
+df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline); 
 colnames(df) <- c('Date', 'Residual', 'Zeroline')
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_point(aes(y=Residual, color=name_USGS), size=3.5) +
-  geom_line(aes(y=Zeroline, color=name_model), size=1)+
+  geom_point(aes(y=Residual, color=name_model1), size=3.5) +
+  geom_line(aes(y=Zeroline, color=name_model2), size=1)+
   scale_y_continuous(limits=c(min,max))+ 
   theme_bw()+ 
   theme(legend.position="top", 
@@ -197,21 +197,23 @@ dev.off()
 
 # Setup for Flow Exceedance Calculations
 # Creating vectors of decreasing flow magnitude
-dec_flows_USGS <- sort(data$gage.flow, decreasing = TRUE)
-dec_flows_model <- sort(data$model.flow, decreasing = TRUE)
+dec_flows_model1 <- sort(data$Model1.Flow, decreasing = TRUE)
+dec_flows_model2 <- sort(data$Model2.Flow, decreasing = TRUE)
+
 # Determining the "rank" (0-1) of the flow value
 num_observations <- as.numeric(length(data$date))
 rank_vec <- as.numeric(c(1:num_observations))
 # Calculating exceedance probability
 prob_exceedance <- 100*((rank_vec) / (num_observations + 1))
 # Creating vectors of calculated quantiles
-model_prob_exceedance <- quantile(dec_flows_model, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
-USGS_prob_exceedance <- quantile(dec_flows_USGS, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
+
+model2_prob_exceedance <- quantile(dec_flows_model2, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
+model1_prob_exceedance <- quantile(dec_flows_model1, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
 
 # Flow exceedance plot -----
 # Determining max flow value for exceedance plot scale
-max <- max(c(max(dec_flows_model), max(dec_flows_USGS)));
-min <- min(c(min(dec_flows_model), min(dec_flows_USGS)));
+max <- max(c(max(dec_flows_model2), max(dec_flows_model1)));
+min <- min(c(min(dec_flows_model2), min(dec_flows_model1)));
 
 if (max > 10000){
   max <- 100000
@@ -244,17 +246,16 @@ if (min==100){
   fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
                                     labels=scaleFUN, limits=c(min,max))
 # Creating and exporting plot
-png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                    "\\plots\\Fig. 4  - Prob. Exceedance.png"),
+png(filename=paste0(container,"\\results\\user's_results\\",SegID, "_",mod.scenario1, "_vs_", mod.scenario2,
+                    "\\Fig. 4  - Prob. Exceedance.png"),
     width = 1400, height = 900, units = "px");
 
-
-df <- data.frame(prob_exceedance, dec_flows_model, dec_flows_USGS); 
-colnames(df) <- c('Date', 'Model', 'USGS')
+df <- data.frame(prob_exceedance, dec_flows_model2, dec_flows_model1); 
+colnames(df) <- c('Date', 'Model2', 'Model1')
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_line(aes(y=USGS, color=name_USGS), size=1) +
-  geom_line(aes(y=Model, color=name_model), size=1)+
+  geom_line(aes(y=Model1, color=name_model1), size=1) +
+  geom_line(aes(y=Model2, color=name_model2), size=1)+
   fixtheyscale+ 
   theme_bw()+ 
   theme(legend.position="top", 
@@ -278,35 +279,35 @@ print(myplot)
 dev.off()
 
 # Setup for Baseflow Calculations
-data$year <- year(ymd(data$date))
-data$month <- month(ymd(data$date))
-data$day <- day(ymd(data$date))
-gage.data <- data.frame(data$day, data$month, data$year, data$gage.flow)
-names(gage.data) <- c('day', 'month', 'year', 'flow')
-model.data <- data.frame(data$day, data$month, data$year, data$model.flow)
-names(model.data) <- c('day', 'month', 'year', 'flow')
+data$year <- year(ymd(data$Date))
+data$month <- month(ymd(data$Date))
+data$day <- day(ymd(data$Date))
+model1.data <- data.frame(data$day, data$month, data$year, data$Model1.Flow)
+names(model1.data) <- c('day', 'month', 'year', 'flow')
+model2.data <- data.frame(data$day, data$month, data$year, data$Model2.Flow)
+names(model2.data) <- c('day', 'month', 'year', 'flow')
 # Creating lowflow objects
-USGSriver <- createlfobj(gage.data, hyearstart = 10, baseflow = TRUE, meta = NULL)
-modelriver <- createlfobj(model.data, hyearstart = 10, baseflow = TRUE, meta = NULL)
-baseflowriver<- data.frame(modelriver, USGSriver);
+model1river <- createlfobj(model1.data, hyearstart = 10, baseflow = TRUE, meta = NULL)
+model2river <- createlfobj(model2.data, hyearstart = 10, baseflow = TRUE, meta = NULL)
+baseflowriver<- data.frame(model2river, model1river);
 colnames(baseflowriver) <-c ('mday', 'mmonth', 'myear', 'mflow', 'mHyear', 'mBaseflow',
                              'gday', 'gmonth', 'gyear', 'gflow', 'gHyear', 'gBaseflow')
 # removing NA values
 baseflowriver<-baseflowriver[complete.cases(baseflowriver)==TRUE,]
-USGSriver<- data.frame(baseflowriver$gday, baseflowriver$gmonth, baseflowriver$gyear, 
+model1river<- data.frame(baseflowriver$gday, baseflowriver$gmonth, baseflowriver$gyear, 
                        baseflowriver$gflow, baseflowriver$gHyear, baseflowriver$gBaseflow);
-modelriver<- data.frame(baseflowriver$mday, baseflowriver$mmonth, baseflowriver$myear, 
+model2river<- data.frame(baseflowriver$mday, baseflowriver$mmonth, baseflowriver$myear, 
                         baseflowriver$mflow, baseflowriver$mHyear, baseflowriver$mBaseflow)
-names(USGSriver) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
-names(modelriver) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
+names(model1river) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
+names(model2river) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
 # Adding date vectors
-USGSriver$date <- as.Date(paste0(USGSriver$year,"-",USGSriver$month,"-",USGSriver$day))
-modelriver$date <- as.Date(paste0(modelriver$year,"-",modelriver$month,"-",modelriver$day))
+model1river$date <- as.Date(paste0(model1river$year,"-",model1river$month,"-",model1river$day))
+model2river$date <- as.Date(paste0(model2river$year,"-",model2river$month,"-",model2river$day))
 
 # Baseflow Indiviudal Graph -----
 # Determining max flow value for plot scale
-max <- max(c(max(USGSriver$baseflow), max(modelriver$baseflow), max(USGSriver$flow), max(modelriver$flow)));
-min <- min(c(min(USGSriver$baseflow), min(modelriver$baseflow), min(USGSriver$flow), min(modelriver$flow)));
+max <- max(c(max(model1river$baseflow), max(model2river$baseflow), max(model1river$flow), max(model2river$flow)));
+min <- min(c(min(model1river$baseflow), min(model2river$baseflow), min(model1river$flow), min(model2river$flow)));
 
 if (max > 10000){
   max <- 100000
@@ -339,18 +340,19 @@ if (min==100){
   fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
                                     labels=scaleFUN, limits=c(min,max))
 # Creating and exporting plot
-png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                    "\\plots\\Fig. 5 - Baseflow.png"),
+png(filename=paste0(container,"\\results\\user's_results\\",SegID, '_',mod.scenario1, "_vs_", mod.scenario2,
+                    "\\Fig. 5 - Baseflow.png"),
     width = 1400, height = 900, units = "px");
+
 par(mfrow = c(1,1));
 
 which 
-df <- data.frame(as.Date(modelriver$date), modelriver$baseflow, USGSriver$baseflow, modelriver$flow, USGSriver$flow); 
-colnames(df) <- c('Date', 'ModelBaseflow', 'USGSBaseflow', 'ModelFlow', 'USGSFlow')
+df <- data.frame(as.Date(model2river$date), model2river$baseflow, model1river$baseflow, model2river$flow, model1river$flow); 
+colnames(df) <- c('Date', 'Model2Baseflow', 'Model1Baseflow', 'Model2Flow', 'Model1Flow')
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_line(aes(y=USGSBaseflow, color=name_USGS), size=1) +
-  geom_line(aes(y=ModelBaseflow, color=name_model), size=1)+
+  geom_line(aes(y=Model1Baseflow, color=name_model1), size=1) +
+  geom_line(aes(y=Model2Baseflow, color=name_model2), size=1)+
   fixtheyscale+ 
   theme_bw()+ 
   theme(legend.position="top", 
@@ -378,17 +380,17 @@ dev.off()
 # Baseflow Combined Graph -----
 
 # Creating and exporting plot
-png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                    "\\plots\\Fig. 6 - Baseflow and Flow.png"),
+png(filename=paste0(container,"\\results\\user's_results\\",SegID, '_',mod.scenario1, "_vs_", mod.scenario2,
+                    "\\Fig. 6 - Baseflow and Flow.png"),
     width = 1400, height = 900, units = "px");
 par(mfrow = c(1,1));
 
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_line(aes(y=USGSFlow, color=paste("Flow:", name_USGS)), size=1)+
-  geom_line(aes(y=ModelFlow, color=paste("Flow:", name_model)), size=1)+ 
-  geom_line(aes(y=USGSBaseflow, color=paste("Baseflow:", name_USGS)), size=1) +
-  geom_line(aes(y=ModelBaseflow, color=paste("Baseflow:", name_model)), size=1)+
+  geom_line(aes(y=Model1Flow, color=paste("Flow:", name_model1)), size=1)+
+  geom_line(aes(y=Model2Flow, color=paste("Flow:", name_model2)), size=1)+ 
+  geom_line(aes(y=Model1Baseflow, color=paste("Baseflow:", name_USGS)), size=1) +
+  geom_line(aes(y=Model2Baseflow, color=paste("Baseflow:", name_model)), size=1)+
   fixtheyscale+ 
   theme_bw()+ 
   theme(legend.position="top", 
@@ -414,21 +416,21 @@ dev.off()
 
 # Zoomed hydrograph in year of lowest 90-year flow -----
 # Running gage calculations
-f3_USGS <- zoo(data$gage.flow, order.by = data$date)
-g2_USGS <- group2(f3_USGS, year = 'water')
+f3_model1 <- zoo(data$Model1.Flow, order.by = data$Date)
+g2_model1 <- group2(f3_model1, year = 'water')
 # Running model calculations
-f3_model <- zoo(data$model.flow, order.by = data$date)
-g2_model <- group2(f3_model, year = 'water')
+f3_model2 <- zoo(data$Model2.Flow, order.by = data$Date)
+g2_model2 <- group2(f3_model2, year = 'water')
 
-yearly_Gage_90DayMin <- g2_USGS[,c(1,10)];
-yearly_Mod_90DayMin <- g2_model[,c(1,10)];
-low.year <- subset(yearly_Gage_90DayMin, yearly_Gage_90DayMin$`90 Day Min`==min(yearly_Gage_90DayMin$`90 Day Min`));
+yearly_Model1_90DayMin <- g2_model1[,c(1,10)];
+yearly_Model2_90DayMin <- g2_model2[,c(1,10)];
+low.year <- subset(yearly_Model1_90DayMin, yearly_Model1_90DayMin$`90 Day Min`==min(yearly_Model1_90DayMin$`90 Day Min`));
 low.year <- low.year$year;
 low.year <- subset(data, data$year==low.year);
 
 # Scaling using max/min
-max <- max(c(max(low.year$gage.flow), max(low.year$model.flow)));
-min <- min(c(min(low.year$gage.flow), min(low.year$model.flow)));
+max <- max(c(max(low.year$Model1.Flow), max(low.year$Model2.Flow)));
+min <- min(c(min(low.year$Model1.Flow), min(low.year$Model2.Flow)));
 if (max > 10000){
   max <- 100000
 }else if (max > 1000){
@@ -460,16 +462,16 @@ if (min==100){
   fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
                                     labels=scaleFUN, limits=c(min,max))
 # Creating and exporting plot
-png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                    "\\plots\\Fig. 7 - Zoomed Hydrograph.png"),
+png(filename=paste0(container,"\\results\\user's_results\\",SegID, '_',mod.scenario1, "_vs_", mod.scenario2,
+                    "\\Fig. 7 - Zoomed Hydrograph.png"),
     width = 1400, height = 600, units = "px");
 
-df <- data.frame(as.Date(low.year$date), low.year$model.flow, low.year$gage.flow); 
-colnames(df) <- c('Date', 'Model', 'USGS')
+df <- data.frame(as.Date(low.year$Date), low.year$Model2.Flow, low.year$Model1.Flow); 
+colnames(df) <- c('Date', 'Model2', 'Model1')
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_line(aes(y=USGS, color=name_USGS), size=1) +
-  geom_line(aes(y=Model, color=name_model), size=1)+
+  geom_line(aes(y=Model1, color=name_model1), size=1) +
+  geom_line(aes(y=Model2, color=name_model2), size=1)+
   fixtheyscale+ 
   theme_bw()+ 
   theme(legend.position="top", 
@@ -491,13 +493,13 @@ myplot <- ggplot(df, aes(x=Date)) +
   labs(y = "Flow (cfs)")
 print <- try(print(myplot))
 if (class(print)=="try-error") {
-  low.year2 <- subset(yearly_Gage_90DayMin, yearly_Gage_90DayMin$`90 Day Min`==sort(yearly_Gage_90DayMin$`90 Day Min`, TRUE)[2]);
+  low.year2 <- subset(yearly_Model1_90DayMin, yearly_Model1_90DayMin$`90 Day Min`==sort(yearly_Model1_90DayMin$`90 Day Min`, TRUE)[2]);
   low.year2 <- low.year2$year;
   low.year2 <- subset(data, data$year==low.year2);
   
   # Scaling using max/min
-  max2 <- max(c(max(low.year2$gage.flow), max(low.year2$model.flow)));
-  min2 <- min(c(min(low.year2$gage.flow), min(low.year2$model.flow)));
+  max2 <- max(c(max(low.year2$Model1.Flow), max(low.year2$Model2.Flow)));
+  min2 <- min(c(min(low.year2$Model1.Flow), min(low.year2$Model2.Flow)));
   if (max2 > 10000){
     max2 <- 100000
   }else if (max2 > 1000){
@@ -531,16 +533,16 @@ if (class(print)=="try-error") {
                                        labels=scaleFUN, limits=c(min2,max2))
   }
   # Creating and exporting plot
-  png(filename=paste0(container,"\\results\\user's_results\\",siteNo,"_vs_",RivSeg,
-                      "\\plots\\Fig. 7 - Zoomed Hydrograph.png"),
+  png(filename=paste0(container,"\\results\\user's_results\\",SegID, '_',mod.scenario1, "_vs_", mod.scenario2,
+                      "\\Fig. 7 - Zoomed Hydrograph.png"),
       width = 1400, height = 600, units = "px");
   
-  df2 <- data.frame(as.Date(low.year2$date), low.year2$model.flow, low.year2$gage.flow); 
-  colnames(df2) <- c('Date', 'Model', 'USGS')
+  df2 <- data.frame(as.Date(low.year2$Date), low.year2$Model2.Flow, low.year2$Model1.Flow); 
+  colnames(df2) <- c('Date', 'Model2', 'Model1')
   options(scipen=5, width = 1400, height = 950)
   myplot2 <- ggplot(df2, aes(x=Date)) + 
-    geom_line(aes(y=USGS, color=name_USGS), size=1) +
-    geom_line(aes(y=Model, color=name_model), size=1)+
+    geom_line(aes(y=Model1, color=name_model1), size=1) +
+    geom_line(aes(y=Model2, color=name_model2), size=1)+
     fixtheyscale2+ 
     theme_bw()+ 
     theme(legend.position="top", 
