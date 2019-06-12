@@ -111,13 +111,13 @@ data <- setNames(data, c("Date", "Model1.Flow", "Model2.Flow"))
 # USGS gage data is in cfs
 # The conversion factor from acre-feet to cfs is 0.504167
 
-data$Model1.Flow <- data$`Model 1 Flow`* 0.504167
-data$Model2.Flow <- data$`Model 2 Flow`* 0.504167
+data$Model1.Flow <- data$`Model1.Flow`* 0.504167
+data$Model2.Flow <- data$`Model2.Flow`* 0.504167
 
 # EXPORTING "TRIMMED FLOW" ------------------------------------------------
 
 # Exporting "trimmed flow"
-write.csv(data, file = paste0(container, container.cont, "/derived_data/trimmed_data/",  SegID, "_", mod.scenario1, "_vs_", mod.scenario2," - Raw Data.csv"))
+write.csv(data, file = paste0(container, container.cont, "/derived_data/trimmed+area-adjusted_data/",  SegID, "_", mod.scenario1, "_vs_", mod.scenario2," - Derived Data.csv"))
 
 # AREA-ADJUSTING FLOW -----------------------------------------------------
 
