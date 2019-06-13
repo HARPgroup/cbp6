@@ -389,8 +389,8 @@ options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
   geom_line(aes(y=Model1Flow, color=paste("Flow:", name_model1)), size=1)+
   geom_line(aes(y=Model2Flow, color=paste("Flow:", name_model2)), size=1)+ 
-  geom_line(aes(y=Model1Baseflow, color=paste("Baseflow:", name_USGS)), size=1) +
-  geom_line(aes(y=Model2Baseflow, color=paste("Baseflow:", name_model)), size=1)+
+  geom_line(aes(y=Model1Baseflow, color=paste("Baseflow:", name_model1)), size=1) +
+  geom_line(aes(y=Model2Baseflow, color=paste("Baseflow:", name_model2)), size=1)+
   fixtheyscale+ 
   theme_bw()+ 
   theme(legend.position="top", 
