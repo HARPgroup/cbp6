@@ -1,7 +1,9 @@
+library(dataRetrieval)
+
 import.model.data.cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
   # Downloading and exporting hourly model data
   model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/river/", mod.scenario, "/stream/", 
-                                  RivSeg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE);  
+                                  riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE);  
   # Converting hourly to daily data and exporting daily data
   model_hourly <- model_hourly[-1,]
   model_hourly$V1 <- trimws(model_hourly$V1, which = "both")
@@ -66,6 +68,59 @@ import.vahydro.metric <- function(met.varkey, met.propcode, seg.or.gage, mod.sce
   metprop <- getProperty(metinfo, site, metprop)
   metric <- metprop$propvalue
   return(metric)
+}
+
+post.vahydro.metric <- function(met.varkey, met.propcode, met.name, met.value, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
+  if (nchar(seg.or.gage)==8) {
+    # GETTING GAGE DATA FROM VA HYDRO
+    hydrocode = paste("usgs_",seg.or.gage,sep="");
+    ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+    inputs <- list (
+      hydrocode = hydrocode
+    )
+  } else if (nchar(seg.or.gage)==13) {
+    # GETTING MODEL DATA FROM VA HYDRO
+    hydrocode = paste("vahydrosw_wshed_",seg.or.gage,sep="");
+    ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+    inputs <- list (
+      hydrocode = hydrocode,
+      bundle = 'watershed',
+      ftype = 'vahydro'
+    )
+  }
+  #property dataframe returned
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  hydroid <- odata[1,"hydroid"];
+  fname <- as.character(odata[1,]$name );
+  print(paste("Retrieved hydroid",hydroid,"for", fname,seg.or.gage, sep=' '));
+  inputs <- list(
+    varkey = "om_model_element",
+    featureid = hydroid,
+    entity_type = "dh_feature",
+    propcode = mod.scenario
+  )
+  property <- getProperty(inputs, site, property)
+  
+  metinfo <- list(
+    varkey = met.varkey,
+    propcode = met.propcode,
+    featureid = as.integer(as.character(property$pid)),
+    entity_type = "dh_properties"
+  )
+  metprop <- getProperty(metinfo, site, metprop)
+  
+  if (identical(metprop, FALSE)) {
+    # create
+    metprop = metinfo
+  }
+  
+  metprop$propname = met.name
+  metprop$varkey = met.varkey
+  metprop$propcode = met.propcode
+  metprop$propvalue = signif(met.value, digits=3)
+  metprop$pid = NULL
+  postProperty(metprop,fxn_locations,base_url = site,metprop) 
 }
 
 import.all.vahydro.metrics <- function(seg.or.gage, mod.scenario, token, site) {
