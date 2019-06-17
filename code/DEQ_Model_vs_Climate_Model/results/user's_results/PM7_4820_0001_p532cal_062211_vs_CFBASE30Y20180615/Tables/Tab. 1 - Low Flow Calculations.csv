@@ -1,0 +1,15 @@
+"","Model 1","Model 2","Pct. Error"
+"Min. 1 Day Min",0,108,Inf
+"Med. 1 Day Min",717,740,3.21
+"Min. 3 Day Min",1.8e-13,127,7.06e+16
+"Med. 3 Day Min",739,785,6.22
+"Min. 7 Day Min",3.06e-13,149,4.87e+16
+"Med. 7 Day Min",874,813,-6.98
+"Min. 30 Day Min",141,383,172
+"Med. 30 Day Min",1530,1490,-2.61
+"Min. 90 Day Min",581,932,60.4
+"Med. 90 Day Min",2980,3100,4.03
+"7Q10",0.000367,200,54500000
+"Year of 90-Day Low Flow",1999,1999,0
+"Drought Year Mean",NA,NA,NA
+"Mean Baseflow",7160,7060,-1.4
