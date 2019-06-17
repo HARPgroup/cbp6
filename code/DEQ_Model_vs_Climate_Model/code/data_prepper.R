@@ -27,7 +27,7 @@ SegID <- "PM7_4820_0001"
 # Should new or original data be used?
 new.or.original <- "new"
 
-site <- "http://deq2.bse.vt.edu/d.bet"    #Specify the site of interest, either d.bet OR d.dh
+site <- "http://deq2.bse.vt.edu/d.dh"    #Specify the site of interest, either d.bet OR d.dh
 
 # SETUP
 
