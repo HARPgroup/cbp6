@@ -1,3 +1,14 @@
+#' Lowest Yearly Mean Metric Function 
+#' @description Calculates the lowest yearly mean flow of dataframe - must be trimmed to water year 
+#' @param data a dataframe with hydrologic data 
+#' @return The lowest yearly mean flow
+#' @import lubridate
+#' @import base
+#' @import lfstat
+#' @import stats
+#' @import zoo
+#' @export low.yearly.mean
+
 low.yearly.mean <- function(data) {
   #setup
   data$year <- year(ymd(data$date))

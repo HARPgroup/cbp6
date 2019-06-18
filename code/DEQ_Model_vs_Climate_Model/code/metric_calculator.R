@@ -76,7 +76,7 @@ g2_model2 <- group2(f3_model2, year = 'water')
 Model2_Monthly_Means <- aggregate(data$Model1.Flow, list(data$month), FUN = mean)
 Model1_Monthly_Means <- aggregate(data$Model2.Flow, list(data$month), FUN = mean)
 
-# Setup for Montly Mins Calculations
+# Setup for Monthly Mins Calculations
 flows_model1 <- zoo(data$Model1.Flow, order.by = data$Date)
 flows_model2 <- zoo(data$Model2.Flow, order.by = data$Date)
 

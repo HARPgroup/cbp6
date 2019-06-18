@@ -1,3 +1,15 @@
+#' Import USGS Gage Information Function 
+#' @description Imports data from the USGS, harvested from their stream gages
+#' @param riv.seg Specific river segment of interest 
+#' @param mod.phase should be "p6/p6_gb604/tmp" (phase 6) or "p532c-sova" (phase 5)
+#' @param mod.scenario should be "CFBASE30Y20180615" (phase 6) or "p532cal_062211"
+#' @param start.date character starting date for data retrieval in the form YYYY-MM-DD.
+#' @param end.date character ending date for data retrieval in the form YYYY-MM-DD.
+#' @return A dataframe containing the specfic river segments model data for the specified time period
+#' @import stats
+#' @import base
+#' @export model.import.data.cfs
+
 model.import.data.cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
   # Downloading and exporting hourly model data
   model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/river/", mod.scenario, "/stream/", 

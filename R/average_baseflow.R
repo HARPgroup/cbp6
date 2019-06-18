@@ -1,3 +1,12 @@
+#' Baseflow Metric Function 
+#' @description Calculates baseflow of dataframe - must be trimmed to water year 
+#' @param data a dataframe with hydrologic data 
+#' @return The average baseflow
+#' @import lubridate
+#' @import lfstat
+#' @import base
+#' @export average.baseflow 
+
 average.baseflow <- function(data){
   #setup
   data$year <- year(ymd(data$date))
