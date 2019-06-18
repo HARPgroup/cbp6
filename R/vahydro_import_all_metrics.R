@@ -1,3 +1,14 @@
+#' Import All Metrics from VAHydro Function
+#' @description Imports all metrics from VAHydro for a given scenario
+#' @param seg.or.gage indicate segment name or gage number
+#' @param mod.scenario input scenario code
+#' @param token input token number for access
+#' @param site input site name
+#' @return dataframe of all metrics
+#' @import base
+#' @import from function file
+#' @export vahydro.import.all.metrics
+
 vahydro.import.all.metrics <- function(seg.or.gage, mod.scenario, token, site) {
   overall.mean <- vahydro.import.metric(met.varkey = "overall_mean", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   jan.low.flow <- vahydro.import.metric(met.varkey = "monthly_low_flow", met.propcode = 'ml1', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)

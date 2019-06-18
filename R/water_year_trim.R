@@ -1,5 +1,12 @@
+#' Trimming Data to Water Year Function
+#' @description Trims data to water year
+#' @param data dataframe of date and flow data taken from import data functions
+#' @return dataframe trimmed to water year
+#' @import base
+#' @import lubridate
+#' @export water.year.trim
+
 water.year.trim <- function(data) {
-  library(lubridate)
   data.length <- length(data$date)
   start.month <- month(data$date[1])
   end.month <- month(data$date[data.length])

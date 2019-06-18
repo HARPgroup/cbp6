@@ -1,3 +1,15 @@
+#' Specified Day Minimum Metric Function
+#' @description Measures minimum of dataframe for given number of days - data must be trimmed to water year
+#' @param data dataframe of date and flow data taken from import data functions
+#' @param num.day number for days of interest
+#' @param min_or_med minimum of minimum data, or median of minimum data
+#' @return specified day minimum metric
+#' @import lubridate
+#' @import zoo
+#' @import IHA
+#' @import base
+#' @export num.day.min
+
 num.day.min <- function(data, num.day, min_or_med) {
   
   data$year <- year(ymd(data$date))

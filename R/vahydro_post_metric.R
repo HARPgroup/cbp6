@@ -1,3 +1,17 @@
+#' Import Post Metric from VAHydro Function
+#' @description Imports post metric from VAHydro for a given scenario
+#' @param met.varkey input variable key
+#' @param met.propcode input prop code
+#' @param met.name input name of metric
+#' @param seg.or.gage indicate segment name or gage number
+#' @param mod.scenario input scenario code
+#' @param token input token number for access
+#' @param site input site name
+#' @return post metric data
+#' @import base
+#' @import sp
+#' @export vahydro.post.metric
+
 vahydro.post.metric <- function(met.varkey, met.propcode, met.name, met.value, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
   if (nchar(seg.or.gage)==8) {
     # GETTING GAGE DATA FROM VA HYDRO

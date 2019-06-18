@@ -1,3 +1,15 @@
+#' Specified Day Maximum Metric Function
+#' @description Measures maximum of dataframe for given number of days - data must be trimmed to water year
+#' @param data dataframe of date and flow data taken from import data functions
+#' @param num.day number for days of interest
+#' @param max_or_med maximum of maximum data, or median of maximum data
+#' @return specified day maximum metric
+#' @import lubridate
+#' @import zoo
+#' @import IHA
+#' @import base
+#' @export num.day.max
+
 num.day.max <- function(data, num.day, max_or_med) {
   
   data$year <- year(ymd(data$date))
