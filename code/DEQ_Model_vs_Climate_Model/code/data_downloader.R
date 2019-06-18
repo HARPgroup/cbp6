@@ -22,15 +22,15 @@ container <- paste0(split.location[1:basepath.stop], collapse = "/")
 # INPUTS ------------------------------------------------------------------
 
 # Input River Segment ID number
-SegID <- "PM7_4820_0001"
+SegID <- "BS1_8730_8540"
 
 # Model phase and scenario
 mod.phase1 <- "p532c-sova" # should be "p6/p6_gb604/tmp" (phase 6) or "p532c-sova" (phase 5)
 mod.scenario1 <- "p532cal_062211" # should be "CFBASE30Y20180615" (phase 6) or "p532cal_062211"
 
 # Model phase and scenario
-mod.phase2 <- "p6/p6_gb604/tmp" # should be "p6/p6_gb604/tmp" (phase 6) or "p532c-sova" (phase 5)
-mod.scenario2 <- "CFBASE30Y20180615" # should be "CFBASE30Y20180615" (phase 6) or "p532cal_062211"
+mod.phase2 <- "p532c-sova" # should be "p6/p6_gb604/tmp" (phase 6) or "p532c-sova" (phase 5)
+mod.scenario2 <- "p532cal_062211" # should be "CFBASE30Y20180615" (phase 6) or "p532cal_062211"
 
 
 # Start and end dates of data (Model: Has data from 1984-01-01 to 2005-12-31)
@@ -102,4 +102,5 @@ write.csv(model_daily2, file = paste0(container, "/data/new_(updated)_data/raw_d
 # Merging data and exporting merged data
 combined.flows <- merge(model_daily1, model_daily2, by.x = "date", by.y = "date", all = TRUE)
 write.csv(combined.flows, file = paste0(container, "/data/", SegID, "_", mod.scenario1, "_vs_", mod.scenario2," - Raw Data.csv"))
+
 
