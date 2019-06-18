@@ -1,4 +1,4 @@
-import.vahydro.metric <- function(met.varkey, met.propcode, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
+vahydro.import.metric <- function(met.varkey, met.propcode, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
   if (nchar(seg.or.gage)==8) {
     # GETTING GAGE DATA FROM VA HYDRO
     hydrocode = paste("usgs_",seg.or.gage,sep="");

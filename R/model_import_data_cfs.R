@@ -1,7 +1,7 @@
-import.model.data.cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
+model.import.data.cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
   # Downloading and exporting hourly model data
   model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/river/", mod.scenario, "/stream/", 
-                                  RivSeg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE);  
+                                  riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE);  
   # Converting hourly to daily data and exporting daily data
   model_hourly <- model_hourly[-1,]
   model_hourly$V1 <- trimws(model_hourly$V1, which = "both")
