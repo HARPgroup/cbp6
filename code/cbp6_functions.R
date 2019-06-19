@@ -429,10 +429,9 @@ low.yearly.mean <- function(data) {
   lf_model <- aggregate(model1river$flow, by = list(model1river$hyear), FUN = mean)
   colnames(lf_model) <- c('Water_Year', 'Mean_Flow')
   #calculation
-  lf_model <- which(lf_model["Water_Year"] == DoR)
-  lf_model <- lf_model["Mean_Flow"][lf_model]
-  lfmin <- lf_model
-  return(lfmin)
+  lf_model_flow <- as.numeric(which(lf_model["Water_Year"] == DoR))
+  lf_model <- lf_model[lf_model_flow,2]
+  return(lf_model)
 }
 
 # Creating Data Frame with calculated metrics 

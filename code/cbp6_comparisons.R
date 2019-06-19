@@ -24,7 +24,7 @@ source(paste0(container, "/cbp6_functions.R"))
 source(paste0(container, "/DEQ_Model_vs_USGS_Comparison/code/function_holder.R"))
 
 # Inputs
-riv.seg <- 'PM7_4820_0001'
+riv.seg <- 'YP4_6720_6750'
 #gage.num <- ''
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
