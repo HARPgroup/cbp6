@@ -3,7 +3,6 @@
 #' @param data dataframe of date and flow data taken from import data functions
 #' @return september 10% metric
 #' @import lubridate
-#' @import base
 #' @import data.table
 #' @export sept.10.flow
 

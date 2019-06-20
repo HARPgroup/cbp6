@@ -7,7 +7,6 @@
 #' @import lubridate
 #' @import zoo
 #' @import IHA
-#' @import base
 #' @export num.day.min
 
 num.day.min <- function(data, num.day, min_or_med) {

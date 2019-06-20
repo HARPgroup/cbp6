@@ -2,7 +2,6 @@
 #' @description Calculates when the Drought of Record occurs in dataframe - must be trimmed to water year
 #' @param data 
 #' @return The year when the Drought of Record occurs within dataframe
-#' @import base
 #' @import zoo 
 #' @export drought.of.record
 

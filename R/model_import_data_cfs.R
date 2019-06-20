@@ -7,7 +7,6 @@
 #' @param end.date character ending date for data retrieval in the form YYYY-MM-DD.
 #' @return A dataframe containing the specfic river segments model data for the specified time period
 #' @import stats
-#' @import base
 #' @export model.import.data.cfs
 
 model.import.data.cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {

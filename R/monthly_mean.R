@@ -4,7 +4,6 @@
 #' @param num.month number for month of interest
 #' @return monthly mean metric
 #' @import lubridate
-#' @import base
 #' @import stats
 #' @export monthly.mean
 

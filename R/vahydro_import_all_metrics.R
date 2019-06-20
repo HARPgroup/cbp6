@@ -5,7 +5,6 @@
 #' @param token input token number for access
 #' @param site input site name
 #' @return dataframe of all metrics
-#' @import base
 #' @import from function file
 #' @export vahydro.import.all.metrics
 

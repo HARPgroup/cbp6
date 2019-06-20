@@ -7,7 +7,6 @@
 #' @import lubridate
 #' @import zoo
 #' @import IHA
-#' @import base
 #' @export num.day.max
 
 num.day.max <- function(data, num.day, max_or_med) {

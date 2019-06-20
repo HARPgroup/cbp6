@@ -2,7 +2,6 @@
 #' @description Calculates 65 different hydrologic metrics from the given dataframe - must be trimmed to water year 
 #' @param data a dataframe with hydrologic data 
 #' @return A data frame with 65 different hydrologic metrics
-#' @import base
 #' @export metrics.calc.all
 
 # Creating Data Frame with calculated metrics 

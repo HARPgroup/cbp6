@@ -3,8 +3,6 @@
 #' @param data a dataframe with hydrologic data 
 #' @param num.month the number corresponding to the month whose maximum flow value you wish to receive
 #' @return The maximum flow for the specified month
-#' @import lubridate
-#' @import base
 #' @import zoo
 #' @export monthly.max
 
