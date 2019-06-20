@@ -5,7 +5,6 @@
 #' @param end.date character ending date for data retrieval in the form YYYY-MM-DD.
 #' @return A dataframe containing the specfic gage's data for the specified time period
 #' @import dataRetrieval
-#' @import base
 #' @export import.gage.data.cfs
 
 import.gage.data.cfs <- function(siteNo, start.date, end.date) {

@@ -3,7 +3,6 @@
 #' @param data dataframe of date and flow data taken from import data functions
 #' @return overall mean flow metric
 #' @import lubridate
-#' @import base
 #' @export overall.mean.flow
 
 overall.mean.flow <- function(data) {

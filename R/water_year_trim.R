@@ -2,7 +2,6 @@
 #' @description Trims data to water year
 #' @param data dataframe of date and flow data taken from import data functions
 #' @return dataframe trimmed to water year
-#' @import base
 #' @import lubridate
 #' @export water.year.trim
 

@@ -8,7 +8,6 @@
 #' @param token input token number for access
 #' @param site input site name
 #' @return post metric data
-#' @import base
 #' @import sp
 #' @export vahydro.post.metric
 

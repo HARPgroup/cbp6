@@ -3,7 +3,6 @@
 #' @param data a dataframe with hydrologic data 
 #' @return The lowest yearly mean flow
 #' @import lubridate
-#' @import base
 #' @import lfstat
 #' @import stats
 #' @import zoo
