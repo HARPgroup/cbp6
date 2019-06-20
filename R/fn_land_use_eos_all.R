@@ -7,7 +7,7 @@
 # LOADING LIBRARIES ----------
 library(lubridate)
 
-land.use.eos.all <- function(land.segment, mod.phase, mod.scenario, outpath) {
+land.use.eos.all <- function(land.segment, wdmpath, mod.scenario, outpath) {
   # INPUTS ----------
   land.use.list <- c('afo','alf','ccn','cex','cfo','cid','cpd','for','hom','hvf','hwm','hyo','hyw','lwm','nal','nex','nhi','nho','nhy','nid','nlo','npa','npd','pas','rcn','rex','rid','rpd','trp','urs')
   dsn.list <- c('0111', '0211', '0411')
@@ -20,7 +20,7 @@ land.use.eos.all <- function(land.segment, mod.phase, mod.scenario, outpath) {
       input.data.namer <- paste0(land.segment,land.use.list[j],dsn.list[i])
       print(paste("Downloading", counter, "of", total.files))
       counter <- counter+1
-      temp.data.input <- try(read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list[i],".csv")))
+      temp.data.input <- try(read.csv(paste0(wdmpath, "/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list[i],".csv")))
       colnames(temp.data.input) <- c('Year', 'Month', 'Day', 'Hour', dsn.list[i])
       assign(input.data.namer,temp.data.input)
     }
