@@ -3,6 +3,7 @@
 export(average_baseflow)
 export(drought_of_record)
 export(flow_exceedance)
+export(overall_mean_flow)
 import(lfstat)
 import(lubridate)
 import(stats)
