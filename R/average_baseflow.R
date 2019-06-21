@@ -4,6 +4,7 @@
 #' @return The average baseflow
 #' @import lubridate
 #' @import lfstat
+#' @import stats
 #' @export average.baseflow 
 
 average.baseflow <- function(data){
