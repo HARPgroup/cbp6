@@ -2,7 +2,6 @@
 
 export(average_baseflow)
 export(drought_of_record)
-import(IHA)
 import(lfstat)
 import(lubridate)
 import(stats)
