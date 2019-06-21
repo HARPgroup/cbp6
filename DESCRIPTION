@@ -6,6 +6,8 @@ Description:
 Authors@R:
 	person("Joseph", "Kleiner", email = "joseph.kleiner@deq.virginia.gov", role = c("aut", "cre"))
 	person("Emma", "Aguero", email = "emmaa4@vt.edu", role = c("aut", "cre"))
+	person("Kevin", "D'Andrea", email = "kevind@vt.edu", role = c("aut", "cre"))
+	person("Daniel", "Hildebrand", email = "danielh7@vt.edu", role = c("aut", "cre"))
 Depends:
 	R (>= 3.1)
 Imports: 
