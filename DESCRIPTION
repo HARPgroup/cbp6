@@ -13,7 +13,9 @@ Depends:
 Imports: 
 	lubridate,
 	lfstat,
-	stats
+	stats,
+	zoo,
+	IHA
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.1.1
