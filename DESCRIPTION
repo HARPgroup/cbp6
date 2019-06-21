@@ -1,0 +1,20 @@
+Package: cbp6
+Version: 0.1.0
+Title: What the Package Does (one line, title case)
+Description:
+	DEMO PACKAGE.
+Authors@R:
+	person("Joseph", "Kleiner", email = "joseph.kleiner@deq.virginia.gov", role = c("aut", "cre"))
+	person("Emma", "Aguero", email = "emmaa4@vt.edu", role = c("aut", "cre"))
+Depends:
+	R (>= 3.1)
+Imports: 
+	lubridate,
+	lfstat,
+	stats
+License: GPL-2
+LazyData: TRUE
+RoxygenNote: 6.1.1
+Encoding: UTF-8
+
+    
