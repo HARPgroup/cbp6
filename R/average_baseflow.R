@@ -4,10 +4,10 @@
 #' @return The average baseflow
 #' @import lubridate
 #' @import lfstat
-#' @import base
-#' @export average.baseflow 
+#' @import stats
+#' @export average_baseflow 
 
-average.baseflow <- function(data){
+average_baseflow <- function(data){
   #setup
   data$year <- year(ymd(data$date))
   data$month <- month(ymd(data$date))

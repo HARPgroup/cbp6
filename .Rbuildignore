@@ -1,0 +1,9 @@
+^Tutorials$
+^code$
+^utils$
+^analysis$
+^auth.private.example$
+^config.local.private.example$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
