@@ -5,9 +5,9 @@
 #' @param end.date character ending date for data retrieval in the form YYYY-MM-DD.
 #' @return A dataframe containing the specfic gage's data for the specified time period
 #' @import dataRetrieval
-#' @export import.gage.data.cfs
+#' @export import_gage_data_cfs
 
-import.gage.data.cfs <- function(siteNo, start.date, end.date) {
+import_gage_data_cfs <- function(siteNo, start.date, end.date) {
   #Download and export raw USGS data
   pCode <- "00060"
   USGS_daily <- readNWISdv(siteNo, pCode, start.date, end.date)
