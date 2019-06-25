@@ -1,4 +1,4 @@
-context("average_baseflow")
+context("gage_import_data_Cfs")
 library(cbp6)
 first_date <- as.Date("2013-10-01")
 date <- first_date+c(0:729)
@@ -64,6 +64,6 @@ end.date <- "2015-09-30"
 test_that(
   "a description of my test",
   {
-    expect_equal(import.gage.data.cfs("03209000","2013-10-01","2015-09-30"), data)
+    expect_equal(import_gage_data_cfs("03209000","2013-10-01","2015-09-30"), data)
   }
 )

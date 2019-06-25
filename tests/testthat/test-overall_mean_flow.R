@@ -1,4 +1,4 @@
-context("average_baseflow")
+context("overall_mean_flow")
 library(cbp6)
 first_date <- as.Date("2013-10-01")
 date <- first_date+c(0:729)
