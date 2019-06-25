@@ -14,7 +14,8 @@ Imports:
 	lubridate,
 	lfstat,
 	stats,
-	zoo
+	zoo,
+	dataRetrieval
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.1.1
