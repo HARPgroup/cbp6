@@ -1,4 +1,4 @@
-context("gage_import_data_cfs")
+context("water_year_trim")
 library(cbp6)
 first_date <- as.Date("2013-10-01")
 date <- first_date+c(0:729)
@@ -57,13 +57,9 @@ data <- data.frame(date,flow = c(73.7, 75.3, 75.3, 75.3, 288, 275, 57.3, 57, 58.
                                  151, 209, 131, 87.3, 87.5, 88.1, 89.3, 89.4, 64.5, 50.6, 50.6, 48.6, 48.6,
                                  48.6, 48.6, 48.6, 48.1, 47.3, 47, 47, 47, 46.9, 47, 47, 47, 47, 47, 47, 47,
                                  47, 47, 47, 47, 47, 47, 72.3, 49.1, 47, 47, 47, 47, 47, 47.4, 47.9))
-siteNo <- "03209000"
-start.date <- "2013-10-01"
-end.date <- "2015-09-30"
-
 test_that(
   "a description of my test",
   {
-    expect_equal(import_gage_data_cfs("03209000","2013-10-01","2015-09-30"), data)
+    expect_equal(water_year_trim(data), data)
   }
 )
