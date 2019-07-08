@@ -15,7 +15,9 @@ Imports:
 	lfstat,
 	stats,
 	zoo,
-	dataRetrieval
+	dataRetrieval,
+	IHA,
+	PearsonDS
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.1.1
