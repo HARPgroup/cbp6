@@ -2,10 +2,8 @@ library(dataRetrieval)
 
 model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
   # Downloading and exporting hourly model data
-  paste("Starting Data Download...")
   model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/river/", mod.scenario, "/stream/", 
                                   riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
-  paste("Data Download complete. Starting conversions...")
   RivSegStr1 <- strsplit(riv.seg, "\\+")
   RivSegStr1 <- RivSegStr1[[1]]
   num.segs1 <- length(RivSegStr1)
@@ -200,7 +198,7 @@ vahydro_import_all_metrics <- function(seg.or.gage, mod.scenario, token, site) {
   drought.of.record.year <- vahydro.import.metric(met.varkey = "dor_year", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   drought.of.record.mean <- vahydro.import.metric(met.varkey = "dor_mean", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   mean.baseflow <- vahydro.import.metric(met.varkey = "baseflow", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
-  
+
   metrics <- data.frame(overall.mean, jan.low.flow, feb.low.flow, mar.low.flow, apr.low.flow, may.low.flow,
                         jun.low.flow, jul.low.flow, aug.low.flow, sep.low.flow, oct.low.flow, nov.low.flow,
                         dec.low.flow, jan.mean.flow, feb.mean.flow, mar.mean.flow, apr.mean.flow,
@@ -223,8 +221,8 @@ water_year_trim <- function(data) {
   data.length <- length(data$date)
   start.month <- month(data$date[1])
   end.month <- month(data$date[data.length])
-  start.day <- as.numeric(day(data$date[1]))
-  end.day <- as.numeric(day(data$date[data.length]))
+  start.day <- day(data$date[1])
+  end.day <- day(data$date[data.length])
   
   if (start.month <= 9) {
     start.year <- year(data$date[1])
@@ -244,7 +242,7 @@ water_year_trim <- function(data) {
   
   start.date <- paste0(start.year, "-10-01")
   end.date <- paste0(end.year, "-09-30")
-  
+
   start.line <- which(data$date == start.date)
   end.line <- which(data$date == end.date)
   
@@ -527,7 +525,7 @@ metrics_compare <- function(metrics1, metrics2) {
   return(metrics1)
 }
 
-fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
+fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
   
   #Libraries---------
   library(rgeos) #used for geospatial processing 
@@ -535,9 +533,6 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
   library(ggsn) #used for adding scale bar and north arrow to map
   library(sp) #required for SpatialPolygonsDataFrame()
   library(rlist) #use for grouping map images from ggplot
-  
-  source(paste(hydro_tools, "HARP-2018/DEQ_Model_ONLY_v1.0/code/fn_ALL.upstream.R", sep = "/"));
-  source(paste(hydro_tools, "HARP-2018/DEQ_Model_ONLY_v1.0/code/fn_upstream.R", sep = "/"));
   
   #----------Define function for watershedDF-----------------------
   getWatershedDF <- function(geom){
@@ -588,17 +583,88 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
                   'TU2_8860_9000', 'TU3_8880_9230', 'TU2_8950_9040', 'TU2_8970_9280',
                   'TU5_9000_9280', 'TU1_9010_9290', 'TU3_9040_9180', 'TU3_9060_9230',
                   'TU2_9070_9090', 'TU2_9100_9200', 'TU3_9180_9090', 'TU2_9200_9180',
-                  'TU1_9220_9200', 'TU3_9230_9260', 'NR2_8600_8700', 'NR6_8500_7820')
+                  'TU1_9220_9200', 'TU3_9230_9260', 'NR2_8600_8700', 'NR6_8500_7820',
+                  'EL0_4560_4562','EL0_4561_4562','EL0_4562_0001','EL2_4400_4590',
+                  'EL2_4590_0001','EL2_5110_5270','EL2_5270_0001','PM0_4640_4820',
+                  'PM1_3120_3400','PM1_3450_3400','PM1_3510_4000','PM1_3710_4040',
+                  'PM1_4000_4290','PM1_4250_4500','PM1_4430_4200','PM1_4500_4580',
+                  'PM2_2860_3040','PM2_3400_3340','PM2_4860_4670','PM3_3040_3340',
+                  'PM3_4660_4620','PM3_4670_4660','PM4_3340_3341','PM4_3341_4040',
+                  'PM4_4040_4410','PM7_4150_4290','PM7_4200_4410','PM7_4290_4200',
+                  'PM7_4410_4620','PM7_4580_4820','PM7_4620_4580','PM7_4820_0001',
+                  'PS0_6150_6160','PS0_6160_6161','PS1_4790_4830','PS1_4830_5080',
+                  'PS2_5550_5560','PS2_5560_5100','PS2_6420_6360','PS2_6490_6420',
+                  'PS2_6660_6490','PS2_6730_6660','PS3_5100_5080','PS3_5990_6161',
+                  'PS3_6161_6280','PS3_6280_6230','PS3_6460_6230','PS4_5080_4380',
+                  'PS4_5840_5240','PS4_6230_6360','PS4_6360_5840','PS5_4370_4150',
+                  'PS5_4380_4370','PS5_5200_4380','PS5_5240_5200','PU0_3000_3090',
+                  'PU0_3601_3602','PU0_3611_3530','PU0_3751_3752','PU0_3871_3690',
+                  'PU0_5620_5380','PU0_6080_5620','PU1_3030_3440','PU1_3100_3690',
+                  'PU1_3170_3580','PU1_3580_3780','PU1_3850_4190','PU1_3940_3970',
+                  'PU1_4190_4300','PU1_4300_4440','PU1_4760_4450','PU1_4840_4760',
+                  'PU1_5380_5050','PU1_5520_5210','PU1_5820_5380','PU2_2790_3290',
+                  'PU2_2840_3080','PU2_3080_3640','PU2_3090_4050','PU2_3140_3680',
+                  'PU2_3180_3370','PU2_3370_4020','PU2_3630_3590','PU2_3770_3600',
+                  'PU2_3900_3750','PU2_4050_4180','PU2_4160_3930','PU2_4220_3900',
+                  'PU2_4340_3860','PU2_4360_4160','PU2_4720_4750','PU2_4730_4220',
+                  'PU2_4750_4450','PU2_5190_4310','PU2_5700_5210','PU2_6050_5190',
+                  'PU3_2510_3290','PU3_3290_3390','PU3_3390_3730','PU3_3680_3890',
+                  'PU3_3860_3610','PU3_4280_3860','PU3_4450_4440','PU3_5210_5050',
+                  'PU4_3780_3930','PU4_3890_3990','PU4_3970_3890','PU4_3990_3780',
+                  'PU4_4210_4170','PU4_4310_4210','PU4_4440_3970','PU4_5050_4310',
+                  'PU5_3930_4170','PU5_4170_4020','PU6_3440_3590','PU6_3530_3440',
+                  'PU6_3590_3640','PU6_3600_3602','PU6_3602_3730','PU6_3610_3530',
+                  'PU6_3640_3600','PU6_3690_3610','PU6_3730_3750','PU6_3750_3752',
+                  'PU6_3752_4080','PU6_3870_3690','PU6_4020_3870','PU6_4080_4180',
+                  'PU6_4180_4150','JA0_7291_7290','JA2_7290_0001','JA1_7600_7570',
+                  'JA1_7640_7280','JA2_7410_7470','JA2_7550_7280','JA2_7570_7480',
+                  'JA4_7280_7340','JA4_7340_7470','JA4_7470_7480','JA5_7480_0001',
+                  'JB3_6820_7053','JB3_7053_0001','PL1_4460_4780','PL1_4780_0001',
+                  'JL1_6560_6440','JL1_6760_6910','JL1_6770_6850','JL1_6910_6960',
+                  'JL1_6940_7200','JL1_7080_7190','JL1_7170_6800','JL1_7190_7250',
+                  'JL1_7200_7250','JL1_7530_7430','JL2_6240_6520','JL2_6440_6441',
+                  'JL2_6441_6520','JL2_6850_6890','JL2_7110_7120','JL2_7120_6970',
+                  'JL2_7240_7350','JL2_7250_7090','JL2_7350_7090','JL3_7020_7100',
+                  'JL3_7090_7150','JL4_6520_6710','JL4_6710_6740','JL6_6740_7100',
+                  'JL6_6890_6990','JL6_6960_6970','JL6_6970_6740','JL6_6990_6960',
+                  'JL6_7150_6890','JL6_7160_7440','JL6_7320_7150','JL6_7430_7320',
+                  'JL6_7440_7430','JL7_6800_7070','JL7_7030_6800','JL7_7070_0001',
+                  'JL7_7100_7030','JU1_6290_6590','JU1_6300_6650','JU1_6340_6650',
+                  'JU1_6590_6600','JU1_6880_7260','JU1_7560_7500','JU1_7630_7490',
+                  'JU1_7690_7490','JU1_7750_7560','JU2_6410_6640','JU2_6600_6810',
+                  'JU2_6810_6900','JU2_7140_7330','JU2_7180_7380','JU2_7360_7000',
+                  'JU2_7450_7360','JU3_6380_6900','JU3_6640_6790','JU3_6650_7300',
+                  'JU3_6790_7260','JU3_6900_6950','JU3_6950_7330','JU3_7400_7510',
+                  'JU3_7490_7400','JU4_7000_7300','JU4_7260_7380','JU4_7330_7000',
+                  'JU4_7380_7160','JU5_7300_7510','JU5_7420_7160','JU5_7500_7420',
+                  'JU5_7510_7500','PL0_5141_5140','PL1_5370_5470','PL2_4970_5250',
+                  'PL2_5140_5360','PL2_5470_5360','PL3_5250_0001','PL3_5360_5250',
+                  'PL0_5010_5130','PL1_5130_0001','PL0_5490_0001','PL0_5540_5490',
+                  'PL2_5300_5630','PL2_5630_0001','PL0_5730_5690','PL1_5690_0001',
+                  'PL0_5530_5710','PL0_5710_0001','RU2_5220_5640','RU2_5500_5610',
+                  'RU2_5810_5610','RU2_5940_6200','RU2_6090_6220','RU2_6200_6170',
+                  'RU2_6220_6170','RU3_5610_5640','RU3_6170_6040','RU4_5640_6030',
+                  'RU4_6040_6030','RU5_6030_0001','WM1_3660_3910','WM1_3910_0001',
+                  'WM0_3881_3880','WM1_3882_3880','WM3_3880_4060','WM3_4060_0001',
+                  'WU1_3240_3331','WU1_3330_0001','WU1_3331_3330','WU0_3021_3020',
+                  'WU1_3350_3490','WU1_3490_3480','WU2_3020_3320','WU2_3320_3480',
+                  'WU3_3480_3481','WU3_3481_0001','XU0_4090_4270','XU0_4091_4270',
+                  'XU0_4130_4070','XU2_4070_4330','XU2_4270_4650','XU2_4330_4480',
+                  'XU2_4480_4650','XU3_4650_0001','YM1_6370_6620','YM2_6120_6430',
+                  'YM3_6430_6620','YM4_6620_0001','YP1_6570_6680','YP1_6680_6670',
+                  'YP2_6390_6330','YP3_6330_6700','YP3_6470_6690','YP3_6670_6720',
+                  'YP3_6690_6720','YP3_6700_6670','YP4_6720_6750','YP4_6750_0001',
+                  'YP0_6840_0001','YP0_6860_6840')
   
   # Splitting the River Segment string into each segment name
   RivSegStr <- strsplit(RivSeg, "\\+")
   RivSegStr <- RivSegStr[[1]]
-  num.segs <- length(RivSegStr)
+  num.segs <- as.numeric(length(RivSegStr))
   
   # Getting all upstream segments for each of the linked segs, combining
   # to form a vector of all upstream segments.
   AllUpstreamSegs <- vector()
-  for (i in 1:num.segs) {
+  for (i in as.numeric(1:num.segs)) {
     RivSeg <- RivSegStr[i]
     UpstreamSegs <- fn_ALL.upstream(RivSeg, AllSegList)
     AllUpstreamSegs <- c(AllUpstreamSegs, UpstreamSegs)
@@ -608,9 +674,9 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
     AllUpstreamSegs <- AllUpstreamSegs[-eliminate]
   }
   AllUpstreamSegs <- unique(AllUpstreamSegs)
-  num.upstream <- length(AllUpstreamSegs)
+  num.upstream <- as.numeric(length(AllUpstreamSegs))
   
-  STATES <- read.table(file=paste(hydro_tools,"GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
+  STATES <- read.table(file=paste(cbp6_link, "GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
   
   # first specify bounding box / extent of map: -----------------------------
   extent <- data.frame(x = c(-84, -75), 
@@ -717,7 +783,7 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
     geom_polygon(data = NJDF, color="gray46", fill = NA, lwd=0.5)+
     geom_polygon(data = OHDF, color="gray46", fill = NA, lwd=0.5)
   if (num.upstream > 0) {
-    for (i in 1:num.upstream) {  
+    for (i in as.numeric(1:num.upstream)) {  
       RivSeg <- AllUpstreamSegs[i]
       namer <- paste0("upstream.watershedDF", i)
       
@@ -726,7 +792,7 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
       inputs <- list (
         bundle = 'watershed',
         ftype = 'vahydro',
-        hydrocode = paste0('vahydrosw_wshed_', RivSeg)
+        hydrocode = paste('vahydrosw_wshed_', RivSeg, sep='')
       )
       
       dataframe <- getFeature(inputs, token, site)
@@ -793,7 +859,8 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
   modelinput <- list(
     varkey = "om_model_element",
     featureid = local_da_prop$featureid,
-    entity_type = "dh_feature"
+    entity_type = "dh_feature",
+    propcode = "p532cal_062211"
   )
   findgage <- getProperty(modelinput, site, findgage)
   
@@ -843,16 +910,21 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, hydro_tools, token) {
     map <- map +
       geom_polygon(data = eval(parse(text = namer)), color="black", fill = "green3",alpha = 0.25,lwd=0.5)
   }
+  
+  if (is.logical(gagetrue)==FALSE){
   map <- map + geom_polygon(data = bbDF, color="black", fill = NA,lwd=0.5)+
     geom_point(aes(x = x, y = y, group = id), data = GAGEDF, fill="red", color="black", size = 1.8, shape=24)
-  
+  }
   
   #additions to map -------------
   map <- map + 
     #ADD NORTH ARROW AND SCALE BAR
     north(bbDF, location = 'topleft', symbol = 12, scale=0.1)+
-    scalebar(bbDF, dist = 100, dd2km = TRUE, model = 'WGS84',st.bottom=FALSE)+
-    
+    scalebar(data = bbDF, transform = TRUE, dist_unit = "km", location = 'bottomleft', dist = 100, model = 'WGS84',st.bottom=FALSE, st.size = 3.5,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))+
     scale_x_continuous(limits = c(extent$x))+
     scale_y_continuous(limits = c(extent$y))+
     
@@ -944,11 +1016,10 @@ fn_iha_DOR_Year <- function(flows){
   dor_year = loflows[ndx,]$"year";
 }
 
+
 rest_token <- function(base_url, token, rest_uname = FALSE, rest_pw = FALSE) {
   
-  #base_url <- 'http://deq1.bse.vt.edu/d.bet'
-  rest_uname <- 'test'
-  rest_pw <- 'test'
+  base_url <- 'http://deq1.bse.vt.edu/d.bet'
   
   #Cross-site Request Forgery Protection (Token required for POST and PUT operations)
   csrf_url <- paste(base_url,"restws/session/token/",sep="/");
@@ -997,3 +1068,378 @@ rest_token <- function(base_url, token, rest_uname = FALSE, rest_pw = FALSE) {
   token <- token
 } #close function
 
+fn_upstream <- function(RivSeg, AllSegList) {
+  library(stringr)
+  library(rapportools)
+  # Create dataframe for upstream and downstream segments based on code in string
+  ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 5))
+  colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'Downstream', 'Upstream')
+  ModelSegments$RiverSeg <- AllSegList
+  
+  # Pull out 4 digit codes in middle and end for upstream/downstream segments
+  i <- 1
+  for (i in 1:nrow(ModelSegments)){
+    
+    ModelSegments[i,2]<- str_sub(ModelSegments[i,1], start=5L, end=8L)
+    ModelSegments[i,3]<- str_sub(ModelSegments[i,1], start=10L, end=-1L)
+    i <- i + 1
+  }
+  
+  # Determine Downstream Segment ----------
+  j <- 1
+  for (j in 1:nrow(ModelSegments)){
+    Downstream <- which(ModelSegments$Middle==ModelSegments$Last[j])
+    if (length(Downstream)==0){
+      ModelSegments[j,4]  <- 'NA'
+    }else if (length(Downstream)!=0){
+      ModelSegments[j,4] <- as.character(ModelSegments[Downstream,1])
+    }
+    j<-j+1
+  }
+  # Determine Upstream Segment ----------
+  k<-1
+  for (k in 1:nrow(ModelSegments)){
+    Upstream <- which(as.character(ModelSegments$Downstream)==as.character(ModelSegments$RiverSeg[k]))
+    NumUp <- ModelSegments$RiverSeg[Upstream]
+    ModelSegments[k,5]<- paste(NumUp, collapse = '+')
+    if (is.empty(ModelSegments[k,5])==TRUE){
+      ModelSegments[k,5]<- 'NA'
+    } 
+    k<-k+1
+  }
+  SegUpstream <- as.numeric(which(as.character(ModelSegments$RiverSeg)==as.character(RivSeg)))
+  SegUpstream <- ModelSegments$Upstream[SegUpstream]
+  SegUpstream <- strsplit(as.character(SegUpstream), "\\+")
+  SegUpstream <- try(SegUpstream[[1]], silent = TRUE)
+  if (class(SegUpstream)=='try-error') {
+    SegUpstream <- NA
+  }
+  return(SegUpstream)
+}
+
+fn_ALL.upstream <- function(RivSeg, AllSegList) {
+  UpstreamSeg <- fn_upstream(RivSeg, AllSegList)
+  AllUpstream <- character(0)
+  BranchedSegs <- character(0)
+  while (is.na(UpstreamSeg[1])==FALSE || is.empty(BranchedSegs) == FALSE) {
+    while (is.na(UpstreamSeg[1])==FALSE) {
+      num.segs <- as.numeric(length(UpstreamSeg))
+      if (num.segs > 1) {
+        BranchedSegs[(length(BranchedSegs)+1):(length(BranchedSegs)+num.segs-1)] <- UpstreamSeg[2:num.segs]
+        UpstreamSeg <- UpstreamSeg[1]
+      }
+      AllUpstream[length(AllUpstream)+1] <- UpstreamSeg
+      UpstreamSeg <- fn_upstream(UpstreamSeg, AllSegList)
+    }
+    num.branched <- as.numeric(length(BranchedSegs))
+    UpstreamSeg <- BranchedSegs[1]
+    BranchedSegs <- BranchedSegs[-1]
+  }
+  AllUpstream <- AllUpstream[which(AllUpstream != 'NA')]
+  if (is.empty(AllUpstream[1])==TRUE) {
+    AllUpstream <- 'NA'
+  }
+  return(AllUpstream)
+}
+
+getProperty <- function(inputs, base_url, prop){
+  print(inputs)
+  #Convert varkey to varid - needed for REST operations 
+  if (!is.null(inputs$varkey)) {
+    # this would use REST 
+    # getVarDef(list(varkey = inputs$varkey), token, base_url)
+    # but it is broken for vardef for now metadatawrapper fatal error
+    # EntityMetadataWrapperException: Invalid data value given. Be sure it matches the required data type and format. 
+    # in EntityDrupalWrapper->set() 
+    # (line 736 of /var/www/html/d.dh/modules/entity/includes/entity.wrapper.inc).
+    
+    propdef_url<- paste(base_url,"/?q=vardefs.tsv/",inputs$varkey,sep="")
+    print(paste("Trying", propdef_url))
+    propdef_table <- read.table(propdef_url,header = TRUE, sep = "\t")    
+    varid <- propdef_table[1][which(propdef_table$varkey == inputs$varkey),]
+    print(paste("varid: ",varid,sep=""))
+    if (is.null(varid)) {
+      # we sent a bad variable id so we should return FALSE
+      return(FALSE)
+    }
+    inputs$varid = varid
+  }
+  # now, verify that we have either a proper varid OR a propname
+  if (is.null(inputs$varid) & is.null(inputs$propname)) {
+    # we were sent a bad variable id so we should return FALSE
+    return(FALSE)
+  }
+  
+  pbody = list(
+    #bundle = 'dh_properties',
+    featureid = inputs$featureid,
+    entity_type = inputs$entity_type 
+  );
+  if (!is.null(inputs$varid)) {
+    pbody$varid = inputs$varid
+  }
+  if (!is.null(inputs$bundle)) {
+    pbody$bundle = inputs$bundle
+  }
+  if (!is.null(inputs$propcode)) {
+    pbody$propcode = inputs$propcode
+  }
+  if (!is.null(inputs$propname)) {
+    pbody$propname = inputs$propname
+  }
+  if (!is.null(inputs$pid)) {
+    if (inputs$pid > 0) {
+      # forget about other attributes, just use pid
+      pbody = list(
+        pid = inputs$pid
+      )
+    }
+  }
+  
+  prop <- GET(
+    paste(base_url,"/dh_properties.json",sep=""), 
+    add_headers(HTTP_X_CSRF_TOKEN = token),
+    query = pbody, 
+    encode = "json"
+  );
+  prop_cont <- content(prop);
+  
+  if (length(prop_cont$list) != 0) {
+    print(paste("Number of properties found: ",length(prop_cont$list),sep=""))
+    
+    prop <- data.frame(proptext=character(),
+                       pid=character(),
+                       propname=character(), 
+                       propvalue=character(),
+                       propcode=character(),
+                       startdate=character(),
+                       enddate=character(),
+                       featureid=character(),
+                       modified=character(),
+                       entity_type=character(),
+                       bundle=character(),
+                       varid=character(),
+                       uid=character(),
+                       vid=character(),
+                       status=character(),
+                       module=character(),
+                       field_dh_matrix=character(),
+                       stringsAsFactors=FALSE) 
+    
+    i <- 1
+    for (i in 1:length(prop_cont$list)) {
+      
+      prop_i <- data.frame(
+        "proptext" = if (is.null(prop_cont$list[[i]]$proptext)){""} else {prop_cont$list[[i]]$proptext},
+        "pid" = if (is.null(prop_cont$list[[i]]$pid)){""} else {as.integer(prop_cont$list[[i]]$pid)},
+        "propname" = if (is.null(prop_cont$list[[i]]$propname)){""} else {prop_cont$list[[i]]$propname},
+        "propvalue" = if (is.null(prop_cont$list[[i]]$propvalue)){""} else {as.numeric(prop_cont$list[[i]]$propvalue)},
+        "propcode" = if (is.null(prop_cont$list[[i]]$propcode)){""} else {prop_cont$list[[i]]$propcode},
+        "startdate" = if (is.null(prop_cont$list[[i]]$startdate)){""} else {prop_cont$list[[i]]$startdate},
+        "enddate" = if (is.null(prop_cont$list[[i]]$enddate)){""} else {prop_cont$list[[i]]$enddate},
+        "featureid" = if (is.null(prop_cont$list[[i]]$featureid)){""} else {prop_cont$list[[i]]$featureid},
+        "modified" = if (is.null(prop_cont$list[[i]]$modified)){""} else {prop_cont$list[[i]]$modified},
+        "entity_type" = if (is.null(prop_cont$list[[i]]$entity_type)){""} else {prop_cont$list[[i]]$entity_type},
+        "bundle" = if (is.null(prop_cont$list[[i]]$bundle)){""} else {prop_cont$list[[i]]$bundle},
+        "varid" = if (is.null(prop_cont$list[[i]]$varid)){""} else {prop_cont$list[[i]]$varid},
+        "uid" = if (is.null(prop_cont$list[[i]]$uid)){""} else {prop_cont$list[[i]]$uid},
+        "vid" = if (is.null(prop_cont$list[[i]]$vid)){""} else {prop_cont$list[[i]]$vid},
+        "field_dh_matrix" = "",
+        "status" = if (is.null(prop_cont$list[[i]]$status)){""} else {prop_cont$list[[i]]$status},
+        "module" = if (is.null(prop_cont$list[[i]]$module)){""} else {prop_cont$list[[i]]$module},
+        stringsAsFactors=FALSE
+      )
+      # handle data_matrix
+      if (!is.null(prop_cont$list[[i]]$field_dh_matrix$value)) {
+        dfl = prop_cont$list[[i]]$field_dh_matrix$value
+        df <- data.frame(matrix(unlist(dfl), nrow=length(dfl), byrow=T))
+        prop_i$field_dh_matrix <- jsonlite::serializeJSON(df);
+      }
+      prop  <- rbind(prop, prop_i)
+    }
+  } else {
+    print("This property does not exist")
+    return(FALSE)
+  }
+  prop <- prop
+}
+
+
+postProperty <- function(inputs,base_url,prop){
+  
+  #inputs <-prop_inputs
+  #base_url <- site
+  #Search for existing property matching supplied varkey, featureid, entity_type 
+  dataframe <- getProperty(inputs, base_url, prop)
+  if (is.data.frame(dataframe)) {
+    pid <- as.character(dataframe$pid)
+  } else {
+    pid = NULL
+  }
+  if (!is.null(inputs$varkey)) {
+    # this would use REST 
+    # getVarDef(list(varkey = inputs$varkey), token, base_url)
+    # but it is broken for vardef for now metadatawrapper fatal error
+    # EntityMetadataWrapperException: Invalid data value given. Be sure it matches the required data type and format. 
+    # in EntityDrupalWrapper->set() 
+    # (line 736 of /var/www/html/d.dh/modules/entity/includes/entity.wrapper.inc).
+    
+    propdef_url<- paste(base_url,"/?q=vardefs.tsv/",inputs$varkey,sep="")
+    propdef_table <- read.table(propdef_url,header = TRUE, sep = "\t")    
+    varid <- propdef_table[1][which(propdef_table$varkey == inputs$varkey),]
+    print(paste("varid: ",varid,sep=""))
+    if (is.null(varid)) {
+      # we sent a bad variable id so we should return FALSE
+      return(FALSE)
+    }
+  }
+  if (!is.null(inputs$varid)) {
+    varid = inputs$varid
+  }
+  
+  if (is.null(varid)) {
+    print("Variable IS is null - returning.")
+    return(FALSE)
+  }
+  
+  pbody = list(
+    bundle = 'dh_properties',
+    featureid = inputs$featureid,
+    varid = varid,
+    entity_type = inputs$entity_type,
+    proptext = inputs$proptext,
+    propvalue = inputs$propvalue,
+    propcode = inputs$propcode,
+    startdate = inputs$startdate,
+    propname = inputs$propname,
+    enddate = inputs$enddate
+  );
+  
+  if (is.null(pid)){
+    print("Creating Property...")
+    prop <- POST(paste(base_url,"/dh_properties/",sep=""), 
+                 add_headers(HTTP_X_CSRF_TOKEN = token),
+                 body = pbody,
+                 encode = "json"
+    );
+    #content(prop)
+    if (prop$status == 201){prop <- paste("Status ",prop$status,", Property Created Successfully",sep="")
+    } else {prop <- paste("Status ",prop$status,", Error: Property Not Created Successfully",sep="")}
+    
+  } else if (length(dataframe$pid) == 1){
+    print("Single Property Exists, Updating...")
+    print(paste("Posting", pbody$varid )) 
+    print(pbody) 
+    #pbody$pid = pid
+    prop <- PUT(paste(base_url,"/dh_properties/",pid,sep=""), 
+                add_headers(HTTP_X_CSRF_TOKEN = token),
+                body = pbody,
+                encode = "json"
+    );
+    #content(prop)
+    if (prop$status == 200){prop <- paste("Status ",prop$status,", Property Updated Successfully",sep="")
+    } else {prop <- paste("Status ",prop$status,", Error: Property Not Updated Successfully",sep="")}
+  } else {
+    prop <- print("Multiple Properties Exist, Execution Halted")
+  }
+  
+}
+
+getFeature <- function(inputs, token, base_url, feature){
+  #inputs <-    conveyance_inputs 
+  #base_url <- site
+  #print(inputs)
+  pbody = list(
+    hydroid = inputs$hydroid,
+    bundle = inputs$bundle,
+    ftype = inputs$ftype,
+    hydrocode = inputs$hydrocode
+  );
+  
+  
+  if (!is.null(inputs$hydroid)) {
+    if (inputs$hydroid > 0) {
+      # forget about other attributes, just use hydroid if provided 
+      pbody = list(
+        hydroid = inputs$hydroid
+      )
+    }
+  }
+  
+  feature <- GET(
+    paste(base_url,"/dh_feature.json",sep=""), 
+    add_headers(HTTP_X_CSRF_TOKEN = token),
+    query = pbody, 
+    encode = "json"
+  );
+  feature_cont <- content(feature);
+  
+  if (length(feature_cont$list) != 0) {
+    print(paste("Number of features found: ",length(feature_cont$list),sep=""))
+    
+    feat <- data.frame(hydroid = character(),
+                       bundle = character(),
+                       ftype = character(),
+                       hydrocode = character(),
+                       name = character(),
+                       fstatus = character(),
+                       address1 = character(),
+                       address2 = character(),
+                       city = character(),
+                       state = character(),
+                       postal_code = character(),
+                       description = character(),
+                       uid = character(),
+                       status = character(),
+                       module = character(),
+                       feed_nid = character(),
+                       dh_link_facility_mps = character(),
+                       dh_nextdown_id = character(),
+                       dh_areasqkm = character(),
+                       dh_link_admin_location = character(),
+                       field_dh_from_entity = character(),
+                       field_dh_to_entity = character(),
+                       dh_geofield = character(),
+                       geom = character(),
+                       stringsAsFactors=FALSE) 
+    
+    #i <- 1
+    for (i in 1:length(feature_cont$list)) {
+      
+      feat_i <- data.frame("hydroid" = if (is.null(feature_cont$list[[i]]$hydroid)){""} else {feature_cont$list[[i]]$hydroid},
+                           "bundle" = if (is.null(feature_cont$list[[i]]$bundle)){""} else {feature_cont$list[[i]]$bundle},
+                           "ftype" = if (is.null(feature_cont$list[[i]]$ftype)){""} else {feature_cont$list[[i]]$ftype},
+                           "hydrocode" = if (is.null(feature_cont$list[[i]]$hydrocode)){""} else {feature_cont$list[[i]]$hydrocode},
+                           "name" = if (is.null(feature_cont$list[[i]]$name)){""} else {feature_cont$list[[i]]$name},
+                           "fstatus" = if (is.null(feature_cont$list[[i]]$fstatus)){""} else {feature_cont$list[[i]]$fstatus},
+                           "address1" = if (is.null(feature_cont$list[[i]]$address1)){""} else {feature_cont$list[[i]]$address1},
+                           "address2" = if (is.null(feature_cont$list[[i]]$address2)){""} else {feature_cont$list[[i]]$address2},
+                           "city" = if (is.null(feature_cont$list[[i]]$city)){""} else {feature_cont$list[[i]]$city},
+                           "state" = if (is.null(feature_cont$list[[i]]$state)){""} else {feature_cont$list[[i]]$state},
+                           "postal_code" = if (is.null(feature_cont$list[[i]]$postal_code)){""} else {feature_cont$list[[i]]$postal_code},
+                           "description" = if (is.null(feature_cont$list[[i]]$description)){""} else {feature_cont$list[[i]]$description},
+                           "uid" = if (is.null(feature_cont$list[[i]]$uid)){""} else {feature_cont$list[[i]]$uid},
+                           "status" = if (is.null(feature_cont$list[[i]]$status)){""} else {feature_cont$list[[i]]$status},
+                           "module" = if (is.null(feature_cont$list[[i]]$module)){""} else {feature_cont$list[[i]]$module},
+                           "feed_nid" = if (is.null(feature_cont$list[[i]]$feed_nid)){""} else {feature_cont$list[[i]]$feed_nid},
+                           "dh_link_facility_mps" = if (!length(feature_cont$list[[i]]$dh_link_facility_mps)){""} else {feature_cont$list[[i]]$dh_link_facility_mps[[1]]$id},
+                           "dh_nextdown_id" = if (!length(feature_cont$list[[i]]$dh_nextdown_id)){""} else {feature_cont$list[[i]]$dh_nextdown_id[[1]]$id},
+                           "dh_areasqkm" = if (is.null(feature_cont$list[[i]]$dh_areasqkm)){""} else {feature_cont$list[[i]]$dh_areasqkm},
+                           "dh_link_admin_location" = if (!length(feature_cont$list[[i]]$dh_link_admin_location)){""} else {feature_cont$list[[i]]$dh_link_admin_location[[1]]$id},
+                           "field_dh_from_entity" = if (!length(feature_cont$list[[i]]$field_dh_from_entity)){""} else {feature_cont$list[[i]]$field_dh_from_entity$id},
+                           "field_dh_to_entity" = if (!length(feature_cont$list[[i]]$field_dh_to_entity)){""} else {feature_cont$list[[i]]$field_dh_to_entity$id},
+                           "dh_geofield" = if (is.null(feature_cont$list[[i]]$dh_geofield$geom)){""} else {feature_cont$list[[i]]$dh_geofield$geom},
+                           "geom" = if (is.null(feature_cont$list[[i]]$dh_geofield$geom)){""} else {feature_cont$list[[i]]$dh_geofield$geom}
+      )
+      
+      # "dh_link_admin_location" = if (!length(feature_cont$list[[i]]$dh_link_admin_location)){""} else {feature_cont$list[[i]]$dh_link_admin_location[[1]]$id},
+      
+      
+      feat  <- rbind(feat, feat_i)
+    }
+  } else {
+    print("This Feature does not exist")
+    return(FALSE)
+  }
+  feature <- feat
+}
