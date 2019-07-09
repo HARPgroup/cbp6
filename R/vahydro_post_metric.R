@@ -3,6 +3,7 @@
 #' @param met.varkey input variable key
 #' @param met.propcode input prop code
 #' @param met.name input name of metric
+#' @param met.value value of the metric
 #' @param seg.or.gage indicate segment name or gage number
 #' @param mod.scenario input scenario code
 #' @param token input token number for access

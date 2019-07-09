@@ -5,7 +5,6 @@
 #' @param token input token number for access
 #' @param site input site name
 #' @return dataframe of all metrics
-#' @import from function file
 #' @export vahydro_import_all_metrics
 
 vahydro_import_all_metrics <- function(seg.or.gage, mod.scenario, token, site) {

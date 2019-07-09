@@ -19,7 +19,8 @@ Imports:
 	IHA,
 	PearsonDS,
 	data.table,
-	sp
+	sp,
+	utils
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.1.1
