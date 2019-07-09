@@ -19,7 +19,7 @@ mod.scenario <- "p532cal_062211" # should be "CFBASE30Y20180615" (phase 6) or "p
 # Start and end dates of data (p5 Model: Has data from 1984-01-01 to 2005-12-31, p6 to 2015-12-31)
 start.date <- "1984-01-01"
 end.date <- "2005-12-31"
-site = "02077500"
+site = "http://deq2.bse.vt.edu/d.dh"
 
 mod.data <- import.model.data.cfs(RivSeg, mod.phase, mod.scenario, start.date, end.date)
 gage.data <- import.gage.data.cfs(site, start.date, end.date)
@@ -32,4 +32,4 @@ which(test!=trimmed.data)
 met.varkey <- "monthly_low_flow"
 met.propcode <- "ml3"
 seg.or.gage <- "02077500"
-import.vahydro.metric(met.varkey, met.propcode, seg.or.gage, mod.scenario = "p532cal_062211", token, site = "http://deq2.bse.vt.edu/d.bet")
+vahydro_import_metric(met.varkey, met.propcode, seg.or.gage, mod.scenario = "p532cal_062211", token, site = "http://deq2.bse.vt.edu/d.dh")
