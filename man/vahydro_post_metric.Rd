@@ -14,6 +14,8 @@ vahydro_post_metric(met.varkey, met.propcode, met.name, met.value,
 
 \item{met.name}{input name of metric}
 
+\item{met.value}{value of the metric}
+
 \item{seg.or.gage}{indicate segment name or gage number}
 
 \item{mod.scenario}{input scenario code}

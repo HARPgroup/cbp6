@@ -1,8 +1,8 @@
-#' September 10% Metric Function
-#' @description Measures the September 10% of the entire timeseries 
+#' September 10pct Metric Function
+#' @description Measures the September 10pct of the entire timeseries 
 #' @description data must be trimmed to water year
 #' @param data dataframe of date and flow data taken from import data functions
-#' @return september 10% metric
+#' @return september 10pct metric
 #' @import lubridate
 #' @import data.table
 #' @export sept_10_flow

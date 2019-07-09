@@ -2,7 +2,7 @@
 % Please edit documentation in R/sept_10_flow.R
 \name{sept_10_flow}
 \alias{sept_10_flow}
-\title{September 10% Metric Function}
+\title{September 10pct Metric Function}
 \usage{
 sept_10_flow(data)
 }
@@ -10,10 +10,10 @@ sept_10_flow(data)
 \item{data}{dataframe of date and flow data taken from import data functions}
 }
 \value{
-september 10% metric
+september 10pct metric
 }
 \description{
-Measures the September 10% of the entire timeseries
+Measures the September 10pct of the entire timeseries
 
 data must be trimmed to water year
 }
