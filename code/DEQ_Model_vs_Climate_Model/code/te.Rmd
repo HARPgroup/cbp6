@@ -1,0 +1,956 @@
+---
+header-includes: \pagenumbering{gobble}
+output:
+pdf_document: default 
+word_document: default
+html_document: default
+---
+
+```{r, include=FALSE}
+# Loading Necessary Packages 
+library(dataRetrieval)
+library(lubridate)
+library(plyr)
+library(zoo)
+library(knitr)
+library(ggplot2)
+library(stats)
+library(lfstat)
+library(rstudioapi)
+library(IHA)
+library(PearsonDS)
+library(scales)
+library(rlang)
+
+# INPUTS
+riv.seg <- 'JA5_7480_0001'
+mod.phase1 <- 'p6/p6_gb604/tmp'
+mod.scenario1 <- 'CBASE1808L55CY55R45P50R45P50Y'
+mod.phase2 <- 'p6/p6_gb604/tmp'
+mod.scenario2 <- 'CFBASE30Y20180615'
+start.date <- '1990-01-01'
+end.date <- '2000-12-31'
+
+# SETUP
+# Setting active directory 
+# Setting working directory to the source file location
+current_path <- rstudioapi::getActiveDocumentContext()$path 
+
+# Setting up output location
+split.location <- strsplit(current_path, split = '/')
+split.location <- as.vector(split.location[[1]])
+basepath.stop <- as.numeric(which(split.location == 'code'))
+container <- paste0(split.location[1:basepath.stop], collapse = "/")
+
+# Sourcing functions
+
+source(paste0(container,"/cbp6_functions.R"))
+source(paste0(container,"/function_holder.R"))
+
+# Should new or original data be used?
+new.or.original <- "new"
+
+# CARRYOVER IF MASTER IS BEING RUN ----------------------------------------
+if (exists("container.master") == TRUE) {
+  container <- container.master
+  riv.seg <- riv.seg.master
+  new.or.original <- new.or.original.master
+}
+
+# LOADING DATA ------------------------------------------------------------
+
+data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
+data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
+data2 <- data2[1:6210,]
+
+
+data1 <- water_year_trim(data1)
+data2 <- water_year_trim(data2)
+```
+
+---
+title: "Appendix C.13: River Segment `r paste(riv.seg,': ',mod.scenario1," vs. ", mod.scenario2)`"
+header-includes:
+  - \usepackage{titling}
+  - \pretitle{\begin{flushleft}}
+  - \posttitle{\end{flushleft}}
+output:
+  pdf_document
+
+---
+
+```{r,  include=FALSE}
+# Creating Data Frame with calculated metrics 
+metrics1 <- metrics_calc_all(data1)
+metrics2 <- metrics_calc_all(data2)
+
+percent_difference <- metrics_compare(metrics1, metrics2)
+```
+
+
+
+```{r, include=FALSE}
+
+# initialize variables ----------------------------------------------------
+# This section will create a hydrograph that will zoom in on 3 month segments where error is high
+# It does so for the top three highest error periods
+
+#all_data puts model gage flows and corresponding dates in one data frame
+all_data <- data.frame(data1$date, data1$flow, data2$flow) 
+all_data$counter <- 1:length(all_data$data1.date) # counter fixes issues with row numbers later on in script
+colnames(all_data) <- c('Date', 'Scenario 1 Flow', 'Scenario 2 Flow', 'Counter')
+
+# find the first date for which data is collected, (in date format)
+# and a date that is roughly one year and two months past the first date
+YearStart <- as.character(as.Date(all_data$Date[1]))     
+fixer <- which(all_data$Date == paste0(year(YearStart)+1,"-11-30"))
+YearEnd <- as.character(as.Date(all_data$Date[fixer]))
+
+# YearStart_Row and YearEnd_Row are the rows corresponding the the YearStart and YearEnd dates
+YearStart_Row <- as.numeric(which(all_data$Date==YearStart)) 
+YearEnd_Row <- as.numeric(which(all_data$Date==YearEnd))
+
+# initalize dataframes and counters, assign names for dataframe columns
+#AvgMonthlyError: used within nested for loop to create a 1x12 matrix that holds 1 year of 3 month error segments
+#Timespan_Error: used in large loop to store values from AvgMonthlyError; holds entire timespan of 3 month error segments
+AvgMonthlyDifference <- data.frame(matrix(nrow=1,ncol=1));  
+names(AvgMonthlyDifference)<-'Difference' 
+Timespan_Difference <- data.frame(matrix(nrow=1, ncol=1)); 
+names(Timespan_Difference)<-'Difference'
+i <- 1; # used for first for loop to advance a year
+x <- 1 # x and y used to advance dataframes
+y <- 12
+
+# start loops used for yearly and monthly data  -------------------------------------------------------------
+
+loop <- as.numeric(round(length(data1$date)/365, digits = 0))-1
+for (i in 1:loop){                                # run loop for an entire data series
+  year <- all_data[YearStart_Row:YearEnd_Row,] # specify year: 10-01-year1 to 11-30-year2
+  m <- 1                                        # counter for nested loop
+  
+  MonthStart <- YearStart  # first date for 3 month timespan                      
+  doi <- as.Date(MonthStart) 
+  doi <- doi + seq(0,365,31) 
+  # doi= date of interest. dummy variable just to create the function next.month
+  next.month <- function(doi) as.Date(as.yearmon(doi) + 1/12) +  as.numeric(as.Date(doi)-(as.Date(as.yearmon(doi))))
+  
+  #(re)initalize variables for the nested loop
+  MonthEnd <-data.frame(next.month(doi));  # last date in 3 month timespan - used function to determine 3rd month
+  MonthEnd <- MonthEnd[3,1]-2 # specifies end of month 3 as last date
+  # (technically specifies 01 of month 4)
+  
+  # row numbers corresponding with start and end dates, as a number. See note below 
+  MonthStart_Row <- as.numeric(which(as.Date(all_data$Date)==as.Date(MonthStart)))
+  MonthEnd_Row <- as.numeric(which(as.Date(all_data$Date)==as.Date(MonthEnd)))
+  
+  # Note: Counter column is used here to specify which row starts MonthStart and MonthEnd_Row.
+  # When rows are pulled from year row numbers are also pulled, 
+  # so a counter must be used for proper row numbers.
+  Start_new <- which(year$Counter==MonthStart_Row)
+  End_new <- which(year$Counter==MonthEnd_Row)
+  
+  # begin nested loop
+  for (m in 1:12){
+    month_time <- year[Start_new:End_new ,]         #extract data for 3 month timespan within year of interest
+    avgmonth_scenario1 <- mean(month_time$`Scenario 1 Flow`)   # find average of gage flow for 3 months
+    avgmonth_scenario2 <- mean(month_time$`Scenario 2 Flow`) # find average of model flow for 3 months
+    AvgMonthlyDifference[m,1] <- (avgmonth_scenario1 - avgmonth_scenario2)/ avgmonth_scenario1 * 100  # percent error between gage and model
+    
+    MonthEnd<-as.Date(MonthEnd)
+    MonthEnd<-MonthEnd+1
+    MonthEndyear <- year(MonthEnd)   # Year associated with last month of extracted data 
+    MonthEndmonth <- month(MonthEnd) # Month associated with last month of extracted data 
+    
+    # the next three lines are for the error calculations -- stop on 1st of month 4 (31 of month 3)
+    # Note: this DOES include the 1st of the next month in error calculation
+    # Put a control on what date the script advances by - if date is not 1st of month, reset it
+    DateCheck <- as.Date(paste0(MonthEndyear,'-',MonthEndmonth,'-01'))
+    if (MonthEnd != DateCheck)
+      MonthEnd <- as.Date(paste0(MonthEndyear,'-', MonthEndmonth, '-01'))
+    
+    MonthEnd <- MonthEnd-1
+    stopdate <- as.Date(MonthEnd)
+    AvgMonthlyDifference[m,2] <- stopdate
+    
+    # Advance to next month or count
+    MonthStart <- next.month(MonthStart)
+    MonthEnd <- MonthEnd+1
+    MonthEnd <- next.month(MonthEnd)
+    MonthEnd <- MonthEnd-1
+    StartMonth_Row <- which(as.Date(all_data$Date)==as.Date(MonthStart));     
+    StartMonth_Row <- as.numeric(StartMonth_Row)
+    EndMonth_Row <- which(as.Date(all_data$Date)==as.Date(MonthEnd));     
+    EndMonth_Row <- as.numeric(EndMonth_Row)
+    Start_new <- which(year$Counter==StartMonth_Row)
+    End_new <- which(year$Counter==EndMonth_Row)
+    m <- m + 1
+  }
+  
+  Timespan_Difference[x:y, 1] <- AvgMonthlyDifference[,1] # save the error entries from AvgMonthlyError
+  Timespan_Difference[x:y, 2] <- AvgMonthlyDifference[,2] # save the dates 
+  
+  # advance Timespan_Error for next run
+  x <- x + 12  
+  y <- y + 12
+  
+  YearStart <- as.Date(YearStart) + 365  # Advance 1 year
+  YearEnd <- as.Date(YearEnd) + 365     # Advance 1 year & 2 months (from 10-01 to 11-30)
+  
+  # Put a control on what date the script advances by - if end date is not 11-30, reset it
+  # - if begin date is not -10-01, reset it
+  YearBeginyear <- year(YearStart)  # pull year of beginning year
+  YearBeginCheck <- as.Date(paste0(YearBeginyear,'-10-01'))
+  if (YearBeginyear != YearBeginCheck)     
+    YearStart <- as.Date(paste0(YearBeginyear,'-10-01'))
+  
+  YearEndyear <- year(YearEnd)  # pull year of ending year
+  YearEndCheck <- as.Date(paste0(YearEndyear,'-11-30'))
+  if (YearEnd != YearEndCheck)     
+    YearEnd <- as.Date(paste0(YearEndyear,'-11-30'))
+  YearStart_Row <- which(as.Date(all_data$Date)== as.Date(YearStart))
+  YearEnd_Row <- which(as.Date(all_data$Date) == as.Date(YearEnd))
+  
+  i <- i + 1
+}
+
+# This section of code will plot timeframes with high error.
+# count the number of 3 month periods over 20% error, plot the highest 3 periods.
+
+Timespan_Difference$Logic <- Timespan_Difference$Difference>=20 | Timespan_Difference$Difference<= -20
+HighDifference <- Timespan_Difference[Timespan_Difference$Logic=='TRUE',]
+HighDifference <- HighDifference[order(abs(HighDifference$Difference), decreasing = TRUE),]
+names(HighDifference)<-c('Difference', 'Date', 'Logic')
+
+# pull data for each of these 3 month segments.
+HighestDifferences <- HighDifference[1:3,]
+HighestDifferences$Date <- as.Date(HighestDifferences$Date)
+
+# initalize variables for loop
+differenceyear <- data.frame(matrix(nrow=1,ncol=6))
+differencedates <- data.frame(matrix(nrow=1, ncol=2))
+names(differenceyear)<- c('endyear', 'endmonth', 'enddate', 'startyear', 'startmonth', 'startdate')
+names(differencedates)<- c('start date row', 'end date row')
+storeplotdata1<- data.frame(matrix(nrow=1, ncol=4))
+names(storeplotdata1)<- c('Date', 'Scenario 1 Flow', 'Scenario 2 Flow', 'Counter')
+storeplotdata2<- data.frame(matrix(nrow=1, ncol=4))
+names(storeplotdata2)<- c('Date', 'Scenario 1 Flow', 'Scenario 2 Flow', 'Counter')
+storeplotdata3<- data.frame(matrix(nrow=1, ncol=4))
+names(storeplotdata3)<- c('Date', 'Scenario 1 Flow', 'Scenario 2 Flow', 'Counter')
+
+q <- 1
+
+for (q in 1:length(HighestDifferences)){
+  differenceyear[q,1] <- year(HighestDifferences$Date[q])  # ending year
+  differenceyear[q,2]<- month(HighestDifferences$Date[q]) + 1 # ending month
+  differenceyear[q,4]<- year(HighestDifferences$Date[q]) #startyear
+  differenceyear[q,5]<- month(HighestDifferences$Date[q])-2 #startmonth
+  
+  if (differenceyear[q,2] > 12) { # if end month is jan, must move year up
+    differenceyear[q,4] <- differenceyear[q,1]
+    differenceyear[q,1]<- differenceyear[q,1] + 1 # year for jan moves
+    differenceyear[q,2] <- 1
+  }else if (differenceyear[q,5] == -1) {
+    differenceyear[q,4] <- differenceyear[q,4] - 1 # if january, go back a year and start november
+    differenceyear[q,5] <- 11
+  }else if (differenceyear[q,5] == 0) {
+    differenceyear[q,4] <- differenceyear[q,4] - 1 # if january, go back a year and start november
+    differenceyear[q,5] <- 12
+  } else{
+    differenceyear[q,1]<- differenceyear[q,1]  #endyear
+    differenceyear[q,2]<- differenceyear[q,2]  #endmonth
+    differenceyear[q,4]<- differenceyear[q,4]  #startyear
+    differenceyear[q,5]<- differenceyear[q,5]  #startmonth
+  }
+  differenceyear[q,3]<- paste0(differenceyear[q,1], '-',differenceyear[q,2], '-01') #enddate
+  differenceyear$enddate <- as.Date(differenceyear$enddate)
+  differenceyear[q,6]<- as.Date(paste0(differenceyear[q,4], '-', differenceyear[q,5], '-01')) #startdate
+  differenceyear$startdate <- as.Date(differenceyear$startdate)
+  
+  differencedates[q,1]<- as.character(differenceyear$startdate[q])
+  differencedates[q,2]<- as.character(differenceyear$enddate[q]-1)
+  differencedates[q,3]<- which(as.Date(all_data$Date)==as.Date(differencedates$`start date row`[q]))
+  differencedates[q,4]<- which(as.Date(all_data$Date)==as.Date(differencedates$`end date row`[q]))
+  
+  plot1<-all_data[differencedates$V3[q]:differencedates$V4[q],]
+if (q==1){
+  storeplotdata1<- plot1
+}else if(q==2){
+  storeplotdata2<- plot1
+}else if(q==3){
+  storeplotdata3<- plot1
+}
+  q <- q+1
+}
+
+# # create and export 3 plots: \plot for info of row q
+
+difference1 <- signif(HighestDifferences$Difference[1], digits=3)     #Create error variable to display on graph
+difference2 <- signif(HighestDifferences$Difference[2], digits=3)
+difference3 <- signif(HighestDifferences$Difference[3], digits=3)
+
+# CREATES OUTPUT MATRIX -------------------------------------------------------
+avg_scenario1 <- mean(data1$flow)
+avg_scenario2 <- mean(data2$flow)
+  
+# also want to list the number of timespans that were over 20% error.
+over20 <- signif(nrow(HighDifference)/nrow(Timespan_Difference)*100, digits=3)
+OUTPUT_MATRIX <- matrix(c(avg_scenario1, avg_scenario2, over20), nrow=1, ncol=3)
+rownames(OUTPUT_MATRIX) = c("Flow")
+colnames(OUTPUT_MATRIX) = c('Scenario 1', 'Scenario 2', 'Difference>20 (%)')
+overall_difference <- signif((OUTPUT_MATRIX[1,1]-OUTPUT_MATRIX[1,2])/OUTPUT_MATRIX[1,1]*100, digits=3)
+OUTPUT_MATRIX <- matrix(c(over20, percent_difference[3,]), nrow=1, ncol=2)
+rownames(OUTPUT_MATRIX) = c("Percent")
+colnames(OUTPUT_MATRIX) = c('Difference > 20%', 'Overall Difference')
+
+OUTPUT_MATRIX <- signif(as.numeric(OUTPUT_MATRIX), digits = 2)
+OUTPUT_MATRIXsaver <- OUTPUT_MATRIX
+OUTPUT_MATRIX <- kable(format(OUTPUT_MATRIX, digits = 3))
+# plot for highest error 
+# Max/min for y axis scaling
+max <- max(c(max(storeplotdata1$`Scenario 1 Flow`), max(storeplotdata1$`Scenario 2 Flow`)));
+min <- min(c(max(storeplotdata1$`Scenario 1 Flow`), max(storeplotdata1$`Scenario 2 Flow`)));
+xpos1 <- min(storeplotdata1$Date)+20
+xpos2 <- max(storeplotdata1$Date)-20
+
+# Creating and exporting plot
+df <- data.frame(as.Date(storeplotdata1$Date), storeplotdata1$`Scenario 1 Flow`, storeplotdata1$`Scenario 2 Flow`); 
+colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
+options(scipen=5, width = 1400, height = 950)
+difference1plot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=Scenario1, color=name_Scenario1), size=1) +
+  geom_line(aes(y=Scenario2, color=name_Scenario2), size=1) +
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=14),
+        axis.text=element_text(size=14, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  annotate("text", x=xpos1, y=max, label= paste0('Difference:', '',difference1, '', '%'), size=5)+
+  annotate("text", x=xpos2, y=max, label= paste0('Date Range: ', '', 
+             min(storeplotdata1$Date),': ', max(storeplotdata1$Date)), size=5)+
+  labs(y = "Flow (cfs)")
+
+# plot for second highest error 
+# Max/min for y axis scaling
+max <- max(c(max(storeplotdata2$`Scenario 1 Flow`), max(storeplotdata2$`Scenario 2 Flow`)));
+min <- min(c(max(storeplotdata2$`Scenario 1 Flow`), max(storeplotdata2$`Scenario 2 Flow`)));
+xpos1 <- min(storeplotdata2$Date)+20
+xpos2 <- max(storeplotdata2$Date)-20
+
+# Creating and exporting plot
+df <- data.frame(as.Date(storeplotdata2$Date), storeplotdata2$`Scenario 1 Flow`, storeplotdata2$`Scenario 2 Flow`); 
+colnames(df) <- c('Date', 'Scenario 1', 'Scenario 2')
+options(scipen=5, width = 1400, height = 950)
+difference2plot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=Scenario_1, color=name_Scenario1), size=1) +
+  geom_line(aes(y=Scenario_2, color=name_Scenario2), size=1)+
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=14),
+        axis.text=element_text(size=14, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  annotate("text", x=xpos1, y=max, label= paste0('Difference:', '',difference2, '', '%'), size=5)+
+  annotate("text", x=xpos2, y=max, label= paste0('Date Range: ', '', 
+                                                 min(storeplotdata2$Date),': ', max(storeplotdata2$Date)), size=5)+
+  labs(y = "Flow (cfs)")
+
+
+
+# plot for third highest error 
+# Max/min for y axis scaling
+max <- max(c(max(storeplotdata3$`Scenario 1 Flow`), max(storeplotdata3$`Scenario 2 Flow`)));
+min <- min(c(max(storeplotdata3$`Scenario 1 Flow`), max(storeplotdata3$`Scenario 2 Flow`)));
+xpos1 <- min(storeplotdata3$Date)+20
+xpos2 <- max(storeplotdata3$Date)-20
+
+# Creating and exporting plot
+df <- data.frame(as.Date(storeplotdata3$Date), storeplotdata3$`Scenario 1 Flow`, storeplotdata3$`Scenario 2 Flow`); 
+colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
+options(scipen=5, width = 1400, height = 950)
+difference3plot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=Scenari, color=name_Scenario1), size=1) +
+  geom_line(aes(y=Scenario_2, color=name_Scenario2), size=1)+
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=14),
+        axis.text=element_text(size=14, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  annotate("text", x=xpos1, y=max, label= paste0('Difference:', '',difference3, '', '%'), size=5)+
+  annotate("text", x=xpos2, y=max, label= paste0('Date Range: ', '', 
+                                                 min(storeplotdata3$Date),': ', max(storeplotdata3$Date)), size=5)+
+  labs(y = "Flow (cfs)")
+```
+
+
+
+
+```{r,  include=FALSE}
+# OUTPUT TABLES -----
+# Table 1: Monthly Average Flow
+Table1 <- matrix(c(percent_difference[1,1], percent_difference[1,14], percent_difference[1,15], percent_difference[1,16], percent_difference[1,17], percent_difference[1,18], percent_difference[1,19], percent_difference[1,20], percent_difference[1,21], percent_difference[1,22], percent_difference[1,23], percent_difference[1,24], percent_difference[1,25], percent_difference[2,1], percent_difference[2,14], percent_difference[2,15], percent_difference[2,16], percent_difference[2,17], percent_difference[2,18], percent_difference[2,19], percent_difference[2,20], percent_difference[2,21], percent_difference[2,22], percent_difference[2,23], percent_difference[2,24], percent_difference[2,25], percent_difference[3,1], percent_difference[3,14], percent_difference[3,15], percent_difference[3,16], percent_difference[3,17], percent_difference[3,18], percent_difference[3,19], percent_difference[3,20], percent_difference[3,21], percent_difference[3,22], percent_difference[3,23], percent_difference[3,24], percent_difference[3,25]),
+                 nrow = 13, ncol = 3);
+colnames(Table1) = c("Scenario 1", "Scenario 2", "Pct. Difference");
+rownames(Table1) = c("Overall Mean Flow", 
+                     "Jan. Mean Flow", "Feb. Mean Flow",
+                     "Mar. Mean Flow", "Apr. Mean Flow",
+                     "May Mean Flow", "Jun. Mean Flow",
+                     "Jul. Mean Flow", "Aug. Mean Flow",
+                     "Sep. Mean Flow", "Oct. Mean Flow",
+                     "Nov. Mean Flow", "Dec. Mean Flow");
+Table1 <- round(Table1, digits = 2)
+Table1 <- kable(format(Table1, digits = 3, drop0trailing = TRUE))
+Table2 <- matrix(c(percent_difference[1,2], percent_difference[1,3],
+percent_difference[1,4], percent_difference[1,5], percent_difference[1,6],
+percent_difference[1,7], percent_difference[1,8], percent_difference[1,9],
+percent_difference[1,10], percent_difference[1,11], percent_difference[1,12],
+percent_difference[1,13], percent_difference[2,2],
+percent_difference[2,3], percent_difference[2,4], percent_difference[2,5],
+percent_difference[2,6], percent_difference[2,7], percent_difference[2,8],
+percent_difference[2,9], percent_difference[2,10], percent_difference[2,11],
+percent_difference[2,12], percent_difference[2,13], 
+percent_difference[3,2], percent_difference[3,3], percent_difference[3,4],
+percent_difference[3,5], percent_difference[3,6], percent_difference[3,7],
+percent_difference[3,8], percent_difference[3,9], percent_difference[3,10],
+percent_difference[3,11], percent_difference[3,12], percent_difference[3,13]),
+                 nrow = 12, ncol = 3);
+colnames(Table2) = c("Scenario 1", "Scenario 2", "Pct. Difference");
+rownames(Table2) = c("Jan. Low Flow", "Feb. Low Flow",
+                     "Mar. Low Flow", "Apr. Low Flow",
+                     "May Low Flow", "Jun. Low Flow",
+                     "Jul. Low Flow", "Aug. Low Flow",
+                     "Sep. Low Flow", "Oct. Low Flow",
+                     "Nov. Low Flow", "Dec. Low Flow");
+Table2 <- round(Table2, digits = 2)
+Table2 <- kable(format(Table2, digits = 3, drop0trailing = TRUE))
+# Table 3: Monthly High Flow
+Table3 <- matrix(c(percent_difference[1,26], percent_difference[1,27], percent_difference[1,28],percent_difference[1,29], percent_difference[1,30], percent_difference[1,31],percent_difference[1,32], percent_difference[1,33], percent_difference[1,34],percent_difference[1,35], percent_difference[1,36], percent_difference[1,37],percent_difference[2,26],percent_difference[2,27], percent_difference[2,28], percent_difference[2,29],percent_difference[2,30], percent_difference[2,31], percent_difference[2,32],percent_difference[2,33], percent_difference[2,34], percent_difference[2,35],percent_difference[2,36], percent_difference[2,37],percent_difference[3,26], percent_difference[3,27], percent_difference[3,28],percent_difference[3,29], percent_difference[3,30], percent_difference[3,31],percent_difference[3,32], percent_difference[3,33], percent_difference[3,34],percent_difference[3,35], percent_difference[3,36], percent_difference[3,37]),
+                 nrow = 12, ncol = 3);
+colnames(Table3) = c("Scenario 1", "Scenario 2", "Pct. Difference");
+rownames(Table3) = c("Jan. High Flow", "Feb. High Flow",
+                     "Mar. High Flow", "Apr. High Flow",
+                     "May High Flow", "Jun. High Flow",
+                     "Jul. High Flow", "Aug. High Flow",
+                     "Sep. High Flow", "Oct. High Flow",
+                     "Nov. High Flow", "Dec. High Flow");
+Table3 <- round(Table3, digits = 2)
+Table3 <- kable(format(Table3, digits = 3, drop0trailing = TRUE))
+Table4 <- matrix(c(percent_difference[1,38], percent_difference[1,43],
+                   percent_difference[1,39], percent_difference[1,44],
+                   percent_difference[1,40], percent_difference[1,45],
+                   percent_difference[1,41], percent_difference[1,46],
+                   percent_difference[1,42], percent_difference[1,47],
+                   percent_difference[1,59], percent_difference[1,60],
+                   percent_difference[1,58], percent_difference[1,66], 
+                   percent_difference[2,38], percent_difference[2,43],
+                   percent_difference[2,39], percent_difference[2,44],
+                   percent_difference[2,40], percent_difference[2,45],
+                   percent_difference[2,41], percent_difference[2,46],
+                   percent_difference[2,42], percent_difference[2,47],
+                   percent_difference[2,59], percent_difference[2,60],
+                   percent_difference[2,58], percent_difference[2,66],
+                   percent_difference[3,38], percent_difference[3,43],
+                   percent_difference[3,39], percent_difference[3,44],
+                   percent_difference[3,40], percent_difference[3,45],
+                   percent_difference[3,41], percent_difference[3,46],
+                   percent_difference[3,42], percent_difference[3,47],
+                   percent_difference[3,59], percent_difference[3,60],
+                   percent_difference[3,58], percent_difference[3,66]), 
+                 nrow = 14, ncol = 3);
+colnames(Table4) = c("Scenario 1", "Scenario 2", "Pct. Difference");
+rownames(Table4) = c("Min. 1 Day Min", "Med. 1 Day Min", 
+                     "Min. 3 Day Min", "Med. 3 Day Min",
+                     "Min. 7 Day Min", "Med. 7 Day Min",
+                     "Min. 30 Day Min", "Med. 30 Day Min",
+                     "Min. 90 Day Min", "Med. 90 Day Min", 
+                     "7Q10", "Year of 90-Day Min. Flow",
+                     "Drought Year Mean", "Mean Baseflow");
+Table4 <- round(Table4, digits = 2)
+Table4 <- kable(format(Table4, digits = 3, drop0trailing = TRUE))
+# Table 5: Period High Flows
+Table5 <- matrix(c(percent_difference[1,48], percent_difference[1,53],
+                   percent_difference[1,49], percent_difference[1,54],
+                   percent_difference[1,50], percent_difference[1,55],
+                   percent_difference[1,51], percent_difference[1,56],
+                   percent_difference[1,52], percent_difference[1,57],
+                   percent_difference[2,48], percent_difference[2,53],
+                   percent_difference[2,49], percent_difference[2,54],
+                   percent_difference[2,50], percent_difference[2,55],
+                   percent_difference[2,51], percent_difference[2,56],
+                   percent_difference[2,52], percent_difference[2,57],
+                   percent_difference[3,48], percent_difference[3,53],
+                   percent_difference[3,49], percent_difference[3,54],
+                   percent_difference[3,50], percent_difference[3,55],
+                   percent_difference[3,51], percent_difference[3,56],
+                   percent_difference[3,52], percent_difference[3,57]), 
+                 nrow = 10, ncol = 3);
+colnames(Table5) = c("USGS Gage", "Model", "Pct. Error");
+rownames(Table5) = c("Max. 1 Day Max", "Med. 1 Day Max", 
+                     "Max. 3 Day Max", "Med. 3 Day Max",
+                     "Max. 7 Day Max", "Med. 7 Day Max",
+                     "Max. 30 Day Max", "Med. 30 Day Max",
+                     "Max. 90 Day Max", "Med. 90 Day Max");
+Table5 <- round(Table5, digits = 2)
+Table5 <- kable(format(Table5, digits = 3, drop0trailing = TRUE))
+# Table 6: Non-Exceedance Flows
+Table6 <- matrix(c(percent_difference[1,62], percent_difference[1,63], percent_difference[1,64],percent_difference[1,65], percent_difference[1,66], percent_difference[1,61],percent_difference[2,62], percent_difference[2,63], percent_difference[2,64],percent_difference[2,65], percent_difference[2,66], percent_difference[2,61],percent_difference[3,62], percent_difference[3,63], percent_difference[3,64],percent_difference[3,65], percent_difference[3,66], percent_difference[3,61]), 
+                 nrow = 6, ncol = 3);
+colnames(Table6) = c("Scenario 1", "Scenario 2", "Pct. Difference");
+rownames(Table6) = c("1% Non-Exceedance", "5% Non-Exceedance",
+                     "50% Non-Exceedance", "95% Non-Exceedance",
+                     "99% Non-Exceedance", "Sept. 10% Non-Exceedance");
+Table6 <- round(Table6, digits = 2)
+Table6 <- kable(format(Table6, digits = 3, drop0trailing = TRUE))
+
+# Creating names for plot legends
+name_scenario1 <- paste('Scenario 1', mod.scenario1);
+name_scenario2 <- paste('Scenario 2', mod.scenario2);
+
+# CREATE FUNCTIONS FOR PLOTTING  ------------------------------------------
+base_breaks <- function(n = 10){
+  function(x) {
+    axisTicks(log10(range(x, na.rm = TRUE)), log = TRUE, n = n)
+  }
+}
+scaleFUN <- function(x) sprintf("%.0f", x)
+```
+
+
+
+```{r, results = 'asis', echo=FALSE, warning=FALSE, message=FALSE}
+description.cont <- paste0(" The average daily discharge error between the model and gage data for the 20 year timespan was ", OUTPUT_MATRIXsaver[1,2] ,"%, with ", OUTPUT_MATRIXsaver[1,1], "% of its rolling three month time spans above 20% error.")
+cat(description)
+cat(description.cont)
+```
+
+\pagebreak
+
+## Table 1: Monthly Low Flows
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+Table2
+```
+
+
+## Table 2: Monthly Average Flows
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+Table1
+```
+
+
+\pagebreak
+
+## Table 3: Monthly High Flows
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+Table3
+```
+
+## Table 4: Period Low Flows
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+Table4
+```
+
+## Table 5: Period High Flows
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+Table5
+```
+
+## Table 6: Non-Exceedance Flows
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+Table6
+```
+
+## Fig. 1: Hydrograph
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Basic hydrograph -----
+# Max/min for y axis scaling
+max <- max(c(max(all_data$`Scenario 1 Flow`), max(all_data$`Scenario 2 Flow`)));
+min <- min(c(min(all_data$`Scenario 1 Flow`), min(all_data$`Scenario 2 Flow`)));
+if (max > 10000){
+  max <- 100000
+}else if (max > 1000){
+  max <- 10000
+}else if (max > 100){
+  max <- 1000
+}else if (max > 10){
+  max <- 100
+}
+if (min>100){
+  min<-100
+}else if (min>10){ 
+  min<-10
+}else 
+  min<-1
+if (min==100){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(100, 1000, 10000, 100000), 
+                                    limits=c(min,max))
+}else if (min==10){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else if (min==1){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(1, 10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
+                                    labels=scaleFUN, limits=c(min,max))
+df <- data.frame(as.Date(all_data$Date), all_data$`Scenario 1 Flow`, all_data$`Scenario 2 Flow`); 
+colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
+options(scipen=5, width = 1400, height = 950)
+myplot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=Scenario1, color=name_scenario1), size=0.5) +
+  geom_line(aes(y=Scenario2, color=name_scenario2), size=0.5)+
+  fixtheyscale+
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=12),
+        axis.text=element_text(size=12, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  labs(y = "Flow (cfs)")
+myplot
+```
+
+# Fig. 2: Zoomed Hydrograph
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Zoomed hydrograph in year of lowest 90-year flow -----
+# Running gage calculations
+f3_Scenario1 <- zoo(all_data$'Scenario 1 Flow', order.by = all_data$Date)
+g2_Scenario1 <- group2(f3_Scenario1, year = 'water')
+# Running model calculations
+f3_Scenario2 <- zoo(all_data$'Scenario 2 Flow', order.by = all_data$Date)
+g2_Scenario2 <- group2(f3_Scenario2, year = 'water')
+
+yearly_scenario1_90DayMin <- g2_Scenario1[,c(1,10)];
+yearly_scenario2_90DayMin <- g2_Scenario2[,c(1,10)];
+low.year <- subset(yearly_scenario1_90DayMin, yearly_scenario1_90DayMin$`90 Day Min`==min(yearly_scenario1_90DayMin$`90 Day Min`));
+low.year <- low.year$year;
+low.year <- subset(all_data, all_data$year==low.year);
+
+# Scaling using max/min
+max <- max(c(max(low.year$'Scenario 1 Flow'), max(low.year$'Scenario 2 Flow')));
+min <- min(c(min(low.year$'Scenario 1 Flow'), min(low.year$'Scenario 2 Flow')));
+if (max > 10000){
+  max <- 100000
+}else if (max > 1000){
+  max <- 10000
+}else if (max > 100){
+  max <- 1000
+}else if (max > 10){
+  max <- 100
+}
+if (min>100){
+  min<-100
+}else if (min>10){ 
+  min<-10
+}else 
+  min<-1
+if (min==100){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(100, 1000, 10000, 100000), 
+                                    limits=c(min,max))
+}else if (min==10){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else if (min==1){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(1, 10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
+                                    labels=scaleFUN, limits=c(min,max))
+df <- data.frame(as.Date(low.year$Date), low.year$'Scenario 1 Flow', low.year$'Scenario 2 Flow'); 
+colnames(df) <- c('Date', 'Scenario 1', 'Scenario 2')
+options(scipen=5, width = 1400, height = 950)
+myplot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=USGS, color=name_USGS), size=0.7) +
+  geom_line(aes(y=Model, color=name_model), size=0.7)+
+  fixtheyscale+ 
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=12),
+        axis.text=element_text(size=12, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  labs(y = "Flow (cfs)")
+myplot
+```
+
+# Fig. 3: Flow Exceedance
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Flow exceedance plot -----
+# Determining max flow value for exceedance plot scale
+max <- max(c(max(dec_flows_model), max(dec_flows_USGS)));
+min <- min(c(min(dec_flows_model), min(dec_flows_USGS)));
+
+if (max > 10000){
+  max <- 100000
+}else if (max > 1000){
+  max <- 10000
+}else if (max > 100){
+  max <- 1000
+}else if (max > 10){
+  max <- 100
+}
+if (min>100){
+  min<-100
+}else if (min>10){ 
+  min<-10
+}else 
+  min<-1
+if (min==100){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(100, 1000, 10000, 100000), 
+                                    limits=c(min,max))
+}else if (min==10){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else if (min==1){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(1, 10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
+                                    labels=scaleFUN, limits=c(min,max))
+df <- data.frame(prob_exceedance, dec_flows_model, dec_flows_USGS); 
+colnames(df) <- c('Date', 'Model', 'USGS')
+options(scipen=5, width = 1400, height = 950)
+myplot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=USGS, color=name_USGS), size=0.8) +
+  geom_line(aes(y=Model, color=name_model), size=0.8)+
+  fixtheyscale+ 
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=12),
+        axis.text=element_text(size=12, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  labs(x= "Probability of Exceedance (%)", y = "Flow (cfs)")
+myplot
+```
+
+# Fig. 4: Baseflow
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Baseflow Indiviudal Graph -----
+# Determining max flow value for plot scale
+max <- max(c(max(USGSriver$baseflow), max(modelriver$baseflow), max(USGSriver$flow), max(modelriver$flow)));
+min <- min(c(min(USGSriver$baseflow), min(modelriver$baseflow), min(USGSriver$flow), min(modelriver$flow)));
+
+if (max > 10000){
+  max <- 100000
+}else if (max > 1000){
+  max <- 10000
+}else if (max > 100){
+  max <- 1000
+}else if (max > 10){
+  max <- 100
+}
+if (min>100){
+  min<-100
+}else if (min>10){ 
+  min<-10
+}else 
+  min<-1
+if (min==100){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(100, 1000, 10000, 100000), 
+                                    limits=c(min,max))
+}else if (min==10){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else if (min==1){
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), 
+                                    breaks = c(1, 10, 100, 1000, 10000), 
+                                    limits=c(min,max))
+}else
+  fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
+                                    labels=scaleFUN, limits=c(min,max))
+df <- data.frame(as.Date(modelriver$date), modelriver$baseflow, USGSriver$baseflow, modelriver$flow, USGSriver$flow); 
+colnames(df) <- c('Date', 'ModelBaseflow', 'USGSBaseflow', , 'USGSFlow')
+options(scipen=5, width = 1400, height = 950)
+myplot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=USGSBaseflow, color=name_USGS), size=0.5) +
+  geom_line(aes(y=ModelBaseflow, color=name_model), size=0.5)+
+  fixtheyscale+ 
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=12),
+        axis.text=element_text(size=12, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  labs(y = "Flow (cfs)")
+myplot
+```
+
+# Fig. 5: Combined Baseflow
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+par(mfrow = c(1,1));
+options(scipen=5, width = 1400, height = 950)
+myplot <- ggplot(df, aes(x=Date)) + 
+  geom_line(aes(y=USGSFlow, color=paste("Gage Flow")), size=1)+
+  geom_line(aes(y=ModelFlow, color=paste("Model Flow")), size=0.5)+ 
+  geom_line(aes(y=USGSBaseflow, color=paste("Gage Baseflow")), size=0.5) +
+  geom_line(aes(y=ModelBaseflow, color=paste("Model Baseflow")), size=1)+
+  fixtheyscale+ 
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=12),
+        axis.text=element_text(size=12, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("black","red","grey", "light pink"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  labs(y = "Flow (cfs)")
+myplot
+```
+
+
+
+# Fig. 6: Largest Error Segment
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+error1plot
+```
+
+# Fig. 7: Second Largest Error Segment
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+error2plot
+```
+
+# Fig. 8: Third Largest Error Segment
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+error3plot
+```
+
+# Fig. 9: Residuals Plot
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Setup for Residuals
+data <- combined.flows[complete.cases(combined.flows),]
+resid <- (data$model.flow - data$gage.flow)
+resid <- data.frame(data$date, resid)
+
+# Residuals plot for hydrograph
+
+zeroline <- rep_len(0, length(data$date)) 
+quantresid <- data.frame(signif(quantile(resid$resid), digits=3))
+min <- min(resid$resid)
+max <- max(resid$resid)
+names(quantresid) <- c('Percentiles')
+
+df <- data.frame(as.Date(resid$data.date), resid$resid, zeroline); 
+colnames(df) <- c('Date', 'Residual', 'Zeroline')
+options(scipen=5, width = 1400, height = 950)
+myplot <- ggplot(df, aes(x=Date)) + 
+  geom_point(aes(y=Residual, color=name_USGS), size=1) +
+  geom_line(aes(y=Zeroline, color=name_model), size=0.8)+
+  scale_y_continuous(limits=c(min,max))+ 
+  theme_bw()+ 
+  theme(legend.position="top", 
+        legend.title=element_blank(),
+        legend.box = "horizontal", 
+        legend.background = element_rect(fill="white",
+                                         size=0.5, linetype="solid", 
+                                         colour ="white"),
+        legend.text=element_text(size=12),
+        axis.text=element_text(size=12, colour="black"),
+        axis.title=element_text(size=14, colour="black"),
+        axis.line = element_line(colour = "black", 
+                                 size = 0.5, linetype = "solid"),
+        axis.ticks = element_line(colour="black"),
+        panel.grid.major=element_line(colour = "light grey"), 
+        panel.grid.minor=element_blank())+
+  scale_colour_manual(values=c("dark green","black"))+
+  guides(colour = guide_legend(override.aes = list(size=5)))+
+  labs(y = "Flow Difference(cfs)")
+myplot
+``
