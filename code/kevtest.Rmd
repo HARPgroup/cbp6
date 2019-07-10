@@ -26,15 +26,15 @@ library(stringr)
 library(RCurl)
 
 # INPUTS
-riv.seg <- 'JA5_7480_0001'
+riv.seg <- 'JU3_7490_7400'
 mod.phase1 <- 'p6/p6_gb604/tmp'
 mod.scenario1 <- 'CFBASE30Y20180615'
 mod.phase2 <- 'p6/p6_gb604/tmp'
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y'
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-site_number <- '02041650'
-cbp6_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6";
+site_number <- '02018000'
+cbp6_link <- "C:\\Users\\emma\\Documents\\HARP\\Github\\cbp6";
 site_url <- "http://deq2.bse.vt.edu/d.dh"
 
 # SETUP
@@ -42,8 +42,8 @@ site_url <- "http://deq2.bse.vt.edu/d.dh"
 # Setting active directory 
 # Setting working directory to the source file location
 
-container1 ="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
-container2 = "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
+container1 ="C:\\Users\\emma\\Documents\\HARP\\Github";
+container2 = "C:\\Users\\emma\\Documents\\HARP\\Github\\cbp6\\code";
 
 # Sourcing functions
 source(paste0(container2,"/cbp6_functions.R"))
@@ -68,7 +68,7 @@ data2 <- water_year_trim(data2)
 ```
 
 ---
-title: "Appendix ##: River Segment: `r paste(riv.seg,': ',mod.scenario1," vs. Scenario 2: ", mod.scenario2)`"
+title: "Appendix ##: River Segment: `r paste(riv.seg,': ','Base 2018:',mod.scenario1," vs. Climate Change: ", mod.scenario2)`"
 header-includes:
   - \usepackage{titling}
   - \pretitle{\begin{flushleft}}
