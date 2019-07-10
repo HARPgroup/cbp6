@@ -676,7 +676,7 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
   AllUpstreamSegs <- unique(AllUpstreamSegs)
   num.upstream <- as.numeric(length(AllUpstreamSegs))
   
-  STATES <- read.table(file=paste(cbp6_link, "GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
+  STATES <- read.table(file=paste(cbp6_link,"GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
   
   # first specify bounding box / extent of map: -----------------------------
   extent <- data.frame(x = c(-84, -75), 
@@ -1018,8 +1018,6 @@ fn_iha_DOR_Year <- function(flows){
 
 
 rest_token <- function(base_url, token, rest_uname = FALSE, rest_pw = FALSE) {
-  
-  base_url <- 'http://deq1.bse.vt.edu/d.bet'
   
   #Cross-site Request Forgery Protection (Token required for POST and PUT operations)
   csrf_url <- paste(base_url,"restws/session/token/",sep="/");
