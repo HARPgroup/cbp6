@@ -1,6 +1,6 @@
 ---
 header-includes: \pagenumbering{gobble}
-output:
+output: pdf_document 
 pdf_document: default 
 word_document: default
 html_document: default
@@ -567,12 +567,14 @@ base_breaks <- function(n = 10){
 scaleFUN <- function(x) sprintf("%.0f", x)
 ```
 
-
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+gis_img
+```
 
 ```{r, results = 'asis', echo=FALSE, warning=FALSE, message=FALSE}
-#description.cont <- paste0(" The average daily discharge change between scenario 1 and scenario 2 for the 20 year timespan was ", OUTPUT_MATRIXsaver[1,2] ,"%, with ", OUTPUT_MATRIXsaver[1,1], "% of its rolling three month time spans above 20% difference.")
-#cat(description)
-#cat(description.cont)
+description.cont <- paste0(" The average daily discharge change between scenario 1 and scenario 2 for the 20 year timespan was ", OUTPUT_MATRIXsaver[2] ,"%, with ", OUTPUT_MATRIXsaver[1], "% of its rolling three month time spans above 20% difference.")
+cat(description)
+cat(description.cont)
 ```
 
 \pagebreak
