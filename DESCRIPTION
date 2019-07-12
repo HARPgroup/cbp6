@@ -20,7 +20,16 @@ Imports:
 	PearsonDS,
 	data.table,
 	sp,
-	utils
+	utils,
+	stringr,
+	rapportools,
+	ggmap,
+	ggsn,
+	rlist,
+	rgeos,
+	httr,
+	ggplot2,
+	jsonlite
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.1.1
