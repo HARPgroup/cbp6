@@ -28,14 +28,14 @@ library(stringr)
 library(RCurl)
 
 # INPUTS
-riv.seg <- 'JU3_7490_7400'
+riv.seg <- 'JL7_6800_7070'
 mod.phase1 <- 'p6/p6_gb604/tmp'
 mod.scenario1 <- 'CFBASE30Y20180615'
 mod.phase2 <- 'p6/p6_gb604/tmp'
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y'
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-site_number <- '02018000'
+site_number <- '02037000'
 cbp6_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
 site_url <- "http://deq2.bse.vt.edu/d.dh"
 
@@ -354,9 +354,9 @@ difference1plot <- ggplot(df, aes(x=Date)) +
         panel.grid.minor=element_blank())+
 scale_colour_manual(values=c("black","red"))+
   guides(colour = guide_legend(override.aes = list(size=5)))+
-  annotate("text", x=xpos1, y=max, label= paste0('Difference:', '',difference1, '', '%'), size=3.25)+
-  annotate("text", x=xpos2, y=max, label= paste0('Date Range: ', '', 
-             min(storeplotdata1$Date),': ', max(storeplotdata1$Date)), size=3.25)+
+  annotate("text", x=xpos1, y=1.05*max, label= paste0('Difference:', '',difference1, '', '%'), size=3)+
+  annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
+             min(storeplotdata1$Date),': ', max(storeplotdata1$Date)), size=3)+
   labs(y = "Flow (cfs)")
 
 # plot for second highest difference 
@@ -390,9 +390,9 @@ difference2plot <- ggplot(df, aes(x=Date)) +
         panel.grid.minor=element_blank())+
   scale_colour_manual(values=c("black","red"))+
   guides(colour = guide_legend(override.aes = list(size=5)))+
-  annotate("text", x=xpos1, y=max, label= paste0('Difference:', '',difference2, '', '%'), size=3.2)+
-  annotate("text", x=xpos2, y=max, label= paste0('Date Range: ', '', 
-                                                 min(storeplotdata2$Date),': ', max(storeplotdata2$Date)), size=3.2)+
+  annotate("text", x=xpos1, y=1.05*max, label= paste0('Difference:', '',difference2, '', '%'), size=3)+
+  annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
+                                                 min(storeplotdata2$Date),': ', max(storeplotdata2$Date)), size=3)+
   labs(y = "Flow (cfs)")
 
 
@@ -428,9 +428,9 @@ difference3plot <- ggplot(df, aes(x=Date)) +
         panel.grid.minor=element_blank())+
   scale_colour_manual(values=c("black","red"))+
   guides(colour = guide_legend(override.aes = list(size=5)))+
-  annotate("text", x=xpos1, y=max, label= paste0('Difference:', '',difference3, '', '%'), size=3.15)+
-  annotate("text", x=xpos2, y=max, label= paste0('Date Range: ', '', 
-                                                 min(storeplotdata3$Date),': ', max(storeplotdata3$Date)), size=3.15)+
+  annotate("text", x=xpos1, y=1.05*max, label= paste0('Difference:', '',difference3, '', '%'), size=3)+
+  annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
+                                                 min(storeplotdata3$Date),': ', max(storeplotdata3$Date)), size=3)+
   labs(y = "Flow (cfs)")
 ```
 
@@ -493,21 +493,21 @@ Table4 <- matrix(c(percent_difference[1,38], percent_difference[1,43],
                    percent_difference[1,41], percent_difference[1,46],
                    percent_difference[1,42], percent_difference[1,47],
                    percent_difference[1,59], percent_difference[1,60],
-                   percent_difference[1,58], percent_difference[1,66], 
+                   percent_difference[1,58], percent_difference[1,67], 
                    percent_difference[2,38], percent_difference[2,43],
                    percent_difference[2,39], percent_difference[2,44],
                    percent_difference[2,40], percent_difference[2,45],
                    percent_difference[2,41], percent_difference[2,46],
                    percent_difference[2,42], percent_difference[2,47],
                    percent_difference[2,59], percent_difference[2,60],
-                   percent_difference[2,58], percent_difference[2,66],
+                   percent_difference[2,58], percent_difference[2,67],
                    percent_difference[3,38], percent_difference[3,43],
                    percent_difference[3,39], percent_difference[3,44],
                    percent_difference[3,40], percent_difference[3,45],
                    percent_difference[3,41], percent_difference[3,46],
                    percent_difference[3,42], percent_difference[3,47],
                    percent_difference[3,59], percent_difference[3,60],
-                   percent_difference[3,58], percent_difference[3,66]), 
+                   percent_difference[3,58], percent_difference[3,67]), 
                  nrow = 14, ncol = 3);
 colnames(Table4) = c("Scenario 1", "Scenario 2", "Pct. Difference");
 rownames(Table4) = c("Min. 1 Day Min", "Med. 1 Day Min", 
@@ -929,10 +929,10 @@ myplot
 par(mfrow = c(1,1));
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_line(aes(y=Scenario1Flow, color=paste("Base 2018 Flow")), size=1)+
-  geom_line(aes(y=Scenario2Flow, color=paste("Climate Change Flow")), size=0.5)+ 
-  geom_line(aes(y=Scenario1Baseflow, color=paste("Base 2018 Baseflow")), size=0.5) +
-  geom_line(aes(y=Scenario2Baseflow, color=paste("Climate Change Baseflow")), size=1)+
+  geom_line(aes(y=Scenario1Flow, color=paste("2018 Flow")), size=1)+
+  geom_line(aes(y=Scenario2Flow, color=paste("CC Flow")), size=0.5)+ 
+  geom_line(aes(y=Scenario1Baseflow, color=paste("2018 Baseflow")), size=0.5) +
+  geom_line(aes(y=Scenario2Baseflow, color=paste("CC Baseflow")), size=1)+
   fixtheyscale+ 
   theme_bw()+ 
   theme(legend.position="top", 
@@ -976,7 +976,7 @@ difference3plot
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Setup for Residuals
 data <- all_data[complete.cases(all_data),]
-resid <- (data$`Scenario 1 Flow` - data$`Scenario 2 Flow`)
+resid <- (data$`Scenario 2 Flow` - data$`Scenario 1 Flow`)
 resid <- data.frame(data$Date, resid)
 
 # Residuals plot for hydrograph
@@ -991,8 +991,8 @@ df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline);
 colnames(df) <- c('Date', 'Residual', 'Zeroline')
 options(scipen=5, width = 1400, height = 950)
 myplot <- ggplot(df, aes(x=Date)) + 
-  geom_point(aes(y=Residual, color="Base 2018"), size=1) +
-  geom_line(aes(y=Zeroline, color="Climate Change"), size=0.8)+
+  geom_point(aes(y=Residual, color="Residual (CC - Base)"), size=1) +
+  geom_line(aes(y=Zeroline, color="Zeroline"), size=0.8)+
   scale_y_continuous(limits=c(min,max))+ 
   theme_bw()+ 
   theme(legend.position="top", 
