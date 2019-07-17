@@ -2,11 +2,11 @@ library(dataRetrieval)
 
 model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
   # Downloading and exporting hourly model data
-  model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/river/", mod.scenario, "/stream/", 
+  model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/out/river/", mod.scenario, "/stream/", 
                                   riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
-  RivSegStr1 <- strsplit(riv.seg, "\\+")
-  RivSegStr1 <- RivSegStr1[[1]]
-  num.segs1 <- length(RivSegStr1)
+  riv.segStr1 <- strsplit(riv.seg, "\\+")
+  riv.segStr1 <- riv.segStr1[[1]]
+  num.segs1 <- length(riv.segStr1)
   model_days1 <- length(seq(as.Date(start.date):as.Date(end.date)))
   # Converting hourly to daily data and exporting daily data
   model_hourly <- model_hourly[-1,]
@@ -22,10 +22,10 @@ model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, 
   return(model_daily)
 }
 
-gage_import_data_cfs <- function(siteNo, start.date, end.date) {
+gage_import_data_cfs <- function(site_number, start.date, end.date) {
   #Download and export raw USGS data
   pCode <- "00060"
-  USGS_daily <- readNWISdv(siteNo, pCode, start.date, end.date)
+  USGS_daily <- readNWISdv(site_number, pCode, start.date, end.date)
   
   #Format USGS data to date and flow
   USGS_daily <- USGS_daily[,c(3,4)]
@@ -340,6 +340,13 @@ drought_of_record <- function(data) {
   return(DoR)
 }
 
+# # DROUGHT OF RECORD (MIN. 90 DAY MIN.) FLOW Calculation DONE
+# drought_of_record_flow <- function(data) {
+#   flows_model1 <- zoo(data$flow, order.by = data$date)
+#   DoR <- fn_iha_DOR(flows_model1)
+#   return(DoR)
+# }
+
 # 7Q10 DONE
 seven_q_ten <- function(data) {
   flows_model1 <- zoo(data$flow, order.by = data$date)
@@ -436,7 +443,7 @@ low_yearly_mean <- function(data) {
   lf_model <- aggregate(model1river$flow, by = list(model1river$hyear), FUN = mean)
   colnames(lf_model) <- c('Water_Year', 'Mean_Flow')
   #calculation
-  lf_model_flow <- as.numeric(which(lf_model["Water_Year"] == DoR))
+  lf_model_flow <- as.numeric(which(lf_model$'Water_Year' == DoR))
   lf_model <- lf_model[lf_model_flow,2]
   return(lf_model)
 }
@@ -525,15 +532,8 @@ metrics_compare <- function(metrics1, metrics2) {
   return(metrics1)
 }
 
-fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
-  
-  #Libraries---------
-  library(rgeos) #used for geospatial processing 
-  library(ggmap) #required for foritfy()
-  library(ggsn) #used for adding scale bar and north arrow to map
-  library(sp) #required for SpatialPolygonsDataFrame()
-  library(rlist) #use for grouping map images from ggplot
-  
+fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
+
   #----------Define function for watershedDF-----------------------
   getWatershedDF <- function(geom){
     
@@ -550,41 +550,7 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
     return(watershedDF)
   }
   
-  AllSegList <- c('OR5_7980_8200', 'OR2_8020_8130', 'OR2_8070_8120', 'OR4_8120_7890',
-                  'OR2_8130_7900', 'OR5_8200_8370', 'OR4_8271_8120', 'TU3_8480_8680',
-                  'TU1_8570_8680', 'TU3_8650_8800', 'TU4_8680_8810', 'TU2_8790_9070',
-                  'TU4_8800_9290', 'TU4_8810_9000', 'BS4_8540_8441', 'BS3_8580_8440',
-                  'BS2_8590_8440', 'BS1_8730_8540', 'MN2_8250_8190', 'MN4_8260_8400',
-                  'MN0_8300_0001', 'MN4_8400_8380', 'MN4_8510_8380', 'MN2_8530_8510',
-                  'NR6_7820_7960', 'NR1_7880_8050', 'BS3_8350_8330', 'BS4_8440_8441',
-                  'MN3_7540_7680', 'MN1_7590_7860', 'MN1_7620_7710', 'MN3_7680_7860',
-                  'MN4_7710_8161', 'MN2_7720_7830', 'MN1_7730_8160', 'MN3_7770_7930',
-                  'MN4_7810_8080', 'MN2_7830_7950', 'MN3_7860_8080', 'MN3_7930_8010',
-                  'MN4_7950_7710', 'MN1_7990_8100', 'MN3_8010_7950', 'MN4_8080_8110',
-                  'MN2_8100_8190', 'MN5_8161_8160', 'MN3_8190_8260', 'MN5_8230_8161',
-                  'NR6_7960_8050', 'NR1_8030_8051', 'NR6_8050_8051', 'NR6_8051_8000',
-                  'NR6_8170_7960', 'NR6_8180_8051', 'NR2_8210_8180', 'NR3_8290_8170',
-                  'NR3_8420_8430', 'NR3_8430_7820', 'NR6_8640_8500', 'NR3_8690_8500',
-                  'NR5_8700_8640', 'NR3_8740_8500', 'NR5_8760_8640', 'NR1_8820_8760',
-                  'NR5_8870_8760', 'NR1_8960_8870', 'NR1_9030_9080', 'NR5_9050_8870',
-                  'NR5_9080_9050', 'NR4_9130_9080', 'NR1_9150_9050', 'NR3_9170_9130',
-                  'NR3_9190_9170', 'NR3_9240_9130', 'NR2_9250_9170', 'NR3_9310_9240',
-                  'OD3_8340_8520', 'OD3_8520_8621', 'OD2_8560_8630', 'OD6_8621_8470',
-                  'OD3_8630_8720', 'OD6_8660_8621', 'OD2_8670_8890', 'OD3_8710_8470',
-                  'OD3_8720_8900', 'OD5_8770_8780', 'OD5_8780_8660', 'OD2_8830_8710',
-                  'OD2_8840_9020', 'OD3_8850_8931', 'OD5_8890_8770', 'OD5_8900_8770',
-                  'OD1_8910_8930', 'OD2_8920_8830', 'OD3_8930_8931', 'OD3_8931_9140',
-                  'OD5_8940_8780', 'OD4_8990_8900', 'OD3_9020_9110', 'OD4_9110_9140',
-                  'OD4_9140_8990', 'OD1_9270_9110', 'OR2_7610_7780', 'OR2_7650_8070',
-                  'OR2_7670_7840', 'OR1_7700_7980', 'OR3_7740_8271', 'OR2_7780_7890',
-                  'OR2_7840_7970', 'OR5_7890_7970', 'OR2_7900_7740', 'OR5_7910_8410',
-                  'OR5_7970_8200', 'OR1_8280_8020', 'OR1_8320_8271', 'OR5_8370_8410',
-                  'OR5_8410_8470', 'OR2_8450_8490', 'OR2_8460_8271', 'OR7_8470_8490',
-                  'TU2_8860_9000', 'TU3_8880_9230', 'TU2_8950_9040', 'TU2_8970_9280',
-                  'TU5_9000_9280', 'TU1_9010_9290', 'TU3_9040_9180', 'TU3_9060_9230',
-                  'TU2_9070_9090', 'TU2_9100_9200', 'TU3_9180_9090', 'TU2_9200_9180',
-                  'TU1_9220_9200', 'TU3_9230_9260', 'NR2_8600_8700', 'NR6_8500_7820',
-                  'EL0_4560_4562','EL0_4561_4562','EL0_4562_0001','EL2_4400_4590',
+  AllSegList <- c('EL0_4560_4562','EL0_4561_4562','EL0_4562_0001','EL2_4400_4590',
                   'EL2_4590_0001','EL2_5110_5270','EL2_5270_0001','PM0_4640_4820',
                   'PM1_3120_3400','PM1_3450_3400','PM1_3510_4000','PM1_3710_4040',
                   'PM1_4000_4290','PM1_4250_4500','PM1_4430_4200','PM1_4500_4580',
@@ -657,16 +623,16 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
                   'YP0_6840_0001','YP0_6860_6840')
   
   # Splitting the River Segment string into each segment name
-  RivSegStr <- strsplit(RivSeg, "\\+")
-  RivSegStr <- RivSegStr[[1]]
-  num.segs <- as.numeric(length(RivSegStr))
+  riv.segStr <- strsplit(riv.seg, "\\+")
+  riv.segStr <- riv.segStr[[1]]
+  num.segs <- as.numeric(length(riv.segStr))
   
   # Getting all upstream segments for each of the linked segs, combining
   # to form a vector of all upstream segments.
   AllUpstreamSegs <- vector()
-  for (i in as.numeric(1:num.segs)) {
-    RivSeg <- RivSegStr[i]
-    UpstreamSegs <- fn_ALL.upstream(RivSeg, AllSegList)
+  for (i in 1:num.segs) {
+    riv.seg <- riv.segStr[i]
+    UpstreamSegs <- fn_ALL.upstream(riv.seg, AllSegList)
     AllUpstreamSegs <- c(AllUpstreamSegs, UpstreamSegs)
   }
   eliminate <- which(AllUpstreamSegs=="NA")
@@ -677,6 +643,8 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
   num.upstream <- as.numeric(length(AllUpstreamSegs))
   
   STATES <- read.table(file=paste(cbp6_link,"GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
+  RIVDF <- read.table(file=paste(cbp6_link,"GIS_LAYERS","RIVDF.csv",sep="/"), header=TRUE, sep=",") #Load state geometries
+  WBDF <- read.table(file=paste(cbp6_link,"GIS_LAYERS","WBDF.csv",sep="/"), header=TRUE, sep=",") #Load state geometries
   
   # first specify bounding box / extent of map: -----------------------------
   extent <- data.frame(x = c(-84, -75), 
@@ -770,21 +738,25 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
   OHPoints <- fortify( OHProjected, region = "id")
   OHDF <- merge(OHPoints,  OHProjected@data, by = "id")
   
-  # set up ggplot for states ---------------
-  statemap <- ggplot(data = VADF, aes(x=long, y=lat, group = group))+
-    geom_polygon(data = VADF, color="gray46", fill = "gray")+
-    geom_polygon(data = TNDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = NCDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = KYDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = WVDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = MDDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = DEDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = PADF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = NJDF, color="gray46", fill = NA, lwd=0.5)+
-    geom_polygon(data = OHDF, color="gray46", fill = NA, lwd=0.5)
+  SC <- STATES[which(STATES$state == "SC"),]
+  SC_geom <- readWKT(SC$geom)
+  SC_geom_clip <- gIntersection(bb, SC_geom)
+  SCProjected <- SpatialPolygonsDataFrame(SC_geom_clip,data.frame("id"), match.ID = TRUE)
+  SCProjected@data$id <- rownames(SCProjected@data)
+  SCPoints <- fortify( SCProjected, region = "id")
+  SCDF <- merge(SCPoints,  SCProjected@data, by = "id")
+  
+  DC <- STATES[which(STATES$state == "DC"),]
+  DC_geom <- readWKT(DC$geom)
+  DC_geom_clip <- gIntersection(bb, DC_geom)
+  DCProjected <- SpatialPolygonsDataFrame(DC_geom_clip,data.frame("id"), match.ID = TRUE)
+  DCProjected@data$id <- rownames(DCProjected@data)
+  DCPoints <- fortify( DCProjected, region = "id")
+  DCDF <- merge(DCPoints,  DCProjected@data, by = "id")
+    
   if (num.upstream > 0) {
-    for (i in as.numeric(1:num.upstream)) {  
-      RivSeg <- AllUpstreamSegs[i]
+    for (i in 1:num.upstream) {  
+      riv.seg <- AllUpstreamSegs[i]
       namer <- paste0("upstream.watershedDF", i)
       
       # Retrieve Riversegment Feature From VAHydro  -----------------------------
@@ -792,10 +764,10 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
       inputs <- list (
         bundle = 'watershed',
         ftype = 'vahydro',
-        hydrocode = paste('vahydrosw_wshed_', RivSeg, sep='')
+        hydrocode = paste0('vahydrosw_wshed_', riv.seg)
       )
       
-      dataframe <- getFeature(inputs, token, site)
+      dataframe <- getFeature(inputs, token, site_url)
       #print(dataframe)
       hydroid <- dataframe$hydroid
       inputs <- list(
@@ -803,15 +775,15 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
         featureid = hydroid,
         entity_type = "dh_properties"
       )
-      prop <- getProperty(inputs, site, prop)
+      prop <- getProperty(inputs, site_url, prop)
       
       inputs <- list(
         varkey = "wshed_local_area_sqmi",
         featureid = hydroid,
         entity_type = "dh_feature"
       )
-      local_da_prop <- getProperty(inputs, site, prop)
-      #postProperty(inputs = local_da_prop, base_url = site, prop = prop)
+      local_da_prop <- getProperty(inputs, site_url, prop)
+      #postProperty(inputs = local_da_prop, base_url = site_url, prop = prop)
       
       geom <- dataframe$geom
       watershedDF <- getWatershedDF(geom)
@@ -819,8 +791,35 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
     }
   }
   
+  # set up ggplot for states ---------------
+  statemap <- ggplot(data = VADF, aes(x=long, y=lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)+
+    
+    
+    geom_polygon(data = watershedDF, color="khaki4", fill = "green",alpha = 0.25,lwd=0.5)+
+    
+    # ADD RIVERS ####################################################################
+  geom_point(data = RIVDF, aes(x = long, y = lat), color="steelblue1", size=0.09)+
+    #################################################################################
+  
+  # ADD WATERBODIES ###############################################################
+  geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
+  #################################################################################
+  
   for (i in 1:num.segs) {  
-    RivSeg <- RivSegStr[i]
+    riv.seg <- riv.segStr[i]
     namer <- paste0("seg.watershedDF", i)
     
     # Retrieve Riversegment Feature From VAHydro  -----------------------------
@@ -828,10 +827,10 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
     inputs <- list (
       bundle = 'watershed',
       ftype = 'vahydro',
-      hydrocode = paste0('vahydrosw_wshed_', RivSeg)
+      hydrocode = paste0('vahydrosw_wshed_', riv.seg)
     )
     
-    dataframe <- getFeature(inputs, token, site)
+    dataframe <- getFeature(inputs, token, site_url)
     #print(dataframe)
     hydroid <- dataframe$hydroid
     inputs <- list(
@@ -839,63 +838,29 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
       featureid = hydroid,
       entity_type = "dh_properties"
     )
-    prop <- getProperty(inputs, site, prop)
+    prop <- getProperty(inputs, site_url, prop)
     
     inputs <- list(
       varkey = "wshed_local_area_sqmi",
       featureid = hydroid,
       entity_type = "dh_feature"
     )
-    local_da_prop <- getProperty(inputs, site, prop)
-    #postProperty(inputs = local_da_prop, base_url = site, prop = prop)
+    local_da_prop <- getProperty(inputs, site_url, prop)
+    #postProperty(inputs = local_da_prop, base_url = site_url, prop = prop)
     
     geom <- dataframe$geom
     watershedDF <- getWatershedDF(geom)
     assign(namer, watershedDF)
   }
   
-  # Determine if Gage Exists for Segment (gage_linked?) ---------------------
+  # Create gage dataframe (gage_linked?) ---------------------
+  library(dataRetrieval)
   
-  modelinput <- list(
-    varkey = "om_model_element",
-    featureid = local_da_prop$featureid,
-    entity_type = "dh_feature",
-    propcode = "p532cal_062211"
-  )
-  findgage <- getProperty(modelinput, site, findgage)
-  
-  gagetrue <- list(
-    varkey = "gage_weighted", 
-    featureid = findgage$pid,
-    entity_type = "dh_properties"
-  )
-  gagetrue <- getProperty(gagetrue, site, gagetrue)
-  
-  # if gagetrue is not logical, analyze with gages, check for linked segments. 
-  if (is.logical(gagetrue)==FALSE){
-    
-    # Retrieve USGS Gage Feature From VAHydro  --------------------------------
-    Gage <- as.character(gagetrue$propcode)
-    gage.inputs <- list (
-      bundle = 'usgsgage',
-      hydrocode = paste0('usgs_', Gage)
-    )
-    
-    gage.df <- getFeature(gage.inputs, token, site)
-    
-    
-    # Set up gage geometry: 
-    # Geoprocess gage geometry----------------------
-    split_1 <- read.table(text = as.character(gage.df$geom), sep = "(", colClasses = "character")
-    split_2 <- read.table(text = split_1$V2, sep = ")", colClasses = "character")
-    split_3 <- read.table(text = split_2$V1, sep = " ", colClasses = "character")
-    GAGEDF <- data.frame(x=as.numeric(split_3$V1),y=as.numeric(split_3$V2),X.id.="id",id="1")
-  }
+  gage <- readNWISsite(site_number)
+  GAGEDF <- data.frame(x=as.numeric(gage$dec_long_va),y=as.numeric(gage$dec_lat_va),X.id.="id",id="1")
   
   #--------------------------------------------------------------------------------------------
   #--------------------------------------------------------------------------------------------
-  
-  
   
   map <- statemap
   if (num.upstream > 0) {
@@ -910,11 +875,9 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
     map <- map +
       geom_polygon(data = eval(parse(text = namer)), color="black", fill = "green3",alpha = 0.25,lwd=0.5)
   }
-  
-  if (is.logical(gagetrue)==FALSE){
   map <- map + geom_polygon(data = bbDF, color="black", fill = NA,lwd=0.5)+
-    geom_point(aes(x = x, y = y, group = id), data = GAGEDF, fill="red", color="black", size = 1.8, shape=24)
-  }
+    geom_point(aes(x = x, y = y, group = id), data = GAGEDF, fill="red", color="black", size = 2.75, shape=24)
+  
   
   #additions to map -------------
   map <- map + 
@@ -942,17 +905,11 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
   inputs <- list (
     bundle = 'watershed',
     ftype = 'vahydro',
-    hydrocode = paste0('vahydrosw_wshed_', RivSeg)
+    hydrocode = paste0('vahydrosw_wshed_', riv.seg)
   )
   print(map)
   return(map)
 }
-
-# Automating August Low Flows
-
-library('zoo')
-library('IHA')
-library(PearsonDS)
 
 fn_iha_7q10 <- function(zoots) {
   g2 <- group2(zoots) 
@@ -1000,6 +957,7 @@ fn_iha_mhf <- function(zoots, targetmo) {
 
 #Calculates the Drought of record Flow
 fn_iha_DOR <- function(flows){
+  #flows <- flows$flow
   loflows <- group2(flows);
   l90 <- loflows["90 Day Min"];
   ndx = which.min(as.numeric(l90[,"90 Day Min"]));
@@ -1066,7 +1024,7 @@ rest_token <- function(base_url, token, rest_uname = FALSE, rest_pw = FALSE) {
   token <- token
 } #close function
 
-fn_upstream <- function(RivSeg, AllSegList) {
+fn_upstream <- function(riv.seg, AllSegList) {
   library(stringr)
   library(rapportools)
   # Create dataframe for upstream and downstream segments based on code in string
@@ -1105,7 +1063,7 @@ fn_upstream <- function(RivSeg, AllSegList) {
     } 
     k<-k+1
   }
-  SegUpstream <- as.numeric(which(as.character(ModelSegments$RiverSeg)==as.character(RivSeg)))
+  SegUpstream <- as.numeric(which(as.character(ModelSegments$RiverSeg)==as.character(riv.seg)))
   SegUpstream <- ModelSegments$Upstream[SegUpstream]
   SegUpstream <- strsplit(as.character(SegUpstream), "\\+")
   SegUpstream <- try(SegUpstream[[1]], silent = TRUE)
@@ -1115,8 +1073,8 @@ fn_upstream <- function(RivSeg, AllSegList) {
   return(SegUpstream)
 }
 
-fn_ALL.upstream <- function(RivSeg, AllSegList) {
-  UpstreamSeg <- fn_upstream(RivSeg, AllSegList)
+fn_ALL.upstream <- function(riv.seg, AllSegList) {
+  UpstreamSeg <- fn_upstream(riv.seg, AllSegList)
   AllUpstream <- character(0)
   BranchedSegs <- character(0)
   while (is.na(UpstreamSeg[1])==FALSE || is.empty(BranchedSegs) == FALSE) {

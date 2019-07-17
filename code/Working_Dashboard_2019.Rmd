@@ -26,26 +26,33 @@ library(httr)
 library(dplyr)
 library(stringr)
 library(RCurl)
+library(rgeos)
+library(ggmap)
+library(ggsn)
+library(sp)
+library(rlist)
 
 # INPUTS
-riv.seg <- 'JL7_6800_7070'
-mod.phase1 <- 'p6/p6_gb604/tmp'
-mod.scenario1 <- 'CFBASE30Y20180615'
-mod.phase2 <- 'p6/p6_gb604/tmp'
-mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y'
+riv.seg <- 'YP4_6720_6750'
+mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
+mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-site_number <- '02037000'
-cbp6_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
+site_number <- '01673000'
+cbp6_link <- "C:\\Users\\emma\\Documents\\HARP\\Github\\cbp6\\code";
 site_url <- "http://deq2.bse.vt.edu/d.dh"
+area <- readNWISsite(site_number); area <- area$`drain_area_va` #sq. miles
+area <- area*27878400 #sq ft
 
 # SETUP
 # SETUP
 # Setting active directory 
 # Setting working directory to the source file location
 
-container1 ="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
-container2 = "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
+container1 ="C:\\Users\\emma\\Documents\\HARP\\Github";
+container2 = "C:\\Users\\emma\\Documents\\HARP\\Github\\cbp6\\code";
 
 # Sourcing functions
 source(paste0(container2,"/cbp6_functions.R"))
@@ -93,7 +100,7 @@ options(timeout=120); # set timeout to twice default level to avoid abort due to
 description <- read_file(paste0(cbp6_link, "/gage_descriptions/", site_number, ".txt"))
 
 # Generating gage location maps
-gis_img <- fn_gage_and_seg_mapper(RivSeg = riv.seg, site = site_url, cbp6_link, token)
+gis_img <- fn_gage_and_seg_mapper(riv.seg, site_number, site_url, cbp6_link)
 ```
 
 
@@ -567,9 +574,9 @@ base_breaks <- function(n = 10){
 scaleFUN <- function(x) sprintf("%.0f", x)
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-gis_img
-```
+# ```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# gis_img
+# ```
 
 ```{r, results = 'asis', echo=FALSE, warning=FALSE, message=FALSE}
 description.cont <- paste0(" The average daily discharge change between scenario 1 and scenario 2 for the 20 year timespan was ", OUTPUT_MATRIXsaver[2] ,"%, with ", OUTPUT_MATRIXsaver[1], "% of its rolling three month time spans above 20% difference.")
@@ -972,7 +979,7 @@ difference2plot
 difference3plot
 ```
 
-# Fig. 9: Residuals Plot
+# Fig. 9A: Residuals Plot
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Setup for Residuals
 data <- all_data[complete.cases(all_data),]
@@ -1014,3 +1021,48 @@ myplot <- ggplot(df, aes(x=Date)) +
   labs(y = "Flow Difference(cfs)")
 myplot
 ```
+
+
+# Fig. 9B: Area Weighted Residuals Plot
+# ```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# # Setup for Residuals
+# data <- all_data[complete.cases(all_data),]
+# data_weighted <- data/area
+# resid <- (data_weighted$`Scenario 2 Flow` - data_weighted$`Scenario 1 Flow`)
+# resid <- data.frame(data_weighted$Date, resid)
+# 
+# # Residuals plot for hydrograph
+# 
+# zeroline <- rep_len(0, length(data_weighted$Date)) 
+# quantresid <- data.frame(signif(quantile(resid$resid), digits=3))
+# min <- min(resid$resid)
+# max <- max(resid$resid)
+# names(quantresid) <- c('Percentiles')
+# 
+# df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline); 
+# colnames(df) <- c('Date', 'Residual', 'Zeroline')
+# options(scipen=5, width = 1400, height = 950)
+# myplot <- ggplot(df, aes(x=Date)) + 
+#   geom_point(aes(y=Residual, color="Residual (CC - Base)"), size=1) +
+#   geom_line(aes(y=Zeroline, color="Zeroline"), size=0.8)+
+#   scale_y_continuous(limits=c(min,max))+ 
+#   theme_bw()+ 
+#   theme(legend.position="top", 
+#         legend.title=element_blank(),
+#         legend.box = "horizontal", 
+#         legend.background = element_rect(fill="white",
+#                                          size=0.5, linetype="solid", 
+#                                          colour ="white"),
+#         legend.text=element_text(size=12),
+#         axis.text=element_text(size=12, colour="black"),
+#         axis.title=element_text(size=14, colour="black"),
+#         axis.line = element_line(colour = "black", 
+#                                  size = 0.5, linetype = "solid"),
+#         axis.ticks = element_line(colour="black"),
+#         panel.grid.major=element_line(colour = "light grey"), 
+#         panel.grid.minor=element_blank())+
+#   scale_colour_manual(values=c("dark green","black"))+
+#   guides(colour = guide_legend(override.aes = list(size=5)))+
+#   labs(y = "Flow Difference(cfs)")
+# myplot
+# ```
