@@ -444,7 +444,7 @@ low_yearly_mean <- function(data) {
   colnames(lf_model) <- c('Water_Year', 'Mean_Flow')
   #calculation
   lf_model_flow <- as.numeric(which(lf_model$'Water_Year' == DoR))
-  lf_model <- lf_model[lf_model_flow,2]
+  lf_model <- signif(lf_model[lf_model_flow,2], digits = 3)
   return(lf_model)
 }
 
