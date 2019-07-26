@@ -129,7 +129,7 @@ fn_gage_and_seg_mapper <- function(RivSeg, site, cbp6_link, token) {
                   'PL1_5910_0001','PM1_3711_3710','PM1_4251_4250','PM1_4252_4250',
                   'PU3_4451_4450','RL0_6540_0001','RL1_6180_0001','WM0_3650_0001',
                   'WM0_3740_0001','WU0_3250_0001','WU0_3670_0001','WU1_3482_0001',
-                  'YL2_6580_0001',)
+                  'YL2_6580_0001')
   
   # Splitting the River Segment string into each segment name
   RivSegStr <- strsplit(RivSeg, "\\+")
