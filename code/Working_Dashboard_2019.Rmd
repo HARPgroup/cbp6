@@ -33,14 +33,14 @@ library(sp)
 library(rlist)
 
 # INPUTS
-riv.seg <- 'JA5_7480_0001'
+riv.seg <- 'EL2_4590_0001'
 mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
 mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-site_number <- '02041650'
+site_number <- '01488500'
 cbp6_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
 site_url <- "http://deq2.bse.vt.edu/d.dh"
 area <- readNWISsite(site_number); 
