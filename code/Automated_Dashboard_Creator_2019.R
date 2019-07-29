@@ -27,7 +27,7 @@ info <- read.csv("C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code\\
 master.table <- data.frame()
 
 counter <- 1
-while (counter <= length(info$riv.seg)) { #change to number of rows on full csv
+while (counter <= length(8)) { #change to number of rows on full csv
   riv.seg <- as.character(info[counter,1]) #input for model data import
   site_number <- paste0("0",info[counter,2]) #input for model data import
   rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code", output_file = paste0(riv.seg, ".pdf"))
