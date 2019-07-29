@@ -665,7 +665,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
                   'PL1_5910_0001','PM1_3711_3710','PM1_4251_4250','PM1_4252_4250',
                   'PU3_4451_4450','RL0_6540_0001','RL1_6180_0001','WM0_3650_0001',
                   'WM0_3740_0001','WU0_3250_0001','WU0_3670_0001','WU1_3482_0001',
-                  'YL2_6580_0001','EL0_4560_4562')
+                  'YL2_6580_0001')
   
   # Splitting the River Segment string into each segment name
   riv.segStr <- strsplit(riv.seg, "\\+")
@@ -835,33 +835,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
       assign(namer, watershedDF)
     }
   }
-  
-  # set up ggplot for states ---------------
-  statemap <- ggplot(data = VADF, aes(x=long, y=lat, group = group))+
-    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
-    geom_polygon(data = VADF, color="gray46", fill = "gray")+
-    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)+
-    
-    
-    geom_polygon(data = watershedDF, color="khaki4", fill = "green", alpha = 0.25,lwd=0.5)+
-    
-    # ADD RIVERS ####################################################################
-  geom_point(data = RIVDF, aes(x = long, y = lat), color="steelblue1", size=0.09)+
-    #################################################################################
-  
-  # ADD WATERBODIES ###############################################################
-  geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
-  #################################################################################
+ 
   
   for (i in 1:num.segs) {  
     riv.seg <- riv.segStr[i]
@@ -898,6 +872,32 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
     assign(namer, watershedDF)
   }
   
+  # set up ggplot for states ---------------
+  statemap <- ggplot(data = VADF, aes(x=long, y=lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)+
+    
+    
+    geom_polygon(data = watershedDF, color="khaki4", fill = "green", alpha = 0.25,lwd=0.5)+
+    
+    # ADD RIVERS ####################################################################
+  geom_point(data = RIVDF, aes(x = long, y = lat), color="steelblue1", size=0.09)+
+    #################################################################################
+  
+  # ADD WATERBODIES ###############################################################
+  geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
+  #################################################################################
   # Create gage dataframe (gage_linked?) ---------------------
   library(dataRetrieval)
   
