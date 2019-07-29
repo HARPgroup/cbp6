@@ -836,33 +836,6 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
     }
   }
   
-  # set up ggplot for states ---------------
-  statemap <- ggplot(data = VADF, aes(x=long, y=lat, group = group))+
-    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
-    geom_polygon(data = VADF, color="gray46", fill = "gray")+
-    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
-    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)+
-    
-    
-    geom_polygon(data = watershedDF, color="khaki4", fill = "green",alpha = 0.25,lwd=0.5)+
-    
-    # ADD RIVERS ####################################################################
-  geom_point(data = RIVDF, aes(x = long, y = lat), color="steelblue1", size=0.09)+
-    #################################################################################
-  
-  # ADD WATERBODIES ###############################################################
-  geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
-  #################################################################################
-  
   for (i in 1:num.segs) {  
     riv.seg <- riv.segStr[i]
     namer <- paste0("seg.watershedDF", i)
@@ -897,6 +870,33 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
     watershedDF <- getWatershedDF(geom)
     assign(namer, watershedDF)
   }
+  
+  # set up ggplot for states ---------------
+  statemap <- ggplot(data = VADF, aes(x=long, y=lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)+
+    
+    
+    geom_polygon(data = watershedDF, color="khaki4", fill = "green",alpha = 0.25,lwd=0.5)+
+    
+    # ADD RIVERS ####################################################################
+  geom_point(data = RIVDF, aes(x = long, y = lat), color="steelblue1", size=0.09)+
+    #################################################################################
+  
+  # ADD WATERBODIES ###############################################################
+  geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
+
   
   # Create gage dataframe (gage_linked?) ---------------------
   library(dataRetrieval)
