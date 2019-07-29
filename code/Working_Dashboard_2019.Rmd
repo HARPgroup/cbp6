@@ -33,14 +33,14 @@ library(sp)
 library(rlist)
 
 # INPUTS
-riv.seg <- 'EL2_4590_0001'
+riv.seg <- 'EL0_4562_0001'
 mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
 mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-site_number <- '01488500'
+site_number <- '00000000'
 cbp6_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
 site_url <- "http://deq2.bse.vt.edu/d.dh"
 area <- readNWISsite(site_number); 
@@ -98,8 +98,10 @@ token <- rest_token(site_url, token, rest_uname, rest_pw);
 options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
 
 # Loading written gage description
-description <- read_file(paste0(cbp6_link, "/gage_descriptions/", site_number, ".txt"))
-
+description <- try(read_file(paste0(cbp6_link, "/gage_descriptions/", site_number, ".txt")))
+if (class(description) == "try-error") {
+  description <- ""
+}
 # Generating gage location maps
 gis_img <- fn_gage_and_seg_mapper(riv.seg, site_number, site_url, cbp6_link)
 ```
