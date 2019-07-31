@@ -4,7 +4,16 @@ output: pdf_document
 pdf_document: default 
 word_document: default
 html_document: default
+params:
+  token: token
+  riv.seg: riv.seg
+  
 ---
+
+```{r, include=FALSE}
+token = params$token
+riv.seg = params$riv.seg
+```
 
 ```{r, include=FALSE}
 # Loading Necessary Packages 
@@ -50,18 +59,17 @@ library(rlist)
 # Setting active directory 
 # Setting working directory to the source file location
 
-container1 ="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
-container2 = "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github\\cbp6\\code";
-
+# github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
+cbp6_link = paste0(github_link, "\\cbp6\\code");
 # Sourcing functions
-source(paste0(container2,"/cbp6_functions.R"))
+source(paste0(cbp6_link,"/cbp6_functions.R"))
 
 # Should new or original data be used?
 new.or.original <- "new"
 
 # CARRYOVER IF MASTER IS BEING RUN ----------------------------------------
 if (exists("container.master") == TRUE) {
-  container1 <- container.master
+  github_link <- container.master
   riv.seg <- riv.seg.master
   new.or.original <- new.or.original.master
 }
@@ -88,7 +96,7 @@ output:
 
 ```{r, include=FALSE}
 # #retrieve rest token
-# source(paste0(container1, "/auth.private"));
+# source(paste0(github_link, "/auth.private"));
 # 
 # #load rest username and password, contained in auth.private file
 # 
@@ -106,6 +114,7 @@ inputs <- list (
   bundle = 'watershed',
   ftype = 'vahydro'
 )
+
 #property dataframe returned
 feature = FALSE;
 odata <- getFeature(inputs, token, site_url, feature);
@@ -122,7 +131,8 @@ areainfo <- list(
   featureid = as.integer(as.character(hydroid)),
   entity_type = "dh_feature"
 )
-model.area <- getProperty(areainfo, site_url, model.area)
+
+model.area <- getPropertyALT(areainfo, site_url, model.area, token)
 area <- model.area$propvalue
 area <- area*27878400 #sq ft
 
@@ -132,7 +142,7 @@ if (class(description) == "try-error") {
   description <- ""
 }
 # Generating gage location maps
-gis_img <- fn_gage_and_seg_mapper(riv.seg, site_number, site_url, cbp6_link)
+gis_img <- fn_gage_and_seg_mapperALT(riv.seg, site_number, site_url, cbp6_link, token)
 
 ```
 
@@ -142,10 +152,8 @@ gis_img <- fn_gage_and_seg_mapper(riv.seg, site_number, site_url, cbp6_link)
 metrics1 <- metrics_calc_all(data1)
 metrics2 <- metrics_calc_all(data2)
 
-percent_difference <- metrics_compare(metrics1, metrics2)
+percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
 ```
-
-
 
 ```{r, include=FALSE}
 
