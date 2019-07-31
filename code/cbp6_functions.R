@@ -528,7 +528,7 @@ metrics_compare <- function(metrics1, metrics2) {
   difference <- (100*(metrics2-metrics1)/metrics1)
   metrics1[2,] <- metrics2
   metrics1[3,] <- difference
-  rownames(metrics1) <- c('Scenario1','Scenario2','Percent Difference')
+  rownames(metrics1) <- c(paste0(riv.seg, ' Scenario1'), paste0(riv.seg, ' Scenario2'), paste0(riv.seg, ' Percent Difference'))
   return(metrics1)
 }
 
@@ -680,6 +680,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
     UpstreamSegs <- fn_ALL.upstream(riv.seg, AllSegList)
     AllUpstreamSegs <- c(AllUpstreamSegs, UpstreamSegs)
   }
+  AllUpstreamSegs <- c(riv.seg, AllUpstreamSegs)
   eliminate <- which(AllUpstreamSegs=="NA")
   if (is.empty(eliminate) == FALSE) {
     AllUpstreamSegs <- AllUpstreamSegs[-eliminate]
@@ -901,8 +902,14 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
   # Create gage dataframe (gage_linked?) ---------------------
   library(dataRetrieval)
   
-  gage <- readNWISsite(site_number)
-  GAGEDF <- data.frame(x=as.numeric(gage$dec_long_va),y=as.numeric(gage$dec_lat_va),X.id.="id",id="1")
+  gage <- try(readNWISsite(site_number))
+  if (class(gage) == "try-error") {
+    gage <- ""
+  }
+  GAGEDF <- try(data.frame(x=as.numeric(gage$dec_long_va),y=as.numeric(gage$dec_lat_va),X.id.="id",id="1"))
+  if (class(GAGEDF) == "try-error") {
+    GAGEDF <- ""
+  }
   
   #--------------------------------------------------------------------------------------------
   #--------------------------------------------------------------------------------------------
@@ -920,9 +927,13 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
     map <- map +
       geom_polygon(data = eval(parse(text = namer)), color="black", fill = "green3",alpha = 0.25,lwd=0.5)
   }
-  map <- map + geom_polygon(data = bbDF, color="black", fill = NA,lwd=0.5)+
-    #geom_point(aes(x = x, y = y, group = id), data = GAGEDF, fill="red", color="black", size = 2.75, shape=24)
-  
+
+  map <- map + geom_polygon(data = bbDF, color="black", fill = NA,lwd=0.5)
+  save.map <- map
+  map <- try(map + geom_point(aes(x = x, y = y, group = id), data = GAGEDF, fill="red", color="black", size = 2.75, shape=24))
+  if (site_number == "0NA") {
+    map <- save.map
+  }
   
   #additions to map -------------
   map <- map + 
