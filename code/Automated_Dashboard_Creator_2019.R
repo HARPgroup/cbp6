@@ -10,7 +10,7 @@ site.or.server <- 'site'
 
 automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server) {
   
-  cbp6_link = paste0(github_link, "\\cbp6\\code");
+  cbp6_link = paste0(github_link, "/cbp6/code");
   
   setwd(cbp6_link)
   dir.create('dashboard comparisons')
