@@ -4,10 +4,11 @@ mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
+github_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
 site_url <- "http://deq2.bse.vt.edu/d.dh"
 
 automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url) {
+  
   cbp6_link = paste0(github_link, "\\cbp6\\code");
   
   # Sourcing functions
@@ -22,11 +23,12 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
   
   info <- read.csv(paste0(cbp6_link, "\\data.csv"))
-  master.table <- data.frame()
+  base.table <- data.frame()
+  climatechange.table <- data.frame()
   
   counter <- 1
   
-  while (counter <= 4) { #change to number of rows on full csv
+  while (counter <= 5) { #change to number of rows on full csv
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
     rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = cbp6_link, output_file = paste0(riv.seg, ".pdf"), 
@@ -46,8 +48,10 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     # table.metrics2 <- data.frame(riv.seg,metrics2[1,1],metrics2[1,67],metrics2[1,61],metrics2[1,59]) #create row to add to overall dataframe
     # colnames(table.metrics1) <- c('River Segment', 'Overall Mean Flow', 'Mean Baseflow', 'September 10%', '7Q10') 
     # colnames(table.metrics2) <- c('River Segment', 'Overall Mean Flow', 'Mean Baseflow', 'September 10%', '7Q10') 
-    master.table <- rbind(master.table, all_metrics, stringsAsFactors = FALSE)
+    base.table <- rbind(base.table, metrics1, stringsAsFactors = FALSE)
+    climatechange.table <- rbind(climatechange.table, metrics2, stringsAsFactors = FALSE)
     counter <- counter + 1
   }
-  return(master.table)
+  write.csv(base.table, file = 'Base_2018_Metrics.csv')
+  write.csv(climatechange.table, file = 'Climate_Change_Metrics.csv')
 }
