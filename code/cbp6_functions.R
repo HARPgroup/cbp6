@@ -23,6 +23,28 @@ model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, 
   return(model_daily)
 }
 
+model_server_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
+  # Downloading and exporting hourly model data
+  model_hourly <- read.csv(paste0("/opt/model/", mod.phase, "/out/river/", mod.scenario, "/stream/", 
+                                  riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
+  riv.segStr1 <- strsplit(riv.seg, "\\+")
+  riv.segStr1 <- riv.segStr1[[1]]
+  num.segs1 <- length(riv.segStr1)
+  model_days1 <- length(seq(as.Date(start.date):as.Date(end.date)))
+  # Converting hourly to daily data and exporting daily data
+  model_hourly <- model_hourly[-1,]
+  model_hourly$V1 <- trimws(model_hourly$V1, which = "both")
+  colnames(model_hourly) <- c("year","month","day","hour","ovol")
+  model_hourly$date <- as.Date(paste0(model_hourly$year,"-",model_hourly$month,"-",model_hourly$day))
+  model_daily <- aggregate(model_hourly$ovol, list(model_hourly$date), FUN = sum)
+  colnames(model_daily) <- c("date","flow")
+  start.line <- as.numeric(which(model_daily$date == start.date))
+  end.line <- as.numeric(which(model_daily$date == end.date))
+  model_daily <- model_daily[start.line:end.line,]
+  model_daily$flow <- signif(model_daily$flow * 0.504167, digits=3) # conversion from acre-feet to cfs
+  return(model_daily)
+}
+
 gage_import_data_cfs <- function(site_number, start.date, end.date) {
   #Download and export raw USGS data
   pCode <- "00060"

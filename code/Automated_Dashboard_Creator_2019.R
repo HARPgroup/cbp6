@@ -4,12 +4,17 @@ mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
-github_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
+github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
 site_url <- "http://deq2.bse.vt.edu/d.dh"
+site.or.server <- 'site'
 
-automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url) {
+automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server) {
   
   cbp6_link = paste0(github_link, "\\cbp6\\code");
+  
+  setwd(cbp6_link)
+  dir.create('dashboard comparisons')
+  output.dir <- paste0(cbp6_link, '\\dashboard comparisons')
   
   # Sourcing functions
   source(paste0(cbp6_link,"/cbp6_functions.R"))
@@ -31,7 +36,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   while (counter <= 5) { #change to number of rows on full csv
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
-    rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = cbp6_link, output_file = paste0(riv.seg, ".pdf"), 
+    rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = output.dir, output_file = paste0(riv.seg, ".pdf"), 
                       params = list(token = token, riv.seg = riv.seg))
     # LOADING DATA ------------------------------------------------------------
     
@@ -42,7 +47,9 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     data2 <- water_year_trim(data2)
     
     metrics1 <- metrics_calc_all(data1) #calculate metrics into a matrix
+    rownames(metrics1) <- (riv.seg)
     metrics2 <- metrics_calc_all(data2)
+    rownames(metrics2) <- (riv.seg)
     all_metrics <- metrics_compare(metrics1, metrics2, riv.seg)
     # table.metrics1 <- data.frame(riv.seg,metrics1[1,1],metrics1[1,67],metrics1[1,61],metrics1[1,59]) #create row to add to overall dataframe
     # table.metrics2 <- data.frame(riv.seg,metrics2[1,1],metrics2[1,67],metrics2[1,61],metrics2[1,59]) #create row to add to overall dataframe
@@ -52,6 +59,6 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     climatechange.table <- rbind(climatechange.table, metrics2, stringsAsFactors = FALSE)
     counter <- counter + 1
   }
-  write.csv(base.table, file = 'Base_2018_Metrics.csv')
-  write.csv(climatechange.table, file = 'Climate_Change_Metrics.csv')
+  write.csv(base.table, file = paste0(output.dir, '//Base_2018_Metrics.csv'))
+  write.csv(climatechange.table, file = paste0(output.dir, '//Climate_Change_Metrics.csv'))
 }
