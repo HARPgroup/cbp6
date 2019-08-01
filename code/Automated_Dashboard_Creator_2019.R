@@ -27,7 +27,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   token <- rest_token(site_url, token, rest_uname, rest_pw);
   options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
   
-  info <- read.csv(paste0(cbp6_link, "\\data.csv"))
+  info <- read.csv(paste0(cbp6_link, "/data.csv"))
   base.table <- data.frame()
   climatechange.table <- data.frame()
   
