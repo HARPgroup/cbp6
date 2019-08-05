@@ -34,7 +34,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   
   counter <- 1
   
-  while (counter <= 2) { #change to number of rows on full csv
+  while (counter <= length(info$riv.seg)) { #change to number of rows on full csv
     print(paste('Generating dashboard for segment', counter, 'of', length(info$riv.seg), sep = ' '))
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
@@ -53,9 +53,9 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     # data1 <- water_year_trim(data1)
     # data2 <- water_year_trim(data2)
     
-    metrics1 <- metrics_calc_all(data1) #calculate metrics into a matrix
+    # metrics1 <- metrics_calc_all(data1) #calculate metrics into a matrix
     rownames(metrics1) <- (riv.seg)
-    metrics2 <- metrics_calc_all(data2)
+    # metrics2 <- metrics_calc_all(data2)
     rownames(metrics2) <- (riv.seg)
     all_metrics <- metrics_compare(metrics1, metrics2, riv.seg)
     # table.metrics1 <- data.frame(riv.seg,metrics1[1,1],metrics1[1,67],metrics1[1,61],metrics1[1,59]) #create row to add to overall dataframe
