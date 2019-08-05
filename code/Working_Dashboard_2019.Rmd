@@ -40,6 +40,9 @@ library(ggmap)
 library(ggsn)
 library(sp)
 library(rlist)
+library(tinytex)
+
+options(tinytex.verbose = TRUE)
 
 # # INPUTS
 #  riv.seg <- 'EL0_4562_0001'
@@ -60,10 +63,15 @@ library(rlist)
 # Setting working directory to the source file location
 
 # github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
-cbp6_link = paste0(github_link, "\\cbp6\\code");
+cbp6_link = paste0(github_link, "/cbp6/code");
+```
+
+```{r, include=FALSE}
 # Sourcing functions
 source(paste0(cbp6_link,"/cbp6_functions.R"))
+```
 
+```{r, include=FALSE}
 # Should new or original data be used?
 new.or.original <- "new"
 
@@ -75,16 +83,20 @@ if (exists("container.master") == TRUE) {
 }
 
 # LOADING DATA ------------------------------------------------------------
-
-data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
-data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
+if (site.or.server == 'site') {
+  data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
+  data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
+} else if (site.or.server == 'server') {
+  data1 <- model_server_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
+  data2 <- model_server_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
+}
 
 data1 <- water_year_trim(data1)
 data2 <- water_year_trim(data2)
 ```
 
 ---
-title: "Appendix ##: River Segment: `r paste(riv.seg,'- Scenario 1: ',mod.scenario1," vs. Scenario 2: ", mod.scenario2)`"
+title: "River Segment: `r paste(riv.seg,'- Scenario 1: ',mod.scenario1," vs. Scenario 2: ", mod.scenario2)`"
 header-includes:
   - \usepackage{titling}
   - \pretitle{\begin{flushleft}}
