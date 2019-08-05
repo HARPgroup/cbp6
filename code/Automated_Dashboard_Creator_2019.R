@@ -1,12 +1,12 @@
-mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
-mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
-mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
-mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
-start.date <- '1984-01-01'
-end.date <- '2000-12-31'
-github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
-site_url <- "http://deq2.bse.vt.edu/d.dh"
-site.or.server <- 'site'
+# mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+# mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
+# mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+# mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
+# start.date <- '1984-01-01'
+# end.date <- '2000-12-31'
+# github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
+# site_url <- "http://deq2.bse.vt.edu/d.dh"
+# site.or.server <- 'site'
 
 automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server) {
   
@@ -33,7 +33,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   
   counter <- 1
   
-  while (counter <= length(info$riv.seg)) { #change to number of rows on full csv
+  while (counter <= 5) { #change to number of rows on full csv
     print(paste('Generating dashboard for segment', counter, 'of', length(info$riv.seg), sep = ' '))
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
