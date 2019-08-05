@@ -66,7 +66,9 @@ cbp6_link = paste0(github_link, "\\cbp6\\code");
 ```{r, include=FALSE}
 # Sourcing functions
 source(paste0(cbp6_link,"/cbp6_functions.R"))
+```
 
+```{r, include=FALSE}
 # Should new or original data be used?
 new.or.original <- "new"
 
