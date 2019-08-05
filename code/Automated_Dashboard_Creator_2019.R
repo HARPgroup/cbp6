@@ -34,7 +34,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   
   counter <- 1
   
-  while (counter <= 3) { #change to number of rows on full csv
+  while (counter <= 2) { #change to number of rows on full csv
     print(paste('Generating dashboard for segment', counter, 'of', length(info$riv.seg), sep = ' '))
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
@@ -42,11 +42,16 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
                       params = list(token = token, riv.seg = riv.seg))
     # LOADING DATA ------------------------------------------------------------
     
-    data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
-    data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
-    
-    data1 <- water_year_trim(data1)
-    data2 <- water_year_trim(data2)
+    # if (site.or.server == 'site') {
+    #   data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
+    #   data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
+    # } else if (site.or.server == 'server') {
+    #   data1 <- model_server_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
+    #   data2 <- model_server_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
+    # }
+    # 
+    # data1 <- water_year_trim(data1)
+    # data2 <- water_year_trim(data2)
     
     metrics1 <- metrics_calc_all(data1) #calculate metrics into a matrix
     rownames(metrics1) <- (riv.seg)
