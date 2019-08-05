@@ -61,6 +61,9 @@ library(rlist)
 
 # github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
 cbp6_link = paste0(github_link, "\\cbp6\\code");
+```
+
+```{r, include=FALSE}
 # Sourcing functions
 source(paste0(cbp6_link,"/cbp6_functions.R"))
 
