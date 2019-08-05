@@ -2008,7 +2008,7 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   map <- map + 
     #ADD NORTH ARROW AND SCALE BAR
     north(bbDF, location = 'topleft', symbol = 12, scale=0.1)+
-    scalebar(data = bbDF, transform = TRUE, dist_unit = "km", location = 'bottomleft', dist = 100, model = 'WGS84',st.bottom=FALSE, st.size = 3.5,
+    scalebar(data = bbDF, ddtokm = TRUE, location = 'bottomleft', dist = 100, model = 'WGS84',st.bottom=FALSE, st.size = 3.5,
              anchor = c(
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
