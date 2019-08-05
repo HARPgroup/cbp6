@@ -13,8 +13,9 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   cbp6_link = paste0(github_link, "/cbp6/code");
   
   setwd(cbp6_link)
-  dir.create('dashboards')
-  output.dir <- paste0(cbp6_link, '/dashboards')
+  dir.create(paste0('/opt/model/p6/p6_gb604/out/dashboards/', mod.scenario1, '.vs.', mod.scenario2))
+  dash.output.dir <- paste0('/opt/model/p6/p6_gb604/out/dashboards/', mod.scenario1, '.vs.', mod.scenario2)
+  metr.output.dir <- paste0('/opt/model/p6/p6_gb604/out/metrics')
   
   # Sourcing functions
   source(paste0(cbp6_link,"/cbp6_functions.R"))
@@ -33,11 +34,11 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   
   counter <- 1
   
-  while (counter <= 1) { #change to number of rows on full csv
+  while (counter <= 3) { #change to number of rows on full csv
     print(paste('Generating dashboard for segment', counter, 'of', length(info$riv.seg), sep = ' '))
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
-    rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = output.dir, output_file = paste0(riv.seg, ".pdf"), 
+    rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = dash.output.dir, output_file = paste0(riv.seg, ".pdf"), 
                       params = list(token = token, riv.seg = riv.seg))
     # LOADING DATA ------------------------------------------------------------
     
@@ -60,6 +61,6 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     climatechange.table <- rbind(climatechange.table, metrics2, stringsAsFactors = FALSE)
     counter <- counter + 1
   }
-  write.csv(base.table, file = paste0(output.dir, '//Base_2018_Metrics.csv'))
-  write.csv(climatechange.table, file = paste0(output.dir, '//Climate_Change_Metrics.csv'))
+  write.csv(base.table, file = paste0(metr.output.dir, paste0('//',mod.scenario1,'-metrics.csv')))
+  write.csv(climatechange.table, file = paste0(metr.output.dir, paste0('//',mod.scenario2,'-metrics.csv')))
 }
