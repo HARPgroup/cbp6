@@ -14,7 +14,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   
   setwd(cbp6_link)
   dir.create('dashboards')
-  output.dir <- paste0(cbp6_link, '\\dashboards')
+  output.dir <- paste0(cbp6_link, '/dashboards')
   
   # Sourcing functions
   source(paste0(cbp6_link,"/cbp6_functions.R"))
@@ -33,7 +33,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   
   counter <- 1
   
-  while (counter <= 5) { #change to number of rows on full csv
+  while (counter <= 1) { #change to number of rows on full csv
     print(paste('Generating dashboard for segment', counter, 'of', length(info$riv.seg), sep = ' '))
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
