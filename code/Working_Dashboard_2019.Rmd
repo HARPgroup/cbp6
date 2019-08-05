@@ -88,7 +88,7 @@ data2 <- water_year_trim(data2)
 ```
 
 ---
-title: "Appendix ##: River Segment: `r paste(riv.seg,'- Scenario 1: ',mod.scenario1," vs. Scenario 2: ", mod.scenario2)`"
+title: "River Segment: `r paste(riv.seg,'- Scenario 1: ',mod.scenario1," vs. Scenario 2: ", mod.scenario2)`"
 header-includes:
   - \usepackage{titling}
   - \pretitle{\begin{flushleft}}
