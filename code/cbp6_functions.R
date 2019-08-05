@@ -1757,7 +1757,7 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   AllUpstreamSegs <- unique(AllUpstreamSegs)
   num.upstream <- as.numeric(length(AllUpstreamSegs))
   
-  STATES <- read.table(file=paste(cbp6_link,"GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
+  STATES <- read.table(file=paste(cbp6_link,"GIS_LAYERS","STATES.tsv",sep="/"), header=TRUE, sep="\t") #Load state geometries
   RIVDF <- read.table(file=paste(cbp6_link,"GIS_LAYERS","RIVDF.csv",sep="/"), header=TRUE, sep=",") #Load state geometries
   WBDF <- read.table(file=paste(cbp6_link,"GIS_LAYERS","WBDF.csv",sep="/"), header=TRUE, sep=",") #Load state geometries
   
