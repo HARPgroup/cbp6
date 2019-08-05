@@ -40,6 +40,9 @@ library(ggmap)
 library(ggsn)
 library(sp)
 library(rlist)
+library(tinytex)
+
+options(tinytex.verbose = TRUE)
 
 # # INPUTS
 #  riv.seg <- 'EL0_4562_0001'
