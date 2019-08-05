@@ -60,7 +60,7 @@ library(rlist)
 # Setting working directory to the source file location
 
 # github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
-cbp6_link = paste0(github_link, "\\cbp6\\code");
+cbp6_link = paste0(github_link, "/cbp6/code");
 ```
 
 ```{r, include=FALSE}
