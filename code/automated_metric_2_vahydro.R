@@ -27,7 +27,7 @@ automated_metric_2_vahydro <- function(mod.phase, mod.scenario, start.date, end.
   
   counter <- 1
   
-  while (counter <= 2) { 
+  while (counter <= length(info$riv.seg)) { 
     riv.seg <- as.character(info[counter,1]) #input for model data import
     
     # LOADING DATA ------------------------------------------------------------
@@ -102,6 +102,7 @@ automated_metric_2_vahydro <- function(mod.phase, mod.scenario, start.date, end.
     vahydro_post_metric('non-exceedance', 'ne5', '5% Non-Exceedance Flow', signif(metrics$flow.exceedance.5, digits = 3), riv.seg, mod.scenario, token, site_url)
     vahydro_post_metric('non-exceedance', 'ne50', '50% Non-Exceedance Flow', signif(metrics$flow.exceedance.50, digits = 3), riv.seg, mod.scenario, token, site_url)
     vahydro_post_metric('non-exceedance', 'ne95', '95% Non-Exceedance Flow', signif(metrics$flow.exceedance.95, digits =3), riv.seg, mod.scenario, token, site_url)
+    vahydro_post_metric('non-exceedance', 'ne99', '99% Non-Exceedance Flow', signif(metrics$flow.exceedance.99, digits =3), riv.seg, mod.scenario, token, site_url)
     vahydro_post_metric('monthly_non-exceedance', 'mne9_10', 'September 10%', signif(metrics$sept.10.percent, digits =3), riv.seg, mod.scenario, token, site_url)
     vahydro_post_metric('7q10', '', '7q10', signif(metrics$sevenQ.ten, digits = 3), riv.seg, mod.scenario, token, site_url)
     vahydro_post_metric('dor_year', '', 'Year of Drought of Record Occurence', metrics$drought.record, riv.seg, mod.scenario, token, site_url)
