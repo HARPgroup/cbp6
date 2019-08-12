@@ -99,7 +99,6 @@ vahydro_import_metric <- function(met.varkey, met.propcode, seg.or.gage, mod.sce
   metric <- metprop$propvalue
   return(metric)
 }
-
 vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
   if (nchar(seg.or.gage)==8) {
     # GETTING GAGE DATA FROM VA HYDRO
@@ -152,6 +151,54 @@ vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, s
   metprop$pid = NULL
   postProperty(metprop,base_url = site,metprop) 
 }
+
+vahydro_post_scenario <- function(scen.varkey = 'om_model_element', scen.value = 0, seg.or.gage, mod.scenario, token, site) {
+  if (nchar(seg.or.gage)==8) {
+    # GETTING GAGE DATA FROM VA HYDRO
+    hydrocode = paste("usgs_",seg.or.gage,sep="");
+    ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+    inputs <- list (
+      hydrocode = hydrocode
+    )
+  } else if (nchar(seg.or.gage)==13) {
+    # GETTING MODEL DATA FROM VA HYDRO
+    hydrocode = paste("vahydrosw_wshed_",seg.or.gage,sep="");
+    ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+    inputs <- list (
+      hydrocode = hydrocode,
+      bundle = 'watershed',
+      ftype = 'vahydro'
+    )
+  }
+  #property dataframe returned
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  hydroid <- odata[1,"hydroid"];
+  fname <- as.character(odata[1,]$name);
+  print(paste("Retrieved hydroid",hydroid,"for", fname,seg.or.gage, sep=' '));
+  inputs <- list(
+    varkey = "om_model_element",
+    featureid = hydroid,
+    entity_type = "dh_feature",
+    propcode = mod.scenario
+  )
+  property <- getProperty(inputs, site, property)
+  
+  if (identical(property, FALSE)) {
+    # create
+    property = inputs
+  }
+  scen.propcode = mod.scenario
+  scen.name = paste0(mod.scenario, ':',fname)
+  
+  property$propname = scen.name
+  property$varkey = scen.varkey
+  property$propcode = scen.propcode
+  property$propvalue = signif(scen.value, digits=3)
+  property$pid = NULL
+  postProperty(property,base_url = site,property) 
+}
+
 
 vahydro_import_all_metrics <- function(seg.or.gage, mod.scenario, token, site) {
   overall.mean <- vahydro.import.metric(met.varkey = "overall_mean", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
@@ -556,7 +603,7 @@ metrics_compare <- function(metrics1, metrics2, riv.seg) {
 }
 
 fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
-
+  
   #----------Define function for watershedDF-----------------------
   getWatershedDF <- function(geom){
     
@@ -667,10 +714,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
                   'PL0_5530_5710','PL0_5710_0001','RU2_5220_5640','RU2_5500_5610',
                   'RU2_5810_5610','RU2_5940_6200','RU2_6090_6220','RU2_6200_6170',
                   'RU2_6220_6170','RU3_5610_5640','RU3_6170_6040','RU4_5640_6030',
-                  'RU4_6040_6030','RU5_6030_0001','WM1_3660_3910',
-                  'WM3_3880_4060','WM3_4060_0001',
-                  'WU1_3490_3480','WU2_3020_3320','WU2_3320_3480',
-                  'WU3_3480_3481','WU3_3481_0001','XU0_4090_4270','XU0_4091_4270',
+                  'RU4_6040_6030','RU5_6030_0001','XU0_4090_4270','XU0_4091_4270',
                   'XU0_4130_4070','XU2_4070_4330','XU2_4270_4650','XU2_4330_4480',
                   'XU2_4480_4650','XU3_4650_0001','YM1_6370_6620','YM2_6120_6430',
                   'YM3_6430_6620','YM4_6620_0001','YP1_6570_6680','YP1_6680_6670',
@@ -682,9 +726,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
                   'JB0_7052_0001','JB1_8090_0001','JB2_7800_0001','PL0_4510_0001',
                   'PL0_5000_0001','PL0_5070_0001','PL0_5510_0001','PL0_5720_0001',
                   'PL0_5750_0001','PL0_5830_0001','PL1_4540_0001','PL1_5230_0001',
-                  'PL1_5910_0001',
-                  'RL0_6540_0001','RL1_6180_0001',
-                  'YL2_6580_0001')
+                  'PL1_5910_0001','RL0_6540_0001','RL1_6180_0001','YL2_6580_0001')
   
   # Splitting the River Segment string into each segment name
   riv.segStr <- strsplit(riv.seg, "\\+")
@@ -818,7 +860,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
   DCProjected@data$id <- rownames(DCProjected@data)
   DCPoints <- fortify( DCProjected, region = "id")
   DCDF <- merge(DCPoints,  DCProjected@data, by = "id")
-    
+  
   if (num.upstream > 0) {
     for (i in 1:num.upstream) {  
       riv.seg <- AllUpstreamSegs[i]
@@ -855,7 +897,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
       assign(namer, watershedDF)
     }
   }
- 
+  
   
   for (i in 1:num.segs) {  
     riv.seg <- riv.segStr[i]
@@ -946,7 +988,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
     map <- map +
       geom_polygon(data = eval(parse(text = namer)), color="black", fill = "green3",alpha = 0.25,lwd=0.5)
   }
-
+  
   map <- map + geom_polygon(data = bbDF, color="black", fill = NA,lwd=0.5)
   save.map <- map
   map <- try(map + geom_point(aes(x = x, y = y, group = id), data = GAGEDF, fill="red", color="black", size = 2.75, shape=24))
@@ -985,6 +1027,7 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
   print(map)
   return(map)
 }
+
 
 fn_iha_7q10 <- function(zoots) {
   g2 <- group2(zoots) 
@@ -1709,27 +1752,19 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
                   'PL0_5530_5710','PL0_5710_0001','RU2_5220_5640','RU2_5500_5610',
                   'RU2_5810_5610','RU2_5940_6200','RU2_6090_6220','RU2_6200_6170',
                   'RU2_6220_6170','RU3_5610_5640','RU3_6170_6040','RU4_5640_6030',
-                  'RU4_6040_6030','RU5_6030_0001','WM1_3910_0001',
-                  'WM0_3881_3880',
-                  'WU1_3240_3331','WU1_3330_0001','WU1_3331_3330','WU0_3021_3020',
-                  'WU1_3350_3490','XU0_4090_4270','XU0_4091_4270',
+                  'RU4_6040_6030','RU5_6030_0001','XU0_4090_4270','XU0_4091_4270',
                   'XU0_4130_4070','XU2_4070_4330','XU2_4270_4650','XU2_4330_4480',
                   'XU2_4480_4650','XU3_4650_0001','YM1_6370_6620','YM2_6120_6430',
                   'YM3_6430_6620','YM4_6620_0001','YP1_6570_6680','YP1_6680_6670',
                   'YP2_6390_6330','YP3_6330_6700','YP3_6470_6690','YP3_6670_6720',
                   'YP3_6690_6720','YP3_6700_6670','YP4_6720_6750','YP4_6750_0001',
-                  'YP0_6840_0001','YP0_6860_6840','DE0_3791_0001','DE0_4141_0001',
-                  'DE0_4231_0001','EL0_5400_0001','EL0_5767_0001','EL1_5150_0001',
-                  'EL1_5430_0001','EL1_5570_0001','EL1_6000_0001','EM2_3980_0001',
-                  'EM2_4100_0001','EU0_3726_0001','EU0_3830_0001','EU1_2650_0001',
-                  'EU1_2810_0001','EU2_3520_0001','EL2_5272_5270','JB0_7051_0001',
+                  'YP0_6840_0001','YP0_6860_6840',
+                  'EL0_5400_0001','EL1_5150_0001',
+                  'EL1_5430_0001','EL1_5570_0001','EL1_6000_0001','JB0_7051_0001',
                   'JB0_7052_0001','JB1_8090_0001','JB2_7800_0001','PL0_4510_0001',
                   'PL0_5000_0001','PL0_5070_0001','PL0_5510_0001','PL0_5720_0001',
                   'PL0_5750_0001','PL0_5830_0001','PL1_4540_0001','PL1_5230_0001',
-                  'PL1_5910_0001','PM1_3711_3710','PM1_4251_4250','PM1_4252_4250',
-                  'PU3_4451_4450','RL0_6540_0001','RL1_6180_0001','WM0_3650_0001',
-                  'WM0_3740_0001','WU0_3250_0001','WU0_3670_0001','WU1_3482_0001',
-                  'YL2_6580_0001')
+                  'PL1_5910_0001','RL0_6540_0001','RL1_6180_0001','YL2_6580_0001') 
   
   # Splitting the River Segment string into each segment name
   riv.segStr <- strsplit(riv.seg, "\\+")
