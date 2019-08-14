@@ -3,7 +3,7 @@ mod.scenario <- 'CBASE1808L55CY55R45P50R45P50Y' #or 'CBASE1808L55CY55R45P50R45P5
 start.date <- '1984-01-01'
 end.date <- '2000-12-31'
 github_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
-site_url <- "http://deq2.bse.vt.edu/d.bet"
+site_url <- "http://deq2.bse.vt.edu/d.alpha"
 site.or.server <- 'site'
 
 source(paste0(github_link, "/auth.private"));
@@ -25,7 +25,7 @@ automated_metric_2_vahydro <- function(mod.phase, mod.scenario, start.date, end.
   
   info <- read.csv(paste0(cbp6_link, "/data.csv"))
   
-  counter <- 24
+  counter <- 1
   
   while (counter <= length(info$riv.seg)) { 
     riv.seg <- as.character(info[counter,1]) #input for model data import
