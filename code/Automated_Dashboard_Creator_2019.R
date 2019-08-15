@@ -8,7 +8,7 @@
 # site_url <- "http://deq2.bse.vt.edu/d.bet"
 # site.or.server <- 'site'
 
-automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server) {
+automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server, start.num = 1, num.reps = NA) {
   
   cbp6_link = paste0(github_link, "/cbp6/code");
   
@@ -29,13 +29,16 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
   
   info <- read.csv(paste0(cbp6_link, "/data.csv"))
+  if (is.na(num.reps) == TRUE) {
+    num.reps <- length(info$riv.seg)
+  }
   base.table <- data.frame()
   climatechange.table <- data.frame()
   
-  counter <- 1
+  counter <- start.num
   
-  while (counter <= length(info$riv.seg)) { #change to number of rows on full csv
-    print(paste('Generating dashboard for segment', counter, 'of', length(info$riv.seg), sep = ' '))
+  while (counter <= num.reps) { #change to number of rows on full csv
+    print(paste('Generating dashboard for segment', counter, 'of', counter+num.reps, sep = ' '))
     riv.seg <- as.character(info[counter,1]) #input for model data import
     site_number <- paste0("0",info[counter,2]) #input for model data import
     rmarkdown::render(paste0("Working_Dashboard_2019.Rmd"), "pdf_document", output_dir = dash.output.dir, output_file = paste0(riv.seg, ".pdf"), 
