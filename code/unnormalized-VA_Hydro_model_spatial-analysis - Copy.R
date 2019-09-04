@@ -185,6 +185,7 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site) {
   
   for (i in 1:num.segs) {
     RivSeg <- all.riv.segs[i]
+    print(paste('Downloading data for segment', i, 'of', num.segs))
     
     # GETTING MODEL DATA FROM VA HYDRO
     hydrocode = paste("vahydrosw_wshed_",RivSeg,sep="");
@@ -1023,9 +1024,6 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site) {
     assign(namer, watershedDF)
   }
   
-  dir.create(paste0(output_location,"\\SouthernRivers_p532_SpatialAnalysis-unnormalized"), showWarnings = FALSE);
-  new.output_location <- paste0(output_location, "\\SouthernRivers_p532_SpatialAnalysis-unnormalized")
-  
   # Initiating counter
   ctr <- 1
   
@@ -1035,6 +1033,7 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site) {
   cols <- rainbow(6)
   
   for (ctr in 1:num.metrics) {
+    print(paste('Generating map for metric', ctr, 'of', num.metrics))
     
     DesiredMetric<- metric.names[ctr]
     

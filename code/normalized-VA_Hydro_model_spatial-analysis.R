@@ -12,7 +12,7 @@
 #github_link="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
 
 # INPUTS ------------------------------------------------------------------
-normalized_spatial_analysis <- function(mod.scenario, github_link, site) {
+normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.num = 1) {
 
   library(rgdal)
   library(raster)
@@ -182,8 +182,9 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site) {
   # POPULATES DATA FRAME WITH ALL_METRICS PERCENT ERROR DATA -----------------------
   all.errors.line.no <- 1
   
-  for (i in 1:num.segs) {
+  for (i in start.num:num.segs) {
     RivSeg <- all.riv.segs[i]
+    print(paste('Downloading data for segment', i, 'of', num.segs))
     
     # GETTING MODEL DATA FROM VA HYDRO
     hydrocode = paste("vahydrosw_wshed_",RivSeg,sep="");
@@ -1033,6 +1034,7 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site) {
   cols <- rainbow(6)
   
   for (ctr in 1:num.metrics) {
+    print(paste('Generating map for metric', ctr, 'of', num.metrics))
     
     DesiredMetric<- metric.names[ctr]
     

@@ -5,7 +5,7 @@
 # start.date <- '1984-01-01'
 # end.date <- '2000-12-31'
 # github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
-# site_url <- "http://deq2.bse.vt.edu/d.bet"
+# site_url <- "http://deq2.bse.vt.edu/d.dh"
 # site.or.server <- 'site'
 
 automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server, start.num = 1, num.reps = NA) {
