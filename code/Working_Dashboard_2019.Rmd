@@ -5,8 +5,8 @@ pdf_document: default
 word_document: default
 html_document: default
 params:
-  token: token
-  riv.seg: riv.seg
+token: token
+riv.seg: riv.seg
   
 ---
 
