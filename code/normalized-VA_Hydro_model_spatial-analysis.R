@@ -5,14 +5,14 @@
 # create quick maps for spatial analysis of metrics associated with river segments.
 
 # mod.scenario <- 'CFBASE30Y20180615' #or 'CBASE1808L55CY55R45P50R45P50Y' 
-# github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
+# github_link <- "C:/Users/danie/Documents/HARP/GitHub"
 # site_url <- "http://deq2.bse.vt.edu/d.bet"
 # site.or.server <- 'site'
 
-#github_link="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
+# github_link="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
 
 # INPUTS ------------------------------------------------------------------
-normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.num = 1) {
+normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.num = 1, token = token) {
 
   library(rgdal)
   library(raster)
@@ -21,11 +21,6 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   library(ggsn)
   library(sp)
   
-  output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "normalized");
-  
-  # SETUP
-  
-  source(paste(github_link,'config.local.private',sep='/'));
   cbp6_link = paste0(github_link, "/cbp6/code") 
   source(paste0(cbp6_link,"/cbp6_functions.R"))
   
@@ -33,6 +28,19 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in auth.private file
   token <- rest_token(site, token, rest_uname, rest_pw);
   options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
+  
+  
+  output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "normalized");
+  
+  # SETUP
+  
+  cbp6_link = paste0(github_link, "/cbp6/code") 
+  source(paste0(cbp6_link,"/cbp6_functions.R"))
+  
+  #retrieve rest token
+  source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in auth.private file
+  # token <- rest_token(site, token, rest_uname, rest_pw);
+  # options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
   
   # CREATING LIST OF RIVER SEGS ---------------------------------------------------
   

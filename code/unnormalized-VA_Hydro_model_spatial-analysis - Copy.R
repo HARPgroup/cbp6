@@ -26,7 +26,6 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site) {
   
   # SETUP
   
-  source(paste(github_link,'config.local.private',sep='/'));
   cbp6_link = paste0(github_link, "/cbp6/code") 
   source(paste0(cbp6_link,"/cbp6_functions.R"))
   
