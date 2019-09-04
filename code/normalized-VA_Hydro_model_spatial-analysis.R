@@ -20,6 +20,7 @@ source(paste0(cbp6_link,"/cbp6_functions.R"))
 source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in auth.private file
 token1 <- rest_token(site, token1, rest_uname, rest_pw);
 options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
+token <- token1
 
 # INPUTS ------------------------------------------------------------------
 normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.num = 1, token = token1) {
