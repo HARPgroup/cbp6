@@ -18,7 +18,7 @@ source(paste0(cbp6_link,"/cbp6_functions.R"))
 
 #retrieve rest token
 source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in auth.private file
-token1 <- rest_token(site, token, rest_uname, rest_pw);
+token1 <- rest_token(site, token1, rest_uname, rest_pw);
 options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
 
 # INPUTS ------------------------------------------------------------------
