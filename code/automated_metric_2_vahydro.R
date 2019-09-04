@@ -25,7 +25,7 @@ automated_metric_2_vahydro <- function(mod.phase, mod.scenario, start.date, end.
   
   info <- read.csv(paste0(cbp6_link, "/data.csv"))
   
-  counter <- 1
+  counter <- 260
   
   while (counter <= length(info$riv.seg)) { 
     riv.seg <- as.character(info[counter,1]) #input for model data import
