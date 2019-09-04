@@ -207,6 +207,7 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
       entity_type = "dh_feature",
       propcode = mod.scenario
     )
+    token = token
     model <- getProperty(inputs, site, model)
     all.metrics <- data.frame(matrix(NA, nrow = 1, ncol = num.metrics))
     # Getting the contributing drainage area feature
