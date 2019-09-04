@@ -11,6 +11,14 @@
 
 # github_link="C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github";
 
+cbp6_link = paste0(github_link, "/cbp6/code") 
+source(paste0(cbp6_link,"/cbp6_functions.R"))
+
+#retrieve rest token
+source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in auth.private file
+token <- rest_token(site, token, rest_uname, rest_pw);
+options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
+
 # INPUTS ------------------------------------------------------------------
 normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.num = 1, token = token) {
 
@@ -20,15 +28,6 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   library(ggmap)
   library(ggsn)
   library(sp)
-  
-  cbp6_link = paste0(github_link, "/cbp6/code") 
-  source(paste0(cbp6_link,"/cbp6_functions.R"))
-  
-  #retrieve rest token
-  source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in auth.private file
-  token <- rest_token(site, token, rest_uname, rest_pw);
-  options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
-  
   
   output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "normalized");
   
