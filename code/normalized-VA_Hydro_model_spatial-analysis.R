@@ -32,7 +32,8 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   library(ggsn)
   library(sp)
   
-  output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/normalized");
+  map_output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/normalized");
+  metrics_output_location <- paste0("/opt/model/p6/p6_gb604/out/metrics")
   
   # SETUP
   
@@ -791,6 +792,7 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   
   Metrics <- all.errors.all.segments[,-num.metrics]
   
+  
   #--------------------------------------------------------------------------------------------
   #LOAD STATE GEOMETRY
   #--------------------------------------------------------------------------------------------
@@ -1004,6 +1006,6 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
     
     # Incrementing counter
     ctr <- ctr + 1
-    ggsave(filename = paste0(DesiredMetric, ".jpeg"), device = "jpeg", path = output_location, width = 7, height = 4.5)
+    ggsave(filename = paste0(DesiredMetric, ".jpeg"), device = "jpeg", path = map_output_location, width = 7, height = 4.5)
   }
 }

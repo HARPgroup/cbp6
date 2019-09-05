@@ -32,7 +32,8 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site, token
   library(ggsn)
   library(sp)
   
-  output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/normalized");
+  map_output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/normalized");
+  metrics_output_location <- paste0("/opt/model/p6/p6_gb604/out/metrics")
   
   # SETUP
   
@@ -787,6 +788,7 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site, token
   }
   
   Metrics <- all.errors.all.segments[,-num.metrics]
+  write.csv(Metrics, file = paste0(metrics_output_location, paste0('//',mod.scenario,'-metrics.csv')))
   
   #--------------------------------------------------------------------------------------------
   #LOAD STATE GEOMETRY
@@ -1001,6 +1003,6 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site, token
     
     # Incrementing counter
     ctr <- ctr + 1
-    ggsave(filename = paste0(DesiredMetric, ".jpeg"), device = "jpeg", path = output_location, width = 7, height = 4.5)
+    ggsave(filename = paste0(DesiredMetric, ".jpeg"), device = "jpeg", path = map_output_location, width = 7, height = 4.5)
   }
 }

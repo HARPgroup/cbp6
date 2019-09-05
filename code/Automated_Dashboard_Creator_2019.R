@@ -69,6 +69,4 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     climatechange.table <- rbind(climatechange.table, metrics2, stringsAsFactors = FALSE)
     counter <- counter + 1
   }
-  write.csv(base.table, file = paste0(metr.output.dir, paste0('//',mod.scenario1,'-metrics.csv')))
-  write.csv(climatechange.table, file = paste0(metr.output.dir, paste0('//',mod.scenario2,'-metrics.csv')))
 }
