@@ -32,7 +32,7 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   library(ggsn)
   library(sp)
   
-  output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "normalized");
+  output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/normalized");
   
   # SETUP
   
