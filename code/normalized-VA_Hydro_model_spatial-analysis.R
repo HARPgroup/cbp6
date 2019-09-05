@@ -794,7 +794,7 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
   #--------------------------------------------------------------------------------------------
   #LOAD STATE GEOMETRY
   #--------------------------------------------------------------------------------------------
-  STATES <- read.table(file=paste(cbp6_link,"GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
+  STATES <- read.table(file=paste(cbp6_link,"GIS_LAYERS","STATES.tsv",sep="/"), header=TRUE, sep="\t") #Load state geometries
   
   #specify spatial extent for map  
   extent <- data.frame(x = c(-84, -75), 
