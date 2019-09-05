@@ -23,7 +23,7 @@ options(timeout=120); # set timeout to twice default level to avoid abort due to
 token <- token1
 
 # INPUTS ------------------------------------------------------------------
-unnormalized_spatial_analysis <- function(mod.scenario, github_link, site, token = token) {
+unnormalized_spatial_analysis <- function(mod.scenario, github_link, site, token = token1) {
   
   library(rgdal)
   library(raster)
