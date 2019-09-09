@@ -5,7 +5,7 @@
 # start.date <- '1984-01-01'
 # end.date <- '2000-12-31'
 # github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
-# site_url <- "http://deq2.bse.vt.edu/d.bet"
+# site_url <- "http://deq2.bse.vt.edu/d.dh"
 # site.or.server <- 'site'
 
 automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server, start.num = 1, num.reps = NA) {
@@ -69,6 +69,4 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
     climatechange.table <- rbind(climatechange.table, metrics2, stringsAsFactors = FALSE)
     counter <- counter + 1
   }
-  write.csv(base.table, file = paste0(metr.output.dir, paste0('//',mod.scenario1,'-metrics.csv')))
-  write.csv(climatechange.table, file = paste0(metr.output.dir, paste0('//',mod.scenario2,'-metrics.csv')))
 }
