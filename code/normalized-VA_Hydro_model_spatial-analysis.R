@@ -66,7 +66,7 @@ normalized_spatial_analysis <- function(mod.scenario, github_link, site, start.n
                      'Dec. Mean Flow', 'Min. 1-Day Low Flow', 'Med. 1-Day Low Flow',
                      'Min. 3-Day Low Flow', 'Med. 3-Day Low Flow', 'Min. 7-Day Low Flow',
                      'Med. 7-Day Low Flow', 'Min. 30-Day Low Flow', 'Med. 30-Day Low Flow',
-                     'Min. 90-Day Low Flow', 'Med. 90-Day Low Flow', '7q10',
+                     'Min. 90-Day Low Flow', 'Med. 90-Day Low Flow', 'x7q10',
                      '1pct Non-Exceedance', '5pct Non-Exceedance',
                      '50pct Non-Exceedance', '95pct Non-Exceedance', '99pct Non-Exceedance',
                      'Sep. 10pct Non-Exceedance', 'Mean Baseflow', 'Jan. High Flow',
