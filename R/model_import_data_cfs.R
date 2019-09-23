@@ -12,7 +12,7 @@
 
 model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
   # Downloading and exporting hourly model data
-  model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/wdm/river/", mod.scenario, "/stream/", 
+  model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/river/", mod.scenario, "/stream/", 
                                   riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
   RivSegStr1 <- strsplit(riv.seg, "\\+")
   RivSegStr1 <- RivSegStr1[[1]]
