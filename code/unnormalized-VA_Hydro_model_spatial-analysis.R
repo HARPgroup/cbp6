@@ -32,7 +32,7 @@ unnormalized_spatial_analysis <- function(mod.scenario, github_link, site, token
   library(ggsn)
   library(sp)
   
-  map_output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/normalized");
+  map_output_location <- paste0("/opt/model/p6/p6_gb604/out/maps/", mod.scenario, "/unnormalized");
   metrics_output_location <- paste0("/opt/model/p6/p6_gb604/out/metrics")
   
   # SETUP
