@@ -67,7 +67,7 @@ elid = as.numeric(as.character(prop[1,]$propvalue))
 # Analsyis config
 #runids = c(20021,20023);
 #runids = c(20051,20054);
-runid = 104
+runid = 106
 
 wshed_summary_tbl = data.frame(
   "Run ID" = character(), 
@@ -81,7 +81,15 @@ wshed_summary_tbl = data.frame(
 omsite = site <- "http://deq2.bse.vt.edu"
 dat <- fn_get_runfile(elid, runid, site = omsite,  cached = FALSE);
 
-plot(as.numeric(dat$Qout) ~ as.Date(as.character(dat$thisdate)), ylim = c(0,1000))
+plot(as.numeric(dat$Qout) ~ as.Date(as.character(dat$thisdate)), ylim = c(0,200))
+points(as.Date(as.character(dat$thisdate)),as.numeric(dat107$Qout), col='blue')
+points(as.Date(as.character(dat$thisdate)),as.numeric(dat107$wd_mgd), col='blue')
+points(as.Date(as.character(dat$thisdate)),as.numeric(dat$wd_mgd), col='green')
+
 quantile(as.numeric(dat$Qout))
+quantile(as.numeric(dat107$Qout))
 
 quantile(as.numeric(dat$wd_cumulative_mgd))
+
+dat107 = dat
+
