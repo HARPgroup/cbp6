@@ -2,12 +2,14 @@ library('sqldf')
 basepath <- '/opt/model/p6/p6_gb604'
 land.segment = 'N51005'
 river.segment = 'JU3_7400_7510'
-// test 
-land.segment, basepath, lu.scenario = 'BASE20180615', outpath;
-lutablegen(
+lu.scenario = 'BASE20180615'
+outpath = '/tmp/'
+# lutablegen(land.segment, basepath, lu.scenario, outpath)
+
+
 lutablegen <- function(land.segment, basepath, lu.scenario, outpath) {
   # INPUTS ----------
-  lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/',pattern=lu.scenario)
+  lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/'),pattern=lu.scenario)
   lutable = FALSE
   for (i in 1:length(lufile.list)) {
     lufile <- lufile.list[i]
@@ -32,6 +34,6 @@ lutablegen <- function(land.segment, basepath, lu.scenario, outpath) {
   lus <- lapply(lus, function(x) gsub("[.]", "", x))
   names(lutable) <- lus 
   lutable <- t(lutable)
-  
+  return(lutable)
 }
   
