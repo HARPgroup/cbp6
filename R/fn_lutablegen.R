@@ -1,16 +1,9 @@
 library('sqldf')
-basepath <- '/opt/model/p6/p6_gb604'
-land.segment = 'N51005'
-river.segment = 'JU3_7400_7510'
-lu.scenario = 'BASE20180615'
-outpath = '/tmp/'
-# lutablegen(land.segment, basepath, lu.scenario, outpath)
 
-
-lutablegen <- function(land.segment, basepath, lu.scenario, outpath) {
+lutablegen <- function(land.segment, basepath, lu.scenario) {
   # INPUTS ----------
   lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/'),pattern=lu.scenario)
-  lutable = FALSE
+  lutable_yrs = FALSE
   for (i in 1:length(lufile.list)) {
     lufile <- lufile.list[i]
     luyear <- substr(lufile, 10,13)
@@ -23,17 +16,21 @@ lutablegen <- function(land.segment, basepath, lu.scenario, outpath) {
       "landseg = '", land.segment, 
       "' and riverseg = '", river.segment, "'"
     )
-    
-    if (!is.logical(lutable)) {
-      q <- paste(q, " UNION select * from lutable ")
-    }
     lutable <- sqldf(q)
+    lutable <- lutable[,names(lutable)]
+    if (!is.logical(lutable_yrs)) {
+      q <- "select * from lutable_yrs UNION select * from lutable "
+    } else {
+      q <- " select * from lutable "
+    }
+    lutable_yrs <- sqldf(q)
   }
-  lus <- names(lutable) 
+  lus <- names(lutable_yrs) 
   # Fix the funky "for." on the forest column name 
-  lus <- lapply(lus, function(x) gsub("[.]", "", x))
-  names(lutable) <- lus 
-  lutable <- t(lutable)
-  return(lutable)
+  # do it on all in case there are other odd ones 
+  lus <- lapply(lus, function(x) gsub("[.]", "", x)) 
+  names(lutable_yrs) <- lus 
+  lutable_yrs <- t(lutable_yrs)
+  return(lutable_yrs)
 }
   
