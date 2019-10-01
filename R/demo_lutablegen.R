@@ -3,6 +3,7 @@ land.segment = 'N51121'
 river.segment = 'JU1_7690_7490'
 lu.scenario = 'BASE20180615'
 model.scenario = 'CFBASE30Y20180615'
+# Get the base table
 tbl = lutablegen(land.segment, basepath, lu.scenario)
 # Transpose the table 
 tblt <- t(tbl)
@@ -17,5 +18,6 @@ outfile = paste0(
   "/landuse/","lutable_",
   land.segment,"_",river.segment, ".csv"
 );
+print(paste0("Writing: ", outfile))
 write.csv(tbl_om, outfile, row.names=FALSE)
 
