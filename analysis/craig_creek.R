@@ -65,7 +65,9 @@ elid = as.numeric(as.character(prop[1,]$propvalue))
 # Analsyis config
 #runids = c(20021,20023);
 #runids = c(20051,20054);
-runid = 106
+
+runid = 100
+
 
 wshed_summary_tbl = data.frame(
   "Run ID" = character(), 
@@ -89,5 +91,5 @@ quantile(as.numeric(dat107$Qout))
 
 quantile(as.numeric(dat$wd_cumulative_mgd))
 
-dat107 = dat
 
+dat107 = dat
