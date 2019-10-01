@@ -4,7 +4,7 @@ lu.scenario = 'BASE20180615'
 model.scenario = 'CFBASE30Y20180615'
 
 lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/'),pattern=lu.scenario)
-lrsegfile <- lufile.list[1]
+lufile <- lufile.list[1]
 lrseglist <- read.csv(paste0(basepath,'/input/scenario/river/land_use/', lufile))
 
 for (i in 1:length(lrseglist)) {
