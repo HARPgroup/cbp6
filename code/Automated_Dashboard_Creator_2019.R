@@ -1,19 +1,19 @@
-# mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
-# mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
-# mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
-# mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
-# start.date <- '1984-01-01'
-# end.date <- '2000-12-31'
-# github_link <- "C:\\Users\\danie\\Documents\\HARP\\Github"
-# site_url <- "http://deq2.bse.vt.edu/d.dh"
-# site.or.server <- 'site'
+mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
+mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
+start.date <- '1984-01-01'
+end.date <- '2000-12-31'
+github_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
+site_url <- "http://deq2.bse.vt.edu/d.dh"
+site.or.server <- 'site'
 
 automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scenario2, start.date, end.date, github_link, site_url, site.or.server, start.num = 1, num.reps = NA) {
   
   cbp6_link = paste0(github_link, "/cbp6/code");
   
   setwd(cbp6_link)
-  dir.create(paste0('/opt/model/p6/p6_gb604/out/dashboards/', mod.scenario1, '.vs.', mod.scenario2))
+  #dir.create(paste0('/opt/model/p6/p6_gb604/out/dashboards/', mod.scenario1, '.vs.', mod.scenario2))
   dash.output.dir <- paste0('/opt/model/p6/p6_gb604/out/dashboards/', mod.scenario1, '.vs.', mod.scenario2)
   metr.output.dir <- paste0('/opt/model/p6/p6_gb604/out/metrics')
   
@@ -35,7 +35,7 @@ automated_dashboard <- function(mod.phase1, mod.scenario1, mod.phase2, mod.scena
   base.table <- data.frame()
   climatechange.table <- data.frame()
   
-  counter <- start.num
+  counter <- 279
   
   while (counter <= num.reps) { #change to number of rows on full csv
     print(paste('Generating dashboard for segment', counter, 'of', counter+num.reps, sep = ' '))

@@ -11,8 +11,8 @@ riv.seg: riv.seg
 ---
 
 ```{r, include=FALSE}
-token = params$token
-riv.seg = params$riv.seg
+#token = params$token
+#riv.seg = params$riv.seg
 ```
 
 ```{r, include=FALSE}
