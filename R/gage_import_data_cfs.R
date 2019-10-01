@@ -7,7 +7,7 @@
 #' @import dataRetrieval
 #' @export import_gage_data_cfs
 
-import_gage_data_cfs <- function(siteNo, start.date, end.date) {
+gage_import_data_cfs <- function(siteNo, start.date, end.date) {
   #Download and export raw USGS data
   pCode <- "00060"
   USGS_daily <- readNWISdv(siteNo, pCode, start.date, end.date)
