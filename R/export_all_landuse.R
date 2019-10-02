@@ -9,6 +9,8 @@ lufile <- lufile.list[1]
 lrseglist <- read.csv(paste0(basepath,'/input/scenario/river/land_use/', lufile))
 
 for (i in 1:length(lrseglist)) {
+  land.segment = as.character(lrseglist[i,"landseg"])
+  river.segment = as.character(lrseglist[i,"riverseg"])
   outfile = paste0(
     outpath,"/out/land/", model.scenario, 
     "/landuse/","lutable_",
@@ -20,8 +22,6 @@ for (i in 1:length(lrseglist)) {
   }
   if(!file.exists(outfile)) {
     print(paste("Handling", land.segment, river.segment))
-    land.segment = as.character(lrseglist[i,"landseg"])
-    river.segment = as.character(lrseglist[i,"riverseg"])
     # Get the base table
     tbl = lutablegen(land.segment, basepath, lu.scenario)
     # Transpose the table 
