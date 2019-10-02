@@ -8,9 +8,9 @@ lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/'),pa
 lufile <- lufile.list[1]
 lrseglist <- read.csv(paste0(basepath,'/input/scenario/river/land_use/', lufile))
 
-for (i in 1:length(lrseglist)) {
-  land.segment = as.character(lrseglist[i,"landseg"])
-  river.segment = as.character(lrseglist[i,"riverseg"])
+for (i in 1:length(lrseglist$landseg)) {
+  land.segment = as.character(lrseglist$landseg[i])
+  river.segment = as.character(lrseglist$riverseg[i])
   outfile = paste0(
     outpath,"/out/land/", model.scenario, 
     "/landuse/","lutable_",
