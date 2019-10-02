@@ -1,5 +1,6 @@
 source("./fn_lutablegen.R")
 basepath <- '/opt/model/p6/p6_gb604'
+outpath = basepath 
 lu.scenario = 'BASE20180615'
 model.scenario = 'CFBASE30Y20180615'
 replaceall = FALSE 
@@ -30,7 +31,6 @@ for (i in 1:length(lrseglist)) {
     cn <- c("thisyear", tbl$thisyear)
     names(tblt) <- cn
     tbl_om <- sqldf("select * from tblt where thisyear not in ('thisyear', 'riverseg', 'landseg')");
-    outpath = basepath 
     print(paste0("Writing: ", outfile))
     write.csv(tbl_om, outfile, row.names=FALSE)
   } else {
