@@ -14,9 +14,11 @@ for (i in 1:length(lrseglist)) {
     land.segment,"_",river.segment, ".csv"
   );
   if (replaceall) {
+    print(paste("Removing", land.segment, river.segment))
     file.remove(outfile)
   }
   if(!file.exists(outfile)) {
+    print(paste("Handling", land.segment, river.segment))
     land.segment = as.character(lrseglist[i,"landseg"])
     river.segment = as.character(lrseglist[i,"riverseg"])
     # Get the base table
@@ -31,6 +33,8 @@ for (i in 1:length(lrseglist)) {
     outpath = basepath 
     print(paste0("Writing: ", outfile))
     write.csv(tbl_om, outfile, row.names=FALSE)
+  } else {
+    print(paste("Skipping", land.segment, river.segment))
   }
 
 }
