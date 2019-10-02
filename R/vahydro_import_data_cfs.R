@@ -8,7 +8,7 @@
 #' @import pander
 #' @import httr
 #' @import hydroTSM
-#' @export model_import_data_cfs
+#' @export vahydro_import_data_cfs
 
 vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh") {
   hydrocode = paste0("vahydrosw_wshed_", riv.seg);
