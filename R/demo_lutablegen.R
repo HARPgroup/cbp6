@@ -1,5 +1,6 @@
+source("fn_lutablegen.R")
 basepath <- '/opt/model/p6/p6_gb604'
-land.segment = 'N51121'
+land.segment = 'N51045'
 river.segment = 'JU1_7690_7490'
 lu.scenario = 'BASE20180615'
 model.scenario = 'CFBASE30Y20180615'
