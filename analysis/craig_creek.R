@@ -5,7 +5,7 @@ library(hydroTSM);
 site <- "http://deq2.bse.vt.edu/d.dh"    #Specify the site of interest, either d.bet OR d.dh
 #----------------------------------------------
 # Load Libraries
-hydro_tools <- 'C:/Users/danie/Documents/HARP/GitHub/hydro-tools';
+hydro_tools <- "C:/Users/Kevin D'Andrea/Desktop/HARP/GitHub/hydro-tools";
 source(paste(hydro_tools,"VAHydro-2.0/rest_functions.R", sep = "/")); 
 source(paste(hydro_tools,"VAHydro-1.0/fn_vahydro-1.0.R", sep = "/"));  
 source(paste(hydro_tools,"LowFlow/fn_iha.R", sep = "/"));  
@@ -19,7 +19,7 @@ source(paste(hydro_tools,"auth.private", sep = "/"));#load rest username and pas
 token <- rest_token(site, token, rest_uname, rest_pw);
 options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
 
-hydrocode = "vahydrosw_wshed_JU3_7400_7510";
+hydrocode = "vahydrosw_wshed_JU1_7690_7490";
 ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
 inputs <- list (
   hydrocode = hydrocode,
@@ -66,7 +66,7 @@ elid = as.numeric(as.character(prop[1,]$propvalue))
 #runids = c(20021,20023);
 #runids = c(20051,20054);
 
-runid = 100
+runid = 116
 
 
 wshed_summary_tbl = data.frame(
