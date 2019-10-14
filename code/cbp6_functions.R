@@ -2069,9 +2069,7 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   return(map)
 }
 
-vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh") {
-  hydro_tools <- "C:/Users/Kevin D'Andrea/Desktop/HARP/GitHub/hydro-tools";
-  source(paste(hydro_tools,"VAHydro-1.0/fn_vahydro-1.0.R", sep = "/"));  
+vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
   hydrocode = paste0("vahydrosw_wshed_", riv.seg);
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
   inputs <- list (
@@ -2132,6 +2130,10 @@ vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.
   
   dat.trim <- data.frame(dat.date, dat.flow, row.names = NULL)
   colnames(dat.trim) <- c('date','flow')
+  
+  start.line <- as.numeric(which(dat.trim$date == start.date))
+  end.line <- as.numeric(which(dat.trim$date == end.date))
+  dat.trim <- dat.trim[start.line:end.line,]
   
   return(dat.trim)
 }

@@ -4,13 +4,15 @@
 #' @param run.id the VA hydro run ID of the specified vahydro model run
 #' @param token the VA hydro token to access the specified site
 #' @param site the specified vahydro site to be accessed
+#' @param start.date the starting date of analysis, format 'yyyy-mm-dd'
+#' @param end.date the ending date of analysis, format 'yyyy-mm-dd'
 #' @return A dataframe containing the specfic river segments vahydro model data
 #' @import pander
 #' @import httr
 #' @import hydroTSM
 #' @export vahydro_import_data_cfs
 
-vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh") {
+vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
   hydrocode = paste0("vahydrosw_wshed_", riv.seg);
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
   inputs <- list (
@@ -71,6 +73,10 @@ vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.
   
   dat.trim <- data.frame(dat.date, dat.flow, row.names = NULL)
   colnames(dat.trim) <- c('date','flow')
+  
+  start.line <- as.numeric(which(dat.trim$date == start.date))
+  end.line <- as.numeric(which(dat.trim$date == end.date))
+  dat.trim <- dat.trim[start.line:end.line,]
     
   return(dat.trim)
 }
