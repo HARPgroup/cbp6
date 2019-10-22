@@ -45,11 +45,11 @@ library(tinytex)
 options(tinytex.verbose = TRUE)
 
 # # INPUTS
-riv.seg <- 'JU1_7690_7490'
-run.id1 <- '116'
-run.id2 <- '117'
+riv.seg <- 'PU3_4450_4440'
+run.id1 <- '120'
+run.id2 <- '121'
 start.date <- '1984-01-01'
-end.date <- '2013-12-31'
+end.date <- '2000-12-31'
 github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
 cbp6_link <- paste0(github_link, "/cbp6/code");
 site_url <- "http://deq2.bse.vt.edu/d.dh"
@@ -114,7 +114,7 @@ data2 <- water_year_trim(data2)
 ```
 
 ---
-title: "River Segment: `r paste(riv.seg,'- Scenario : ',mod.scenario1,": VaHydro Run 116 vs. VAHydro Run 117 (fixed channel length)")`"
+title: "River Segment: `r paste(riv.seg,'- Scenario : ',mod.scenario1,": VaHydro Run 120 (Base) vs. VAHydro Run 121 (Climate Change)")`"
 header-includes:
   - \usepackage{titling}
   - \pretitle{\begin{flushleft}}
