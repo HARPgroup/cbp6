@@ -59,8 +59,8 @@ site <- site_url
 # obsolete inputs
 mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
-mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
-mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
+mod.phase2 <- 'p532c-sova' #or "p532c-sova" (phase 5)
+mod.scenario2 <- 'p532cal_062211' #or "p532cal_062211" (phase 5)
 site_number <- '00000000'
 
 # GETTING MODEL DATA FROM VA HYDRO
@@ -930,9 +930,9 @@ colnames(baseflowriver) <-c ('mday', 'mmonth', 'myear', 'mflow', 'mHyear', 'mBas
 
 # removing NA values
 baseflowriver<-baseflowriver[complete.cases(baseflowriver)==TRUE,]
-scenario1river<- data.frame(baseflowriver$gday, baseflowriver$gmonth, baseflowriver$gyear, 
+scenario2river<- data.frame(baseflowriver$gday, baseflowriver$gmonth, baseflowriver$gyear, 
                        baseflowriver$gflow, baseflowriver$gHyear, baseflowriver$gBaseflow);
-scenario2river<- data.frame(baseflowriver$mday, baseflowriver$mmonth, baseflowriver$myear, 
+scenario1river<- data.frame(baseflowriver$mday, baseflowriver$mmonth, baseflowriver$myear, 
                         baseflowriver$mflow, baseflowriver$mHyear, baseflowriver$mBaseflow)
 names(scenario1river) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
 names(scenario2river) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
