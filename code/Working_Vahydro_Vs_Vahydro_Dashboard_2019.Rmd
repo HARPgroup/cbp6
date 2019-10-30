@@ -45,7 +45,7 @@ library(tinytex)
 options(tinytex.verbose = TRUE)
 
 # # INPUTS
-riv.seg <- 'PU3_4450_4440'
+riv.seg <- 'RU5_6030_0001'
 run.id1 <- '120'
 run.id2 <- '121'
 start.date <- '1984-01-01'
@@ -59,8 +59,8 @@ site <- site_url
 # obsolete inputs
 mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
-mod.phase2 <- 'p532c-sova' #or "p532c-sova" (phase 5)
-mod.scenario2 <- 'p532cal_062211' #or "p532cal_062211" (phase 5)
+mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
+mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 site_number <- '00000000'
 
 # GETTING MODEL DATA FROM VA HYDRO
@@ -114,7 +114,7 @@ data2 <- water_year_trim(data2)
 ```
 
 ---
-title: "River Segment: `r paste(riv.seg,'- Scenario : ',mod.scenario1,": VaHydro Run 120 (Base) vs. VAHydro Run 121 (Climate Change)")`"
+title: "River Segment: `r paste(riv.seg,'- Scenario : ',mod.scenario1,": VaHydro Run 120 (Base) vs. VAHydro Run 121 (CC)")`"
 header-includes:
   - \usepackage{titling}
   - \pretitle{\begin{flushleft}}
