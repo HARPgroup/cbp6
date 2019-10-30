@@ -29,3 +29,6 @@ dat.r <- vahydro_import_data_cfs(riv.seg = riv.seg, run.id = run.id, site = site
 
 mean(dat.lr1$flow) + mean(dat.lr2$flow) + mean(dat.lr3$flow) + mean(dat.lr4$flow)
 mean(dat.r$flow)
+
+local.runoff.inflows <- read.csv(paste0(github_link, '/cbp6/analysis/runlog120.210913.csv'))
+which(local.runoff.inflows$Runit != 'Qmdc_unit')

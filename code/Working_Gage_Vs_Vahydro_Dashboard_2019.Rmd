@@ -52,7 +52,7 @@ mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
 mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario2 <- 'CBASE1808L55CY55R45P50R45P50Y' #or "p532cal_062211" (phase 5)
 start.date <- '1984-01-01'
-end.date <- '2014-12-31'
+end.date <- '2005-12-31'
 site_number <- '01668000'
 github_link <- "C:\\Users\\danie\\Documents\\HARP\\GitHub"
 cbp6_link <- paste0(github_link, "/cbp6/code");
