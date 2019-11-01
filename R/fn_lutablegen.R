@@ -1,8 +1,11 @@
 library('sqldf')
 
-lutablegen <- function(land.segment, basepath, lu.scenario) {
+lutablegen <- function(land.segment, basepath, lu.scenario, ccextra = FALSE) {
   # INPUTS ----------
   lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/'),pattern=lu.scenario)
+  if (!is.logical(ccextra)) {
+    lufile.list <- rbind(lufile.list, ccextra)
+  }
   lutable_yrs = FALSE
   for (i in 1:length(lufile.list)) {
     lufile <- lufile.list[i]
