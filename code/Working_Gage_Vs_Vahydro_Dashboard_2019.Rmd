@@ -48,6 +48,8 @@ options(tinytex.verbose = TRUE)
 # Set defaults for river segment and run ID
 riv.seg <- 'RU5_6030_0001'
 run.id <- '120'
+# load command line args
+argst <- commandArgs(trailingOnly=T)
 # Use command line args for riverseg and runid if supplied, i.e., this script is run as:
 # Rscript Working_Gage_Vs_Dashboard_2019.Rmd RU5_6030_0001 121
 if (length(argst) >= 1) {
