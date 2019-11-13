@@ -24,7 +24,6 @@ low_yearly_mean <- function(data) {
   colnames(lf_model) <- c('Water_Year', 'Mean_Flow')
   #calculation
   lf_model <- which(lf_model["Water_Year"] == DoR)
-  lf_model <- lf_model["Mean_Flow"][lf_model]
-  lfmin <- lf_model
+  lf_model <- lf_model[lf_model_flow,2]
   return(lfmin)
 }

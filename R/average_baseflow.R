@@ -23,6 +23,6 @@ average_baseflow <- function(data){
                            baseflowriver$flow, baseflowriver$year, baseflowriver$baseflow);
   names(model1river) <- c('day', 'month', 'year', 'flow', 'hyear', 'baseflow')
   #calculation
-  base <- signif(mean(model1river$baseflow), digits=3);
+  base <- mean(model1river$baseflow);
   return(base)
 }

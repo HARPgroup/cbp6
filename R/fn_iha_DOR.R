@@ -10,6 +10,6 @@ fn_iha_DOR <- function(data){
   loflows <- group2(data);
   l90 <- loflows["90 Day Min"];
   ndx = which.min(as.numeric(l90[,"90 Day Min"]));
-  dor_flow = round(loflows[ndx,]$"90 Day Min",1);
+  dor_flow = loflows[ndx,]$"90 Day Min";
   #dor_year = loflows[ndx,]$"year";
 }

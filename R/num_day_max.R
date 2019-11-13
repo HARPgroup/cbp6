@@ -20,27 +20,27 @@ num_day_max <- function(data, num.day, max_or_med) {
   
   if (max_or_med == "max"){
     if (num.day == 1) {
-      metric <- signif(max(g2$'1 Day Max'), digits=3)}
+      metric <- max(g2$'1 Day Max')}
     else if (num.day == 3){
-      metric <- signif(max(g2$'3 Day Max'), digits=3)}
+      metric <- max(g2$'3 Day Max')}
     else if (num.day == 7){
-      metric <- signif(max(g2$'7 Day Max'), digits=3)}
+      metric <- max(g2$'7 Day Max')}
     else if (num.day == 30){
-      metric <- signif(max(g2$'30 Day Max'), digits=3)}
+      metric <- max(g2$'30 Day Max')}
     else if (num.day == 90){
-      metric <- signif(max(g2$'90 Day Max'), digits=3)}
+      metric <- max(g2$'90 Day Max')}
   }
   if (max_or_med == "med"){  
     if (num.day == 1) {
-      metric <- signif(median(g2$'1 Day Max'), digits=3)}
+      metric <- median(g2$'1 Day Max')}
     else if (num.day == 3){
-      metric <- signif(median(g2$'3 Day Max'), digits=3)}
+      metric <- median(g2$'3 Day Max')}
     else if (num.day == 7){
-      metric <- signif(median(g2$'7 Day Max'), digits=3)}
+      metric <- median(g2$'7 Day Max')}
     else if (num.day == 30){
-      metric <- signif(median(g2$'30 Day Max'), digits=3)}
+      metric <- median(g2$'30 Day Max')}
     else if (num.day == 90){
-      metric <- signif(median(g2$'90 Day Max'), digits=3)}
+      metric <- median(g2$'90 Day Max')}
   }
   return(metric)  
 }

@@ -110,8 +110,8 @@ mean(local.runoff.inflows$flow.unit) * area #1503.4 cfs
 local.runoff.inflows.pre06 <- local.runoff.inflows[year(local.runoff.inflows$date)>=2005,]
 local.runoff.inflows.06on <- local.runoff.inflows[year(local.runoff.inflows$date)>2005,]
 
-mean(local.runoff.inflows.pre06$flow.unit) * area
-mean(local.runoff.inflows.06on$flow.unit) * area 
+mean(local.runoff.inflows.pre06$flow.unit) * area #1437.73
+mean(local.runoff.inflows.06on$flow.unit) * area #1421.65
 # Hmmmm... the local runoff inflows are also slightly decreasing from '06 on, so this doesn't
 # seem to be the problem either...
 
