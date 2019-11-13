@@ -45,8 +45,21 @@ library(tinytex)
 options(tinytex.verbose = TRUE)
 
 # # INPUTS
-riv.seg <- 'PU3_4450_4440'
+# Set defaults for river segment and run ID
+riv.seg <- 'RU5_6030_0001'
+
 run.id <- '120'
+# load command line args
+argst <- commandArgs(trailingOnly=T)
+# Use command line args for riverseg and runid if supplied, i.e., this script is run as:
+# Rscript Working_Gage_Vs_Dashboard_2019.Rmd RU5_6030_0001 121
+if (length(argst) >= 1) {
+  riv.seg=argst[1]
+}
+if (length(argst) >= 2) {
+  run.id=argst[2]
+}
+
 mod.phase1 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
 mod.scenario1 <- 'CFBASE30Y20180615' #or "p532cal_062211" (phase 5)
 mod.phase2 <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
