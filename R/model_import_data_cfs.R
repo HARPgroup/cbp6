@@ -28,6 +28,6 @@ model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, 
   start.line <- as.numeric(which(model_daily$date == start.date))
   end.line <- as.numeric(which(model_daily$date == end.date))
   model_daily <- model_daily[start.line:end.line,]
-  model_daily$flow <- signif(model_daily$flow * 0.504167, digits=3) # conversion from acre-feet to cfs
+  model_daily$flow <- model_daily$flow * 0.504167 # conversion from acre-feet to cfs
   return(model_daily)
 }

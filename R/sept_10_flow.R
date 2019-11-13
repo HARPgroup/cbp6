@@ -12,6 +12,6 @@ sept_10_flow <- function(data) {
   data$month <- month(ymd(data$date))
   data$day <- day(ymd(data$date))
   sept_flows <- subset(data, month == '9')
-  sept_10 <- signif(quantile(sept_flows$flow, 0.10), digits = 3)
+  sept_10 <- quantile(sept_flows$flow, 0.10)
   return(sept_10)
 }
