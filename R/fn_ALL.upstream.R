@@ -4,9 +4,9 @@
 #' @param AllSegList A list of all segments
 #' @return All upstream segments
 #' @import rapportools
-#' @export fn_ALL_upstream
+#' @export fn_ALL.upstream
 
-fn_ALL_upstream <- function(riv.seg, AllSegList) {
+fn_ALL.upstream <- function(riv.seg, AllSegList) {
   UpstreamSeg <- fn_upstream(riv.seg, AllSegList)
   AllUpstream <- character(0)
   BranchedSegs <- character(0)
