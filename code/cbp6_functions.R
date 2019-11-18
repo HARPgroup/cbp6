@@ -2526,8 +2526,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference1plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2564,8 +2564,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference2plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2602,8 +2602,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference3plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2851,8 +2851,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference1plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2889,8 +2889,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference2plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2927,8 +2927,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference3plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2960,7 +2960,7 @@ tab6.nonexceedence.flows <- function(percent_difference) {
   # Table 6: Non-Exceedance Flows
   Table6 <- matrix(c(percent_difference[1,62], percent_difference[1,63], percent_difference[1,64],percent_difference[1,65], percent_difference[1,66], percent_difference[1,61],percent_difference[2,62], percent_difference[2,63], percent_difference[2,64],percent_difference[2,65], percent_difference[2,66], percent_difference[2,61],percent_difference[3,62], percent_difference[3,63], percent_difference[3,64],percent_difference[3,65], percent_difference[3,66], percent_difference[3,61]), 
                    nrow = 6, ncol = 3);
-  colnames(Table6) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table6) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table6) = c("1% Non-Exceedance", "5% Non-Exceedance",
                        "50% Non-Exceedance", "95% Non-Exceedance",
                        "99% Non-Exceedance", "Sept. 10% Non-Exceedance");
@@ -2988,7 +2988,7 @@ tab5.period.high.flows <- function(percent_difference) {
                      percent_difference[3,51], percent_difference[3,56],
                      percent_difference[3,52], percent_difference[3,57]), 
                    nrow = 10, ncol = 3);
-  colnames(Table5) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table5) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table5) = c("Max. 1 Day Max", "Med. 1 Day Max", 
                        "Max. 3 Day Max", "Med. 3 Day Max",
                        "Max. 7 Day Max", "Med. 7 Day Max",
@@ -3024,7 +3024,7 @@ tab4.period.low.flows <- function(percent_difference) {
                      percent_difference[3,59], percent_difference[3,60],
                      percent_difference[3,58], percent_difference[3,67]), 
                    nrow = 14, ncol = 3);
-  colnames(Table4) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table4) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table4) = c("Min. 1 Day Min", "Med. 1 Day Min", 
                        "Min. 3 Day Min", "Med. 3 Day Min",
                        "Min. 7 Day Min", "Med. 7 Day Min",
@@ -3042,7 +3042,7 @@ tab3.monthly.high.flows <- function(percent_difference) {
   # Table 3: Monthly High Flow
   Table3 <- matrix(c(percent_difference[1,26], percent_difference[1,27], percent_difference[1,28],percent_difference[1,29], percent_difference[1,30], percent_difference[1,31],percent_difference[1,32], percent_difference[1,33], percent_difference[1,34],percent_difference[1,35], percent_difference[1,36], percent_difference[1,37],percent_difference[2,26],percent_difference[2,27], percent_difference[2,28], percent_difference[2,29],percent_difference[2,30], percent_difference[2,31], percent_difference[2,32],percent_difference[2,33], percent_difference[2,34], percent_difference[2,35],percent_difference[2,36], percent_difference[2,37],percent_difference[3,26], percent_difference[3,27], percent_difference[3,28],percent_difference[3,29], percent_difference[3,30], percent_difference[3,31],percent_difference[3,32], percent_difference[3,33], percent_difference[3,34],percent_difference[3,35], percent_difference[3,36], percent_difference[3,37]),
                    nrow = 12, ncol = 3);
-  colnames(Table3) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table3) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table3) = c("Jan. High Flow", "Feb. High Flow",
                        "Mar. High Flow", "Apr. High Flow",
                        "May High Flow", "Jun. High Flow",
@@ -3059,7 +3059,7 @@ tab2.monthly.average.flows <- function(percent_difference) {
   # Table 2: Monthly Average Flow
   Table2 <- matrix(c(percent_difference[1,1], percent_difference[1,14], percent_difference[1,15], percent_difference[1,16], percent_difference[1,17], percent_difference[1,18], percent_difference[1,19], percent_difference[1,20], percent_difference[1,21], percent_difference[1,22], percent_difference[1,23], percent_difference[1,24], percent_difference[1,25], percent_difference[2,1], percent_difference[2,14], percent_difference[2,15], percent_difference[2,16], percent_difference[2,17], percent_difference[2,18], percent_difference[2,19], percent_difference[2,20], percent_difference[2,21], percent_difference[2,22], percent_difference[2,23], percent_difference[2,24], percent_difference[2,25], percent_difference[3,1], percent_difference[3,14], percent_difference[3,15], percent_difference[3,16], percent_difference[3,17], percent_difference[3,18], percent_difference[3,19], percent_difference[3,20], percent_difference[3,21], percent_difference[3,22], percent_difference[3,23], percent_difference[3,24], percent_difference[3,25]),
                    nrow = 13, ncol = 3);
-  colnames(Table2) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table2) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table2) = c("Overall Mean Flow", 
                        "Jan. Mean Flow", "Feb. Mean Flow",
                        "Mar. Mean Flow", "Apr. Mean Flow",
@@ -3089,7 +3089,7 @@ tab1.monthly.low.flows <- function(percent_difference) {
                      percent_difference[3,8], percent_difference[3,9], percent_difference[3,10],
                      percent_difference[3,11], percent_difference[3,12], percent_difference[3,13]),
                    nrow = 12, ncol = 3);
-  colnames(Table1) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table1) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table1) = c("Jan. Low Flow", "Feb. Low Flow",
                        "Mar. Low Flow", "Apr. Low Flow",
                        "May Low Flow", "Jun. Low Flow",
@@ -3401,8 +3401,8 @@ fig4.baseflow.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1Baseflow', 'Scenario2Baseflow','Scenario1Flow', 'Scenario2Flow')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1Baseflow, color="VAHydro Scen. 1"), size=0.5) +
-    geom_line(aes(y=Scenario2Baseflow, color="VAHydro Scen. 2"), size=0.5)+
+    geom_line(aes(y=Scenario1Baseflow, color="Scen. 1"), size=0.5) +
+    geom_line(aes(y=Scenario2Baseflow, color="Scen. 2"), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3480,8 +3480,8 @@ fig3.flow.exceedance <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=0.8) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=0.8)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=0.8) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=0.8)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3557,8 +3557,8 @@ fig2.zoomed.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=0.7) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=0.7)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=0.7) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=0.7)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3622,8 +3622,8 @@ fig1.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=0.5) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=0.5)+
+    geom_line(aes(y=Scenario1, color="Scen. 1"), size=0.5) +
+    geom_line(aes(y=Scenario2, color="Scen. 2"), size=0.5)+
     fixtheyscale+
     theme_bw()+ 
     theme(legend.position="top", 
