@@ -3646,3 +3646,77 @@ fig1.hydrograph <- function(all_data) {
   ggsave("fig1.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
   print(paste('Fig. 1: Hydrograph saved at location ', as.character(getwd()), '/fig1.png', sep = ''))
 }
+
+fn_downstream <- function(riv.seg, AllSegList) {
+  library(stringr)
+  library(rapportools)
+  # Create dataframe for upstream and downstream segments based on code in string
+  ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 5))
+  colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'Downstream', 'Upstream')
+  ModelSegments$RiverSeg <- AllSegList
+  
+  # Pull out 4 digit codes in middle and end for upstream/downstream segments
+  i <- 1
+  for (i in 1:nrow(ModelSegments)){
+    
+    ModelSegments[i,2]<- str_sub(ModelSegments[i,1], start=5L, end=8L)
+    ModelSegments[i,3]<- str_sub(ModelSegments[i,1], start=10L, end=-1L)
+    i <- i + 1
+  }
+  
+  # Determine Downstream Segment ----------
+  j <- 1
+  for (j in 1:nrow(ModelSegments)){
+    Downstream <- which(ModelSegments$Middle==ModelSegments$Last[j])
+    if (length(Downstream)==0){
+      ModelSegments[j,4]  <- 'NA'
+    }else if (length(Downstream)!=0){
+      ModelSegments[j,4] <- as.character(ModelSegments[Downstream,1])
+    }
+    j<-j+1
+  }
+  # Determine Upstream Segment ----------
+  k<-1
+  for (k in 1:nrow(ModelSegments)){
+    Upstream <- which(as.character(ModelSegments$Downstream)==as.character(ModelSegments$RiverSeg[k]))
+    NumUp <- ModelSegments$RiverSeg[Upstream]
+    ModelSegments[k,5]<- paste(NumUp, collapse = '+')
+    if (is.empty(ModelSegments[k,5])==TRUE){
+      ModelSegments[k,5]<- 'NA'
+    } 
+    k<-k+1
+  }
+  SegDownstream <- as.numeric(which(as.character(ModelSegments$RiverSeg)==as.character(riv.seg)))
+  SegDownstream <- ModelSegments$Downstream[SegDownstream]
+  SegDownstream <- strsplit(as.character(SegDownstream), "\\+")
+  SegDownstream <- try(SegDownstream[[1]], silent = TRUE)
+  if (class(SegDownstream)=='try-error') {
+    SegDownstream <- NA
+  }
+  return(SegDownstream)
+}
+
+fn_ALL.downstream <- function(riv.seg, AllSegList) {
+  downstreamSeg <- fn_downstream(riv.seg, AllSegList)
+  Alldownstream <- character(0)
+  BranchedSegs <- character(0)
+  while (is.na(downstreamSeg[1])==FALSE || is.empty(BranchedSegs) == FALSE) {
+    while (is.na(downstreamSeg[1])==FALSE) {
+      num.segs <- as.numeric(length(downstreamSeg))
+      if (num.segs > 1) {
+        BranchedSegs[(length(BranchedSegs)+1):(length(BranchedSegs)+num.segs-1)] <- downstreamSeg[2:num.segs]
+        downstreamSeg <- downstreamSeg[1]
+      }
+      Alldownstream[length(Alldownstream)+1] <- downstreamSeg
+      downstreamSeg <- fn_downstream(downstreamSeg, AllSegList)
+    }
+    num.branched <- as.numeric(length(BranchedSegs))
+    downstreamSeg <- BranchedSegs[1]
+    BranchedSegs <- BranchedSegs[-1]
+  }
+  Alldownstream <- Alldownstream[which(Alldownstream != 'NA')]
+  if (is.empty(Alldownstream[1])==TRUE) {
+    Alldownstream <- 'NA'
+  }
+  return(Alldownstream)
+}

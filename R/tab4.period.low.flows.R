@@ -22,7 +22,7 @@ tab4.period.low.flows <- function(percent_difference) {
                      percent_difference[3,59], percent_difference[3,60],
                      percent_difference[3,58], percent_difference[3,67]), 
                    nrow = 14, ncol = 3);
-  colnames(Table4) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table4) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table4) = c("Min. 1 Day Min", "Med. 1 Day Min", 
                        "Min. 3 Day Min", "Med. 3 Day Min",
                        "Min. 7 Day Min", "Med. 7 Day Min",

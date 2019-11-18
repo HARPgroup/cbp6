@@ -14,7 +14,7 @@ tab1.monthly.low.flows <- function(percent_difference) {
                      percent_difference[3,8], percent_difference[3,9], percent_difference[3,10],
                      percent_difference[3,11], percent_difference[3,12], percent_difference[3,13]),
                    nrow = 12, ncol = 3);
-  colnames(Table1) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table1) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table1) = c("Jan. Low Flow", "Feb. Low Flow",
                        "Mar. Low Flow", "Apr. Low Flow",
                        "May Low Flow", "Jun. Low Flow",

@@ -16,7 +16,7 @@ tab5.period.high.flows <- function(percent_difference) {
                      percent_difference[3,51], percent_difference[3,56],
                      percent_difference[3,52], percent_difference[3,57]), 
                    nrow = 10, ncol = 3);
-  colnames(Table5) = c("VAHydro Scen. 1", "VAHydro Scen. 2", "Pct. Difference");
+  colnames(Table5) = c("Scen. 1", "Scen. 2", "Pct. Difference");
   rownames(Table5) = c("Max. 1 Day Max", "Med. 1 Day Max", 
                        "Max. 3 Day Max", "Med. 3 Day Max",
                        "Max. 7 Day Max", "Med. 7 Day Max",
