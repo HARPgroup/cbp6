@@ -141,7 +141,12 @@ fig5.combined.hydrograph(all_data)
 OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data)
 fig9a.residual.plot(all_data)
 fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
-fig10.runit.boxplot(riv.seg, run.id = run.id1, token, site, start.date, end.date)
+if (dat.source1 != 'vahydro') {
+  run.id <- run.id2
+} else {
+  run.id <- run.id1
+}
+fig10.runit.boxplot(riv.seg, run.id, token, site, start.date, end.date)
 figs11to13.smallest.diff.periods(all_data)
 ```
 
