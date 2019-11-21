@@ -3720,3 +3720,84 @@ fn_ALL.downstream <- function(riv.seg, AllSegList) {
   }
   return(Alldownstream)
 }
+
+link.cbp6.lrseg.hydrocodes = function(riv.seg, psk, site, token) {
+  # Get the hydro ID of the River Segment feature
+  hydrocode = paste0("vahydrosw_wshed_", riv.seg);
+  ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+  inputs <- list (
+    hydrocode = hydrocode,
+    bundle = 'watershed',
+    ftype = 'vahydro'
+  )
+  
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  riv.seg.hydro.id <- as.character(odata$hydroid)
+  
+  # create URL and output file for the table of land units linked to the river segment
+  dat.url <- paste0(site, '/watershed-contains-wkt/', riv.seg.hydro.id, '/landunit/', psk)
+  destfile <- paste0(getwd(), '\\lrsegs.wkt')
+  
+  # downloading, loading, and deleting table of land units linked to river segment
+  download.file(dat.url, destfile, method = 'libcurl')
+  land.units <- read.table(destfile, header = TRUE, sep = ',')
+  unlink(destfile)
+  
+  # getting list of cbp6 land-river segments linked to river segment
+  cbp6.landunits <- as.vector(land.units$hydrocode[land.units$Bundle..Type == 'Land Unit: cbp6_lrseg'])
+  
+  return(cbp6.landunits)
+}
+
+vahydro_import_lrseg_all_flows <- function(lr.seg.hydrocode, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
+  #set hydrocode equal to the ith hydrocode in the lrseg list
+  hydrocode = lr.seg.hydrocode
+  
+  #set inputs for lrseg property
+  ftype = 'cbp6_lrseg'
+  bundle = 'landunit'
+  inputs <- list (
+    hydrocode = hydrocode,
+    bundle = bundle,
+    ftype = ftype
+  )
+  
+  #property dataframe returned
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  
+  featureid <- odata[1,"hydroid"];
+  inputs <- list(
+    varkey = "om_class_cbp_eos_file",
+    featureid = featureid,
+    entity_type = "dh_feature",
+    propcode = "vahydro-1.0"
+  )
+  model <- getProperty(inputs, site, model)
+  
+  fin = as.numeric(as.character(model[1,]$pid))
+  inputs <- list(
+    varkey = "om_element_connection",
+    featureid = fin,
+    entity_type = "dh_properties"
+  )
+  prop <- getProperty(inputs, site, prop)
+  
+  # Manual elid
+  elid = as.numeric(as.character(prop[1,]$propvalue))
+  
+  omsite = site <- "http://deq2.bse.vt.edu"
+  dat <- fn_get_runfile(elid, run.id, site = omsite,  cached = FALSE);
+  
+  dat <- as.data.frame(dat)
+  
+  dat.trim <- dat[,c(9,146,15:143)]
+  rownames(dat.trim) <- NULL
+  
+  start.line <- as.numeric(which(dat.trim$thisdate == start.date))
+  end.line <- as.numeric(which(dat.trim$thisdate == end.date))
+  dat.trim <- dat.trim[start.line:end.line,]
+  
+  return(dat.trim)
+}
