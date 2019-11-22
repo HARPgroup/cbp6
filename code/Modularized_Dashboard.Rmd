@@ -145,8 +145,16 @@ for (i in 1:length(cbp6.landunits)) {
   tmp.tab <- tab.means.by.lrseg.flow(tmp.data)
   assign(namer, tmp.tab)
   
+  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
+  tmp.tab <- tab.zero.day.ratios.by.lrseg.flow(tmp.data)
+  assign(namer, tmp.tab)
+  
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
   tmp.tab <- tab.means.by.lrseg.land.use(tmp.data)
+  assign(namer, tmp.tab)
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
+  tmp.tab <- tab.zero.day.ratios.by.lrseg.land.use(tmp.data)
   assign(namer, tmp.tab)
 }
 
@@ -244,9 +252,22 @@ for (i in 1:length(cbp6.landunits)) {
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
+  
+  cat('\n')
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
+  tmp.tab <- get(namer)
+  cat(namer)
+  print(tmp.tab)
   cat("\n\n\\pagebreak\n")
   
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
+  tmp.tab <- get(namer)
+  cat(namer)
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
