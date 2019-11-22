@@ -5,17 +5,17 @@ pdf_document: default
 word_document: default
 html_document: default
 params: 
-  riv.seg: 'ZZ0_0000_0000'
-  dat.source1: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
+  riv.seg: 'YP3_6700_6670'
+  dat.source1: 'gage' #'vahydro', 'gage', or 'cbp_model'
   dat.source2: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
   start.date: '1984-01-01' #YYYY-MM-DD
-  end.date: '2000-12-31' #YYYY-MM-DD
+  end.date: '2014-12-31' #YYYY-MM-DD
   github_link: "C:\\Users\\danie\\Documents\\HARP\\GitHub"
   site: 'http://deq2.bse.vt.edu/d.dh'
   site.or.server: 'site'
   run.id1: '120'
-  run.id2: '121'
-  gage_number: '00000000'
+  run.id2: '120'
+  gage_number: '01671020'
   mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario1: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
@@ -122,6 +122,14 @@ all_data <- all_data_maker(data1, data2)
 ```
 
 ```{r,  include=FALSE}
+# linking land-river segments
+cbp6.landunits <- link.cbp6.lrseg.hydrocodes(riv.seg, psk, site, token)
+if (dat.source1 != 'vahydro') {
+  run.id <- run.id2
+} else {
+  run.id <- run.id1
+}
+
 # Creating all tables
 Table1 <- tab1.monthly.low.flows(percent_difference)
 Table2 <- tab2.monthly.average.flows(percent_difference)
@@ -129,6 +137,19 @@ Table3 <- tab3.monthly.high.flows(percent_difference)
 Table4 <- tab4.period.low.flows(percent_difference)
 Table5 <- tab5.period.high.flows(percent_difference)
 Table6 <- tab6.nonexceedence.flows(percent_difference)
+
+for (i in 1:length(cbp6.landunits)) {
+  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
+  tmp.tab <- tab.means.by.lrseg.flow(tmp.data)
+  assign(namer, tmp.tab)
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
+  tmp.tab <- tab.means.by.lrseg.land.use(tmp.data)
+  assign(namer, tmp.tab)
+}
+
 ```
 
 ```{r, include=FALSE}
@@ -141,11 +162,6 @@ fig5.combined.hydrograph(all_data)
 OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data)
 fig9a.residual.plot(all_data)
 fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
-if (dat.source1 != 'vahydro') {
-  run.id <- run.id2
-} else {
-  run.id <- run.id1
-}
 fig10.runit.boxplot(riv.seg, run.id, token, site, start.date, end.date)
 figs11to13.smallest.diff.periods(all_data)
 ```
@@ -155,7 +171,23 @@ description <- try(read_file(paste0(cbp6_link, "/gage_descriptions/", gage_numbe
 if (class(description) == "try-error") {
   description <- ""
 }
+
 description.cont <- paste0(" The average daily discharge change between scenario 1 and scenario 2 for the 20 year timespan was ", OUTPUT_MATRIXsaver[2] ,"%, with ", OUTPUT_MATRIXsaver[1], "% of its rolling three month time spans above 20% difference.")
+
+if (dat.source1 == 'gage' | dat.source2 == 'gage') {
+  if (dat.source1 == 'gage') {
+    gage.dat <- data1
+    scen.dat <- data2
+    nse.val <- nse(gage.dat, scen.dat)
+  } else if (dat.source2 == 'gage') {
+    scen.dat <- data1
+    gage.dat <- data2
+    nse.val <- nse(gage.dat, scen.dat)
+  }
+  description.cont2 <- paste0(' The Nash-Sutcliffe Efficiency of the model, calculated between the gage and scenario data, was found to be ', nse.val, '.')
+} else {
+  description.cont2 <- ''
+}
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width='95%'}
@@ -166,6 +198,7 @@ include_graphics("gis.png")
 # Loading written gage description
 cat(description)
 cat(description.cont)
+cat(description.cont2)
 ```
 
 \pagebreak
@@ -198,6 +231,27 @@ Table5
 ## Table 6: Non-Exceedance Flows
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 Table6
+```
+
+```{r pagebreak, results='asis', eval=is_latex_output(), echo = FALSE, warning=FALSE, message = FALSE}
+cat('\\pagebreak')
+```
+
+## Additional Tables: Land-River Segment Flow Metrics
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis"}
+for (i in 1:length(cbp6.landunits)) {
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
+  tmp.tab <- get(namer)
+  cat(namer)
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
+  tmp.tab <- get(namer)
+  cat(namer)
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+}
 ```
 
 ## Fig. 1: Hydrograph
