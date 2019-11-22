@@ -1,4 +1,4 @@
-fig1.hydrograph <- function(all_data) {
+fig1.hydrograph <- function(all_data, cn1='Scenario1', cn2='Scenario2') {
   # SETTING UP PLOTS
   # Basic hydrograph -----
   # Max/min for y axis scaling
@@ -35,11 +35,12 @@ fig1.hydrograph <- function(all_data) {
     fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
                                       labels=scaleFUN, limits=c(min,max))
   df <- data.frame(as.Date(all_data$Date), all_data$`Scenario 1 Flow`, all_data$`Scenario 2 Flow`); 
+  #colnames(df) <- c('Date', cn1, cn2)
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=0.5) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=0.5)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+
     theme_bw()+ 
     theme(legend.position="top", 

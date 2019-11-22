@@ -18,8 +18,8 @@ run.id1 <- 120
 run.id2 <- 121
 gage_number <- '01671020'
 
-data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
-data2 <- gage_import_data_cfs(gage_number, start.date, end.date)
+data2 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
+data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
 
 # TRIMMING DATA TO PROPER WATER YEAR
 data1 <- water_year_trim(data1)
@@ -27,7 +27,7 @@ data2 <- water_year_trim(data2)
 
 all_data <- all_data_maker(data1, data2)
 
-fig1.hydrograph(all_data)
+fig1.hydrograph(all_data, 'USGS', "VAHydro")
 #include_graphics("fig1.png")
 pp <- readPNG("fig1.png")
 plot.new() 
@@ -38,6 +38,7 @@ metrics2 <- metrics_calc_all(data2)
 percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
 
 Table1 <- tab1.monthly.low.flows(percent_difference)
+Table2 <- tab2.monthly.average.flows(percent_difference)
 
 
 #https://github.com/HARPgroup/cbp6/blob/master/code/automated_metric_2_vahydro.R
