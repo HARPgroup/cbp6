@@ -119,6 +119,7 @@ metrics2 <- metrics_calc_all(data2)
 percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
 
 all_data <- all_data_maker(data1, data2)
+
 ```
 
 ```{r,  include=FALSE}
@@ -129,6 +130,10 @@ if (dat.source1 != 'vahydro') {
 } else {
   run.id <- run.id1
 }
+
+# Downloading local runoff inflow data
+  lri.dat <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id, token, site, start.date, end.date);
+  lri.dat <- subset(lri.dat, lri.dat$date >= start.date & lri.dat$date <= end.date);
 
 # Creating all tables
 Table1 <- tab1.monthly.low.flows(percent_difference)
@@ -149,8 +154,16 @@ for (i in 1:length(cbp6.landunits)) {
   tmp.tab <- tab.zero.day.ratios.by.lrseg.flow(tmp.data)
   assign(namer, tmp.tab)
   
-  namer <- paste0('tab.', cbp6.landunits[i], '.iqr.by.lrseg.flow')
-  tmp.tab <- tab.iqr.by.lrseg.flow(tmp.data)
+  namer <- paste0('tab.SURO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'suro')
+  assign(namer, tmp.tab)
+  
+  namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'ifwo')
+  assign(namer, tmp.tab)
+  
+  namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'agwo')
   assign(namer, tmp.tab)
   
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
@@ -159,10 +172,6 @@ for (i in 1:length(cbp6.landunits)) {
   
   namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
   tmp.tab <- tab.zero.day.ratios.by.lrseg.land.use(tmp.data)
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.iqr.by.lrseg.land.use')
-  tmp.tab <- tab.iqr.by.lrseg.land.use(tmp.data)
   assign(namer, tmp.tab)
 }
 
@@ -178,7 +187,7 @@ fig5.combined.hydrograph(all_data)
 OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data)
 fig9a.residual.plot(all_data)
 fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
-fig10.runit.boxplot(riv.seg, run.id, token, site, start.date, end.date)
+fig10.runit.boxplot(lri.dat)
 figs11to13.smallest.diff.periods(all_data)
 ```
 
@@ -263,26 +272,31 @@ for (i in 1:length(cbp6.landunits)) {
   
   cat('\n')
   
-  namer <- paste0('tab.', cbp6.landunits[i], '.iqr.by.lrseg.flow')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  
-  cat('\n')
-  
   namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
   cat("\n\n\\pagebreak\n")
   
-  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
+  namer <- paste0('tab.SURO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
+  cat("\n\n\\pagebreak\n") 
   
-  namer <- paste0('tab.', cbp6.landunits[i], '.iqr.by.lrseg.land.use')
+  namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- get(namer)
+  cat(namer)
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n") 
+  
+  namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- get(namer)
+  cat(namer)
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n") 
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
