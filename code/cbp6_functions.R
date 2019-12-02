@@ -1436,7 +1436,7 @@ postProperty <- function(inputs,base_url,prop){
   } else {
     prop <- print("Multiple Properties Exist, Execution Halted")
   }
-  
+  return(prop)
 }
 
 getFeature <- function(inputs, token, base_url, feature){
@@ -4383,4 +4383,138 @@ tab.iqr.by.lrseg.flow.annual = function(tmp.data, flow.abbreviation) {
   
   tmp.tab <- kable(format(tmp.tab, drop0trailing = TRUE))
   return(tmp.tab)
+}
+
+tab.iqr.by.lrseg.lri.annual = function(lri.data) {
+  years <- unique(year(as.Date(lri.data$date)))
+  
+  tmp.tab <- as.data.frame(matrix(nrow = length(years), ncol = 1))
+  
+  for (i in 1:length(years)) {
+    tmp.dat <- lri.data[which(as.numeric(year(as.Date(lri.data$date))) == as.numeric(years[i])),]
+    
+    tmp.75pct <- signif(as.numeric(quantile(as.numeric(as.matrix(as.data.frame(lri.data$flow))), 0.75)), 3)
+    tmp.25pct <- signif(as.numeric(quantile(as.numeric(as.matrix(as.data.frame(lri.data$flow))), 0.25)), 3)
+    tmp.iqr <- signif(tmp.75pct - tmp.25pct, 3)
+    flow.tabler <- paste0(tmp.iqr, ' [', tmp.25pct, ', ', tmp.75pct, ']')
+    
+    tmp.tab[i, 1] <- flow.tabler
+  }
+  
+  colnames(tmp.tab) = c('IQR of Runit Flows (cfs/sq. mi) [25th, 75th]')
+  rownames(tmp.tab) = c(years)
+  
+  tmp.tab <- kable(format(tmp.tab, drop0trailing = TRUE))
+  return(tmp.tab)
+}
+
+fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name) {
+  flow.names <- grep(flow.abbreviation, colnames(tmp.data), value = TRUE)
+  date.names <- grep('thisdate', colnames(tmp.data), value = TRUE)
+  flow.cols <- which(colnames(tmp.data) %in% flow.names)
+  date.cols <- which(colnames(tmp.data) %in% date.names)
+  all.cols <- c(date.cols, flow.cols)
+  flow.data <- as.data.frame(tmp.data[,all.cols])
+  
+  date.col <- as.Date(flow.data$thisdate)
+  flow.matrix <- flow.data[,-1]
+  for (i in 1:ncol(flow.matrix)) {
+    flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
+  }
+  sum.flow.col <- rowSums(flow.matrix)
+  summed.data <- data.frame(date.col, sum.flow.col)
+  colnames(summed.data) <- c('date', 'flow')
+  
+  boxplot(as.numeric(summed.data$flow) ~ year(summed.data$date), outline = FALSE, ylab = 'Unit Flow (cfs)', xlab = 'Date')
+  dev.copy(png, paste0('fig.', flow.abbreviation, '.', lrseg.name, '.png'))
+  dev.off()
+  print(paste('Fig.: ',  flow.abbreviation, ' Boxplot for lrseg ', lrseg.name, ' saved at location ', as.character(getwd()), '/fig', flow.abbreviation, '.', lrseg.name, '.png', sep = ''))
+}
+
+fig.boxplot.by.flow.for.dash <- function(tmp.data, flow.abbreviation) {
+  flow.names <- grep(flow.abbreviation, colnames(tmp.data), value = TRUE)
+  date.names <- grep('thisdate', colnames(tmp.data), value = TRUE)
+  flow.cols <- which(colnames(tmp.data) %in% flow.names)
+  date.cols <- which(colnames(tmp.data) %in% date.names)
+  all.cols <- c(date.cols, flow.cols)
+  flow.data <- as.data.frame(tmp.data[,all.cols])
+  
+  date.col <- as.Date(flow.data$thisdate)
+  flow.matrix <- flow.data[,-1]
+  for (i in 1:ncol(flow.matrix)) {
+    flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
+  }
+  sum.flow.col <- rowSums(flow.matrix)
+  summed.data <- data.frame(date.col, sum.flow.col)
+  colnames(summed.data) <- c('date', 'flow')
+  
+  plot <- boxplot(as.numeric(summed.data$flow) ~ year(summed.data$date), outline = FALSE, ylab = 'Unit Flow (cfs)', xlab = 'Date')
+  return(plot)
+}
+
+get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token) {
+  # GETTING MODEL DATA FROM VA HYDRO
+  hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
+  ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+  inputs <- list(
+    hydrocode = hydrocode,
+    bundle = 'watershed',
+    ftype = 'vahydro'
+  )
+  
+  #property dataframe returned
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  hydroid <- odata[1,"hydroid"];
+  fname <- as.character(odata[1,]$name);
+  print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
+  
+  # GETTING SCENARIO MODEL ELEMENT FROM VA HYDRO
+  inputs <- list(
+    varkey = "om_model_element",
+    featureid = hydroid,
+    entity_type = "dh_feature",
+    propcode = mod.scenario
+  )
+  scenario <- getProperty(inputs, site, scenario)
+  
+  # DETERMINING PROPNAME AND PROPCODE FOR SCENARIO PROPERTY
+  if (dat.source == 'cbp_model') {
+    scen.propname <- mod.scenario
+    scen.propcode <- mod.scenario
+  } else if (dat.source == 'vahydro') {
+    scen.propname <- paste0('run_', run.id)
+    scen.propcode <- paste0('vahydro_', mod.scenario)
+  } else {
+    stop('Error: data source is neither "cbp_model" nor "vahydro"')
+  }
+  
+  
+  
+  # GETTING SCENARIO PROPERTY FROM VA HYDRO
+  sceninfo <- list(
+    varkey = 'om_scenario',
+    propname = scen.propname,
+    featureid = as.integer(as.character(scenario$pid)),
+    entity_type = "dh_properties",
+    # propvalue = 'finished',
+    propvalue = 0,
+    propcode = scen.propcode,
+    startdate = NULL,
+    enddate = NULL
+    # startdate = start.date,
+    # enddate = end.date
+  )
+  scenprop <- getProperty(sceninfo, site, scenprop)
+  
+  # POST PROPERTY IF IT IS NOT YET CREATED
+  if (identical(scenprop, FALSE)) {
+    # create
+    sceninfo = sceninfo
+    sceninfo$pid = NULL
+  } else {
+    sceninfo$pid = scenprop$pid
+  }
+  
+  postProperty(sceninfo,base_url = site,sceninfo) 
 }
