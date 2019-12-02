@@ -37,8 +37,15 @@ metrics1 <- metrics_calc_all(data1)
 metrics2 <- metrics_calc_all(data2)
 percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
 
-Table1 <- tab1.monthly.low.flows(percent_difference)
-Table2 <- tab2.monthly.average.flows(percent_difference)
+Table1 <- tab1.monthly.low.flows(percent_difference, 'USGS', "VAHydro")
+Table2 <- tab2.monthly.average.flows(percent_difference, 'USGS', "VAHydro")
+Table1
+Table2
 
+ro2 <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id1, token, site, start.date, end.date)
+fig10.runit.boxplot(riv.seg, run.id1, token, site, start.date, end.date)
+pp <- readPNG("fig10.png")
+plot.new() 
+rasterImage(pp,0,0,1,1)
 
 #https://github.com/HARPgroup/cbp6/blob/master/code/automated_metric_2_vahydro.R
