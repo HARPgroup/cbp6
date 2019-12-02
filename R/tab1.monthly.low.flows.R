@@ -1,4 +1,4 @@
-tab1.monthly.low.flows <- function(percent_difference) {
+tab1.monthly.low.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 1: Monthly Low Flow
   Table1 <- matrix(c(percent_difference[1,2], percent_difference[1,3],
                      percent_difference[1,4], percent_difference[1,5], percent_difference[1,6],
@@ -14,7 +14,7 @@ tab1.monthly.low.flows <- function(percent_difference) {
                      percent_difference[3,8], percent_difference[3,9], percent_difference[3,10],
                      percent_difference[3,11], percent_difference[3,12], percent_difference[3,13]),
                    nrow = 12, ncol = 3);
-  colnames(Table1) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table1) = c(cn1, cn2, "Pct. Difference");
   rownames(Table1) = c("Jan. Low Flow", "Feb. Low Flow",
                        "Mar. Low Flow", "Apr. Low Flow",
                        "May Low Flow", "Jun. Low Flow",
