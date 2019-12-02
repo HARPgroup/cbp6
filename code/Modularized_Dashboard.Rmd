@@ -175,6 +175,9 @@ for (i in 1:length(cbp6.landunits)) {
   assign(namer, tmp.tab)
 }
 
+wd <- getwd()
+tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
+
 ```
 
 ```{r, include=FALSE}
@@ -263,8 +266,12 @@ cat('\\pagebreak')
 ```
 
 ## Additional Tables: Land-River Segment Flow Metrics
-```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis", out.width="150%", fig.align='center'}
+
+
 for (i in 1:length(cbp6.landunits)) {
+    tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
+    
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
   tmp.tab <- get(namer)
   cat(namer)
@@ -282,18 +289,33 @@ for (i in 1:length(cbp6.landunits)) {
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  cat(paste0('Fig: Boxplot of Annual SURO Flows for LR-seg ', cbp6.landunits[i]))
+  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'suro')
+  plot
   cat("\n\n\\pagebreak\n") 
   
   namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  cat(paste0('Fig: Boxplot of Annual IFWO Flows for LR-seg ', cbp6.landunits[i]))
+  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'ifwo')
+  plot
   cat("\n\n\\pagebreak\n") 
   
   namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
   tmp.tab <- get(namer)
   cat(namer)
   print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  cat(paste0('Fig: Boxplot of Annual AGWO Flows for LR-seg ', cbp6.landunits[i]))
+  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'agwo')
+  plot
   cat("\n\n\\pagebreak\n") 
   
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
@@ -363,6 +385,8 @@ include_graphics("fig9B.png")
 # Fig. 10: VA Hydro Scen. 1 Runit Values (Outliers Excluded)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
 include_graphics("fig10.png")
+cat('\n')
+tab.iqr.by.lrseg.lri.annual
 ```
 
 # Fig. 11: Smallest Difference Period
