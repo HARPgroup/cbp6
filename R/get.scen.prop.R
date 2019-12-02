@@ -43,24 +43,23 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
     propname = scen.propname,
     featureid = as.integer(as.character(scenario$pid)),
     entity_type = "dh_properties",
-    # propvalue = 'finished',
     propvalue = 0,
     propcode = scen.propcode,
     startdate = NULL,
     enddate = NULL
-    # startdate = start.date,
-    # enddate = end.date
+    # startdate = as.numeric(as.POSIXct(start.date, origin = "1970-01-01", tz = "GMT")),
+    # enddate = as.numeric(as.POSIXct(end.date, origin = "1970-01-01", tz = "GMT"))
+    # at the moment, there are bugs in startdate and enddate on vahydro
   )
   scenprop <- getProperty(sceninfo, site, scenprop)
   
   # POST PROPERTY IF IT IS NOT YET CREATED
   if (identical(scenprop, FALSE)) {
     # create
-    sceninfo = sceninfo
     sceninfo$pid = NULL
   } else {
     sceninfo$pid = scenprop$pid
   }
   
-  postProperty(sceninfo,base_url = site,sceninfo) 
+  postProperty(sceninfo, base_url = site,sceninfo) 
 }
