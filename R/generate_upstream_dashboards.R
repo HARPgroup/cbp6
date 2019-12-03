@@ -157,7 +157,7 @@ generate_upstream_dashboards <- function(riv.seg, dat.source1, dat.source2, star
   
   all.upstream.segs <- fn_ALL.upstream(riv.seg, AllSegList)
   
-  while (i <= length(all.upstream.segs)) {
+  for(i in 1:length(all.upstream.segs)) {
     print(paste('Generating dashboard for segment', i, 'of', length(all.upstream.segs), sep = ' '))
     riv.seg <- all.upstream.segs[i] #input for model data import
     rmarkdown::render(paste0("Modularized_Dashboard.Rmd"), "pdf_document", output_dir = dash.output.dir, output_file = paste0(riv.seg, ".pdf"), 
