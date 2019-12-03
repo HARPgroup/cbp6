@@ -49,7 +49,9 @@ source(paste(github_link,"auth.private", sep = "/"));#load rest username and pas
 source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
 token <- rest_token(site, token, rest_uname, rest_pw);
 options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
+```
 
+```{r, include = FALSE}
 # LOADING DATA ------------------------------------------------------------
 if (dat.source1 == 'vahydro') {
   data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
