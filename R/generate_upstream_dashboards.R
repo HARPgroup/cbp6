@@ -29,11 +29,11 @@ generate_upstream_dashboards <- function(riv.seg, dat.source1, dat.source2, star
   }
   
   if (dat.source2 == 'vahydro') {
-    pt1 = paste0('run_', run.id2)
+    pt2 = paste0('run_', run.id2)
   } else if (dat.source2 == 'gage') {
     stop('gage cannot be used in this automated dashboard creator')
   } else if (dat.source2 == 'cbp_model') {
-    pt1 = mod.scenario2
+    pt2 = mod.scenario2
   }
   
   output.folder.name <- paste0(pt1, '_vs_', pt2)
