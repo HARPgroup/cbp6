@@ -203,7 +203,7 @@ fig9a.residual.plot(all_data)
 fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
 fig10.runit.boxplot(lri.dat)
 figs11to13.smallest.diff.periods(all_data)
-fig.gis(riv.seg, site_number, site_url = site, cbp6_link, token)
+fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token)
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE, include=FALSE}
