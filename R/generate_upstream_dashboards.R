@@ -169,12 +169,12 @@ generate_upstream_dashboards <- function(riv.seg, dat.source1, dat.source2, star
   for(i in 1:length(all.upstream.segs)) {
     print(paste('Generating dashboard for segment', i, 'of', length(all.upstream.segs), sep = ' '))
     riv.seg <- all.upstream.segs[i] #input for model data import
-    rmarkdown::render(paste0("Modularized_Dashboard_Server.Rmd"), "pdf_document", output_dir = dash.output.dir, output_file = paste0(riv.seg, ".pdf"), 
+    rmarkdown::render(paste0("Modularized_Dashboard.Rmd"), "pdf_document", output_dir = dash.output.dir, output_file = paste0(riv.seg, ".pdf"), 
                       params = list(riv.seg = riv.seg, dat.source1 = dat.source1, dat.source2 = dat.source2,
                                     start.date = start.date, end.date = end.date, github_link = github_link,
                                     site = site, site.or.server = site.or.server, run.id1 = run.id1,
                                     run.id2 = run.id2, gage_number = gage_number, mod.phase1 = mod.phase1,
                                     mod.scenario1 = mod.scenario1, mod.phase2 = mod.phase2, 
-                                    mod.scenario2 = mod.scenario2, token = token))
+                                    mod.scenario2 = mod.scenario2))
   }
 }
