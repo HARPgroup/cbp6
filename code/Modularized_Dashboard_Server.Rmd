@@ -57,7 +57,9 @@ token1 = token
 # LOADING DATA ------------------------------------------------------------
 
 if (dat.source1 == 'vahydro') {
+  print('STARTED')
   data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token1, site, start.date, end.date)
+  print('ENDED')
 } else if (dat.source1 == 'gage') {
   data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
 } else if (dat.source1 == 'cbp_model') {
