@@ -61,5 +61,10 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
     sceninfo$pid = scenprop$pid
   }
   
-  postProperty(sceninfo, base_url = site,sceninfo) 
+  postProperty(sceninfo, site, scenprop) 
+  
+  # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
+  scenprop <- getProperty(sceninfo, site, scenprop)
+  
+  return(as.numeric(scenprop$pid))
 }

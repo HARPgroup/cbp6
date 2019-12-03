@@ -6,15 +6,15 @@ word_document: default
 html_document: default
 params: 
   riv.seg: 'JU3_7400_7510'
-  dat.source1: 'gage' #'vahydro', 'gage', or 'cbp_model'
+  dat.source1: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
   dat.source2: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
   start.date: '1984-01-01' #YYYY-MM-DD
-  end.date: '2014-12-31' #YYYY-MM-DD
+  end.date: '2000-12-31' #YYYY-MM-DD
   github_link: "C:\\Users\\danie\\Documents\\HARP\\GitHub"
   site: 'http://deq2.bse.vt.edu/d.dh'
   site.or.server: 'site'
   run.id1: '120'
-  run.id2: '120'
+  run.id2: '121'
   gage_number: '02018000'
   mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario1: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
@@ -119,6 +119,14 @@ metrics2 <- metrics_calc_all(data2)
 percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
 
 all_data <- all_data_maker(data1, data2)
+
+# GETTING/CREATING SCENARIO PROPERTIES FROM VA HYDRO
+scenprop1 <- get.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
+scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, dat.source2, run.id2, start.date, end.date, site, token)
+
+# POSTING METRICS TO SCENARIO PROPERTIES ON VA HYDRO
+vahydro_post_all_metrics_to_scenprop(scenprop1, metrics1, site, token)
+vahydro_post_all_metrics_to_scenprop(scenprop2, metrics2, site, token)
 
 ```
 
