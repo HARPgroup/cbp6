@@ -2059,12 +2059,12 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   #additions to map -------------
   map <- map + 
     #ADD NORTH ARROW AND SCALE BAR
-    north(bbDF, location = 'topleft', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', transform = TRUE, model = 'WGS84', st.bottom=FALSE, st.size = 3.5,
              anchor = c(
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))+
+    north(bbDF, location = 'topleft', symbol = 12, scale=0.1)+
     scale_x_continuous(limits = c(extent$x))+
     scale_y_continuous(limits = c(extent$y))+
     

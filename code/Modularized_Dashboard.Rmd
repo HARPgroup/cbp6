@@ -15,7 +15,7 @@ params:
   site.or.server: 'site'
   run.id1: '120'
   run.id2: '121'
-  gage_number: '02018000'
+  gage_number: '00000000'
   mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario1: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
@@ -203,7 +203,7 @@ fig9a.residual.plot(all_data)
 fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
 fig10.runit.boxplot(lri.dat)
 figs11to13.smallest.diff.periods(all_data)
-# fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token)
+fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token)
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE, include=FALSE}
