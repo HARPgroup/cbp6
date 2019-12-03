@@ -20,7 +20,7 @@ params:
   mod.scenario1: mod.scenario1 #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: mod.phase2 # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario2: mod.scenario2 #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
-  token1: token2
+  token: token
   
 ---
   
@@ -41,7 +41,7 @@ mod.phase1 <- params$mod.phase1
 mod.scenario1 <- params$mod.scenario1
 mod.phase2 <- params$mod.phase2
 mod.scenario2 <- params$mod.scenario2
-token <- params$token1
+token <- params$token
 ```
 
 ```{r, include=FALSE}
@@ -49,12 +49,15 @@ cbp6_link <- paste0(github_link, "/cbp6/code");
 source(paste0(cbp6_link,"/cbp6_functions.R"))
 source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in
 source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
+
+token1 = token
 ```
 
 ```{r, include = FALSE}
 # LOADING DATA ------------------------------------------------------------
+
 if (dat.source1 == 'vahydro') {
-  data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
+  data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token1, site, start.date, end.date)
 } else if (dat.source1 == 'gage') {
   data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
 } else if (dat.source1 == 'cbp_model') {
@@ -66,7 +69,7 @@ if (dat.source1 == 'vahydro') {
 }
 
 if (dat.source2 == 'vahydro') {
-  data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
+  data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token1, site, start.date, end.date)
 } else if (dat.source2 == 'gage') {
   data2 <- gage_import_data_cfs(gage_number, start.date, end.date)
 } else if (dat.source2 == 'cbp_model') {
@@ -113,7 +116,7 @@ output:
 
 ---
   
-  ```{r,  include=FALSE}
+```{r,  include=FALSE}
 # Creating Data Frame with calculated metrics 
 metrics1 <- metrics_calc_all(data1)
 metrics2 <- metrics_calc_all(data2)
@@ -123,18 +126,18 @@ percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
 all_data <- all_data_maker(data1, data2)
 
 # GETTING/CREATING SCENARIO PROPERTIES FROM VA HYDRO
-scenprop1 <- get.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
-scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, dat.source2, run.id2, start.date, end.date, site, token)
+scenprop1 <- get.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token1)
+scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, dat.source2, run.id2, start.date, end.date, site, token1)
 
 # POSTING METRICS TO SCENARIO PROPERTIES ON VA HYDRO
-vahydro_post_all_metrics_to_scenprop(scenprop1, metrics1, site, token)
-vahydro_post_all_metrics_to_scenprop(scenprop2, metrics2, site, token)
+vahydro_post_all_metrics_to_scenprop(scenprop1, metrics1, site, token1)
+vahydro_post_all_metrics_to_scenprop(scenprop2, metrics2, site, token1)
 
 ```
 
 ```{r,  include=FALSE}
 # linking land-river segments
-cbp6.landunits <- link.cbp6.lrseg.hydrocodes(riv.seg, psk, site, token)
+cbp6.landunits <- link.cbp6.lrseg.hydrocodes(riv.seg, psk, site, token1)
 if (dat.source1 != 'vahydro') {
   run.id <- run.id2
 } else {
@@ -142,7 +145,7 @@ if (dat.source1 != 'vahydro') {
 }
 
 # Downloading local runoff inflow data
-lri.dat <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id, token, site, start.date, end.date);
+lri.dat <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id, token1, site, start.date, end.date);
 lri.dat <- subset(lri.dat, lri.dat$date >= start.date & lri.dat$date <= end.date);
 
 # Creating all tables
@@ -154,7 +157,7 @@ Table5 <- tab5.period.high.flows(percent_difference)
 Table6 <- tab6.nonexceedence.flows(percent_difference)
 
 for (i in 1:length(cbp6.landunits)) {
-  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
+  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token1, site, start.date, end.date)
   tmp.data <- tmp.data[complete.cases(tmp.data),]
   
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
@@ -200,7 +203,7 @@ fig4.baseflow.hydrograph(all_data)
 fig5.combined.hydrograph(all_data)
 OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data)
 fig9a.residual.plot(all_data)
-fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
+fig9b.area.weighted.residual.plot(all_data, riv.seg, token1, site)
 fig10.runit.boxplot(lri.dat)
 figs11to13.smallest.diff.periods(all_data)
 ```
@@ -281,7 +284,7 @@ cat('\\pagebreak')
 
 
 for (i in 1:length(cbp6.landunits)) {
-  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
+  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token1, site, start.date, end.date)
   
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
   tmp.tab <- get(namer)
