@@ -163,7 +163,7 @@ generate_upstream_dashboards <- function(riv.seg, dat.source1, dat.source2, star
   
   #load rest username and password, contained in auth.private file
   
-  token <- rest_token(site, token, rest_uname, rest_pw);
+  token2 <- rest_token(site, token2, rest_uname, rest_pw);
   options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
   
   for(i in 1:length(all.upstream.segs)) {
@@ -175,6 +175,6 @@ generate_upstream_dashboards <- function(riv.seg, dat.source1, dat.source2, star
                                     site = site, site.or.server = site.or.server, run.id1 = run.id1,
                                     run.id2 = run.id2, gage_number = gage_number, mod.phase1 = mod.phase1,
                                     mod.scenario1 = mod.scenario1, mod.phase2 = mod.phase2, 
-                                    mod.scenario2 = mod.scenario2, token = token))
+                                    mod.scenario2 = mod.scenario2, token1 = token2))
   }
 }

@@ -20,7 +20,7 @@ params:
   mod.scenario1: mod.scenario1 #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: mod.phase2 # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario2: mod.scenario2 #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
-  token: token
+  token1: token2
   
 ---
   
@@ -41,7 +41,7 @@ mod.phase1 <- params$mod.phase1
 mod.scenario1 <- params$mod.scenario1
 mod.phase2 <- params$mod.phase2
 mod.scenario2 <- params$mod.scenario2
-token <- params$token
+token <- params$token1
 ```
 
 ```{r, include=FALSE}
