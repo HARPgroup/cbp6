@@ -371,6 +371,7 @@ for (i in 1:length(cbp6.landunits)) {
 for (i in 1:length(cbp6.landunits)) {
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
   tmp.tab <- get(namer)
+  cat('\n')
   cat(paste0('## Tab: Mean Flows by Flow Type: LR-Seg ', cbp6.landunits[i]))
   print(tmp.tab)
   cat('\n')
@@ -389,6 +390,7 @@ for (i in 1:length(cbp6.landunits)) {
   
   namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
   tmp.tab <- get(namer)
+  cat('\n')
   cat(paste0('## Tab: IQR for InterFloW Outflow: LR-Seg ', cbp6.landunits[i]))
   print(tmp.tab)
   cat("\n")
@@ -401,12 +403,14 @@ for (i in 1:length(cbp6.landunits)) {
   
   namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
   tmp.tab <- get(namer)
+  cat('\n')
   cat(paste0('## Tab: Mean Flows by Land Use: LR-Seg ', cbp6.landunits[i]))
   print(tmp.tab)
   cat("\n\n\\pagebreak\n")
   
   namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
   tmp.tab <- get(namer)
+  cat('\n')
   cat(paste0('## Tab: Ratio of Zero-Flow Days by Land Use: LR-Seg ', cbp6.landunits[i]))
   print(tmp.tab)
   cat("\n\n\\pagebreak\n")
@@ -419,16 +423,19 @@ for (i in 1:length(cbp6.landunits)) {
   namer <- paste0('data_', cbp6.landunits[i])
   tmp.data <- get(namer)
   
+  cat('\n')
   cat(paste0('## Fig: Annual SURO Flows for LR-seg ', cbp6.landunits[i]))
   plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'suro')
   plot
   cat("\n\n\\pagebreak\n") 
   
+  cat('\n')
   cat(paste0('## Fig: Annual IFWO Flows for LR-seg ', cbp6.landunits[i]))
   plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'ifwo')
   plot
   cat("\n\n\\pagebreak\n") 
   
+  cat('\n')
   cat(paste0('## Fig: Annual AGWO Flows for LR-seg ', cbp6.landunits[i]))
   plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'agwo')
   plot
