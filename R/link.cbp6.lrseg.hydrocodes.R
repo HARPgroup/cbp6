@@ -1,9 +1,9 @@
-source('C:\\Users\\danie\\Documents\\HARP\\GitHub\\auth.private')
-riv.seg <- 'JU3_7400_7510'
-site <- 'http://deq2.bse.vt.edu/d.dh'
-source('C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\code\\cbp6_functions.R')
-source('C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\code\\fn_vahydro-1.0.R')
-token <- rest_token(site, token, rest_uname, rest_pw)
+# source('C:\\Users\\danie\\Documents\\HARP\\GitHub\\auth.private')
+# riv.seg <- 'JU3_7400_7510'
+# site <- 'http://deq2.bse.vt.edu/d.dh'
+# source('C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\code\\cbp6_functions.R')
+# source('C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\code\\fn_vahydro-1.0.R')
+# token <- rest_token(site, token, rest_uname, rest_pw)
 
 link.cbp6.lrseg.hydrocodes = function(riv.seg, psk, site, token) {
   # Get the hydro ID of the River Segment feature

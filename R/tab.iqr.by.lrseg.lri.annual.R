@@ -9,8 +9,8 @@ tab.iqr.by.lrseg.lri.annual = function(lri.data) {
   for (i in 1:length(years)) {
     tmp.dat <- lri.data[which(as.numeric(year(as.Date(lri.data$date))) == as.numeric(years[i])),]
     
-    tmp.75pct <- signif(as.numeric(quantile(as.numeric(as.matrix(as.data.frame(lri.data$flow))), 0.75)), 3)
-    tmp.25pct <- signif(as.numeric(quantile(as.numeric(as.matrix(as.data.frame(lri.data$flow))), 0.25)), 3)
+    tmp.75pct <- signif(as.numeric(quantile(as.numeric(as.matrix(as.data.frame(tmp.dat$flow))), 0.75)), 3)
+    tmp.25pct <- signif(as.numeric(quantile(as.numeric(as.matrix(as.data.frame(tmp.dat$flow))), 0.25)), 3)
     tmp.iqr <- signif(tmp.75pct - tmp.25pct, 3)
     flow.tabler <- paste0(tmp.iqr, ' [', tmp.25pct, ', ', tmp.75pct, ']')
     
