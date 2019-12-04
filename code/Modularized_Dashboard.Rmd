@@ -49,6 +49,10 @@ source(paste(github_link,"auth.private", sep = "/"));#load rest username and pas
 source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
 token <- rest_token(site, token, rest_uname, rest_pw);
 options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
+
+if (gage_number == FALSE | is.na(gage_number) == TRUE) {
+  gage_number <- '00000000'
+}
 ```
 
 ```{r, include = FALSE}
@@ -277,73 +281,6 @@ Table6
 cat('\\pagebreak')
 ```
 
-## Additional Tables: Land-River Segment Flow Metrics
-```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis", out.width="150%", fig.align='center'}
-
-
-for (i in 1:length(cbp6.landunits)) {
-    tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
-    
-  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  
-  cat('\n')
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
-  
-  namer <- paste0('tab.SURO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
-  
-  cat(paste0('Fig: Boxplot of Annual SURO Flows for LR-seg ', cbp6.landunits[i]))
-  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'suro')
-  plot
-  cat("\n\n\\pagebreak\n") 
-  
-  namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
-  
-  cat(paste0('Fig: Boxplot of Annual IFWO Flows for LR-seg ', cbp6.landunits[i]))
-  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'ifwo')
-  plot
-  cat("\n\n\\pagebreak\n") 
-  
-  namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
-  
-  cat(paste0('Fig: Boxplot of Annual AGWO Flows for LR-seg ', cbp6.landunits[i]))
-  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'agwo')
-  plot
-  cat("\n\n\\pagebreak\n") 
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
-  tmp.tab <- get(namer)
-  cat(namer)
-  print(tmp.tab)
-  cat("\n\n\\pagebreak\n")
-}
-```
-
 ## Fig. 1: Hydrograph
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
 include_graphics("fig1.png")
@@ -395,9 +332,10 @@ include_graphics("fig9B.png")
 ```
 
 # Fig. 10: VA Hydro Scen. 1 Runit Values (Outliers Excluded)
-```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%", results='asis', fig.align='center'}
 include_graphics("fig10.png")
 cat('\n')
+cat(paste0('## Tab: Annual IQR of Local Runoff Inflows'))
 tab.iqr.by.lrseg.lri.annual
 ```
 
@@ -414,4 +352,86 @@ include_graphics("fig12.png")
 # Fig. 13: Third Smallest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
 include_graphics("fig13.png")
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis", out.width="150%", fig.align='center'}
+cat("\n\n\\pagebreak\n")
+```
+
+```{r, include=FALSE}
+for (i in 1:length(cbp6.landunits)) {
+  namer <- paste0('data_', cbp6.landunits[i])
+  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
+  assign(namer, tmp.data)
+}
+```
+
+# Additional Tables: Land-River Segment Flow Metrics
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis", out.width="150%", fig.align='center'}
+for (i in 1:length(cbp6.landunits)) {
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: Mean Flows by Flow Type: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat('\n')
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: Ratio of Zero-Flow Days by Flow Type: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat("\n")
+  
+  namer <- paste0('tab.SURO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: IQR for SURface Outflow: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: IQR for InterFloW Outflow: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat("\n")
+  
+  namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: IQR for Active GroundWater Outflow: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: Mean Flows by Land Use: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+  
+  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
+  tmp.tab <- get(namer)
+  cat(paste0('## Tab: Ratio of Zero-Flow Days by Land Use: LR-Seg ', cbp6.landunits[i]))
+  print(tmp.tab)
+  cat("\n\n\\pagebreak\n")
+}
+```
+
+# Additional Figures: Land-River Segment Flow Boxplots
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis", out.width="150%", fig.align='center'}
+for (i in 1:length(cbp6.landunits)) {
+  namer <- paste0('data_', cbp6.landunits[i])
+  tmp.data <- get(namer)
+  
+  cat(paste0('## Fig: Annual SURO Flows for LR-seg ', cbp6.landunits[i]))
+  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'suro')
+  plot
+  cat("\n\n\\pagebreak\n") 
+  
+  cat(paste0('## Fig: Annual IFWO Flows for LR-seg ', cbp6.landunits[i]))
+  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'ifwo')
+  plot
+  cat("\n\n\\pagebreak\n") 
+  
+  cat(paste0('## Fig: Annual AGWO Flows for LR-seg ', cbp6.landunits[i]))
+  plot <- fig.boxplot.by.flow.for.dash(tmp.data, flow.abbreviation = 'agwo')
+  plot
+  cat("\n\n\\pagebreak\n") 
+}
 ```
