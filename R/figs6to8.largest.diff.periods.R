@@ -1,4 +1,4 @@
-figs6to8.largest.diff.periods <- function(all_data) {
+figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is high
   # It does so for the top three highest difference periods
   
@@ -219,8 +219,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference1plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -257,8 +257,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference2plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -295,8 +295,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference3plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),

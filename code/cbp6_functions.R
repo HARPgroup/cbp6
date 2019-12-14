@@ -2334,7 +2334,7 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   return(dat.trim)
 }
 
-figs11to13.smallest.diff.periods <- function(all_data) {
+figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is low
   # It does so for the top three lowest difference periods
   
@@ -2555,8 +2555,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference1plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2593,8 +2593,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference2plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2631,8 +2631,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference3plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2659,7 +2659,8 @@ figs11to13.smallest.diff.periods <- function(all_data) {
   print(paste('Fig. 13: Third Smallest Difference Period saved at location ', as.character(getwd()), '/fig13.png', sep = ''))
 }
 
-figs6to8.largest.diff.periods <- function(all_data) {
+
+figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is high
   # It does so for the top three highest difference periods
   
@@ -2880,8 +2881,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference1plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2918,8 +2919,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference2plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2956,8 +2957,8 @@ figs6to8.largest.diff.periods <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   difference3plot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=1) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=1)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     theme_bw()+ 
     theme(legend.position="top", 
           legend.title=element_blank(),
@@ -2985,11 +2986,11 @@ figs6to8.largest.diff.periods <- function(all_data) {
   return(OUTPUT_MATRIXsaver)
 }
 
-tab6.nonexceedence.flows <- function(percent_difference) {
+tab6.nonexceedence.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 6: Non-Exceedance Flows
   Table6 <- matrix(c(percent_difference[1,62], percent_difference[1,63], percent_difference[1,64],percent_difference[1,65], percent_difference[1,66], percent_difference[1,61],percent_difference[2,62], percent_difference[2,63], percent_difference[2,64],percent_difference[2,65], percent_difference[2,66], percent_difference[2,61],percent_difference[3,62], percent_difference[3,63], percent_difference[3,64],percent_difference[3,65], percent_difference[3,66], percent_difference[3,61]), 
                    nrow = 6, ncol = 3);
-  colnames(Table6) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table6) = c(cn1, cn2, "Pct. Difference");
   rownames(Table6) = c("1% Non-Exceedance", "5% Non-Exceedance",
                        "50% Non-Exceedance", "95% Non-Exceedance",
                        "99% Non-Exceedance", "Sept. 10% Non-Exceedance");
@@ -2999,7 +3000,7 @@ tab6.nonexceedence.flows <- function(percent_difference) {
   return(Table6)
 }
 
-tab5.period.high.flows <- function(percent_difference) {
+tab5.period.high.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 5: Period High Flows
   Table5 <- matrix(c(percent_difference[1,48], percent_difference[1,53],
                      percent_difference[1,49], percent_difference[1,54],
@@ -3017,7 +3018,7 @@ tab5.period.high.flows <- function(percent_difference) {
                      percent_difference[3,51], percent_difference[3,56],
                      percent_difference[3,52], percent_difference[3,57]), 
                    nrow = 10, ncol = 3);
-  colnames(Table5) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table5) = c(cn1, cn2, "Pct. Difference");
   rownames(Table5) = c("Max. 1 Day Max", "Med. 1 Day Max", 
                        "Max. 3 Day Max", "Med. 3 Day Max",
                        "Max. 7 Day Max", "Med. 7 Day Max",
@@ -3029,7 +3030,7 @@ tab5.period.high.flows <- function(percent_difference) {
   return(Table5)
 }
 
-tab4.period.low.flows <- function(percent_difference) {
+tab4.period.low.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 4: Period Low Flows
   Table4 <- matrix(c(percent_difference[1,38], percent_difference[1,43],
                      percent_difference[1,39], percent_difference[1,44],
@@ -3053,7 +3054,7 @@ tab4.period.low.flows <- function(percent_difference) {
                      percent_difference[3,59], percent_difference[3,60],
                      percent_difference[3,58], percent_difference[3,67]), 
                    nrow = 14, ncol = 3);
-  colnames(Table4) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table4) = c(cn1, cn2, "Pct. Difference");
   rownames(Table4) = c("Min. 1 Day Min", "Med. 1 Day Min", 
                        "Min. 3 Day Min", "Med. 3 Day Min",
                        "Min. 7 Day Min", "Med. 7 Day Min",
@@ -3067,11 +3068,11 @@ tab4.period.low.flows <- function(percent_difference) {
   return(Table4)
 }
 
-tab3.monthly.high.flows <- function(percent_difference) {
+tab3.monthly.high.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 3: Monthly High Flow
   Table3 <- matrix(c(percent_difference[1,26], percent_difference[1,27], percent_difference[1,28],percent_difference[1,29], percent_difference[1,30], percent_difference[1,31],percent_difference[1,32], percent_difference[1,33], percent_difference[1,34],percent_difference[1,35], percent_difference[1,36], percent_difference[1,37],percent_difference[2,26],percent_difference[2,27], percent_difference[2,28], percent_difference[2,29],percent_difference[2,30], percent_difference[2,31], percent_difference[2,32],percent_difference[2,33], percent_difference[2,34], percent_difference[2,35],percent_difference[2,36], percent_difference[2,37],percent_difference[3,26], percent_difference[3,27], percent_difference[3,28],percent_difference[3,29], percent_difference[3,30], percent_difference[3,31],percent_difference[3,32], percent_difference[3,33], percent_difference[3,34],percent_difference[3,35], percent_difference[3,36], percent_difference[3,37]),
                    nrow = 12, ncol = 3);
-  colnames(Table3) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table3) = c(cn1, cn2, "Pct. Difference");
   rownames(Table3) = c("Jan. High Flow", "Feb. High Flow",
                        "Mar. High Flow", "Apr. High Flow",
                        "May High Flow", "Jun. High Flow",
@@ -3084,11 +3085,11 @@ tab3.monthly.high.flows <- function(percent_difference) {
   return(Table3)
 }
 
-tab2.monthly.average.flows <- function(percent_difference) {
+tab2.monthly.average.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 2: Monthly Average Flow
   Table2 <- matrix(c(percent_difference[1,1], percent_difference[1,14], percent_difference[1,15], percent_difference[1,16], percent_difference[1,17], percent_difference[1,18], percent_difference[1,19], percent_difference[1,20], percent_difference[1,21], percent_difference[1,22], percent_difference[1,23], percent_difference[1,24], percent_difference[1,25], percent_difference[2,1], percent_difference[2,14], percent_difference[2,15], percent_difference[2,16], percent_difference[2,17], percent_difference[2,18], percent_difference[2,19], percent_difference[2,20], percent_difference[2,21], percent_difference[2,22], percent_difference[2,23], percent_difference[2,24], percent_difference[2,25], percent_difference[3,1], percent_difference[3,14], percent_difference[3,15], percent_difference[3,16], percent_difference[3,17], percent_difference[3,18], percent_difference[3,19], percent_difference[3,20], percent_difference[3,21], percent_difference[3,22], percent_difference[3,23], percent_difference[3,24], percent_difference[3,25]),
                    nrow = 13, ncol = 3);
-  colnames(Table2) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table2) = c(cn1, cn2, "Pct. Difference");
   rownames(Table2) = c("Overall Mean Flow", 
                        "Jan. Mean Flow", "Feb. Mean Flow",
                        "Mar. Mean Flow", "Apr. Mean Flow",
@@ -3102,7 +3103,7 @@ tab2.monthly.average.flows <- function(percent_difference) {
   return(Table2)
 }
 
-tab1.monthly.low.flows <- function(percent_difference) {
+tab1.monthly.low.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 1: Monthly Low Flow
   Table1 <- matrix(c(percent_difference[1,2], percent_difference[1,3],
                      percent_difference[1,4], percent_difference[1,5], percent_difference[1,6],
@@ -3118,7 +3119,7 @@ tab1.monthly.low.flows <- function(percent_difference) {
                      percent_difference[3,8], percent_difference[3,9], percent_difference[3,10],
                      percent_difference[3,11], percent_difference[3,12], percent_difference[3,13]),
                    nrow = 12, ncol = 3);
-  colnames(Table1) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table1) = c(cn1, cn2, "Pct. Difference");
   rownames(Table1) = c("Jan. Low Flow", "Feb. Low Flow",
                        "Mar. Low Flow", "Apr. Low Flow",
                        "May Low Flow", "Jun. Low Flow",
@@ -3152,7 +3153,7 @@ fig10.runit.boxplot <- function(lri.dat) {
   print(paste('Fig. 10: Runit Boxplot saved at location ', as.character(getwd()), '/fig10.png', sep = ''))
 }
 
-fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url) {
+fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url, cn1='Scenario 1', cn2='Scenario 2') {
   
   hydrocode = paste("vahydrosw_wshed_",riv.seg,sep="");
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
@@ -3193,11 +3194,13 @@ fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url
   max <- max(resid$resid)
   names(quantresid) <- c('Percentiles')
   
+  namer <- paste0('Residual (', cn2, ' - ', cn1, ')')
+  
   df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline);
   colnames(df) <- c('Date', 'Residual', 'Zeroline')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) +
-    geom_point(aes(y=Residual, color="Residual (CC - Base)"), size=1) +
+    geom_point(aes(y=Residual, color=namer), size=1) +
     geom_line(aes(y=Zeroline, color="Zeroline"), size=0.8)+
     scale_y_continuous(limits=c(min,max))+
     theme_bw()+
@@ -3222,7 +3225,7 @@ fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url
   print(paste('Fig. 9b: Area-Weighted Residual Plot saved at location ', as.character(getwd()), '/fig9b.png', sep = ''))
 }
 
-fig9a.residual.plot <- function(all_data) {
+fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # Setup for Residuals
   data <- all_data[complete.cases(all_data),]
   resid <- (data$`Scenario 2 Flow` - data$`Scenario 1 Flow`)
@@ -3236,11 +3239,13 @@ fig9a.residual.plot <- function(all_data) {
   max <- max(resid$resid)
   names(quantresid) <- c('Percentiles')
   
+  namer <- paste0('Residual (', cn2, ' - ', cn1, ')')
+  
   df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline); 
   colnames(df) <- c('Date', 'Residual', 'Zeroline')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_point(aes(y=Residual, color="Residual (CC - Base)"), size=1) +
+    geom_point(aes(y=Residual, color=namer), size=1) +
     geom_line(aes(y=Zeroline, color="Zeroline"), size=0.8)+
     scale_y_continuous(limits=c(min,max))+ 
     theme_bw()+ 
@@ -3360,7 +3365,7 @@ fig5.combined.hydrograph <- function(all_data) {
   print(paste('Fig. 5: Combined Hydrograph saved at location ', as.character(getwd()), '/fig5.png', sep = ''))
 }
 
-fig4.baseflow.hydrograph <- function(all_data) {
+fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # Baseflow Indiviudal Graph -----
   
   data1$year <- year(ymd(data1$date))
@@ -3427,8 +3432,8 @@ fig4.baseflow.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1Baseflow', 'Scenario2Baseflow','Scenario1Flow', 'Scenario2Flow')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1Baseflow, color="Scen. 1"), size=0.5) +
-    geom_line(aes(y=Scenario2Baseflow, color="Scen. 2"), size=0.5)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3452,7 +3457,7 @@ fig4.baseflow.hydrograph <- function(all_data) {
   print(paste('Fig. 4: Baseflow Hydrograph saved at location ', as.character(getwd()), '/fig4.png', sep = ''))
 }
 
-fig3.flow.exceedance <- function(all_data) {
+fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   
   #Flow exceedance plot -----
   
@@ -3506,8 +3511,8 @@ fig3.flow.exceedance <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=0.8) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=0.8)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3531,7 +3536,7 @@ fig3.flow.exceedance <- function(all_data) {
   print(paste('Fig. 3: Flow Exceedance saved at location ', as.character(getwd()), '/fig3.png', sep = ''))
 }
 
-fig2.zoomed.hydrograph <- function(all_data) {
+fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # Zoomed hydrograph in year of lowest 90-year flow -----
   # Running scenario 1 calculations
   f3_scenario1 <- zoo(all_data$`Scenario 1 Flow`, order.by = all_data$Date)
@@ -3583,8 +3588,8 @@ fig2.zoomed.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=0.7) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=0.7)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3608,7 +3613,7 @@ fig2.zoomed.hydrograph <- function(all_data) {
   print(paste('Fig. 2: Zoomed Hydrograph saved at location ', as.character(getwd()), '/fig2.png', sep = ''))
 }
 
-fig1.hydrograph <- function(all_data) {
+fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # SETTING UP PLOTS
   # Basic hydrograph -----
   # Max/min for y axis scaling
@@ -3645,11 +3650,12 @@ fig1.hydrograph <- function(all_data) {
     fixtheyscale<- scale_y_continuous(trans = log_trans(), breaks = base_breaks(), 
                                       labels=scaleFUN, limits=c(min,max))
   df <- data.frame(as.Date(all_data$Date), all_data$`Scenario 1 Flow`, all_data$`Scenario 2 Flow`); 
+  #colnames(df) <- c('Date', cn1, cn2)
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="Scen. 1"), size=0.5) +
-    geom_line(aes(y=Scenario2, color="Scen. 2"), size=0.5)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+
     theme_bw()+ 
     theme(legend.position="top", 

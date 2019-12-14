@@ -1,4 +1,4 @@
-fig4.baseflow.hydrograph <- function(all_data) {
+fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # Baseflow Indiviudal Graph -----
   
   data1$year <- year(ymd(data1$date))
@@ -65,8 +65,8 @@ fig4.baseflow.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1Baseflow', 'Scenario2Baseflow','Scenario1Flow', 'Scenario2Flow')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1Baseflow, color="VAHydro Scen. 1"), size=0.5) +
-    geom_line(aes(y=Scenario2Baseflow, color="VAHydro Scen. 2"), size=0.5)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 

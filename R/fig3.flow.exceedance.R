@@ -1,4 +1,4 @@
-fig3.flow.exceedance <- function(all_data) {
+fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   
   #Flow exceedance plot -----
   
@@ -52,8 +52,8 @@ fig3.flow.exceedance <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=0.8) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=0.8)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
