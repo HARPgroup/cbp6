@@ -1,4 +1,7 @@
 figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is high
   # It does so for the top three highest difference periods
   

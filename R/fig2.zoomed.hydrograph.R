@@ -1,4 +1,6 @@
 fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
   # Zoomed hydrograph in year of lowest 90-year flow -----
   # Running scenario 1 calculations
   f3_scenario1 <- zoo(all_data$`Scenario 1 Flow`, order.by = all_data$Date)

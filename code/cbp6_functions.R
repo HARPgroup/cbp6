@@ -2335,6 +2335,9 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
 }
 
 figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is low
   # It does so for the top three lowest difference periods
   
@@ -2661,6 +2664,9 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
 
 
 figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is high
   # It does so for the top three highest difference periods
   
@@ -3366,6 +3372,9 @@ fig5.combined.hydrograph <- function(all_data) {
 }
 
 fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # Baseflow Indiviudal Graph -----
   
   data1$year <- year(ymd(data1$date))
@@ -3432,8 +3441,8 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
   colnames(df) <- c('Date', 'Scenario1Baseflow', 'Scenario2Baseflow','Scenario1Flow', 'Scenario2Flow')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
-    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
+    geom_line(aes(y=Scenario1Baseflow, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2Baseflow, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 
@@ -3458,6 +3467,8 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
 }
 
 fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
   
   #Flow exceedance plot -----
   
@@ -3537,6 +3548,9 @@ fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
 }
 
 fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # Zoomed hydrograph in year of lowest 90-year flow -----
   # Running scenario 1 calculations
   f3_scenario1 <- zoo(all_data$`Scenario 1 Flow`, order.by = all_data$Date)
@@ -3614,6 +3628,9 @@ fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2')
 }
 
 fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # SETTING UP PLOTS
   # Basic hydrograph -----
   # Max/min for y axis scaling

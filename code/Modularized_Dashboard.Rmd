@@ -20,6 +20,9 @@ params:
   mod.scenario1: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario2: 'CBASE1808L55CY55R45P50R45P50Y' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
+  cn1: 'VA Hydro: Base'
+  cn2: 'VA Hydro: CC: Prec 50, Temp 50'
+  
   
 ---
 
@@ -40,6 +43,8 @@ mod.phase1 <- params$mod.phase1
 mod.scenario1 <- params$mod.scenario1
 mod.phase2 <- params$mod.phase2
 mod.scenario2 <- params$mod.scenario2
+cn1 <- params$cn1
+cn2 <- params$cn2
 ```
 
 ```{r, include=FALSE}
@@ -59,12 +64,12 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
 # LOADING DATA ------------------------------------------------------------
 if (dat.source1 == 'vahydro') {
   data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
-  cn1 <- paste0('VA Hydro ', mod.scenario1)
+  #cn1 <- paste0('VA Hydro ', mod.scenario1)
 } else if (dat.source1 == 'gage') {
   data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
-  cn1 <- paste0('USGS ', gage_number)
+  #cn1 <- paste0('USGS ', gage_number)
 } else if (dat.source1 == 'cbp_model') {
-  cn1 <- paste0('CBP ', mod.scenario1)
+  #cn1 <- paste0('CBP ', mod.scenario1)
     if (site.or.server == 'site') {
       data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
     } else if (site.or.server == 'server') {
@@ -74,12 +79,12 @@ if (dat.source1 == 'vahydro') {
 
 if (dat.source2 == 'vahydro') {
   data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
-  cn2 <- paste0('VA Hydro ', mod.scenario2)
+  #cn2 <- paste0('VA Hydro ', mod.scenario2)
 } else if (dat.source2 == 'gage') {
   data2 <- gage_import_data_cfs(gage_number, start.date, end.date)
-  cn2 <- paste0('USGS ', gage_number)
+  #cn2 <- paste0('USGS ', gage_number)
 } else if (dat.source2 == 'cbp_model') {
-  cn2 <- paste0('CBP ', mod.scenario2)
+  #cn2 <- paste0('CBP ', mod.scenario2)
     if (site.or.server == 'site') {
       data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
     } else if (site.or.server == 'server') {

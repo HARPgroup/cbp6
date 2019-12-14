@@ -1,4 +1,5 @@
 fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  
   # Setup for Residuals
   data <- all_data[complete.cases(all_data),]
   resid <- (data$`Scenario 2 Flow` - data$`Scenario 1 Flow`)

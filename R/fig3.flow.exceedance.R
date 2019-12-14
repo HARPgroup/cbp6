@@ -1,5 +1,6 @@
 fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
-  
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
   #Flow exceedance plot -----
   
   # Determining the "rank" (0-1) of the flow value
