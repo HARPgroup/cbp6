@@ -21,7 +21,7 @@ params:
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario2: 'CBASE1808L55CY55R45P50R45P50Y' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
   cn1: 'VA Hydro: Base'
-  cn2: 'VA Hydro: CC: Prec 50, Temp 50'
+  cn2: 'VA Hydro: CC: Precip 50, Temp 50'
   
   
 ---
