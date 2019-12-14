@@ -1,4 +1,7 @@
 fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
+  
   # SETTING UP PLOTS
   # Basic hydrograph -----
   # Max/min for y axis scaling

@@ -20,6 +20,9 @@ params:
   mod.scenario1: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario2: 'CBASE1808L55CY55R45P50R45P50Y' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
+  cn1: 'VA Hydro: Base'
+  cn2: 'VA Hydro: CC: Precip 50, Temp 50'
+  
   
 ---
 
@@ -40,6 +43,8 @@ mod.phase1 <- params$mod.phase1
 mod.scenario1 <- params$mod.scenario1
 mod.phase2 <- params$mod.phase2
 mod.scenario2 <- params$mod.scenario2
+cn1 <- params$cn1
+cn2 <- params$cn2
 ```
 
 ```{r, include=FALSE}
@@ -59,9 +64,12 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
 # LOADING DATA ------------------------------------------------------------
 if (dat.source1 == 'vahydro') {
   data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
+  #cn1 <- paste0('VA Hydro ', mod.scenario1)
 } else if (dat.source1 == 'gage') {
   data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
+  #cn1 <- paste0('USGS ', gage_number)
 } else if (dat.source1 == 'cbp_model') {
+  #cn1 <- paste0('CBP ', mod.scenario1)
     if (site.or.server == 'site') {
       data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
     } else if (site.or.server == 'server') {
@@ -71,9 +79,12 @@ if (dat.source1 == 'vahydro') {
 
 if (dat.source2 == 'vahydro') {
   data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
+  #cn2 <- paste0('VA Hydro ', mod.scenario2)
 } else if (dat.source2 == 'gage') {
   data2 <- gage_import_data_cfs(gage_number, start.date, end.date)
+  #cn2 <- paste0('USGS ', gage_number)
 } else if (dat.source2 == 'cbp_model') {
+  #cn2 <- paste0('CBP ', mod.scenario2)
     if (site.or.server == 'site') {
       data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
     } else if (site.or.server == 'server') {
@@ -150,12 +161,12 @@ if (dat.source1 != 'vahydro') {
   lri.dat <- subset(lri.dat, lri.dat$date >= start.date & lri.dat$date <= end.date);
 
 # Creating all tables
-Table1 <- tab1.monthly.low.flows(percent_difference)
-Table2 <- tab2.monthly.average.flows(percent_difference)
-Table3 <- tab3.monthly.high.flows(percent_difference)
-Table4 <- tab4.period.low.flows(percent_difference)
-Table5 <- tab5.period.high.flows(percent_difference)
-Table6 <- tab6.nonexceedence.flows(percent_difference)
+Table1 <- tab1.monthly.low.flows(percent_difference, cn1, cn2)
+Table2 <- tab2.monthly.average.flows(percent_difference, cn1, cn2)
+Table3 <- tab3.monthly.high.flows(percent_difference, cn1, cn2)
+Table4 <- tab4.period.low.flows(percent_difference, cn1, cn2)
+Table5 <- tab5.period.high.flows(percent_difference, cn1, cn2)
+Table6 <- tab6.nonexceedence.flows(percent_difference, cn1, cn2)
 
 for (i in 1:length(cbp6.landunits)) {
   tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
@@ -197,16 +208,16 @@ tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
 
 ```{r, include=FALSE}
 # Creating all plots
-fig1.hydrograph(all_data)
-fig2.zoomed.hydrograph(all_data)
-fig3.flow.exceedance(all_data)
-fig4.baseflow.hydrograph(all_data)
+fig1.hydrograph(all_data, cn1, cn2)
+fig2.zoomed.hydrograph(all_data, cn1, cn2)
+fig3.flow.exceedance(all_data, cn1, cn2)
+fig4.baseflow.hydrograph(all_data, cn1, cn2)
 fig5.combined.hydrograph(all_data)
-OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data)
-fig9a.residual.plot(all_data)
-fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site)
+OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data, cn1, cn2)
+fig9a.residual.plot(all_data, cn1, cn2)
+fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site, cn1, cn2)
 fig10.runit.boxplot(lri.dat)
-figs11to13.smallest.diff.periods(all_data)
+figs11to13.smallest.diff.periods(all_data, cn1, cn2)
 fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token)
 ```
 

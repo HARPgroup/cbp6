@@ -1,4 +1,4 @@
-tab4.period.low.flows <- function(percent_difference) {
+tab4.period.low.flows <- function(percent_difference, cn1='Scenario 1', cn2='Scenario 2') {
   # Table 4: Period Low Flows
   Table4 <- matrix(c(percent_difference[1,38], percent_difference[1,43],
                      percent_difference[1,39], percent_difference[1,44],
@@ -22,7 +22,7 @@ tab4.period.low.flows <- function(percent_difference) {
                      percent_difference[3,59], percent_difference[3,60],
                      percent_difference[3,58], percent_difference[3,67]), 
                    nrow = 14, ncol = 3);
-  colnames(Table4) = c("Scen. 1", "Scen. 2", "Pct. Difference");
+  colnames(Table4) = c(cn1, cn2, "Pct. Difference");
   rownames(Table4) = c("Min. 1 Day Min", "Med. 1 Day Min", 
                        "Min. 3 Day Min", "Med. 3 Day Min",
                        "Min. 7 Day Min", "Med. 7 Day Min",

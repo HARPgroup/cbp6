@@ -1,4 +1,4 @@
-fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url) {
+fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url, cn1='Scenario 1', cn2='Scenario 2') {
   
   hydrocode = paste("vahydrosw_wshed_",riv.seg,sep="");
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
@@ -39,11 +39,13 @@ fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url
   max <- max(resid$resid)
   names(quantresid) <- c('Percentiles')
   
+  namer <- paste0('Residual (', cn2, ' - ', cn1, ')')
+  
   df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline);
   colnames(df) <- c('Date', 'Residual', 'Zeroline')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) +
-    geom_point(aes(y=Residual, color="Residual (CC - Base)"), size=1) +
+    geom_point(aes(y=Residual, color=namer), size=1) +
     geom_line(aes(y=Zeroline, color="Zeroline"), size=0.8)+
     scale_y_continuous(limits=c(min,max))+
     theme_bw()+

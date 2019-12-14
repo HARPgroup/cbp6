@@ -1,4 +1,6 @@
-fig2.zoomed.hydrograph <- function(all_data) {
+fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  cn1 <- paste0('1: ', cn1)
+  cn2 <- paste0('2: ', cn2)
   # Zoomed hydrograph in year of lowest 90-year flow -----
   # Running scenario 1 calculations
   f3_scenario1 <- zoo(all_data$`Scenario 1 Flow`, order.by = all_data$Date)
@@ -50,8 +52,8 @@ fig2.zoomed.hydrograph <- function(all_data) {
   colnames(df) <- c('Date', 'Scenario1', 'Scenario2')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_line(aes(y=Scenario1, color="VAHydro Scen. 1"), size=0.7) +
-    geom_line(aes(y=Scenario2, color="VAHydro Scen. 2"), size=0.7)+
+    geom_line(aes(y=Scenario1, color=cn1), size=0.5) +
+    geom_line(aes(y=Scenario2, color=cn2), size=0.5)+
     fixtheyscale+ 
     theme_bw()+ 
     theme(legend.position="top", 

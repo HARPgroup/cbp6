@@ -1,4 +1,5 @@
-fig9a.residual.plot <- function(all_data) {
+fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+  
   # Setup for Residuals
   data <- all_data[complete.cases(all_data),]
   resid <- (data$`Scenario 2 Flow` - data$`Scenario 1 Flow`)
@@ -12,11 +13,13 @@ fig9a.residual.plot <- function(all_data) {
   max <- max(resid$resid)
   names(quantresid) <- c('Percentiles')
   
+  namer <- paste0('Residual (', cn2, ' - ', cn1, ')')
+  
   df <- data.frame(as.Date(resid$data.Date), resid$resid, zeroline); 
   colnames(df) <- c('Date', 'Residual', 'Zeroline')
   options(scipen=5, width = 1400, height = 950)
   myplot <- ggplot(df, aes(x=Date)) + 
-    geom_point(aes(y=Residual, color="Residual (CC - Base)"), size=1) +
+    geom_point(aes(y=Residual, color=namer), size=1) +
     geom_line(aes(y=Zeroline, color="Zeroline"), size=0.8)+
     scale_y_continuous(limits=c(min,max))+ 
     theme_bw()+ 
