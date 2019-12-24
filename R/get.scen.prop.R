@@ -15,13 +15,26 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   fname <- as.character(odata[1,]$name);
   print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
-  # GETTING SCENARIO MODEL ELEMENT FROM VA HYDRO
-  inputs <- list(
-    varkey = "om_model_element",
-    featureid = hydroid,
-    entity_type = "dh_feature",
-    propcode = mod.scenario
-  )
+  if (dat.source == 'cbp_model') {
+    # GETTING SCENARIO MODEL ELEMENT FROM VA HYDRO
+    inputs <- list(
+      varkey = "om_model_element",
+      featureid = hydroid,
+      entity_type = "dh_feature",
+      propcode = mod.scenario
+    )
+  } else if (dat.source == 'vahydro') {
+    # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
+    inputs <- list(
+      varkey = "om_model_element",
+      featureid = hydroid,
+      entity_type = "dh_feature",
+      propcode = 'vahydro-1.0'
+    )
+  } else {
+    stop('Error: data source is neither "cbp_model" nor "vahydro"')
+  }
+  
   scenario <- getProperty(inputs, site, scenario)
   
   # DETERMINING PROPNAME AND PROPCODE FOR SCENARIO PROPERTY
