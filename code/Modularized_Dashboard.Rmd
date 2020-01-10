@@ -100,18 +100,24 @@ data2 <- water_year_trim(data2)
 ```{r, include = FALSE}
 if (dat.source1 == 'vahydro') {
   title.part.1 <- paste('VA Hydro Run ', run.id1, sep = '')
+  name.part1 <- paste('runid_', run.id1, sep = '')
 } else if (dat.source1 == 'gage') {
   title.part.1 <- paste('USGS Gage ', gage_number, sep = '')
+  name.part1 <- paste('gage_', gage_number, sep = '')
 } else if (dat.source1 == 'cbp_model') {
   title.part.1 <- paste('Scenario ', mod.scenario1, sep = '')
+  name.part1 <- paste('scen_', mod.scenario1, sep = '')
 }
 
 if (dat.source2 == 'vahydro') {
   title.part.2 <- paste('VA Hydro Run ', run.id2, sep = '')
+  name.part2 <- paste('runid_', run.id2, sep = '')
 } else if (dat.source2 == 'gage') {
   title.part.2 <- paste('USGS Gage ', gage_number, sep = '')
+  name.part2 <- paste('gage_', gage_number, sep = '')
 } else if (dat.source2 == 'cbp_model') {
   title.part.2 <- paste('Scenario ', mod.scenario2, sep = '')
+  name.part2 <- paste('scen_', mod.scenario2, sep = '')
 }
 
 dashboard_title <- paste('River Segment ', riv.seg, ': ', title.part.1, ' vs. ', title.part.2, sep = '')
@@ -452,4 +458,13 @@ for (i in 1:length(cbp6.landunits)) {
   plot
   cat("\n\n\\pagebreak\n") 
 }
+```
+
+```{r, include = FALSE}
+vahydro.propcode <- get.overall.vahydro.prop(riv.seg, site, token)
+dashboard.name = paste0("dashboard_file: ", name.part1, '_vs_', name.part2)
+dashboard.url = paste0('http://deq2.bse.vt.edu/p6/p6_gb604/out/dashboards/run_', run.id1, '_vs_run_', run.id2, '/', riv.seg, '.pdf')
+vahydro_post_metric_to_scenprop(scenprop.pid = vahydro.propcode, met.varkey = 'external_file',
+                                met.propcode = dashboard.url, met.name = dashboard.name, 
+                                met.value = 0, site = site, token = token)
 ```
