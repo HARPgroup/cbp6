@@ -42,7 +42,7 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
     scen.propname <- mod.scenario
     scen.propcode <- mod.scenario
   } else if (dat.source == 'vahydro') {
-    scen.propname <- paste0('run_', run.id)
+    scen.propname <- paste0('runid_', run.id)
     scen.propcode <- paste0('vahydro_', mod.scenario)
   } else {
     stop('Error: data source is neither "cbp_model" nor "vahydro"')
