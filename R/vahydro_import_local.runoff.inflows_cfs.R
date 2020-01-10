@@ -39,7 +39,7 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   da <- getProperty(inputs, site, model)
   
   inputs <- list(
-    varkey = "om_model_element",
+    varkey = "om_water_model_node",
     featureid = featureid,
     entity_type = "dh_feature",
     propcode = "vahydro-1.0"

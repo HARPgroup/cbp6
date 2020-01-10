@@ -26,7 +26,7 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   } else if (dat.source == 'vahydro') {
     # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
     inputs <- list(
-      varkey = "om_model_element",
+      varkey = "om_water_model_node",
       featureid = hydroid,
       entity_type = "dh_feature",
       propcode = 'vahydro-1.0'
