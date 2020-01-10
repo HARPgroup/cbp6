@@ -74,49 +74,89 @@ gage_import_data_cfs <- function(site_number, start.date, end.date) {
   return(USGS_daily)
 }  
 
-vahydro_import_metric <- function(met.varkey, met.propcode, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
-  if (nchar(seg.or.gage)==8) {
-    # GETTING GAGE DATA FROM VA HYDRO
-    hydrocode = paste("usgs_",seg.or.gage,sep="");
-    ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
-    inputs <- list (
-      hydrocode = hydrocode
-    )
-  } else if (nchar(seg.or.gage)==13) {
-    # GETTING MODEL DATA FROM VA HYDRO
-    hydrocode = paste("vahydrosw_wshed_",seg.or.gage,sep="");
-    ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
-    inputs <- list (
-      hydrocode = hydrocode,
-      bundle = 'watershed',
-      ftype = 'vahydro'
-    )
-  }
+#' Import USGS Gage Information Function 
+#' @description Imports data from the USGS, harvested from their stream gages
+#' @param riv.seg Specific river segment of interest 
+#' @param run.id the VA hydro run ID of the specified vahydro model run
+#' @param token the VA hydro token to access the specified site
+#' @param site the specified vahydro site to be accessed
+#' @param start.date the starting date of analysis, format 'yyyy-mm-dd'
+#' @param end.date the ending date of analysis, format 'yyyy-mm-dd'
+#' @return A dataframe containing the specfic river segments vahydro model data
+#' @import pander
+#' @import httr
+#' @import hydroTSM
+#' @export vahydro_import_data_cfs
+
+vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
+  hydrocode = paste0("vahydrosw_wshed_", riv.seg);
+  ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+  inputs <- list (
+    hydrocode = hydrocode,
+    bundle = 'watershed',
+    ftype = 'vahydro'
+  )
+  
   #property dataframe returned
   feature = FALSE;
   odata <- getFeature(inputs, token, site, feature);
-  hydroid <- odata[1,"hydroid"];
-  fname <- as.character(odata[1,]$name );
-  print(paste("Retrieved hydroid",hydroid,"for", fname,seg.or.gage, sep=' '));
-  # get the scenario model segment attached to this river feature
-  inputs <- list(
-    varkey = "om_model_element",
-    featureid = hydroid,
-    entity_type = "dh_feature",
-    propcode = mod.scenario
-  )
-  property <- getProperty(inputs, site, property)
   
-  metinfo <- list(
-    varkey = met.varkey,
-    propcode = met.propcode,
-    featureid = as.integer(as.character(property$pid)),
+  # Get data frame for stashing multirun data
+  stash <- data.frame();
+  mostash <- data.frame();
+  tsstash = FALSE;
+  featureid <- odata[1,"hydroid"];
+  fname <- as.character(odata[1,]$name );
+  inputs <- list(
+    varkey = "wshed_local_area_sqmi",
+    featureid = featureid,
+    entity_type = "dh_feature"
+  )
+  da <- getProperty(inputs, site, model)
+  
+  inputs <- list(
+    varkey = "om_water_model_node",
+    featureid = featureid,
+    entity_type = "dh_feature",
+    propcode = "vahydro-1.0"
+  )
+  model <- getProperty(inputs, site, model)
+  mid = as.numeric(as.character(model[1,]$pid))
+  inputs <- list(
+    varkey = "om_element_connection",
+    featureid = mid,
     entity_type = "dh_properties"
   )
-  metprop <- getProperty(metinfo, site, metprop)
-  metric <- metprop$propvalue
-  return(metric)
+  prop <- getProperty(inputs, site, prop)
+  
+  # Manual elid
+  elid = as.numeric(as.character(prop[1,]$propvalue))
+  
+  wshed_summary_tbl = data.frame(
+    "Run ID" = character(), 
+    "Segment Name (D. Area)" = character(), 
+    "7Q10/ALF/LF-90" = character(), 
+    "WD (mean/max)" = character(), 
+    stringsAsFactors = FALSE) ;
+  #pander(odata);
+  #pander(odata);
+  
+  omsite = site <- "http://deq2.bse.vt.edu"
+  dat <- fn_get_runfile(elid, run.id, site = omsite,  cached = FALSE);
+  
+  dat.date <- as.Date(as.character(dat$thisdate))
+  dat.flow <- as.numeric(dat$Qout)
+  
+  dat.trim <- data.frame(dat.date, dat.flow, row.names = NULL)
+  colnames(dat.trim) <- c('date','flow')
+  
+  start.line <- as.numeric(which(dat.trim$date == start.date))
+  end.line <- as.numeric(which(dat.trim$date == end.date))
+  dat.trim <- dat.trim[start.line:end.line,]
+  
+  return(dat.trim)
 }
+
 vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
   if (nchar(seg.or.gage)==8) {
     # GETTING GAGE DATA FROM VA HYDRO
@@ -2089,75 +2129,6 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   return(map)
 }
 
-vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
-  hydrocode = paste0("vahydrosw_wshed_", riv.seg);
-  ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
-  inputs <- list (
-    hydrocode = hydrocode,
-    bundle = 'watershed',
-    ftype = 'vahydro'
-  )
-  
-  #property dataframe returned
-  feature = FALSE;
-  odata <- getFeature(inputs, token, site, feature);
-  
-  # Get data frame for stashing multirun data
-  stash <- data.frame();
-  mostash <- data.frame();
-  tsstash = FALSE;
-  featureid <- odata[1,"hydroid"];
-  fname <- as.character(odata[1,]$name );
-  inputs <- list(
-    varkey = "wshed_local_area_sqmi",
-    featureid = featureid,
-    entity_type = "dh_feature"
-  )
-  da <- getProperty(inputs, site, model)
-  
-  inputs <- list(
-    varkey = "om_model_element",
-    featureid = featureid,
-    entity_type = "dh_feature",
-    propcode = "vahydro-1.0"
-  )
-  model <- getProperty(inputs, site, model)
-  mid = as.numeric(as.character(model[1,]$pid))
-  inputs <- list(
-    varkey = "om_element_connection",
-    featureid = mid,
-    entity_type = "dh_properties"
-  )
-  prop <- getProperty(inputs, site, prop)
-  
-  # Manual elid
-  elid = as.numeric(as.character(prop[1,]$propvalue))
-  
-  wshed_summary_tbl = data.frame(
-    "Run ID" = character(), 
-    "Segment Name (D. Area)" = character(), 
-    "7Q10/ALF/LF-90" = character(), 
-    "WD (mean/max)" = character(), 
-    stringsAsFactors = FALSE) ;
-  #pander(odata);
-  #pander(odata);
-  
-  omsite = site <- "http://deq2.bse.vt.edu"
-  dat <- fn_get_runfile(elid, run.id, site = omsite,  cached = FALSE);
-  
-  dat.date <- as.Date(as.character(dat$thisdate))
-  dat.flow <- as.numeric(dat$Qout)
-  
-  dat.trim <- data.frame(dat.date, dat.flow, row.names = NULL)
-  colnames(dat.trim) <- c('date','flow')
-  
-  start.line <- as.numeric(which(dat.trim$date == start.date))
-  end.line <- as.numeric(which(dat.trim$date == end.date))
-  dat.trim <- dat.trim[start.line:end.line,]
-  
-  return(dat.trim)
-}
-
 library(dplyr)
 
 vahydro_import_lrseg_all_flows <- function(lr.seg.hydrocode, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
@@ -2284,7 +2255,7 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   da <- getProperty(inputs, site, model)
   
   inputs <- list(
-    varkey = "om_model_element",
+    varkey = "om_water_model_node",
     featureid = featureid,
     entity_type = "dh_feature",
     propcode = "vahydro-1.0"
@@ -4481,7 +4452,7 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   } else if (dat.source == 'vahydro') {
     # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
     inputs <- list(
-      varkey = "om_model_element",
+      varkey = "om_water_model_node",
       featureid = hydroid,
       entity_type = "dh_feature",
       propcode = 'vahydro-1.0'
@@ -4497,7 +4468,7 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
     scen.propname <- mod.scenario
     scen.propcode <- mod.scenario
   } else if (dat.source == 'vahydro') {
-    scen.propname <- paste0('run_', run.id)
+    scen.propname <- paste0('runid_', run.id)
     scen.propcode <- paste0('vahydro_', mod.scenario)
   } else {
     stop('Error: data source is neither "cbp_model" nor "vahydro"')

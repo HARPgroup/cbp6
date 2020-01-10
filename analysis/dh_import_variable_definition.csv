@@ -1,0 +1,2 @@
+varname,vardesc,vocabulary,varunits,varkey,datatype,varcode,isregular,timestep,timeunits,nodataval,data_entry
+External File,A URL of a useful externally-stored file,flow_ecology,NA,external_file,container,external_file,0,NA,NA,0,
