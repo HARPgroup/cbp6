@@ -1,5 +1,5 @@
 data.location <- 'C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\Data\\CBP6_Temp_Prcp_Data'
-land.seg <- 'WshedT'
+land.seg <- 'H24021'
 
 # LOADING DATA -----
 land.seg.info <- read.csv(paste0(data.location, '\\Land_Segment_CBWatershed_Area.csv'))
@@ -125,10 +125,10 @@ print(paste('The total average precipitation for scenarios p10, p50, and p90 are
 landseg.quant.precip.data$Total
 
 print(paste('Temperature quantiles of the 31-member forecast for land segment', land.seg, 'are:'))
-quantile(landseg.ens.prcp.data$Total, c(.10, .50, .90))
+quantile(landseg.ens.temp.data$Total, c(.10, .50, .90))
 
 print(paste('The total average temperature for scenarios p10, p50, and p90 are:'))
-landseg.quant.precip.data$Total
+landseg.quant.temp.data$Total
 
 # TOTAL PRECIP/TEMPERATURE FOR SCENARIOS ARE THE SAME AS THE QUANTILES OF 31 MODELS OF THE TOTAL FOR THAT 
 # LAND SEGMENT
