@@ -25,6 +25,10 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   feature = FALSE;
   odata <- getFeature(inputs, token, site, feature);
   
+  if (odata == FALSE) {
+    return(odata)
+  }
+  
   # Get data frame for stashing multirun data
   stash <- data.frame();
   mostash <- data.frame();
@@ -53,6 +57,10 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   )
   midprop <- getProperty(inputs, site, midprop)
   
+  if (midprop == FALSE) {
+    return(midprop)
+  }
+  
   fin = as.numeric(as.character(midprop[1,]$pid))
   inputs <- list(
     varkey = "om_element_connection",
@@ -74,8 +82,14 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   #pander(odata);
   
   omsite = site <- "http://deq2.bse.vt.edu"
-  dat <- fn_get_runfile(elid, run.id, site = omsite,  cached = FALSE);
+  dat <- fn_get_runfile_mod(elid, run.id, site = omsite,  cached = FALSE);
   
+  if(is.na(dat) != TRUE) {
+    if (dat == FALSE) {
+      return(dat)
+    }
+  }  
+    
   dat.date <- as.Date(as.character(dat$thisdate))
   dat.flow.unit <- as.numeric(dat$Runit)
   
