@@ -1,6 +1,6 @@
 data.location <- 'C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\Data\\CBP6_Temp_Prcp_Data'
 hydro_tools <- '/Users/danie/Documents/HARP/GitHub/hydro-tools';
-run.id <- '14'
+run.id <- '16'
 
 start.date <- '1990-01-01'
 end.date <- '2000-12-31'
@@ -25,6 +25,11 @@ download.file('ftp://ftp.chesapeakebay.net/gis/ModelingP6/P6Beta_v3_LRSegs_08151
 unzip('~/p6_lrsegs.zip', exdir = '.')
 
 library(rgdal)
+library(ggplot2)
+library(dplyr)
+library(rgeos)
+library(ggsn)
+
 # reading in lr-seg layer
 lrsegs <- readOGR('.', 'P6Beta_v3_LRSegs_081516')
 lrsegs.va <- lrsegs[lrsegs@data$ST == 'VA',]
@@ -200,8 +205,7 @@ map <- ggplot(data = rsegs.df, aes(x = long, y = lat, group = group))+
   geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
   geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
 
-library(ggsn)
-map + 
+map_runit_overall <- map + 
   geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
   guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
   theme(legend.justification=c(0,1), legend.position=c(0,1)) +
@@ -215,3 +219,196 @@ map +
              x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
              y = extent$y[1]+(extent$y[1])*0.001
            ))
+ggsave(paste0('runid_', run.id, '.runit.overall.png'), plot = map_runit_overall, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_jan <- map + 
+  geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.jan.png'), plot = map_runit_jan, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_feb <- map + 
+  geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.feb.png'), plot = map_runit_feb, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_mar <- map + 
+  geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.mar.png'), plot = map_runit_mar, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_apr <- map + 
+  geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.apr.png'), plot = map_runit_apr, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_may <- map + 
+  geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.may.png'), plot = map_runit_may, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_jun <- map + 
+  geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.jun.png'), plot = map_runit_jun, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_jul <- map + 
+  geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.jul.png'), plot = map_runit_jul, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_aug <- map + 
+  geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.aug.png'), plot = map_runit_aug, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_sep <- map + 
+  geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.sep.png'), plot = map_runit_sep, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_oct <- map + 
+  geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.oct.png'), plot = map_runit_oct, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_nov <- map + 
+  geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.nov.png'), plot = map_runit_nov, width = 6.18, height = 3.68, units = 'in')
+
+map_runit_dec <- map + 
+  geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Runoff\nUnit Flow\n(cfs/sq.mi.)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave(paste0('runid_', run.id, '.runit.dec.png'), plot = map_runit_dec, width = 6.18, height = 3.68, units = 'in')
