@@ -412,3 +412,21 @@ map_runit_dec <- map +
              y = extent$y[1]+(extent$y[1])*0.001
            ))
 ggsave(paste0('runid_', run.id, '.runit.dec.png'), plot = map_runit_dec, width = 6.18, height = 3.68, units = 'in')
+
+
+jpeg(paste0('runid_', run.id, '_runit.jpeg'), width = 1300, height = 1548)
+runit <- grid.arrange(grobs = list(
+  map_runit_jan, map_runit_feb, map_runit_mar,
+  map_runit_apr, map_runit_may, map_runit_jun,
+  map_runit_jul, map_runit_aug, map_runit_sep,
+  map_runit_oct, map_runit_nov, map_runit_dec,
+  map_runit_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+)
+dev.off()
