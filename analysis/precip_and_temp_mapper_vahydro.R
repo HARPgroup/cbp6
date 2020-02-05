@@ -283,7 +283,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.overall.map.v2.png', plot = map_p10_prcp_overall)
+  ggsave('p10.prcp.overall.map.v2.png', plot = map_p10_prcp_overall, width = 6.18, height = 3.68, units = 'in')
 
   # INDIVIDUAL METRIC MAP -- jan
   map_p10_prcp_jan <- map_p10_prcp + 
@@ -300,7 +300,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.jan.map.v2.png', plot = map_p10_prcp_jan)
+  ggsave('p10.prcp.jan.map.v2.png', plot = map_p10_prcp_jan, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- feb
   map_p10_prcp_feb <- map_p10_prcp + 
@@ -317,7 +317,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.feb.map.v2.png', plot = map_p10_prcp_feb)
+  ggsave('p10.prcp.feb.map.v2.png', plot = map_p10_prcp_feb, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- mar
   map_p10_prcp_mar <- map_p10_prcp + 
@@ -334,7 +334,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.mar.map.v2.png', plot = map_p10_prcp_mar)
+  ggsave('p10.prcp.mar.map.v2.png', plot = map_p10_prcp_mar, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- apr
   map_p10_prcp_apr <- map_p10_prcp + 
@@ -351,7 +351,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.apr.map.v2.png', plot = map_p10_prcp_apr)
+  ggsave('p10.prcp.apr.map.v2.png', plot = map_p10_prcp_apr, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- may
   map_p10_prcp_may <- map_p10_prcp + 
@@ -368,7 +368,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.may.map.v2.png', plot = map_p10_prcp_may)
+  ggsave('p10.prcp.may.map.v2.png', plot = map_p10_prcp_may, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jun
   map_p10_prcp_jun <- map_p10_prcp + 
@@ -385,7 +385,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.jun.map.v2.png', plot = map_p10_prcp_jun)
+  ggsave('p10.prcp.jun.map.v2.png', plot = map_p10_prcp_jun, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jul
   map_p10_prcp_jul <- map_p10_prcp + 
@@ -402,7 +402,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.jul.map.v2.png', plot = map_p10_prcp_jul)
+  ggsave('p10.prcp.jul.map.v2.png', plot = map_p10_prcp_jul, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- aug
   map_p10_prcp_aug <- map_p10_prcp + 
@@ -419,7 +419,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.aug.map.v2.png', plot = map_p10_prcp_aug)
+  ggsave('p10.prcp.aug.map.v2.png', plot = map_p10_prcp_aug, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- sep
   map_p10_prcp_sep <- map_p10_prcp + 
@@ -436,7 +436,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.sep.map.v2.png', plot = map_p10_prcp_sep)
+  ggsave('p10.prcp.sep.map.v2.png', plot = map_p10_prcp_sep, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- oct
   map_p10_prcp_oct <- map_p10_prcp + 
@@ -453,7 +453,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.oct.map.v2.png', plot = map_p10_prcp_oct)
+  ggsave('p10.prcp.oct.map.v2.png', plot = map_p10_prcp_oct, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- nov
   map_p10_prcp_nov <- map_p10_prcp + 
@@ -470,7 +470,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.nov.map.v2.png', plot = map_p10_prcp_nov)
+  ggsave('p10.prcp.nov.map.v2.png', plot = map_p10_prcp_nov, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- dec
   map_p10_prcp_dec <- map_p10_prcp + 
@@ -487,7 +487,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.prcp.dec.map.v2.png', plot = map_p10_prcp_dec)
+  ggsave('p10.prcp.dec.map.v2.png', plot = map_p10_prcp_dec, width = 6.18, height = 3.68, units = 'in')
   
   # P10 TEMP
   lsegs.df_p10_temp <- merge(lsegs.df, TEMP.ENS.10.PCT, by = 'FIPS_NHL')
@@ -509,7 +509,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
   # INDIVIDUAL METRIC MAP -- OVERALL
   map_p10_temp_overall <- map_p10_temp + 
     geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -521,12 +521,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.overall.map.v2.png', plot = map_p10_temp_overall)
+  ggsave('p10.temp.overall.map.v2.png', plot = map_p10_temp_overall, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jan
   map_p10_temp_jan <- map_p10_temp + 
     geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -538,12 +538,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.jan.map.v2.png', plot = map_p10_temp_jan)
+  ggsave('p10.temp.jan.map.v2.png', plot = map_p10_temp_jan, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- feb
   map_p10_temp_feb <- map_p10_temp + 
     geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -555,12 +555,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.feb.map.v2.png', plot = map_p10_temp_feb)
+  ggsave('p10.temp.feb.map.v2.png', plot = map_p10_temp_feb, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- mar
   map_p10_temp_mar <- map_p10_temp + 
     geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -572,12 +572,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.mar.map.v2.png', plot = map_p10_temp_mar)
+  ggsave('p10.temp.mar.map.v2.png', plot = map_p10_temp_mar, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- apr
   map_p10_temp_apr <- map_p10_temp + 
     geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -589,12 +589,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.apr.map.v2.png', plot = map_p10_temp_apr)
+  ggsave('p10.temp.apr.map.v2.png', plot = map_p10_temp_apr, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- may
   map_p10_temp_may <- map_p10_temp + 
     geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -606,12 +606,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.may.map.v2.png', plot = map_p10_temp_may)
+  ggsave('p10.temp.may.map.v2.png', plot = map_p10_temp_may, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jun
   map_p10_temp_jun <- map_p10_temp + 
     geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -623,12 +623,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.jun.map.v2.png', plot = map_p10_temp_jun)
+  ggsave('p10.temp.jun.map.v2.png', plot = map_p10_temp_jun, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jul
   map_p10_temp_jul <- map_p10_temp + 
     geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -640,12 +640,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.jul.map.v2.png', plot = map_p10_temp_jul)
+  ggsave('p10.temp.jul.map.v2.png', plot = map_p10_temp_jul, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- aug
   map_p10_temp_aug <- map_p10_temp + 
     geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -657,12 +657,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.aug.map.v2.png', plot = map_p10_temp_aug)
+  ggsave('p10.temp.aug.map.v2.png', plot = map_p10_temp_aug, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- sep
   map_p10_temp_sep <- map_p10_temp + 
     geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -674,12 +674,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.sep.map.v2.png', plot = map_p10_temp_sep)
+  ggsave('p10.temp.sep.map.v2.png', plot = map_p10_temp_sep, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- oct
   map_p10_temp_oct <- map_p10_temp + 
     geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -691,12 +691,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.oct.map.v2.png', plot = map_p10_temp_oct)
+  ggsave('p10.temp.oct.map.v2.png', plot = map_p10_temp_oct, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- nov
   map_p10_temp_nov <- map_p10_temp + 
     geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -708,12 +708,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.nov.map.v2.png', plot = map_p10_temp_nov)
+  ggsave('p10.temp.nov.map.v2.png', plot = map_p10_temp_nov, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- dec
   map_p10_temp_dec <- map_p10_temp + 
     geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -725,7 +725,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p10.temp.dec.map.v2.png', plot = map_p10_temp_dec)
+  ggsave('p10.temp.dec.map.v2.png', plot = map_p10_temp_dec, width = 6.18, height = 3.68, units = 'in')
   
   # NEEDS DOING FOR P10, P50, P90 AND PRCP/EVAP
   lsegs.df_p50_prcp <- merge(lsegs.df, PRCP.ENS.50.PCT, by = 'FIPS_NHL')
@@ -759,7 +759,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.overall.map.v2.png', plot = map_p50_prcp_overall)
+  ggsave('p50.prcp.overall.map.v2.png', plot = map_p50_prcp_overall, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jan
   map_p50_prcp_jan <- map_p50_prcp + 
@@ -776,7 +776,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.jan.map.v2.png', plot = map_p50_prcp_jan)
+  ggsave('p50.prcp.jan.map.v2.png', plot = map_p50_prcp_jan, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- feb
   map_p50_prcp_feb <- map_p50_prcp + 
@@ -793,7 +793,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.feb.map.v2.png', plot = map_p50_prcp_feb)
+  ggsave('p50.prcp.feb.map.v2.png', plot = map_p50_prcp_feb, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- mar
   map_p50_prcp_mar <- map_p50_prcp + 
@@ -810,7 +810,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.mar.map.v2.png', plot = map_p50_prcp_mar)
+  ggsave('p50.prcp.mar.map.v2.png', plot = map_p50_prcp_mar, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- apr
   map_p50_prcp_apr <- map_p50_prcp + 
@@ -827,7 +827,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.apr.map.v2.png', plot = map_p50_prcp_apr)
+  ggsave('p50.prcp.apr.map.v2.png', plot = map_p50_prcp_apr, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- may
   map_p50_prcp_may <- map_p50_prcp + 
@@ -844,7 +844,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.may.map.v2.png', plot = map_p50_prcp_may)
+  ggsave('p50.prcp.may.map.v2.png', plot = map_p50_prcp_may, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jun
   map_p50_prcp_jun <- map_p50_prcp + 
@@ -861,7 +861,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.jun.map.v2.png', plot = map_p50_prcp_jun)
+  ggsave('p50.prcp.jun.map.v2.png', plot = map_p50_prcp_jun, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jul
   map_p50_prcp_jul <- map_p50_prcp + 
@@ -878,7 +878,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.jul.map.v2.png', plot = map_p50_prcp_jul)
+  ggsave('p50.prcp.jul.map.v2.png', plot = map_p50_prcp_jul, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- aug
   map_p50_prcp_aug <- map_p50_prcp + 
@@ -895,7 +895,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.aug.map.v2.png', plot = map_p50_prcp_aug)
+  ggsave('p50.prcp.aug.map.v2.png', plot = map_p50_prcp_aug, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- sep
   map_p50_prcp_sep <- map_p50_prcp + 
@@ -912,7 +912,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.sep.map.v2.png', plot = map_p50_prcp_sep)
+  ggsave('p50.prcp.sep.map.v2.png', plot = map_p50_prcp_sep, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- oct
   map_p50_prcp_oct <- map_p50_prcp + 
@@ -929,7 +929,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.oct.map.v2.png', plot = map_p50_prcp_oct)
+  ggsave('p50.prcp.oct.map.v2.png', plot = map_p50_prcp_oct, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- nov
   map_p50_prcp_nov <- map_p50_prcp + 
@@ -946,7 +946,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.nov.map.v2.png', plot = map_p50_prcp_nov)
+  ggsave('p50.prcp.nov.map.v2.png', plot = map_p50_prcp_nov, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- dec
   map_p50_prcp_dec <- map_p50_prcp + 
@@ -963,7 +963,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.prcp.dec.map.v2.png', plot = map_p50_prcp_dec)
+  ggsave('p50.prcp.dec.map.v2.png', plot = map_p50_prcp_dec, width = 6.18, height = 3.68, units = 'in')
   
   # p50 TEMP
   lsegs.df_p50_temp <- merge(lsegs.df, TEMP.ENS.50.PCT, by = 'FIPS_NHL')
@@ -985,7 +985,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
   # INDIVIDUAL METRIC MAP -- OVERALL
   map_p50_temp_overall <- map_p50_temp + 
     geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -997,12 +997,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.overall.map.v2.png', plot = map_p50_temp_overall)
+  ggsave('p50.temp.overall.map.v2.png', plot = map_p50_temp_overall, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jan
   map_p50_temp_jan <- map_p50_temp + 
     geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1014,12 +1014,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.jan.map.v2.png', plot = map_p50_temp_jan)
+  ggsave('p50.temp.jan.map.v2.png', plot = map_p50_temp_jan, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- feb
   map_p50_temp_feb <- map_p50_temp + 
     geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1031,12 +1031,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.feb.map.v2.png', plot = map_p50_temp_feb)
+  ggsave('p50.temp.feb.map.v2.png', plot = map_p50_temp_feb, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- mar
   map_p50_temp_mar <- map_p50_temp + 
     geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1048,12 +1048,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.mar.map.v2.png', plot = map_p50_temp_mar)
+  ggsave('p50.temp.mar.map.v2.png', plot = map_p50_temp_mar, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- apr
   map_p50_temp_apr <- map_p50_temp + 
     geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1065,12 +1065,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.apr.map.v2.png', plot = map_p50_temp_apr)
+  ggsave('p50.temp.apr.map.v2.png', plot = map_p50_temp_apr, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- may
   map_p50_temp_may <- map_p50_temp + 
     geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1082,12 +1082,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.may.map.v2.png', plot = map_p50_temp_may)
+  ggsave('p50.temp.may.map.v2.png', plot = map_p50_temp_may, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jun
   map_p50_temp_jun <- map_p50_temp + 
     geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1099,12 +1099,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.jun.map.v2.png', plot = map_p50_temp_jun)
+  ggsave('p50.temp.jun.map.v2.png', plot = map_p50_temp_jun, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jul
   map_p50_temp_jul <- map_p50_temp + 
     geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1116,12 +1116,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.jul.map.v2.png', plot = map_p50_temp_jul)
+  ggsave('p50.temp.jul.map.v2.png', plot = map_p50_temp_jul, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- aug
   map_p50_temp_aug <- map_p50_temp + 
     geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1133,12 +1133,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.aug.map.v2.png', plot = map_p50_temp_aug)
+  ggsave('p50.temp.aug.map.v2.png', plot = map_p50_temp_aug, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- sep
   map_p50_temp_sep <- map_p50_temp + 
     geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1150,12 +1150,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.sep.map.v2.png', plot = map_p50_temp_sep)
+  ggsave('p50.temp.sep.map.v2.png', plot = map_p50_temp_sep, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- oct
   map_p50_temp_oct <- map_p50_temp + 
     geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1167,12 +1167,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.oct.map.v2.png', plot = map_p50_temp_oct)
+  ggsave('p50.temp.oct.map.v2.png', plot = map_p50_temp_oct, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- nov
   map_p50_temp_nov <- map_p50_temp + 
     geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1184,12 +1184,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.nov.map.v2.png', plot = map_p50_temp_nov)
+  ggsave('p50.temp.nov.map.v2.png', plot = map_p50_temp_nov, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- dec
   map_p50_temp_dec <- map_p50_temp + 
     geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1201,7 +1201,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p50.temp.dec.map.v2.png', plot = map_p50_temp_dec)
+  ggsave('p50.temp.dec.map.v2.png', plot = map_p50_temp_dec, width = 6.18, height = 3.68, units = 'in')
   
   # NEEDS DOING FOR P10, P50, P90 AND PRCP/EVAP
   lsegs.df_p90_prcp <- merge(lsegs.df, PRCP.ENS.90.PCT, by = 'FIPS_NHL')
@@ -1235,7 +1235,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.overall.map.v2.png', plot = map_p90_prcp_overall)
+  ggsave('p90.prcp.overall.map.v2.png', plot = map_p90_prcp_overall, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jan
   map_p90_prcp_jan <- map_p90_prcp + 
@@ -1252,7 +1252,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.jan.map.v2.png', plot = map_p90_prcp_jan)
+  ggsave('p90.prcp.jan.map.v2.png', plot = map_p90_prcp_jan, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- feb
   map_p90_prcp_feb <- map_p90_prcp + 
@@ -1269,7 +1269,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.feb.map.v2.png', plot = map_p90_prcp_feb)
+  ggsave('p90.prcp.feb.map.v2.png', plot = map_p90_prcp_feb, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- mar
   map_p90_prcp_mar <- map_p90_prcp + 
@@ -1286,7 +1286,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.mar.map.v2.png', plot = map_p90_prcp_mar)
+  ggsave('p90.prcp.mar.map.v2.png', plot = map_p90_prcp_mar, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- apr
   map_p90_prcp_apr <- map_p90_prcp + 
@@ -1303,7 +1303,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.apr.map.v2.png', plot = map_p90_prcp_apr)
+  ggsave('p90.prcp.apr.map.v2.png', plot = map_p90_prcp_apr, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- may
   map_p90_prcp_may <- map_p90_prcp + 
@@ -1320,7 +1320,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.may.map.v2.png', plot = map_p90_prcp_may)
+  ggsave('p90.prcp.may.map.v2.png', plot = map_p90_prcp_may, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jun
   map_p90_prcp_jun <- map_p90_prcp + 
@@ -1337,7 +1337,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.jun.map.v2.png', plot = map_p90_prcp_jun)
+  ggsave('p90.prcp.jun.map.v2.png', plot = map_p90_prcp_jun, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jul
   map_p90_prcp_jul <- map_p90_prcp + 
@@ -1354,7 +1354,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.jul.map.v2.png', plot = map_p90_prcp_jul)
+  ggsave('p90.prcp.jul.map.v2.png', plot = map_p90_prcp_jul, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- aug
   map_p90_prcp_aug <- map_p90_prcp + 
@@ -1371,7 +1371,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.aug.map.v2.png', plot = map_p90_prcp_aug)
+  ggsave('p90.prcp.aug.map.v2.png', plot = map_p90_prcp_aug, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- sep
   map_p90_prcp_sep <- map_p90_prcp + 
@@ -1388,7 +1388,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.sep.map.v2.png', plot = map_p90_prcp_sep)
+  ggsave('p90.prcp.sep.map.v2.png', plot = map_p90_prcp_sep, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- oct
   map_p90_prcp_oct <- map_p90_prcp + 
@@ -1405,7 +1405,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.oct.map.v2.png', plot = map_p90_prcp_oct)
+  ggsave('p90.prcp.oct.map.v2.png', plot = map_p90_prcp_oct, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- nov
   map_p90_prcp_nov <- map_p90_prcp + 
@@ -1422,7 +1422,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.nov.map.v2.png', plot = map_p90_prcp_nov)
+  ggsave('p90.prcp.nov.map.v2.png', plot = map_p90_prcp_nov, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- dec
   map_p90_prcp_dec <- map_p90_prcp + 
@@ -1439,7 +1439,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.prcp.dec.map.v2.png', plot = map_p90_prcp_dec)
+  ggsave('p90.prcp.dec.map.v2.png', plot = map_p90_prcp_dec, width = 6.18, height = 3.68, units = 'in')
   
   # p90 TEMP
   lsegs.df_p90_temp <- merge(lsegs.df, TEMP.ENS.90.PCT, by = 'FIPS_NHL')
@@ -1461,7 +1461,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
   # INDIVIDUAL METRIC MAP -- OVERALL
   map_p90_temp_overall <- map_p90_temp + 
     geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1473,12 +1473,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.overall.map.v2.png', plot = map_p90_temp_overall)
+  ggsave('p90.temp.overall.map.v2.png', plot = map_p90_temp_overall, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jan
   map_p90_temp_jan <- map_p90_temp + 
     geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1490,12 +1490,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.jan.map.v2.png', plot = map_p90_temp_jan)
+  ggsave('p90.temp.jan.map.v2.png', plot = map_p90_temp_jan, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- feb
   map_p90_temp_feb <- map_p90_temp + 
     geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1507,12 +1507,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.feb.map.v2.png', plot = map_p90_temp_feb)
+  ggsave('p90.temp.feb.map.v2.png', plot = map_p90_temp_feb, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- mar
   map_p90_temp_mar <- map_p90_temp + 
     geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1524,12 +1524,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.mar.map.v2.png', plot = map_p90_temp_mar)
+  ggsave('p90.temp.mar.map.v2.png', plot = map_p90_temp_mar, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- apr
   map_p90_temp_apr <- map_p90_temp + 
     geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1541,12 +1541,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.apr.map.v2.png', plot = map_p90_temp_apr)
+  ggsave('p90.temp.apr.map.v2.png', plot = map_p90_temp_apr, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- may
   map_p90_temp_may <- map_p90_temp + 
     geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1558,12 +1558,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.may.map.v2.png', plot = map_p90_temp_may)
+  ggsave('p90.temp.may.map.v2.png', plot = map_p90_temp_may, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jun
   map_p90_temp_jun <- map_p90_temp + 
     geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1575,12 +1575,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.jun.map.v2.png', plot = map_p90_temp_jun)
+  ggsave('p90.temp.jun.map.v2.png', plot = map_p90_temp_jun, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- jul
   map_p90_temp_jul <- map_p90_temp + 
     geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1592,12 +1592,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.jul.map.v2.png', plot = map_p90_temp_jul)
+  ggsave('p90.temp.jul.map.v2.png', plot = map_p90_temp_jul, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- aug
   map_p90_temp_aug <- map_p90_temp + 
     geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1609,12 +1609,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.aug.map.v2.png', plot = map_p90_temp_aug)
+  ggsave('p90.temp.aug.map.v2.png', plot = map_p90_temp_aug, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- sep
   map_p90_temp_sep <- map_p90_temp + 
     geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1626,12 +1626,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.sep.map.v2.png', plot = map_p90_temp_sep)
+  ggsave('p90.temp.sep.map.v2.png', plot = map_p90_temp_sep, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- oct
   map_p90_temp_oct <- map_p90_temp + 
     geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1643,12 +1643,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.oct.map.v2.png', plot = map_p90_temp_oct)
+  ggsave('p90.temp.oct.map.v2.png', plot = map_p90_temp_oct, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- nov
   map_p90_temp_nov <- map_p90_temp + 
     geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1660,12 +1660,12 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.nov.map.v2.png', plot = map_p90_temp_nov)
+  ggsave('p90.temp.nov.map.v2.png', plot = map_p90_temp_nov, width = 6.18, height = 3.68, units = 'in')
   
   # INDIVIDUAL METRIC MAP -- dec
   map_p90_temp_dec <- map_p90_temp + 
     geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
-    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
     scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green') +
@@ -1677,4 +1677,1616 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
                x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
                y = extent$y[1]+(extent$y[1])*0.001
              ))
-  ggsave('p90.temp.dec.map.v2.png', plot = map_p90_temp_dec)
+  ggsave('p90.temp.dec.map.v2.png', plot = map_p90_temp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+  # VERSION 3 WITH SET SCALES ------
+  # P10 PRCP MAPS
+  lsegs.df_p10_prcp <- merge(lsegs.df, PRCP.ENS.10.PCT, by = 'FIPS_NHL')
+  map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+  
+  # INDIVIDUAL METRIC MAP -- OVERALL
+  map_p10_prcp_overall <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (Overall)') +
+    geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green',
+                         limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.overall.map.v3.png', plot = map_p10_prcp_overall, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jan
+  map_p10_prcp_jan <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (January)') +
+    geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green',
+                         limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.jan.map.v3.png', plot = map_p10_prcp_jan, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- feb
+  map_p10_prcp_feb <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (February)') +
+    geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.feb.map.v3.png', plot = map_p10_prcp_feb, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- mar
+  map_p10_prcp_mar <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (March)') +
+    geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.mar.map.v3.png', plot = map_p10_prcp_mar, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- apr
+  map_p10_prcp_apr <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (April)') +
+    geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.apr.map.v3.png', plot = map_p10_prcp_apr, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- may
+  map_p10_prcp_may <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (May)') +
+    geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.may.map.v3.png', plot = map_p10_prcp_may, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jun
+  map_p10_prcp_jun <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (June)') +
+    geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.jun.map.v3.png', plot = map_p10_prcp_jun, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jul
+  map_p10_prcp_jul <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (July)') +
+    geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.jul.map.v3.png', plot = map_p10_prcp_jul, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- aug
+  map_p10_prcp_aug <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (August)') +
+    geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.aug.map.v3.png', plot = map_p10_prcp_aug, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- sep
+  map_p10_prcp_sep <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (September)') +
+    geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.sep.map.v3.png', plot = map_p10_prcp_sep, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- oct
+  map_p10_prcp_oct <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (October)') +
+    geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.oct.map.v3.png', plot = map_p10_prcp_oct, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- nov
+  map_p10_prcp_nov <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (November)') +
+    geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.nov.map.v3.png', plot = map_p10_prcp_nov, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- dec
+  map_p10_prcp_dec <- map_p10_prcp + 
+    ggtitle('P10 Precipitation (December)') +
+    geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.prcp.dec.map.v3.png', plot = map_p10_prcp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+  # P10 TEMP
+  lsegs.df_p10_temp <- merge(lsegs.df, TEMP.ENS.10.PCT, by = 'FIPS_NHL')
+  map_p10_temp <- ggplot(data = lsegs.df_p10_temp, aes(x = long, y = lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+  
+  # INDIVIDUAL METRIC MAP -- OVERALL
+  map_p10_temp_overall <- map_p10_temp + 
+    ggtitle('P10 Temperature (Overall)') +
+    geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.overall.map.v3.png', plot = map_p10_temp_overall, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jan
+  map_p10_temp_jan <- map_p10_temp + 
+    ggtitle('P10 Temperature (January)') +
+    geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.jan.map.v3.png', plot = map_p10_temp_jan, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- feb
+  map_p10_temp_feb <- map_p10_temp + 
+    ggtitle('P10 Temperature (February)') +
+    geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.feb.map.v3.png', plot = map_p10_temp_feb, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- mar
+  map_p10_temp_mar <- map_p10_temp + 
+    ggtitle('P10 Temperature (March)') +
+    geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.mar.map.v3.png', plot = map_p10_temp_mar, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- apr
+  map_p10_temp_apr <- map_p10_temp + 
+    ggtitle('P10 Temperature (April)') +
+    geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.apr.map.v3.png', plot = map_p10_temp_apr, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- may
+  map_p10_temp_may <- map_p10_temp + 
+    ggtitle('P10 Temperature (May)') +
+    geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.may.map.v3.png', plot = map_p10_temp_may, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jun
+  map_p10_temp_jun <- map_p10_temp + 
+    ggtitle('P10 Temperature (June)') +
+    geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.jun.map.v3.png', plot = map_p10_temp_jun, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jul
+  map_p10_temp_jul <- map_p10_temp + 
+    ggtitle('P10 Temperature (July)') +
+    geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.jul.map.v3.png', plot = map_p10_temp_jul, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- aug
+  map_p10_temp_aug <- map_p10_temp + 
+    ggtitle('P10 Temperature (August)') +
+    geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.aug.map.v3.png', plot = map_p10_temp_aug, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- sep
+  map_p10_temp_sep <- map_p10_temp + 
+    ggtitle('P10 Temperature (September)') +
+    geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.sep.map.v3.png', plot = map_p10_temp_sep, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- oct
+  map_p10_temp_oct <- map_p10_temp + 
+    ggtitle('P10 Temperature (October)') +
+    geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.oct.map.v3.png', plot = map_p10_temp_oct, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- nov
+  map_p10_temp_nov <- map_p10_temp + 
+    ggtitle('P10 Temperature (November)') +
+    geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.nov.map.v3.png', plot = map_p10_temp_nov, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- dec
+  map_p10_temp_dec <- map_p10_temp + 
+    ggtitle('P10 Temperature (December)') +
+    geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p10.temp.dec.map.v3.png', plot = map_p10_temp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+  # NEEDS DOING FOR P10, P50, P90 AND PRCP/EVAP
+  lsegs.df_p50_prcp <- merge(lsegs.df, PRCP.ENS.50.PCT, by = 'FIPS_NHL')
+  map_p50_prcp <- ggplot(data = lsegs.df_p50_prcp, aes(x = long, y = lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+  
+  # INDIVIDUAL METRIC MAP -- OVERALL
+  map_p50_prcp_overall <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (Overall)') +
+    geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.overall.map.v3.png', plot = map_p50_prcp_overall, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jan
+  map_p50_prcp_jan <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (January)') +
+    geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.jan.map.v3.png', plot = map_p50_prcp_jan, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- feb
+  map_p50_prcp_feb <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (February)') +
+    geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.feb.map.v3.png', plot = map_p50_prcp_feb, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- mar
+  map_p50_prcp_mar <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (March)') +
+    geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.mar.map.v3.png', plot = map_p50_prcp_mar, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- apr
+  map_p50_prcp_apr <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (April)') +
+    geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.apr.map.v3.png', plot = map_p50_prcp_apr, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- may
+  map_p50_prcp_may <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (May)') +
+    geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.may.map.v3.png', plot = map_p50_prcp_may, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jun
+  map_p50_prcp_jun <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (June)') +
+    geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.jun.map.v3.png', plot = map_p50_prcp_jun, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jul
+  map_p50_prcp_jul <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (July)') +
+    geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.jul.map.v3.png', plot = map_p50_prcp_jul, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- aug
+  map_p50_prcp_aug <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (August)') +
+    geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.aug.map.v3.png', plot = map_p50_prcp_aug, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- sep
+  map_p50_prcp_sep <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (September)') +
+    geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.sep.map.v3.png', plot = map_p50_prcp_sep, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- oct
+  map_p50_prcp_oct <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (October)') +
+    geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.oct.map.v3.png', plot = map_p50_prcp_oct, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- nov
+  map_p50_prcp_nov <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (November)') +
+    geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.nov.map.v3.png', plot = map_p50_prcp_nov, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- dec
+  map_p50_prcp_dec <- map_p50_prcp + 
+    ggtitle('P50 Precipitation (December)') +
+    geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.prcp.dec.map.v3.png', plot = map_p50_prcp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+  # p50 TEMP
+  lsegs.df_p50_temp <- merge(lsegs.df, TEMP.ENS.50.PCT, by = 'FIPS_NHL')
+  map_p50_temp <- ggplot(data = lsegs.df_p50_temp, aes(x = long, y = lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+  
+  # INDIVIDUAL METRIC MAP -- OVERALL
+  map_p50_temp_overall <- map_p50_temp + 
+    ggtitle('P50 Temperature (Overall)') +
+    geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.overall.map.v3.png', plot = map_p50_temp_overall, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jan
+  map_p50_temp_jan <- map_p50_temp + 
+    ggtitle('P50 Temperature (January)') +
+    geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.jan.map.v3.png', plot = map_p50_temp_jan, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- feb
+  map_p50_temp_feb <- map_p50_temp + 
+    ggtitle('P50 Temperature (February)') +
+    geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.feb.map.v3.png', plot = map_p50_temp_feb, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- mar
+  map_p50_temp_mar <- map_p50_temp + 
+    ggtitle('P50 Temperature (March)') +
+    geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.mar.map.v3.png', plot = map_p50_temp_mar, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- apr
+  map_p50_temp_apr <- map_p50_temp + 
+    ggtitle('P50 Temperature (April)') +
+    geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.apr.map.v3.png', plot = map_p50_temp_apr, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- may
+  map_p50_temp_may <- map_p50_temp + 
+    ggtitle('P50 Temperature (May)') +
+    geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.may.map.v3.png', plot = map_p50_temp_may, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jun
+  map_p50_temp_jun <- map_p50_temp + 
+    ggtitle('P50 Temperature (June)') +
+    geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.jun.map.v3.png', plot = map_p50_temp_jun, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jul
+  map_p50_temp_jul <- map_p50_temp + 
+    ggtitle('P50 Temperature (July)') +
+    geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.jul.map.v3.png', plot = map_p50_temp_jul, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- aug
+  map_p50_temp_aug <- map_p50_temp + 
+    ggtitle('P50 Temperature (August)') +
+    geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.aug.map.v3.png', plot = map_p50_temp_aug, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- sep
+  map_p50_temp_sep <- map_p50_temp + 
+    ggtitle('P50 Temperature (September)') +
+    geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.sep.map.v3.png', plot = map_p50_temp_sep, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- oct
+  map_p50_temp_oct <- map_p50_temp + 
+    ggtitle('P50 Temperature (October)') +
+    geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.oct.map.v3.png', plot = map_p50_temp_oct, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- nov
+  map_p50_temp_nov <- map_p50_temp + 
+    ggtitle('P50 Temperature (November)') +
+    geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.nov.map.v3.png', plot = map_p50_temp_nov, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- dec
+  map_p50_temp_dec <- map_p50_temp + 
+    ggtitle('P50 Temperature (December)') +
+    geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p50.temp.dec.map.v3.png', plot = map_p50_temp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+  # NEEDS DOING FOR P10, P50, P90 AND PRCP/EVAP
+  lsegs.df_p90_prcp <- merge(lsegs.df, PRCP.ENS.90.PCT, by = 'FIPS_NHL')
+  map_p90_prcp <- ggplot(data = lsegs.df_p90_prcp, aes(x = long, y = lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+  
+  # INDIVIDUAL METRIC MAP -- OVERALL
+  map_p90_prcp_overall <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (Overall)') +
+    geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.overall.map.v3.png', plot = map_p90_prcp_overall, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jan
+  map_p90_prcp_jan <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (January)') +
+    geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.jan.map.v3.png', plot = map_p90_prcp_jan, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- feb
+  map_p90_prcp_feb <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (February)') +
+    geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.feb.map.v3.png', plot = map_p90_prcp_feb, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- mar
+  map_p90_prcp_mar <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (March)') +
+    geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.mar.map.v3.png', plot = map_p90_prcp_mar, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- apr
+  map_p90_prcp_apr <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (April)') +
+    geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.apr.map.v3.png', plot = map_p90_prcp_apr, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- may
+  map_p90_prcp_may <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (May)') +
+    geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.may.map.v3.png', plot = map_p90_prcp_may, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jun
+  map_p90_prcp_jun <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (June)') +
+    geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.jun.map.v3.png', plot = map_p90_prcp_jun, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jul
+  map_p90_prcp_jul <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (July)') +
+    geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.jul.map.v3.png', plot = map_p90_prcp_jul, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- aug
+  map_p90_prcp_aug <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (August)') +
+    geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.aug.map.v3.png', plot = map_p90_prcp_aug, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- sep
+  map_p90_prcp_sep <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (September)') +
+    geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.sep.map.v3.png', plot = map_p90_prcp_sep, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- oct
+  map_p90_prcp_oct <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (October)') +
+    geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.oct.map.v3.png', plot = map_p90_prcp_oct, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- nov
+  map_p90_prcp_nov <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (November)') +
+    geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.nov.map.v3.png', plot = map_p90_prcp_nov, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- dec
+  map_p90_prcp_dec <- map_p90_prcp + 
+    ggtitle('P90 Precipitation (December)') +
+    geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.prcp.dec.map.v3.png', plot = map_p90_prcp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+  # p90 TEMP
+  lsegs.df_p90_temp <- merge(lsegs.df, TEMP.ENS.90.PCT, by = 'FIPS_NHL')
+  map_p90_temp <- ggplot(data = lsegs.df_p90_temp, aes(x = long, y = lat, group = group))+
+    geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+    geom_polygon(data = VADF, color="gray46", fill = "gray")+
+    geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+    #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+    geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+  
+  # INDIVIDUAL METRIC MAP -- OVERALL
+  map_p90_temp_overall <- map_p90_temp + 
+    ggtitle('P90 Temperature (Overall)') +
+    geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.overall.map.v3.png', plot = map_p90_temp_overall, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jan
+  map_p90_temp_jan <- map_p90_temp + 
+    ggtitle('P90 Temperature (January)') +
+    geom_polygon(aes(fill = Jan), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.jan.map.v3.png', plot = map_p90_temp_jan, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- feb
+  map_p90_temp_feb <- map_p90_temp + 
+    ggtitle('P90 Temperature (February)') +
+    geom_polygon(aes(fill = Feb), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.feb.map.v3.png', plot = map_p90_temp_feb, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- mar
+  map_p90_temp_mar <- map_p90_temp + 
+    ggtitle('P90 Temperature (March)') +
+    geom_polygon(aes(fill = Mar), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.mar.map.v3.png', plot = map_p90_temp_mar, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- apr
+  map_p90_temp_apr <- map_p90_temp + 
+    ggtitle('P90 Temperature (April)') +
+    geom_polygon(aes(fill = Apr), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.apr.map.v3.png', plot = map_p90_temp_apr, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- may
+  map_p90_temp_may <- map_p90_temp + 
+    ggtitle('P90 Temperature (May)') +
+    geom_polygon(aes(fill = May), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.may.map.v3.png', plot = map_p90_temp_may, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jun
+  map_p90_temp_jun <- map_p90_temp + 
+    ggtitle('P90 Temperature (June)') +
+    geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.jun.map.v3.png', plot = map_p90_temp_jun, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- jul
+  map_p90_temp_jul <- map_p90_temp + 
+    ggtitle('P90 Temperature (July)') +
+    geom_polygon(aes(fill = Jul), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.jul.map.v3.png', plot = map_p90_temp_jul, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- aug
+  map_p90_temp_aug <- map_p90_temp + 
+    ggtitle('P90 Temperature (August)') +
+    geom_polygon(aes(fill = Aug), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.aug.map.v3.png', plot = map_p90_temp_aug, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- sep
+  map_p90_temp_sep <- map_p90_temp + 
+    ggtitle('P90 Temperature (September)') +
+    geom_polygon(aes(fill = Sep), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.sep.map.v3.png', plot = map_p90_temp_sep, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- oct
+  map_p90_temp_oct <- map_p90_temp + 
+    ggtitle('P90 Temperature (October)') +
+    geom_polygon(aes(fill = Oct), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.oct.map.v3.png', plot = map_p90_temp_oct, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- nov
+  map_p90_temp_nov <- map_p90_temp + 
+    ggtitle('P90 Temperature (November)') +
+    geom_polygon(aes(fill = Nov), color = 'black', size = 0.1) +
+    guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.nov.map.v3.png', plot = map_p90_temp_nov, width = 6.18, height = 3.68, units = 'in')
+  
+  # INDIVIDUAL METRIC MAP -- dec
+  map_p90_temp_dec <- map_p90_temp + 
+    ggtitle('P90 Temperature (December)') +
+    geom_polygon(aes(fill = Dec), color = 'black', size = 0.1) +
+    theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+    xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 4)) +
+    north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+    scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+             transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+             st.size = 3.5, st.dist = 0.0285,
+             anchor = c(
+               x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+               y = extent$y[1]+(extent$y[1])*0.001
+             ))
+  ggsave('p90.temp.dec.map.v3.png', plot = map_p90_temp_dec, width = 6.18, height = 3.68, units = 'in')
+  
+library(gridExtra)
+  
+jpeg('p10_prcp.jpeg', width = 1300, height = 1548)
+p10_prcp <- grid.arrange(grobs = list(
+  map_p10_prcp_jan, map_p10_prcp_feb, map_p10_prcp_mar,
+  map_p10_prcp_apr, map_p10_prcp_may, map_p10_prcp_jun,
+  map_p10_prcp_jul, map_p10_prcp_aug, map_p10_prcp_sep,
+  map_p10_prcp_oct, map_p10_prcp_nov, map_p10_prcp_dec,
+  map_p10_prcp_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+  )
+dev.off()
+
+jpeg('p10_temp.jpeg', width = 1300, height = 1548)
+p10_temp <- grid.arrange(grobs = list(
+  map_p10_temp_jan, map_p10_temp_feb, map_p10_temp_mar,
+  map_p10_temp_apr, map_p10_temp_may, map_p10_temp_jun,
+  map_p10_temp_jul, map_p10_temp_aug, map_p10_temp_sep,
+  map_p10_temp_oct, map_p10_temp_nov, map_p10_temp_dec,
+  map_p10_temp_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+)
+dev.off()
+
+jpeg('p50_prcp.jpeg', width = 1300, height = 1548)
+p50_prcp <- grid.arrange(grobs = list(
+  map_p50_prcp_jan, map_p50_prcp_feb, map_p50_prcp_mar,
+  map_p50_prcp_apr, map_p50_prcp_may, map_p50_prcp_jun,
+  map_p50_prcp_jul, map_p50_prcp_aug, map_p50_prcp_sep,
+  map_p50_prcp_oct, map_p50_prcp_nov, map_p50_prcp_dec,
+  map_p50_prcp_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+)
+dev.off()
+
+jpeg('p50_temp.jpeg', width = 1300, height = 1548)
+p50_temp <- grid.arrange(grobs = list(
+  map_p50_temp_jan, map_p50_temp_feb, map_p50_temp_mar,
+  map_p50_temp_apr, map_p50_temp_may, map_p50_temp_jun,
+  map_p50_temp_jul, map_p50_temp_aug, map_p50_temp_sep,
+  map_p50_temp_oct, map_p50_temp_nov, map_p50_temp_dec,
+  map_p50_temp_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+)
+dev.off()
+
+jpeg('p90_prcp.jpeg', width = 1300, height = 1548)
+p90_prcp <- grid.arrange(grobs = list(
+  map_p90_prcp_jan, map_p90_prcp_feb, map_p90_prcp_mar,
+  map_p90_prcp_apr, map_p90_prcp_may, map_p90_prcp_jun,
+  map_p90_prcp_jul, map_p90_prcp_aug, map_p90_prcp_sep,
+  map_p90_prcp_oct, map_p90_prcp_nov, map_p90_prcp_dec,
+  map_p90_prcp_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+)
+dev.off()
+
+jpeg('p90_temp.jpeg', width = 1300, height = 1548)
+p90_temp <- grid.arrange(grobs = list(
+  map_p90_temp_jan, map_p90_temp_feb, map_p90_temp_mar,
+  map_p90_temp_apr, map_p90_temp_may, map_p90_temp_jun,
+  map_p90_temp_jul, map_p90_temp_aug, map_p90_temp_sep,
+  map_p90_temp_oct, map_p90_temp_nov, map_p90_temp_dec,
+  map_p90_temp_overall),
+  widths = c(1.25,1.25,1.25,1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,1,2,2,3,3),
+                        c(4,4,5,5,6,6),
+                        c(7,7,8,8,9,9),
+                        c(10,10,11,11,12,12),
+                        c(NA,13,13,13,13,NA),
+                        c(NA,13,13,13,13,NA))
+)
+dev.off()

@@ -31,6 +31,9 @@ vahydro_import_metric <- function(met.varkey, met.propcode, seg.or.gage, mod.sce
   #property dataframe returned
   feature = FALSE;
   odata <- getFeature(inputs, token, site, feature);
+  if (odata == FALSE) {
+    return(FALSE)
+  }
   hydroid <- odata[1,"hydroid"];
   fname <- as.character(odata[1,]$name );
   print(paste("Retrieved hydroid",hydroid,"for", fname,seg.or.gage, sep=' '));
@@ -42,6 +45,9 @@ vahydro_import_metric <- function(met.varkey, met.propcode, seg.or.gage, mod.sce
     propcode = mod.scenario
   )
   property <- getProperty(inputs, site, property)
+  if (property == FALSE) {
+    return(FALSE)
+  }
   
   metinfo <- list(
     varkey = met.varkey,
