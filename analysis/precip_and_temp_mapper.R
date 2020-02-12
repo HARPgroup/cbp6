@@ -1436,37 +1436,37 @@ dev.off()
 #   geom_path(mapping = NULL) +
 #   coord_equal()
 
-library(rgdal)
-library(ggplot2)
-library(dplyr)
-
-if (va.or.cbw == 'va') {
-  lsegs <- readOGR(lseg.loc, 'P6_LSegs_VA')
-} else if (va.or.cbw == 'cbw') {
-  lsegs <- readOGR(lseg.loc, 'P6_LSegs')
-} else {
-  print(paste('ERROR: Neither VA nor CBW selected'))
-}
-
-lsegs <- spTransform(lsegs, CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
-
-lsegs@data$id <- rownames(lsegs@data)
-
-lsegs.df <- fortify(lsegs)
-
-# map + geom_path() # outline of shape
+# library(rgdal)
+# library(ggplot2)
+# library(dplyr)
 # 
+# if (va.or.cbw == 'va') {
+#   lsegs <- readOGR(lseg.loc, 'P6_LSegs_VA')
+# } else if (va.or.cbw == 'cbw') {
+#   lsegs <- readOGR(lseg.loc, 'P6_LSegs')
+# } else {
+#   print(paste('ERROR: Neither VA nor CBW selected'))
+# }
+# 
+# lsegs <- spTransform(lsegs, CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
+# 
+# lsegs@data$id <- rownames(lsegs@data)
+# 
+# lsegs.df <- fortify(lsegs)
+# 
+# # map + geom_path() # outline of shape
+# # 
+# # map + 
+# #   geom_polygon(aes(fill = id)) #filled
+# 
+# lsegs.df <- merge(lsegs.df, lsegs@data, by = 'id')
+# 
+# # NEEDS DOING FOR P10, P50, P90 AND PRCP/EVAP
+# lsegs.df <- merge(lsegs.df, PRCP.ENS.10.PCT, by = 'FIPS_NHL')
+# map <- ggplot(data = lsegs.df, aes(x = long, y = lat, group = group))
+# 
+# # INDIVIDUAL METRIC MAP
 # map + 
-#   geom_polygon(aes(fill = id)) #filled
-
-lsegs.df <- merge(lsegs.df, lsegs@data, by = 'id')
-
-# NEEDS DOING FOR P10, P50, P90 AND PRCP/EVAP
-lsegs.df <- merge(lsegs.df, PRCP.ENS.10.PCT, by = 'FIPS_NHL')
-map <- ggplot(data = lsegs.df, aes(x = long, y = lat, group = group))
-
-# INDIVIDUAL METRIC MAP
-map + 
-  geom_polygon(aes(fill = Total), color = 'gray', size = 0.1) +
-  coord_fixed(1.3)
-
+#   geom_polygon(aes(fill = Total), color = 'gray', size = 0.1) +
+#   coord_fixed(1.3)
+# 

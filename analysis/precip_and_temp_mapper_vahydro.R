@@ -3,7 +3,7 @@ site <- "http://deq2.bse.vt.edu/d.bet"    #Specify the site of interest, either 
 hydro_tools <- '/Users/danie/Documents/HARP/GitHub/hydro-tools';
 
 data.location <- '/Users/danie/Documents/HARP/GitHub/cbp6/Data/CBP6_Temp_Prcp_Data'
-va.or.cbw <- 'va'
+va.or.cbw <- 'cbw'
 
 # CREATING DIRECTORY TO STORE DATA AND OUTPUTS
 dir.create('~/Precip_and_Temp_Mapper')
@@ -123,9 +123,16 @@ library(ggsn)
 #--------------------------------------------------------------------------------------------
 STATES <- read.table(file=paste(hydro_tools,"GIS_LAYERS","STATES.tsv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
 
-#specify spatial extent for map  
-extent <- data.frame(x = c(-82, -75), 
-                     y = c(36.5, 39.5))  
+#specify spatial extent for map
+if (va.or.cbw == 'va') {
+  extent <- data.frame(x = c(-82, -75), 
+                       y = c(36.5, 39.5))
+} else if (va.or.cbw == 'cbw') {
+  extent <- data.frame(x = c(-85, -73), 
+                       y = c(36.5, 45))
+} else {
+  print(paste('ERROR: Neither VA nor CBW selected'))
+}
 
 
 bb=readWKT(paste0("POLYGON((",extent$x[1]," ",extent$y[1],",",extent$x[2]," ",extent$y[1],",",extent$x[2]," ",extent$y[2],",",extent$x[1]," ",extent$y[2],",",extent$x[1]," ",extent$y[1],"))",sep=""))
