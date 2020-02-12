@@ -4991,5 +4991,9 @@ vahydro_import_metric_from_scenprop <- function(scenprop.pid, met.varkey, met.pr
   )
   metprop <- getProperty(metinfo, site, metprop)
   
+  if (metprop == FALSE) {
+    return(FALSE)
+  }
+  
   return(as.numeric(metprop$propvalue))
 }
