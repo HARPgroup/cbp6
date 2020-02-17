@@ -2717,7 +2717,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2735,7 +2735,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2753,7 +2753,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2771,7 +2771,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2789,7 +2789,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2807,7 +2807,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2825,7 +2825,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2843,7 +2843,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2861,7 +2861,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2879,7 +2879,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2897,7 +2897,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2915,7 +2915,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -2933,7 +2933,7 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
     guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
     theme(legend.justification=c(0,1), legend.position=c(0,1)) +
     xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-20, 20)) +
+    scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(0, 40)) +
     north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
     scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
              transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
@@ -3295,5 +3295,117 @@ p90_temp <- grid.arrange(grobs = list(
                         c(10,10,11,11,12,12),
                         c(NA,13,13,13,13,NA),
                         c(NA,13,13,13,13,NA))
+)
+dev.off()
+
+uni_map_p10_prcp_overall <- map_p10_prcp + 
+  ggtitle('P10 Precipitation (Overall)') +
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-5, 20)) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+
+uni_map_p50_prcp_overall <- map_p50_prcp + 
+  ggtitle('P50 Precipitation (Overall)') +
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-5, 20)) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+
+uni_map_p90_prcp_overall <- map_p90_prcp + 
+  ggtitle('P90 Precipitation (Overall)') +
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Precipitation\nChange (%)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(-5, 20)) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+
+uni_map_p10_temp_overall <- map_p10_temp + 
+  ggtitle('P10 Temperature (Overall)') +
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(1, 3.5)) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+
+uni_map_p50_temp_overall <- map_p50_temp + 
+  ggtitle('P50 Temperature (Overall)') +
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(1, 3.5)) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+
+uni_map_p90_temp_overall <- map_p90_temp + 
+  ggtitle('P90 Temperature (Overall)') +
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = 'brown', mid = 'white', high = 'green', limits = c(1, 3.5)) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+
+jpeg('compare_scen_prcp.jpeg', width = 1300, height = 258)
+compare_prcp <- grid.arrange(grobs = list(
+  uni_map_p10_prcp_overall, uni_map_p50_prcp_overall, uni_map_p90_prcp_overall),
+  widths = c(1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,2,3))
+)
+dev.off()
+
+jpeg('compare_scen_temp.jpeg', width = 1300, height = 258)
+compare_temp <- grid.arrange(grobs = list(
+  uni_map_p10_temp_overall, uni_map_p50_temp_overall, uni_map_p90_temp_overall),
+  widths = c(1.25,1.25,1.25),
+  layout_matrix = rbind(c(1,2,3))
 )
 dev.off()

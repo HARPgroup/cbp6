@@ -11,6 +11,11 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   #property dataframe returned
   feature = FALSE;
   odata <- getFeature(inputs, token, site, feature);
+  
+  if (odata == FALSE) {
+    return(FALSE)
+  }
+  
   hydroid <- odata[1,"hydroid"];
   fname <- as.character(odata[1,]$name);
   print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
@@ -36,6 +41,10 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   }
   
   scenario <- getProperty(inputs, site, scenario)
+  
+  if (scenario == FALSE) {
+    return(FALSE)
+  }
   
   # DETERMINING PROPNAME AND PROPCODE FOR SCENARIO PROPERTY
   if (dat.source == 'cbp_model') {
@@ -78,6 +87,10 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
   scenprop <- getProperty(sceninfo, site, scenprop)
+  
+  if (scenprop == FALSE) {
+    return(FALSE)
+  }
   
   return(as.numeric(scenprop$pid))
 }
