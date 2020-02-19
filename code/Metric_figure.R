@@ -182,7 +182,12 @@ for (i in 1:length(dor.year.df$riv.seg)) {
   riv.seg <- as.character(dor.year.df$riv.seg[i])
   temp.scen.prop <- get.scen.prop(riv.seg = riv.seg, mod.scenario = 'CFBASE30Y20180615', dat.source = 'vahydro', run.id = '11', start.date = '1984-01-01', end.date = '2014-12-31', site, token = token)
   #temp.met <- vahydro_import_metric(met.varkey, met.propcode = '', seg.or.gage = riv.seg, mod.scenario = "CFBASE30Y20180615", token = token, site)
+  if (temp.scen.prop == FALSE) {
+    temp.met <- FALSE
+  }
+  else (
   temp.met <- vahydro_import_metric_from_scenprop(scenprop.pid = temp.scen.prop, met.varkey, met.propcode = '', site, token = token)
+  )
   dor.year.df$dor.year[i] <- temp.met
 }
 
@@ -230,11 +235,11 @@ map <- ggplot(data = lsegs.df, aes(x = long, y = lat, group = group))+
 # CHANGE "SHAPE_AREA" TO WHATEVER COLUMN IN LSEGS.DF YOU WANT A
 # CHOROPLETH MAP OF
 map + 
-  geom_polygon(aes(fill = as.factor(dor.year), group=group), color = as.factor('black'), size = 0.1) +
+  geom_polygon(aes(fill = as.factor(dor.year.y), group=group), color = as.factor('black'), size = 0.1) +
   guides(fill=guide_legend(title=paste0("Legend\n",met.varkey))) +
   theme(legend.justification=c(0,1), legend.position=c(0,1)) +
   xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
-  scale_fill_manual(values = c("red3","red", "darkorange", "yellow","greenyellow",
+  scale_fill_manual(values = c("red4","red", "darkorange", "yellow","greenyellow",
                                "green3","turquoise3", "dodgerblue3","royalblue4",
                                "slateblue3","mediumpurple","violetred","plum","thistle1",
                                "snow1"), na.value = 'grey50') +
