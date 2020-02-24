@@ -70,6 +70,7 @@ for (i in 1:length(rsegs.va.names)) {
 }
 
 avg.runit.vals[avg.runit.vals == 'NaN'] <- NA
+avg.runit.vals[avg.runit.vals == 0] <- NA
 
 #--------------------------------------------------------------------------------------------
 #LOAD STATE GEOMETRY
@@ -444,3 +445,96 @@ runit <- grid.arrange(grobs = list(
                         c(NA,13,13,13,13,NA))
 )
 dev.off()
+
+avg.runit.vals$Jan[which(avg.runit.vals$Jan == 0)] <- NA
+avg.runit.vals$Feb[which(avg.runit.vals$Feb == 0)] <- NA
+avg.runit.vals$Mar[which(avg.runit.vals$Mar == 0)] <- NA
+avg.runit.vals$Apr[which(avg.runit.vals$Apr == 0)] <- NA
+avg.runit.vals$May[which(avg.runit.vals$May == 0)] <- NA
+avg.runit.vals$Jun[which(avg.runit.vals$Jun == 0)] <- NA
+avg.runit.vals$Jul[which(avg.runit.vals$Jul == 0)] <- NA
+avg.runit.vals$Aug[which(avg.runit.vals$Aug == 0)] <- NA
+avg.runit.vals$Sep[which(avg.runit.vals$Sep == 0)] <- NA
+avg.runit.vals$Oct[which(avg.runit.vals$Oct == 0)] <- NA
+avg.runit.vals$Nov[which(avg.runit.vals$Nov == 0)] <- NA
+avg.runit.vals$Dec[which(avg.runit.vals$Dec == 0)] <- NA
+avg.runit.vals$Total[which(avg.runit.vals$Total == 0)] <- NA
+
+
+runit_avgs <- as.data.frame(matrix(data = NA, nrow = 13, ncol = 5))
+colnames(runit_avgs) <- c('Lowest Flow (cfs/sq mi)', 'Median Flow (cfs/sq mi)', 
+                          'Highest Flow (cfs/sq mi)', 'Range of Flows (cfs/sq mi)',
+                          'Average Flow (cfs/sq mi)')
+rownames(runit_avgs) <- c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+                          'Total')
+runit_avgs$`Lowest Flow (cfs/sq mi)` <- c(round(min(avg.runit.vals$Jan, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Feb, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Mar, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Apr, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$May, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Jun, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Jul, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Aug, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Sep, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Oct, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Nov, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Dec, na.rm = TRUE), 2),
+                                          round(min(avg.runit.vals$Total, na.rm = TRUE), 2))
+runit_avgs$`Median Flow (cfs/sq mi)` <- c(round(median(avg.runit.vals$Jan, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Feb, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Mar, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Apr, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$May, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Jun, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Jul, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Aug, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Sep, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Oct, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Nov, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Dec, na.rm = TRUE), 2),
+                                          round(median(avg.runit.vals$Total, na.rm = TRUE), 2))
+runit_avgs$`Highest Flow (cfs/sq mi)` <- c(round(max(avg.runit.vals$Jan, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Feb, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Mar, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Apr, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$May, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Jun, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Jul, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Aug, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Sep, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Oct, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Nov, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Dec, na.rm = TRUE), 2),
+                                           round(max(avg.runit.vals$Total, na.rm = TRUE), 2))
+runit_avgs$`Range of Flows (cfs/sq mi)` <- runit_avgs$`Highest Flow (cfs/sq mi)` - runit_avgs$`Lowest Flow (cfs/sq mi)`
+runit_avgs$`Average Flow (cfs/sq mi)` <- c(round(mean(avg.runit.vals$Jan, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Feb, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Mar, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Apr, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$May, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Jun, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Jul, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Aug, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Sep, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Oct, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Nov, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Dec, na.rm = TRUE), 2),
+                                              round(mean(avg.runit.vals$Total, na.rm = TRUE), 2))
+
+library(readxl)
+library(kableExtra)
+
+# OUTPUT TABLE IN KABLE FORMAT
+kable(runit_avgs, "latex", booktabs = T,
+      caption = paste("Run", run.id, "Runoff Unit Flows"), 
+      label = paste("Run", run.id, "Runoff Unit Flows"),
+      col.names = c('Lowest Flow (cfs/sq mi)', 'Median Flow (cfs/sq mi)', 
+                    'Highest Flow (cfs/sq mi)', 'Range of Flows (cfs/sq mi)',
+                    'Average Flow (cfs/sq mi)')) %>%
+  kable_styling(latex_options = c("striped", "scale_down")) %>% 
+  #column_spec(1, width = "5em") %>%
+  #column_spec(2, width = "5em") %>%
+  #column_spec(3, width = "5em") %>%
+  #column_spec(4, width = "4em") %>%
+  cat(., file = paste(dir.location,"/kable_tables/runid",run.id,".tex",sep=""))
