@@ -5159,4 +5159,6 @@ vahydro_import_all_metrics_from_scenprop <- function(scenprop.pid, site, token) 
   metrics[1,65]=droughtyear
   metrics[1,66]=droughtmeanflow
   metrics[1,67]=meanbaseflow
+  
+  return(metrics)
 }
