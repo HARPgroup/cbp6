@@ -4439,7 +4439,7 @@ fig.boxplot.by.flow.for.dash <- function(tmp.data, flow.abbreviation) {
   return(plot)
 }
 
-get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token) {
+get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run.id, start.date, end.date, site, token) {
   # GETTING MODEL DATA FROM VA HYDRO
   hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
@@ -4475,7 +4475,7 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
       varkey = "om_water_model_node",
       featureid = hydroid,
       entity_type = "dh_feature",
-      propcode = 'vahydro-1.0'
+      propcode = mod.scenario
     )
   } else {
     stop('Error: data source is neither "cbp_model" nor "vahydro"')
