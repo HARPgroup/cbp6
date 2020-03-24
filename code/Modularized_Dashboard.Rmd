@@ -5,7 +5,7 @@ pdf_document: default
 word_document: default
 html_document: default
 params: 
-  riv.seg: 'JA1_7600_7570'
+  riv.seg: 'YP3_6330_6700'
   dat.source1: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
   dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
   start.date: '1990-01-01' #YYYY-MM-DD
