@@ -137,7 +137,7 @@ output:
 
 # GETTING/CREATING SCENARIO PROPERTIES FROM VA HYDRO
 scenprop1 <- get.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
-scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, 'vahydro', run.id2, start.date, end.date, site, token)
+scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, dat.source2, run.id2, start.date, end.date, site, token)
 #if doing gage data change 'dat.source2' to 'vahydro
 
 # POSTING METRICS TO SCENARIO PROPERTIES ON VA HYDRO
