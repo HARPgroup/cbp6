@@ -5,23 +5,23 @@ pdf_document: default
 word_document: default
 html_document: default
 params: 
-  riv.seg: 'JU3_6380_6900'
+  riv.seg: 'YP3_6330_6700'
   dat.source1: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
-  dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
-  start.date: '1990-01-01' #YYYY-MM-DD
-  end.date: '2000-12-31' #YYYY-MM-DD
+  dat.source2: 'gage' #'vahydroR', 'gage', or 'cbp_model'
+  start.date: '1998-07-31' #YYYY-MM-DD
+  end.date: '2014-12-31' #YYYY-MM-DD
   github_link: "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
   site: 'http://deq2.bse.vt.edu/d.dh'
   site.or.server: 'site'
-  run.id1: '14'
-  run.id2: '15'
-  gage_number: '00000000'
+  run.id1: '11'
+  run.id2: 'weighted'
+  gage_number: '01671020'
   mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
-  mod.scenario1: 'CBASE1808L55CY55R45P50R45P50Y' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
+  mod.scenario1: 'vahydro-1.0-gage timespan' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
-  mod.scenario2: 'CBASE1808L55CY55R45P10R45P10Y' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
-  cn1: 'VA Hydro: CC: Precip 50, Temp 50'
-  cn2: 'VA Hydro: CC: Precip 10, Temp 10'
+  mod.scenario2: 'usgs-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
+  cn1: 'VA Hydro: Runid_11_gage_timespan'
+  cn2: 'VA Hydro: Runid_weighted'
   
 ---
 
@@ -137,7 +137,8 @@ output:
 
 # GETTING/CREATING SCENARIO PROPERTIES FROM VA HYDRO
 scenprop1 <- get.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
-scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, dat.source2, run.id2, start.date, end.date, site, token)
+scenprop2 <- get.scen.prop(riv.seg, mod.scenario2, 'vahydro', run.id2, start.date, end.date, site, token)
+#if doing gage data change 'dat.source2' to 'vahydro
 
 # POSTING METRICS TO SCENARIO PROPERTIES ON VA HYDRO
 metrics1 <- vahydro_import_all_metrics_from_scenprop(scenprop1, site, token)

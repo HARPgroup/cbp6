@@ -1,11 +1,11 @@
 mod.phase <- 'p6/p6_gb604' #or "p532c-sova" (phase 5)
-mod.scenario <- 'CFBASE30Y20180615' #or 'CBASE1808L55CY55R45P50R45P50Y' (climate change) 'CFBASE30Y20180615' (base) 'CBASE1808L55CY55R45P10R45P10Y' (climate change 10%) 'CBASE1808L55CY55R45P90R45P90Y' (climate change 90%)
-start.date <- '1984-01-01'
+mod.scenario <- 'vahydro-1.0-gage timespan' #or 'CBASE1808L55CY55R45P50R45P50Y' (climate change) 'CFBASE30Y20180615' (base) 'CBASE1808L55CY55R45P10R45P10Y' (climate change 10%) 'CBASE1808L55CY55R45P90R45P90Y' (climate change 90%)
+start.date <- '1998-07-31' #1984-01-01
 end.date <- '2014-12-31'
 github_link <- "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
 site_url <- "http://deq2.bse.vt.edu/d.dh"
 site.or.server <- 'site'
-riv.seg <- 'JU3_6380_6900'
+riv.seg <- 'YP3_6330_6700'
 run.id <- '11'
 
 token <- token

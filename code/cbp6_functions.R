@@ -316,15 +316,15 @@ vahydro_import_all_metrics <- function(seg.or.gage, mod.scenario, token, site) {
   seven.day.med.high <- vahydro.import.metric(met.varkey = "med_high_flow", met.propcode = 'medh7', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   thirty.day.med.high <- vahydro.import.metric(met.varkey = "med_high_flow", met.propcode = 'medh30', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   ninety.day.med.high <- vahydro.import.metric(met.varkey = "med_high_flow", met.propcode = 'medh90', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
+  drought.of.record.mean <- vahydro.import.metric(met.varkey = "dor_mean", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
+  seven.q.ten <- vahydro.import.metric(met.varkey = "7q10", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
+  drought.of.record.year <- vahydro.import.metric(met.varkey = "dor_year", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
+  sep.ten.pct <- vahydro.import.metric(met.varkey = "monthly_non-exceedance", met.propcode = 'mne9_10', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   one.pct.non.exceedance <- vahydro.import.metric(met.varkey = "non-exceedance", met.propcode = 'ne1', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   five.pct.non.exceedance <- vahydro.import.metric(met.varkey = "non-exceedance", met.propcode = 'ne5', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   fifty.pct.non.exceedance <- vahydro.import.metric(met.varkey = "non-exceedance", met.propcode = 'ne50', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   ninety.five.pct.non.exceedance <- vahydro.import.metric(met.varkey = "non-exceedance", met.propcode = 'ne95', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   ninety.nine.pct.non.exceedance <- vahydro.import.metric(met.varkey = "non-exceedance", met.propcode = 'ne99', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
-  sep.ten.pct <- vahydro.import.metric(met.varkey = "monthly_non-exceedance", met.propcode = 'mne9_10', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
-  seven.q.ten <- vahydro.import.metric(met.varkey = "7q10", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
-  drought.of.record.year <- vahydro.import.metric(met.varkey = "dor_year", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
-  drought.of.record.mean <- vahydro.import.metric(met.varkey = "dor_mean", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
   mean.baseflow <- vahydro.import.metric(met.varkey = "baseflow", met.propcode = '', seg.or.gage = seg.or.gage, mod.scenario = mod.scenario, token = token, site = site)
 
   metrics <- data.frame(overall.mean, jan.low.flow, feb.low.flow, mar.low.flow, apr.low.flow, may.low.flow,
@@ -337,10 +337,10 @@ vahydro_import_all_metrics <- function(seg.or.gage, mod.scenario, token, site) {
                         one.day.min, three.day.min, seven.day.min, thirty.day.min, ninety.day.min,
                         one.day.med.low, three.day.med.low, seven.day.med.low, thirty.day.med.low, ninety.day.med.low,
                         one.day.max, three.day.max, seven.day.max, thirty.day.max, ninety.day.max,
-                        one.day.med.high, three.day.med.high, seven.day.med.high, thirty.day.med.high, ninety.day.med.high,
+                        one.day.med.high, three.day.med.high, seven.day.med.high, thirty.day.med.high, 
+                        ninety.day.med.high, drought.of.record.mean, seven.q.ten, drought.of.record.year, sep.ten.pct,
                         one.pct.non.exceedance, five.pct.non.exceedance, fifty.pct.non.exceedance,
-                        ninety.five.pct.non.exceedance, ninety.nine.pct.non.exceedance, sep.ten.pct,
-                        seven.q.ten, drought.of.record.year, drought.of.record.mean, mean.baseflow)
+                        ninety.five.pct.non.exceedance, ninety.nine.pct.non.exceedance, mean.baseflow)
   return(metrics)
 }
 
@@ -5020,8 +5020,8 @@ vahydro_import_all_metrics_from_scenprop <- function(scenprop.pid, site, token) 
                           'jan.mean.flow','feb.mean.flow','mar.mean.flow','apr.mean.flow','may.mean.flow','jun.mean.flow','jul.mean.flow','aug.mean.flow','sep.mean.flow','oct.mean.flow','nov.mean.flow','dec.mean.flow',
                           'jan.high.flow','feb.high.flow','mar.high.flow','apr.high.flow','may.high.flow','jun.high.flow','jul.high.flow','aug.high.flow','sep.high.flow','oct.high.flow','nov.high.flow','dec.high.flow',
                           'one.day.min','three.day.min','seven.day.min','thirty.day.min','ninety.day.min','one.day.med.min','three.day.med.min','seven.day.med.min','thirty.day.med.min','ninety.day.med.min',
-                          'one.day.max','three.day.max','seven.day.max','thirty.day.max','ninety.day.max','one.day.med.max','three.day.med.max','seven.day.med.max','thirty.day.med.max','ninety.day.med.max',
-                          'flow.exceedance.1','flow.exceedance.5','flow.exceedance.50','flow.exceedance.95','flow.exceedance.99','sept.10.percent','sevenQ.ten','drought.record','lowest.yearly.mean','avg.baseflow'))
+                          'one.day.max','three.day.max','seven.day.max','thirty.day.max','ninety.day.max','one.day.med.max','three.day.med.max','seven.day.med.max','thirty.day.med.max','ninety.day.med.max', 'lowest.yearly.mean', 
+                          'sevenQ.ten', 'drought.record', 'sept.10.percent','flow.exceedance.1','flow.exceedance.5','flow.exceedance.50','flow.exceedance.95','flow.exceedance.99','avg.baseflow'))
   
   overallmean <- vahydro_import_metric_from_scenprop(scenprop.pid, 'overall_mean', '', site, token)
   janlow <- vahydro_import_metric_from_scenprop(scenprop.pid, 'monthly_low_flow', 'ml1', site, token)
@@ -5080,15 +5080,15 @@ vahydro_import_all_metrics_from_scenprop <- function(scenprop.pid, site, token) 
   medhigh7day <- vahydro_import_metric_from_scenprop(scenprop.pid, 'med_high_flow', 'medh7', site, token)
   medhigh30day <- vahydro_import_metric_from_scenprop(scenprop.pid, 'med_high_flow', 'medh30', site, token)
   medhigh90day <- vahydro_import_metric_from_scenprop(scenprop.pid, 'med_high_flow', 'medh90', site, token)
+  droughtmeanflow <- vahydro_import_metric_from_scenprop(scenprop.pid, 'dor_mean', '', site, token)
+  sevenq10 <- vahydro_import_metric_from_scenprop(scenprop.pid, '7q10', '', site, token)
+  droughtyear <- vahydro_import_metric_from_scenprop(scenprop.pid, 'dor_year', '', site, token)
+  sept10 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'monthly_non-exceedance', 'mne9_10', site, token)
   neflow1 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'non-exceedance', 'ne1', site, token)
   neflow5 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'non-exceedance', 'ne5', site, token)
   neflow50 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'non-exceedance', 'ne50', site, token)
   neflow95 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'non-exceedance', 'ne95', site, token)
   neflow99 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'non-exceedance', 'ne99', site, token)
-  sept10 <- vahydro_import_metric_from_scenprop(scenprop.pid, 'monthly_non-exceedance', 'mne9_10', site, token)
-  sevenq10 <- vahydro_import_metric_from_scenprop(scenprop.pid, '7q10', '', site, token)
-  droughtyear <- vahydro_import_metric_from_scenprop(scenprop.pid, 'dor_year', '', site, token)
-  droughtmeanflow <- vahydro_import_metric_from_scenprop(scenprop.pid, 'dor_mean', '', site, token)
   meanbaseflow <- vahydro_import_metric_from_scenprop(scenprop.pid, 'baseflow', '', site, token)
   
   
@@ -5149,15 +5149,15 @@ vahydro_import_all_metrics_from_scenprop <- function(scenprop.pid, site, token) 
   metrics[1,55]=medhigh7day
   metrics[1,56]=medhigh30day
   metrics[1,57]=medhigh90day
-  metrics[1,58]=neflow1
-  metrics[1,59]=neflow5
-  metrics[1,60]=neflow50
-  metrics[1,61]=neflow95
-  metrics[1,62]=neflow99
-  metrics[1,63]=sept10
-  metrics[1,64]=sevenq10
-  metrics[1,65]=droughtyear
-  metrics[1,66]=droughtmeanflow
+  metrics[1,58]=droughtmeanflow
+  metrics[1,59]=sevenq10
+  metrics[1,60]=droughtyear
+  metrics[1,61]=sept10
+  metrics[1,62]=neflow1
+  metrics[1,63]=neflow5
+  metrics[1,64]=neflow50
+  metrics[1,65]=neflow95
+  metrics[1,66]=neflow99
   metrics[1,67]=meanbaseflow
   
   return(metrics)
