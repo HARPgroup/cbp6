@@ -5,9 +5,9 @@ pdf_document: default
 word_document: default
 html_document: default
 params: 
-  riv.seg: 'JA1_7600_7570'
-  dat.source1: 'vahydro' #'vahydro', 'gage', or 'cbp_model'
-  dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
+  riv.seg: 'YP3_6700_6670'
+  dat.source1: 'gage' #'vahydro', 'gage', or 'cbp_model'
+  dat.source2: 'cbp_model' #'vahydroR', 'gage', or 'cbp_model'
   start.date: '1990-01-01' #YYYY-MM-DD
   end.date: '2000-12-31' #YYYY-MM-DD
   github_link: "C:\\Users\\danie\\Documents\\HARP\\GitHub"
@@ -15,7 +15,7 @@ params:
   site.or.server: 'site'
   run.id1: '11'
   run.id2: '18'
-  gage_number: '00000000'
+  gage_number: '01671020'
   mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario1: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
@@ -48,12 +48,9 @@ cn2 <- params$cn2
 ```
 
 ```{r, include=FALSE}
-cbp6_link <- paste0(github_link, "/cbp6/code");
-source(paste0(cbp6_link,"/cbp6_functions.R"))
-source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in
-source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
-token <- rest_token(site, token, rest_uname, rest_pw);
-options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
+# Load Libraries
+basepath='/var/www/R';
+source(paste(basepath,'config.R',sep='/'))
 
 if (gage_number == FALSE | is.na(gage_number) == TRUE) {
   gage_number <- '00000000'

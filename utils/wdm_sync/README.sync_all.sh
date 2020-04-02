@@ -1,6 +1,7 @@
 # These are not fully tested commands, but they are a starting point
 # Sample command to rsyn entiure directory tree
 aws s3 sync s3://bluefish-datashare.chesapeakebay.net/source/ /path/to/local/copy
+# Ex: aws s3 sync s3://bluefish-datashare.chesapeakebay.net/vadeq/gb604/ /opt/model/p6/p6_gb604
 
 # Sync a single file
 #For a single file however, just the CP command is necessary
