@@ -1087,13 +1087,13 @@ map_p50_temp_may <- map_p50_temp +
   scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
            transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
            st.size = 3.5, st.dist = 0.0285,
-           anchor = c(
+ggsave('p50.temp.may.map.v2.png', plot = map_p50_temp_may, width = 6.18, height = 7.00, units = 'in')
+
+# INDIVIDUAL METRIC MAP -- ju           anchor = c(
              x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
              y = extent$y[1]+(extent$y[1])*0.001
            ))
-ggsave('p50.temp.may.map.v2.png', plot = map_p50_temp_may, width = 6.18, height = 7.00, units = 'in')
-
-# INDIVIDUAL METRIC MAP -- jun
+n
 map_p50_temp_jun <- map_p50_temp + 
   geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
   guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
