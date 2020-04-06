@@ -9,15 +9,15 @@ fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # Calculating exceedance probability
   prob_exceedance <- 100*((rank_vec) / (num_observations + 1))
   
-  exceed_scenario1 <- sort(all_data$`Scenario 1 Flow`, decreasing = TRUE)
-  exceed_scenario2 <- sort(all_data$`Scenario 2 Flow`, decreasing = TRUE)
+  exceed_scenario1 <- sort(all_data$`Scenario 1 Flow`, decreasing = TRUE, na.last = TRUE)
+  exceed_scenario2 <- sort(all_data$`Scenario 2 Flow`, decreasing = TRUE, na.last = TRUE)
   
-  scenario1_exceedance <- quantile(exceed_scenario1, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
-  scenario2_exceedance <- quantile(exceed_scenario2, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
+  scenario1_exceedance <- quantile(exceed_scenario1, probs = c(0.01, 0.05, 0.5, 0.95, 0.99), na.rm = TRUE)
+  scenario2_exceedance <- quantile(exceed_scenario2, probs = c(0.01, 0.05, 0.5, 0.95, 0.99), na.rm = TRUE)
   
   # Determining max flow value for exceedance plot scale
-  max <- max(c(max(scenario1_exceedance), max(scenario2_exceedance)));
-  min <- min(c(min(scenario1_exceedance), min(scenario2_exceedance)));
+  max <- max(c(max(scenario1_exceedance), max(scenario2_exceedance)), na.rm = TRUE);
+  min <- min(c(min(scenario1_exceedance), min(scenario2_exceedance)), na.rm = TRUE);
   
   if (max > 10000){
     max <- 100000

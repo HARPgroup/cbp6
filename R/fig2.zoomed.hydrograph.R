@@ -16,8 +16,8 @@ fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2')
   low.year <- subset(all_data, year(all_data$Date)==low.year);
   
   # Scaling using max/min
-  max <- max(c(max(low.year$`Scenario 1 Flow`), max(low.year$`Scenario 2 Flow`)));
-  min <- min(c(min(low.year$`Scenario 1 Flow`), min(low.year$`Scenario 2 Flow`)));
+  max <- max(c(max(low.year$`Scenario 1 Flow`), max(low.year$`Scenario 2 Flow`)), na.rm = TRUE);
+  min <- min(c(min(low.year$`Scenario 1 Flow`), min(low.year$`Scenario 2 Flow`)), na.rm = TRUE);
   if (max > 10000){
     max <- 100000
   }else if (max > 1000){
