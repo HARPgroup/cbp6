@@ -10,7 +10,7 @@ params:
   dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
   start.date: '2004-06-29' #YYYY-MM-DD
   end.date: '2014-12-31' #YYYY-MM-DD
-  github_link: "C:\\Users\\Kevin D'Andrea\\Desktop\\HARP\\Github"
+  github_link: "C:\\Users\\danie\\Documents\\HARP\\Github"
   site: 'http://deq2.bse.vt.edu/d.dh'
   site.or.server: 'site'
   run.id1: 'weighted'
@@ -20,8 +20,8 @@ params:
   mod.scenario1: 'usgs-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario2: 'vahydro-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
-  cn1: 'VA Hydro: Runid_weighted'
   gage.timespan.trimmed: TRUE
+  cn1: 'VA Hydro: Runid_weighted'
   cn2: 'VA Hydro: Runid_11_gage_timespan'
   
 ---
@@ -246,7 +246,7 @@ if (dat.source1 == 'gage' | dat.source2 == 'gage') {
     gage.dat <- data2
     nse.val <- nse(gage.dat, scen.dat)
   }
-  description.cont2 <- paste0(' The Nash-Sutcliffe Efficiency of the model, calculated between the gage and scenario data, was found to be ', nse.val, '.')
+  description.cont2 <- paste0(' The Nash-Sutcliffe Efficiency of the model, calculated between the gage and scenario data, was found to be ', nse.val, '.  Gage data was available for ', signif(length(data1$flow)*100/length(data2$flow), 4), '% of the model timespan.')
 } else {
   description.cont2 <- ''
 }

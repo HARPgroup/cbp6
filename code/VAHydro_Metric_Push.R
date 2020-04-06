@@ -23,7 +23,7 @@ source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
 token <- rest_token(site, token, rest_uname, rest_pw);
 options(timeout=120); # set timeout to twice default level to avoid abort due to high traffic
 
-automated_metric_2_vahydro <- function(riv.seg, run.id, mod.phase, mod.scenario, start.date, end.date, github_link, site, site.or.server = 'site', token) {
+automated_metric_2_vahydro <- function(dat.source, riv.seg, gage_number, run.id, gage.timespan.trimmed, mod.phase, mod.scenario, start.date, end.date, github_link, site, site.or.server = 'site', token) {
   
   # LOADING DATA ------------------------------------------------------------
   if (dat.source == 'vahydro') {
@@ -44,6 +44,7 @@ automated_metric_2_vahydro <- function(riv.seg, run.id, mod.phase, mod.scenario,
       data <- model_server_import_data_cfs(riv.seg, mod.phase, mod.scenario, start.date, end.date)
     }
   }
+  
   data <- water_year_trim(data)
   metrics <- metrics_calc_all(data) #calculate metrics into a matrix
 
@@ -117,8 +118,8 @@ automated_metric_2_vahydro <- function(riv.seg, run.id, mod.phase, mod.scenario,
   vahydro_post_metric_to_scenprop(scenprop.pid, 'baseflow', '', 'Mean Baseflow', signif(metrics$avg.baseflow, digits =3), site, token)
 }
 
-for (i in length(riv.seg.list)) {
-  riv.seg <- riv.seg.list[i]
-  automated_metric_2_vahydro(riv.seg, run.id, mod.phase, mod.scenario, start.date, end.date, github_link, site, site.or.server = 'site', token)
-}
+# for (i in length(riv.seg.list)) {
+#   riv.seg <- riv.seg.list[i]
+#   automated_metric_2_vahydro(riv.seg, run.id, mod.phase, mod.scenario, start.date, end.date, github_link, site, site.or.server = 'site', token)
+# }
   

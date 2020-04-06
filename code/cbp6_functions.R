@@ -3132,8 +3132,9 @@ fig.gis <- function(riv.seg, site_number, site_url, cbp6_link, token) {
 
 all_data_maker <- function(data1, data2) {
   #all_data puts scenario flows and corresponding dates in one data frame
-  all_data <- data.frame(data1$date, data1$flow, data2$flow) 
-  all_data$counter <- 1:length(all_data$data1.date) # counter fixes issues with row numbers later on in script
+  all_data <- full_join(data1, data2, by = 'date')
+  all_data <- all_data[order(as.Date(all_data$date)),]
+  all_data$counter <- 1:length(all_data$date) # counter fixes issues with row numbers later on in script
   colnames(all_data) <- c('Date', 'Scenario 1 Flow', 'Scenario 2 Flow', 'Counter')
   return(all_data)
 }
@@ -3290,8 +3291,8 @@ fig5.combined.hydrograph <- function(all_data) {
   scenario2river$date <- as.Date(paste0(scenario2river$year,"-",scenario2river$month,"-",scenario2river$day))
   
   # Determining max flow value for plot scale
-  max <- max(c(max(scenario1river$baseflow), max(scenario2river$baseflow), max(scenario1river$flow), max(scenario2river$flow)));
-  min <- min(c(min(scenario1river$baseflow), min(scenario2river$baseflow), min(scenario1river$flow), min(scenario2river$flow)));
+  max <- max(c(max(scenario1river$baseflow), max(scenario2river$baseflow), max(scenario1river$flow), max(scenario2river$flow)), na.rm = TRUE);
+  min <- min(c(min(scenario1river$baseflow), min(scenario2river$baseflow), min(scenario1river$flow), min(scenario2river$flow)), na.rm = TRUE);
   
   if (max > 10000){
     max <- 100000
@@ -3390,8 +3391,8 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
   scenario2river$date <- as.Date(paste0(scenario2river$year,"-",scenario2river$month,"-",scenario2river$day))
   
   # Determining max flow value for plot scale
-  max <- max(c(max(scenario1river$baseflow), max(scenario2river$baseflow), max(scenario1river$flow), max(scenario2river$flow)));
-  min <- min(c(min(scenario1river$baseflow), min(scenario2river$baseflow), min(scenario1river$flow), min(scenario2river$flow)));
+  max <- max(c(max(scenario1river$baseflow), max(scenario2river$baseflow), max(scenario1river$flow), max(scenario2river$flow)), na.rm = TRUE);
+  min <- min(c(min(scenario1river$baseflow), min(scenario2river$baseflow), min(scenario1river$flow), min(scenario2river$flow)), na.rm = TRUE);
   
   if (max > 10000){
     max <- 100000
@@ -3455,7 +3456,6 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
 fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
-  
   #Flow exceedance plot -----
   
   # Determining the "rank" (0-1) of the flow value
@@ -3464,15 +3464,15 @@ fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # Calculating exceedance probability
   prob_exceedance <- 100*((rank_vec) / (num_observations + 1))
   
-  exceed_scenario1 <- sort(all_data$`Scenario 1 Flow`, decreasing = TRUE)
-  exceed_scenario2 <- sort(all_data$`Scenario 2 Flow`, decreasing = TRUE)
+  exceed_scenario1 <- sort(all_data$`Scenario 1 Flow`, decreasing = TRUE, na.last = TRUE)
+  exceed_scenario2 <- sort(all_data$`Scenario 2 Flow`, decreasing = TRUE, na.last = TRUE)
   
-  scenario1_exceedance <- quantile(exceed_scenario1, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
-  scenario2_exceedance <- quantile(exceed_scenario2, probs = c(0.01, 0.05, 0.5, 0.95, 0.99))
+  scenario1_exceedance <- quantile(exceed_scenario1, probs = c(0.01, 0.05, 0.5, 0.95, 0.99), na.rm = TRUE)
+  scenario2_exceedance <- quantile(exceed_scenario2, probs = c(0.01, 0.05, 0.5, 0.95, 0.99), na.rm = TRUE)
   
   # Determining max flow value for exceedance plot scale
-  max <- max(c(max(scenario1_exceedance), max(scenario2_exceedance)));
-  min <- min(c(min(scenario1_exceedance), min(scenario2_exceedance)));
+  max <- max(c(max(scenario1_exceedance), max(scenario2_exceedance)), na.rm = TRUE);
+  min <- min(c(min(scenario1_exceedance), min(scenario2_exceedance)), na.rm = TRUE);
   
   if (max > 10000){
     max <- 100000
@@ -3536,7 +3536,6 @@ fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
 fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
-  
   # Zoomed hydrograph in year of lowest 90-year flow -----
   # Running scenario 1 calculations
   f3_scenario1 <- zoo(all_data$`Scenario 1 Flow`, order.by = all_data$Date)
@@ -3552,8 +3551,8 @@ fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2')
   low.year <- subset(all_data, year(all_data$Date)==low.year);
   
   # Scaling using max/min
-  max <- max(c(max(low.year$`Scenario 1 Flow`), max(low.year$`Scenario 2 Flow`)));
-  min <- min(c(min(low.year$`Scenario 1 Flow`), min(low.year$`Scenario 2 Flow`)));
+  max <- max(c(max(low.year$`Scenario 1 Flow`), max(low.year$`Scenario 2 Flow`)), na.rm = TRUE);
+  min <- min(c(min(low.year$`Scenario 1 Flow`), min(low.year$`Scenario 2 Flow`)), na.rm = TRUE);
   if (max > 10000){
     max <- 100000
   }else if (max > 1000){
@@ -3620,8 +3619,8 @@ fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
   # SETTING UP PLOTS
   # Basic hydrograph -----
   # Max/min for y axis scaling
-  max <- max(c(max(all_data$`Scenario 1 Flow`), max(all_data$`Scenario 2 Flow`)));
-  min <- min(c(min(all_data$`Scenario 1 Flow`), min(all_data$`Scenario 2 Flow`)));
+  max <- max(c(max(all_data$`Scenario 1 Flow`), max(all_data$`Scenario 2 Flow`)), na.rm = TRUE);
+  min <- min(c(min(all_data$`Scenario 1 Flow`), min(all_data$`Scenario 2 Flow`)), na.rm = TRUE);
   if (max > 10000){
     max <- 100000
   }else if (max > 1000){
@@ -5299,4 +5298,160 @@ get.cbp.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.d
   }
   
   return(as.numeric(scenario$pid))
+}
+
+automated_metric_2_vahydro <- function(dat.source, riv.seg, gage_number, run.id, gage.timespan.trimmed, mod.phase, mod.scenario, start.date, end.date, github_link, site, site.or.server = 'site', token) {
+  
+  # LOADING DATA ------------------------------------------------------------
+  if (dat.source == 'vahydro') {
+    data <- vahydro_import_data_cfs(riv.seg, run.id, token, site, start.date, end.date)
+    if (gage.timespan.trimmed == TRUE) {
+      scenprop.pid <- get.gage.timespan.scen.prop(riv.seg, run.id, site, token)
+    } else if (gage.timespan.trimmed == FALSE) {
+      scenprop.pid <- get.scen.prop(riv.seg, 'vahydro-1.0', dat.source, run.id, start.date, end.date, site, token)
+    }
+  } else if (dat.source == 'gage') {
+    data <- gage_import_data_cfs(gage_number, start.date, end.date)
+    scenprop.pid <- get.scen.prop(riv.seg, 'usgs-1.0', 'vahydro', run.id = 'weighted', start.date, end.date, site, token)
+  } else if (dat.source == 'cbp_model') {
+    scenprop.pid <- get.cbp.scen.prop(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token)
+    if (site.or.server == 'site') {
+      data <- model_import_data_cfs(riv.seg, mod.phase, mod.scenario, start.date, end.date)
+    } else if (site.or.server == 'server') {
+      data <- model_server_import_data_cfs(riv.seg, mod.phase, mod.scenario, start.date, end.date)
+    }
+  }
+  
+  data <- water_year_trim(data)
+  metrics <- metrics_calc_all(data) #calculate metrics into a matrix
+  
+  #posts metrics to vahydro
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'overall_mean', '', 'Overall Mean Flow', signif(metrics$overall.mean, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml1', 'January Low Flow', signif(metrics$jan.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml2', 'February Low Flow', signif(metrics$feb.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml3', 'March Low Flow', signif(metrics$mar.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml4', 'April Low Flow', signif(metrics$apr.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml5', 'May Low Flow', signif(metrics$may.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml6', 'June Low Flow', signif(metrics$jun.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml7', 'July Low Flow', signif(metrics$jul.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml8', 'August Low Flow', signif(metrics$aug.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml9', 'September Low Flow', signif(metrics$sep.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml10', 'October Low Flow', signif(metrics$oct.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml11', 'November Low Flow', signif(metrics$nov.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_low_flow', 'ml12', 'December Low Flow', signif(metrics$dec.low.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm1', 'January Mean Flow', signif(metrics$jan.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm2', 'February Mean Flow', signif(metrics$feb.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm3', 'March Mean Flow', signif(metrics$mar.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm4', 'April Mean Flow', signif(metrics$apr.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm5', 'May Mean Flow', signif(metrics$may.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm6', 'June Mean Flow', signif(metrics$jun.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm7', 'July Mean Flow', signif(metrics$jul.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm8', 'August Mean Flow', signif(metrics$aug.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm9', 'September Mean Flow', signif(metrics$sep.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm10', 'October Mean Flow', signif(metrics$oct.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm11', 'November Mean Flow', signif(metrics$nov.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_mean_flow', 'mm12', 'December Mean Flow', signif(metrics$dec.mean.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh1', 'January High Flow', signif(metrics$jan.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh2', 'February High Flow', signif(metrics$feb.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh3', 'March High Flow', signif(metrics$mar.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh4', 'April High Flow', signif(metrics$apr.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh5', 'May High Flow', signif(metrics$may.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh6', 'June High Flow', signif(metrics$jun.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh7', 'July High Flow', signif(metrics$jul.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh8', 'August High Flow', signif(metrics$aug.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh9', 'September High Flow', signif(metrics$sep.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh10', 'October High Flow', signif(metrics$oct.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh11', 'November High Flow', signif(metrics$nov.high.flow, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_high_flow', 'mh12', 'December High Flow', signif(metrics$dec.high.flow, digits =3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'min_low_flow', 'min1', '1 Day Min Low Flow', signif(metrics$one.day.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'min_low_flow', 'min3', '3 Day Min Low Flow', signif(metrics$three.day.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'min_low_flow', 'min7', '7 Day Min Low Flow', signif(metrics$seven.day.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'min_low_flow', 'min30', '30 Day Min Low Flow', signif(metrics$thirty.day.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'min_low_flow', 'min90', '90 Day Min Low Flow', signif(metrics$ninety.day.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_low_flow', 'medl1', '1 Day Median Low Flow', signif(metrics$one.day.med.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_low_flow', 'medl3', '3 Day Median Low Flow', signif(metrics$three.day.med.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_low_flow', 'medl7', '7 Day Median Low Flow', signif(metrics$seven.day.med.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_low_flow', 'medl30', '30 Day Median Low Flow', signif(metrics$thirty.day.med.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_low_flow', 'medl90', '90 Day Median Low Flow', signif(metrics$ninety.day.med.min, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'max_high_flow', 'max1', '1 Day Max High Flow', signif(metrics$one.day.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'max_high_flow', 'max3', '3 Day Max High Flow', signif(metrics$three.day.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'max_high_flow', 'max7', '7 Day Max High Flow', signif(metrics$seven.day.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'max_high_flow', 'max30', '30 Day Max High Flow', signif(metrics$thirty.day.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'max_high_flow', 'max90', '90 Day Max High Flow', signif(metrics$ninety.day.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_high_flow', 'medh1', '1 Day Median High Flow', signif(metrics$one.day.med.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_high_flow', 'medh3', '3 Day Median High Flow', signif(metrics$three.day.med.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_high_flow', 'medh7', '7 Day Median High Flow', signif(metrics$seven.day.med.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_high_flow', 'medh30', '30 Day Median High Flow', signif(metrics$thirty.day.med.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'med_high_flow', 'medh90', '90 Day Median High Flow', signif(metrics$ninety.day.med.max, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'non-exceedance', 'ne1', '1% Non-Exceedance Flow', signif(metrics$flow.exceedance.1, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'non-exceedance', 'ne5', '5% Non-Exceedance Flow', signif(metrics$flow.exceedance.5, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'non-exceedance', 'ne50', '50% Non-Exceedance Flow', signif(metrics$flow.exceedance.50, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'non-exceedance', 'ne95', '95% Non-Exceedance Flow', signif(metrics$flow.exceedance.95, digits =3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'non-exceedance', 'ne99', '99% Non-Exceedance Flow', signif(metrics$flow.exceedance.99, digits =3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'monthly_non-exceedance', 'mne9_10', 'September 10%', signif(metrics$sept.10.percent, digits =3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, '7q10', '', '7q10', signif(metrics$sevenQ.ten, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'dor_year', '', 'Year of Drought of Record Occurence', metrics$drought.record, site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'dor_mean', '', 'Drought of Record Year Mean Flow', signif(metrics$lowest.yearly.mean, digits = 3), site, token)
+  vahydro_post_metric_to_scenprop(scenprop.pid, 'baseflow', '', 'Mean Baseflow', signif(metrics$avg.baseflow, digits =3), site, token)
+}
+
+get.gage.timespan <- function(gage_number, start.date = '1984-01-01', end.date = '2014-12-31') {
+  temp.dat <- gage_import_data_cfs(site_number = gage_number, start.date = start.date, end.date = end.date)
+  
+  gage.start.date <- temp.dat$date[1]
+  gage.end.date <- temp.dat$date[length(temp.dat$date)]
+  
+  return(list(gage.start.date, gage.end.date))
+}
+
+post.gage.scen.prop <- function(riv.seg, gage.title, site, token) {
+  # GETTING MODEL DATA FROM VA HYDRO
+  hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
+  ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+  inputs <- list(
+    hydrocode = hydrocode,
+    bundle = 'watershed',
+    ftype = 'vahydro'
+  )
+  
+  #property dataframe returned
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  
+  if (odata == FALSE) {
+    return(FALSE)
+  }
+  
+  hydroid <- odata[1,"hydroid"];
+  fname <- as.character(odata[1,]$name);
+  print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
+  
+  inputs <- list(
+    varkey = "om_water_model_node",
+    featureid = hydroid,
+    entity_type = "dh_feature",
+    propcode = 'usgs-1.0'
+  )
+  
+  scenario <- getProperty(inputs, site, scenario)
+  
+  # POST PROPERTY IF IT IS NOT YET CREATED
+  if (identical(scenario, FALSE)) {
+    # create
+    inputs$pid = NULL
+  } else {
+    inputs$pid = scenario$pid
+  }
+  
+  inputs$propname = gage.title
+  postProperty(inputs, site, scenprop) 
+  
+  # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
+  scenprop <- getProperty(inputs, site, scenprop)
+  
+  if (scenprop == FALSE) {
+    return(FALSE)
+  }
+  
+  return(as.numeric(scenprop$pid))
 }

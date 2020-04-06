@@ -31,8 +31,8 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
   scenario2river$date <- as.Date(paste0(scenario2river$year,"-",scenario2river$month,"-",scenario2river$day))
   
   # Determining max flow value for plot scale
-  max <- max(c(max(scenario1river$baseflow), max(scenario2river$baseflow), max(scenario1river$flow), max(scenario2river$flow)));
-  min <- min(c(min(scenario1river$baseflow), min(scenario2river$baseflow), min(scenario1river$flow), min(scenario2river$flow)));
+  max <- max(c(max(scenario1river$baseflow), max(scenario2river$baseflow), max(scenario1river$flow), max(scenario2river$flow)), na.rm = TRUE);
+  min <- min(c(min(scenario1river$baseflow), min(scenario2river$baseflow), min(scenario1river$flow), min(scenario2river$flow)), na.rm = TRUE);
   
   if (max > 10000){
     max <- 100000
