@@ -7,7 +7,7 @@ source(paste0(github_location, "/auth.private"));
 source(paste(cbp6_location, "/code/fn_vahydro-1.0.R", sep = ''))
 
 # ESSENTIAL INPUTS
-riv.seg <- 'YP3_6470_6690'
+riv.seg <- 'YP2_6390_6330'
 dat.source1 <- 'gage'
 dat.source2 <- 'vahydro'
 github_link <- github_location
@@ -27,9 +27,9 @@ run.id1 <- '11'
 run.id2 <- run.id1
 
 # Inputs if using USGS gage -- otherwise, can ignore
-gage_number <- '01672500'
+gage_number <- '01670400'
 gage_timespan <- get.gage.timespan(gage_number)
-gage.title <- 'USGS 01672500 SOUTH ANNA RIVER NEAR ASHLAND, VA'
+gage.title <- 'USGS 01670400 NORTH ANNA RIVER NEAR PARTLOW, VA'
 
 if (dat.source1 == 'gage' || dat.source2 == 'gage') {
   gage.timespan.trimmed <- TRUE #or FALSE

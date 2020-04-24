@@ -1,8 +1,8 @@
 site <- "http://deq2.bse.vt.edu/d.bet"    #Specify the site of interest, either d.bet OR d.dh
 
-hydro_tools <- '/Users/danie/Documents/HARP/GitHub/hydro-tools';
-
-data.location <- '/Users/danie/Documents/HARP/GitHub/cbp6/Data/CBP6_Temp_Prcp_Data'
+basepath <- '/var/www/R'
+source(paste(basepath,"config.local.private", sep = "/"))
+data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
 va.or.cbw <- 'va'
 
 library("readxl")
