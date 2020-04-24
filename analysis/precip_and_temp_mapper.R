@@ -1,4 +1,6 @@
-data.location <- 'C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\Data\\CBP6_Temp_Prcp_Data'
+basepath <- '/var/www/R'
+source(paste(basepath,"config.local.private", sep = "/"))
+data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
 va.or.cbw <- 'va'
 
 # CREATING DIRECTORY TO STORE DATA AND OUTPUTS

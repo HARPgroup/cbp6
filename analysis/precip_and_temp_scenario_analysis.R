@@ -1,5 +1,7 @@
-data.location <- 'C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\Data\\CBP6_Temp_Prcp_Data'
-land.seg <- 'H24021'
+basepath <- '/var/www/R'
+source(paste(basepath,"config.local.private", sep = "/"))
+data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
+land.seg <- 'N51037'
 
 # LOADING DATA -----
 land.seg.info <- read.csv(paste0(data.location, '\\Land_Segment_CBWatershed_Area.csv'))

@@ -1,11 +1,9 @@
 site <- "http://deq2.bse.vt.edu/d.dh"    #Specify the site of interest, either d.bet OR d.dh
 
-hydro_tools <- '/Users/danie/Documents/HARP/GitHub/hydro-tools';
-cbp6_link <- '/Users/danie/Documents/HARP/GitHub/cbp6';
-
-
-data.location <- '/Users/danie/Documents/HARP/GitHub/cbp6/Data/CBP6_Temp_Prcp_Data'
-va.or.cbw <- 'cbw'
+basepath <- '/var/www/R'
+source(paste(basepath,"config.local.private", sep = "/"))
+data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
+va.or.cbw <- 'va'
 
 # CREATING DIRECTORY TO STORE DATA AND OUTPUTS
 dir.create('~/Precip_and_Temp_Mapper_CBW')
@@ -123,7 +121,7 @@ library(ggsn)
 #--------------------------------------------------------------------------------------------
 #LOAD STATE GEOMETRY
 #--------------------------------------------------------------------------------------------
-STATES <- read.table(file=paste(cbp6_link,"Data","CBW_states.csv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
+STATES <- read.table(file=paste(cbp6_location,"Data","CBW_states.csv",sep="\\"), header=TRUE, sep="\t") #Load state geometries
 
 #specify spatial extent for map
 if (va.or.cbw == 'va') {
@@ -1087,13 +1085,13 @@ map_p50_temp_may <- map_p50_temp +
   scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
            transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
            st.size = 3.5, st.dist = 0.0285,
-ggsave('p50.temp.may.map.v2.png', plot = map_p50_temp_may, width = 6.18, height = 7.00, units = 'in')
-
-# INDIVIDUAL METRIC MAP -- ju           anchor = c(
+           anchor = c(
              x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
              y = extent$y[1]+(extent$y[1])*0.001
            ))
-n
+ggsave('p50.temp.may.map.v2.png', plot = map_p50_temp_may, width = 6.18, height = 7.00, units = 'in')
+
+# INDIVIDUAL METRIC MAP -- jun
 map_p50_temp_jun <- map_p50_temp + 
   geom_polygon(aes(fill = Jun), color = 'black', size = 0.1) +
   guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
