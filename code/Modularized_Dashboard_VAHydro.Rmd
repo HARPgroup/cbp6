@@ -10,7 +10,7 @@ params:
   dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
   start.date: '2004-06-29' #YYYY-MM-DD
   end.date: '2014-12-31' #YYYY-MM-DD
-  github_link: "C:\\Users\\danie\\Documents\\HARP\\Github"
+  github_location: "C:\\Users\\danie\\Documents\\HARP\\Github"
   site: 'http://deq2.bse.vt.edu/d.dh'
   site.or.server: 'site'
   run.id1: 'weighted'
@@ -33,7 +33,7 @@ dat.source1 <- params$dat.source1
 dat.source2 <- params$dat.source2
 start.date <- params$start.date
 end.date <- params$end.date
-github_link <- params$github_link
+github_location <- params$github_location
 site <- params$site
 site.or.server <- params$site.or.server
 run.id1 <- params$run.id1
@@ -49,9 +49,9 @@ gage.timespan.trimmed <- params$gage.timespan.trimmed
 ```
 
 ```{r, include=FALSE}
-cbp6_link <- paste0(github_link, "/cbp6/code");
+cbp6_link <- paste0(github_location, "/cbp6/code");
 source(paste0(cbp6_link,"/cbp6_functions.R"))
-source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in
+source(paste(github_location,"auth.private", sep = "/"));#load rest username and password, contained in
 source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
 token <- rest_token(site, token, rest_uname, rest_pw);
 options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
