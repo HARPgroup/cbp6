@@ -5,6 +5,7 @@ batch.Qout.summarize <- function(dirpath) {
   colnames(qout.table) = c('segment', 'Qout.mean')
   for (i in 1:length(csv.list)) {
     data <- try(read.csv(paste(dirpath, csv.list[i], sep = '/')))
+    data$thisdate <- as.Date(paste(data[,1], data[,2], data[,3], sep = '-'))
     trim <- which(as.Date(data$thisdate) >= as.Date('1991-01-01') & as.Date(data$thisdate) <= as.Date('2000-12-31'))
     data <- data[trim,]
     
