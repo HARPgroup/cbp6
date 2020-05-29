@@ -2,8 +2,7 @@ vahydro_post_metric_to_scenprop <- function(scenprop.pid, met.varkey, met.propco
   hydroid = scenprop.pid
 
   metinfo <- list(
-    varkey = met.varkey,
-    propcode = met.propcode,
+    propname = met.name,
     featureid = as.integer(hydroid),
     entity_type = "dh_properties"
   )
