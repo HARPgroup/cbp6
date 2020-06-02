@@ -2,7 +2,7 @@ land.use.timeseries <- function(dirpath, segname) {
   csv.file <- paste(dirpath, '/', segname, '_0111-0211-0411.csv')
   data <- try(read.csv(csv.file))
   if (class(data) == 'try-error') {
-    stop(paste0("ERROR: Missing climate .csv files (including ", dirpath, "/", csv.list[i]))
+    stop(paste0("ERROR: Missing climate .csv files (including ", dirpath, "/", segname, '_0111-0211-0411.csv)'))
   }
   trim <- which(as.Date(data$thisdate) >= as.Date('1991-01-01') & as.Date(data$thisdate) <= as.Date('2000-12-31'))
   data <- data[trim,]
