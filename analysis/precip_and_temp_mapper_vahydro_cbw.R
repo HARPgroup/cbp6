@@ -1,5 +1,9 @@
 site <- "http://deq2.bse.vt.edu/d.dh"    #Specify the site of interest, either d.bet OR d.dh
 
+# SEEMS TO BE A BROKEN SCRIPT -- AND I'M NOT SURE WHAT IT WAS MEANT TO DO
+# NOT DELETING IT FOR NOW, BUT USE SCRIPT WITHOUT _CBW POSTFIX INSTEAD
+# (INCLUDING TO MAP THE WHOLE CBW)
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
@@ -267,9 +271,9 @@ map_p10_prcp <- ggplot(data = lsegs.df_p10_prcp, aes(x = long, y = lat, group = 
   geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
   #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
   #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
-  geom_polygon(data = NYDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = NYDF, color="gray46", fill = "gray", lwd=0.5)+
   geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
-  geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
   #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
   geom_polygon(data = VADF, color="gray46", fill = "gray", lwd=0.5)+
   geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+

@@ -3350,7 +3350,6 @@ uni_map_p90_prcp_overall <- map_p90_prcp +
            ))
 
 uni_map_p10_temp_overall <- map_p10_temp + 
-  ggtitle('P10 Temperature (Overall)') +
   geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
   guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
   theme(legend.justification=c(0,1), legend.position=c(0,1)) +
@@ -3366,7 +3365,6 @@ uni_map_p10_temp_overall <- map_p10_temp +
            ))
 
 uni_map_p50_temp_overall <- map_p50_temp + 
-  ggtitle('P50 Temperature (Overall)') +
   geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
   guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
   theme(legend.justification=c(0,1), legend.position=c(0,1)) +
@@ -3382,7 +3380,6 @@ uni_map_p50_temp_overall <- map_p50_temp +
            ))
 
 uni_map_p90_temp_overall <- map_p90_temp + 
-  ggtitle('P90 Temperature (Overall)') +
   geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
   guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
   theme(legend.justification=c(0,1), legend.position=c(0,1)) +
@@ -3900,3 +3897,54 @@ kable(p90_temp_tab, "latex", booktabs = T,
   #column_spec(3, width = "5em") %>%
   #column_spec(4, width = "4em") %>%
   cat(., file = paste(dir.location,"/kable_tables/","P90_Temp.tex",sep=""))
+
+# INDIVIDUAL METRIC MAP -- OVERALL
+map_p10_temp_overall <- map_p10_temp + 
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = "white", high = "green", limits = c(1, 1.25), breaks = c(1, 1.25), midpoint = 1) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave('p10.temp.overall.map.v4.png', plot = map_p10_temp_overall, width = 6.18, height = 3.68, units = 'in')
+
+# INDIVIDUAL METRIC MAP -- OVERALL
+map_p50_temp_overall <- map_p50_temp + 
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = "white", high = "green", limits = c(1.7, 2.2), midpoint = 1.7) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave('p50.temp.overall.map.v4.png', plot = map_p50_temp_overall, width = 6.18, height = 3.68, units = 'in')
+
+# INDIVIDUAL METRIC MAP -- OVERALL
+map_p90_temp_overall <- map_p90_temp + 
+  geom_polygon(aes(fill = Total), color = 'black', size = 0.1) +
+  guides(fill=guide_colorbar(title="Temperature\nChange (deg C)")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_gradient2(low = "white", high = "green", limits = c(2.2, 3.2), midpoint = 2.2) +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave('p90.temp.overall.map.v4.png', plot = map_p90_temp_overall, width = 6.18, height = 3.68, units = 'in')

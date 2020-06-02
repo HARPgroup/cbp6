@@ -36,8 +36,8 @@ lrsegs.va <- lrsegs[lrsegs@data$ST == 'VA',]
 
 rsegs.va.names <- as.character(unique(lrsegs.va@data$RiverSeg))
 
-avg.runit.vals <- data.frame(matrix(data = NA, ncol = 4, nrow = length(rsegs.va.names)))
-colnames(avg.runit.vals) <- c('FIPS_NHL', 'run15', 'run14', 'run16')
+avg.runit.vals <- data.frame(matrix(data = NA, ncol = 5, nrow = length(rsegs.va.names)))
+colnames(avg.runit.vals) <- c('FIPS_NHL', 'run15', 'run14', 'run16', 'run11')
 
 # FOR NOW, WEIRD PROBLEMS WITH SEG 75 --fixed
 # rsegs.va.names <- rsegs.va.names[-75]
@@ -74,9 +74,31 @@ for (i in 1:length(rsegs.va.names)) {
   }
   lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
   avg.runit.vals[i,4] <- mean(lri.dat16$flow.unit)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat11)
+  lri.dat11 <- vahydro_import_local.runoff.inflows_cfs(rsegs.va.names[i], '11', token, site, start.date, end.date);
+  if (lri.dat11 == FALSE) {
+    lri.dat11 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat11) <- c('date', 'flow.unit')
+  }
+  lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
+  avg.runit.vals[i,5] <- mean(lri.dat11$flow.unit)
 }
 
 avg.runit.vals[avg.runit.vals == 'NaN'] <- NA
+
+write.csv(avg.runit.vals, "avg.runit.vals.csv")
+avg.runit.vals <- avg.runit.vals[complete.cases(avg.runit.vals),]
+
+runit.percent.difference <- data.frame(matrix(data = NA, ncol = 4, nrow = length(avg.runit.vals$FIPS_NHL)))
+colnames(runit.percent.difference) <- c('FIPS_NHL', 'run15', 'run14', 'run16')
+runit.percent.difference$FIPS_NHL <- avg.runit.vals$FIPS_NHL
+runit.percent.difference$run15 <- 100*(avg.runit.vals$run15-avg.runit.vals$run11)/(avg.runit.vals$run11)
+runit.percent.difference$run14 <- 100*(avg.runit.vals$run14-avg.runit.vals$run11)/(avg.runit.vals$run11)
+runit.percent.difference$run16 <- 100*(avg.runit.vals$run16-avg.runit.vals$run11)/(avg.runit.vals$run11)
+
+write.csv(runit.percent.difference, "runit.percent.difference.csv")
 
 #--------------------------------------------------------------------------------------------
 #LOAD STATE GEOMETRY
