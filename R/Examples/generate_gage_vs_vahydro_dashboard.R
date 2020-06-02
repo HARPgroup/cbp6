@@ -10,7 +10,6 @@ source(paste(cbp6_location, "/code/fn_vahydro-1.0.R", sep = ''))
 riv.seg <- 'YP2_6390_6330'
 dat.source1 <- 'gage'
 dat.source2 <- 'vahydro'
-github_link <- github_location
 site <- "http://deq2.bse.vt.edu/d.dh"
 token <- rest_token(site, token, rest_uname, rest_pw)
 # If a gage is used -- all data is trimmed to gage timeframe.  Otherwise, start/end date defaults
@@ -63,15 +62,15 @@ if (dat.source2 == 'vahydro') {
 }
 
 # POSTING METRICS
-automated_metric_2_vahydro(dat.source = dat.source1, riv.seg = riv.seg, gage_number = gage_number, run.id = run.id1, gage.timespan.trimmed = gage.timespan.trimmed, mod.phase = mod.phase, mod.scenario = mod.scenario1, start.date = start.date, end.date = end.date, github_link = github_link, site = site, site.or.server = 'site', token = token)
-automated_metric_2_vahydro(dat.source = dat.source2, riv.seg = riv.seg, gage_number = gage_number, run.id = run.id2, gage.timespan.trimmed = gage.timespan.trimmed, mod.phase = mod.phase, mod.scenario = mod.scenario2, start.date = start.date, end.date = end.date, github_link = github_link, site = site, site.or.server = 'site', token = token)
+automated_metric_2_vahydro(dat.source = dat.source1, riv.seg = riv.seg, gage_number = gage_number, run.id = run.id1, gage.timespan.trimmed = gage.timespan.trimmed, mod.phase = mod.phase, mod.scenario = mod.scenario1, start.date = start.date, end.date = end.date, github_link = github_location, site = site, site.or.server = 'site', token = token)
+automated_metric_2_vahydro(dat.source = dat.source2, riv.seg = riv.seg, gage_number = gage_number, run.id = run.id2, gage.timespan.trimmed = gage.timespan.trimmed, mod.phase = mod.phase, mod.scenario = mod.scenario2, start.date = start.date, end.date = end.date, github_link = github_location, site = site, site.or.server = 'site', token = token)
 
 # CREATING DASHBOARD (outputted in /var/www/R)
 rmarkdown::render(paste0(cbp6_location, '/code/Modularized_Dashboard_VAHydro.Rmd'), 
                   output_dir = basepath, output_file = paste0(riv.seg, '.pdf'), 
                   params = list(riv.seg = riv.seg, dat.source1 = dat.source1, 
                                 dat.source2 = dat.source2, start.date = start.date, 
-                                end.date = end.date, github_link = github_link, site = site, 
+                                end.date = end.date, github_location = github_location, site = site, 
                                 site.or.server = site.or.server, run.id1 = run.id1, 
                                 run.id2 = run.id2, gage_number = gage_number, 
                                 mod.phase1 = mod.phase, mod.scenario1 = mod.scenario1, 

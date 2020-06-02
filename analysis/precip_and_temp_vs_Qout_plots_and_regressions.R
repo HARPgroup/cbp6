@@ -85,3 +85,28 @@ legend('topright', legend = paste('Rsq =', round(summary(lm(Flow.Change ~ Evap..
 plot(rseg.info.10$Prcp..Change, rseg.info.10$Prcp..Change..VA.Hydro.)
 plot(rseg.info.50$Prcp..Change, rseg.info.50$Prcp..Change..VA.Hydro.)
 plot(rseg.info.90$Prcp..Change, rseg.info.90$Prcp..Change..VA.Hydro.)
+
+boxplot(rseg.info.10$Flow.Change, rseg.info.50$Flow.Change, rseg.info.90$Flow.Change,
+        names = c('ccP10T10', 'ccP50T50', 'ccP90T90'),
+        at = c(1,2,3),
+        ylab = 'Flow Change from Base Scenario (%)')
+
+avg.runit.vals <- read.csv('avg.runit.vals.csv')
+runit.percent.difference <- read.csv('runit.percent.difference.csv')
+
+runit.percent.difference <- runit.percent.difference[complete.cases(runit.percent.difference),]
+boxplot(runit.percent.difference$run15, runit.percent.difference$run14, 
+        runit.percent.difference$run16,
+        names = c('ccP10T10', 'ccP50T50', 'ccP90T90'),
+        at = c(1,2,3),
+        ylab = 'Surface Runoff Change from Base Scenario (%)')
+
+avg.runit.vals2 <- read.csv('avg.runit.vals2.csv')
+runit.percent.difference2 <- read.csv('runit.percent.difference2.csv')
+
+runit.percent.difference2 <- runit.percent.difference2[complete.cases(runit.percent.difference2),]
+boxplot(runit.percent.difference2$run17, runit.percent.difference2$run19, 
+        runit.percent.difference2$run20,
+        names = c('ccP10T10', 'ccP50T50', 'ccP90T90'),
+        at = c(1,2,3),
+        ylab = 'Surface Runoff Change from Base Scenario (%)')
