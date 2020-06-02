@@ -1,5 +1,5 @@
 land.use.timeseries <- function(dirpath, segname) {
-  csv.file <- paste(dirpath, '/', segname, '_0111-0211-0411.csv')
+  csv.file <- paste0(dirpath, '/', segname, '_0111-0211-0411.csv')
   data <- try(read.csv(csv.file))
   if (class(data) == 'try-error') {
     stop(paste0("ERROR: Missing climate .csv files (including ", dirpath, "/", segname, '_0111-0211-0411.csv)'))
