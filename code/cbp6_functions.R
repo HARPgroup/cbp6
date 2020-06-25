@@ -4401,12 +4401,12 @@ fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name) {
   date.cols <- which(colnames(tmp.data) %in% date.names)
   all.cols <- c(date.cols, flow.cols)
   flow.data <- as.data.frame(tmp.data[,all.cols])
-  
   date.col <- as.Date(flow.data$thisdate)
   flow.matrix <- flow.data[,-1]
   for (i in 1:ncol(flow.matrix)) {
-    flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
-  }
+    #flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
+    flow.matrix[,i] <- as.numeric(paste(flow.matrix[,i]))
+     }
   sum.flow.col <- rowSums(flow.matrix)
   summed.data <- data.frame(date.col, sum.flow.col)
   colnames(summed.data) <- c('date', 'flow')
@@ -4428,7 +4428,8 @@ fig.boxplot.by.flow.for.dash <- function(tmp.data, flow.abbreviation) {
   date.col <- as.Date(flow.data$thisdate)
   flow.matrix <- flow.data[,-1]
   for (i in 1:ncol(flow.matrix)) {
-    flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
+    #flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
+    flow.matrix[,i] <- as.numeric(paste(flow.matrix[,i]))
   }
   sum.flow.col <- rowSums(flow.matrix)
   summed.data <- data.frame(date.col, sum.flow.col)
