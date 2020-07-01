@@ -5475,3 +5475,227 @@ vahydro_import_om_class_constant_from_scenprop <- function(scenprop.pid, met.var
   
   return(as.numeric(metprop$propvalue))
 }
+
+get.riv.chan.prop <- function(riv.seg, site, token) {
+  # GETTING MODEL DATA FROM VA HYDRO
+  hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
+  ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
+  inputs <- list(
+    hydrocode = hydrocode,
+    bundle = 'watershed',
+    ftype = 'vahydro'
+  )
+  
+  #property dataframe returned
+  feature = FALSE;
+  odata <- getFeature(inputs, token, site, feature);
+  
+  if (odata == FALSE) {
+    return(FALSE)
+  }
+  
+  hydroid <- odata[1,"hydroid"];
+  fname <- as.character(odata[1,]$name);
+  print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
+  
+  # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
+  inputs <- list(
+    varkey = "om_water_model_node",
+    featureid = hydroid,
+    entity_type = "dh_feature",
+    propcode = 'vahydro-1.0')
+  
+  
+  scenario <- getProperty(inputs, site, scenario)
+  
+  if (scenario == FALSE) {
+    return(FALSE)
+  }
+  
+  # DETERMINING PROPNAME AND PROPCODE FOR SCENARIO PROPERTY
+  scen.propname <- '0. River Channel'
+  scen.propcode <- 'vahydro-1.0'
+  
+  # GETTING SCENARIO PROPERTY FROM VA HYDRO
+  sceninfo <- list(
+    varkey = 'om_USGSChannelGeomObject',
+    propname = scen.propname,
+    featureid = as.integer(as.character(scenario$pid)),
+    entity_type = "dh_properties",
+    propvalue = 0,
+    propcode = scen.propcode,
+    startdate = NULL,
+    enddate = NULL
+    # startdate = as.numeric(as.POSIXct(start.date, origin = "1970-01-01", tz = "GMT")),
+    # enddate = as.numeric(as.POSIXct(end.date, origin = "1970-01-01", tz = "GMT"))
+    # at the moment, there are bugs in startdate and enddate on vahydro
+  )
+  scenprop <- getProperty(sceninfo, site, scenprop)
+  
+  if (scenprop == FALSE) {
+    return(FALSE)
+  }
+  
+  return(as.numeric(scenprop$pid))
+}
+
+
+vahydro_import_metric_from_scenprop_propname <- function(scenprop.pid, met.varkey, met.propcode, site, token, met.propname) {
+  hydroid = scenprop.pid
+  
+  metinfo <- list(
+    varkey = met.varkey,
+    propcode = met.propcode,
+    propname = met.propname,
+    featureid = as.integer(hydroid),
+    entity_type = "dh_properties"
+  )
+  metprop <- getProperty(metinfo, site, metprop)
+  
+  if (metprop == FALSE) {
+    return(FALSE)
+  }
+  
+  return(as.numeric(metprop$propvalue))
+}
+
+getWatershedDF <- function(geom){
+  
+  watershed_geom <- readWKT(geom)
+  watershed_geom_clip <- gIntersection(bb, watershed_geom)
+  if (is.null(watershed_geom_clip)) {
+    watershed_geom_clip = watershed_geom
+  }
+  wsdataProjected <- SpatialPolygonsDataFrame(watershed_geom_clip,data.frame("id"), match.ID = FALSE)
+  wsdataProjected@data$id <- rownames(wsdataProjected@data)
+  watershedPoints <- fortify(wsdataProjected, region = "id")
+  watershedDF <- merge(watershedPoints, wsdataProjected@data, by = "id")
+  
+  return(watershedDF)
+}
+
+lutablegen <- function(land.segment, basepath, lu.scenario, ccextra = FALSE) {
+  # INPUTS ----------
+  lufile.list <- list.files(paste0(basepath, '/input/scenario/river/land_use/'),pattern=lu.scenario)
+  if (!is.logical(ccextra)) {
+    lufile.list <- rbind(lufile.list, ccextra)
+  }
+  lutable_yrs = FALSE
+  for (i in 1:length(lufile.list)) {
+    lufile <- lufile.list[i]
+    luyear <- substr(lufile, 10,13)
+    luyearfile <- paste0(basepath,'/input/scenario/river/land_use/', lufile)
+    print(paste("Opening", luyearfile))
+    luyeardata <- read.csv(luyearfile)
+    q = paste0(
+      "select ", luyear, " as thisyear, ",
+      "luyeardata.* ",
+      "from luyeardata where ",
+      "landseg = '", land.segment, 
+      "' and riverseg = '", river.segment, "'"
+    )
+    lutable <- sqldf(q)
+    if (!is.logical(lutable_yrs)) {
+      lutable <- lutable[,names(lutable_yrs)]
+      q <- "select * from lutable_yrs UNION select * from lutable "
+    } else {
+      q <- " select * from lutable "
+    }
+    lutable_yrs <- sqldf(q)
+  }
+  lus <- names(lutable_yrs) 
+  # Fix the funky "for." on the forest column name 
+  # do it on all in case there are other odd ones 
+  lus <- lapply(lus, function(x) gsub("[.]", "", x)) 
+  names(lutable_yrs) <- lus 
+  return(lutable_yrs)
+}
+
+land.use.eos.all <- function(land.segment, wdmpath, mod.scenario, outpath) {
+  # INPUTS ----------
+  land.use.list <- list.dirs(paste0(wdmpath, "/tmp/wdm/land"), full.name = FALSE, recursive = FALSE)
+  dsn.list <- data.frame(dsn = c('0111', '0211', '0411'), dsn.label = c('suro', 'ifwo', 'agwo'))
+  
+  # READING IN AND DELETING READ-IN LAND USE DATA FROM MODEL ----------
+  counter <- 1
+  total.files <- as.integer(length(land.use.list)*length(dsn.list$dsn))
+  for (i in 1:length(dsn.list$dsn)) {
+    for (j in 1:length(land.use.list)) {
+      input.data.namer <- paste0(land.segment,land.use.list[j],dsn.list$dsn[i])
+      print(paste("Downloading", counter, "of", total.files))
+      counter <- counter+1
+      temp.data.input <- try(read.csv(paste0(wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")))
+      if (class(temp.data.input) == 'try-error') {
+        stop(paste0("ERROR: Missing land use .csv files (including ", wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv", ")"))
+      }
+      colnames(temp.data.input) <- c('Year', 'Month', 'Day', 'Hour', as.character(dsn.list$dsn.label[i]))
+      temp.data.input$thisdate <- strptime(paste(temp.data.input$Year, "-", temp.data.input$Month, "-", temp.data.input$Day, ":", temp.data.input$Hour, sep = ""), format = "%Y-%m-%d:%H")
+      temp.data.formatter <- data.frame(temp.data.input$thisdate, temp.data.input[5])
+      colnames(temp.data.formatter) <- c('thisdate', colnames(temp.data.input[5]))
+      assign(input.data.namer,temp.data.formatter)
+      # Deleting read in file:
+      command <- paste0('rm ', wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")
+      system(command)
+    }
+  }
+  
+  # COMBINING DATA FROM EACH TYPE OF FLOW INTO A SINGLE DATA FRAME ----------
+  dsn.namer <- ''
+  for (i in 1:length(dsn.list$dsn)) {
+    dsn.namer <- paste0(dsn.namer, dsn.list$dsn[i], '-')
+  }
+  dsn.namer <- substr(dsn.namer, 1, nchar(dsn.namer)-1) 
+  overall.data.namer <- paste(land.segment, "_", dsn.namer, sep = '')
+  counter <- 1
+  for (i in 1:length(land.use.list)) {
+    for (j in 1:length(dsn.list$dsn)) {
+      input.data.namer <- paste0(land.segment,land.use.list[i],dsn.list$dsn[j])
+      temp.data.holder <- get(input.data.namer)
+      if (counter == 1) {
+        overall.data.builder <- temp.data.holder
+        names(overall.data.builder)[2] <- paste(land.use.list[i], colnames(temp.data.holder[2]), sep = "_") 
+      } else {
+        overall.data.builder[,counter+1] <- temp.data.holder[,2]
+        names(overall.data.builder)[names(overall.data.builder) == paste0('V', counter+1)] <- paste(land.use.list[i], colnames(temp.data.holder[2]), sep = '_')
+      }
+      counter <- counter + 1
+    }
+  }
+  assign(overall.data.namer,overall.data.builder)
+  saved.file <- paste0(outpath, "/", overall.data.namer, ".csv")
+  write.csv(overall.data.builder, saved.file, row.names = FALSE)
+  return(saved.file)
+}
+
+land.use.wdm.export.all <- function(land.segment, wdmpath, mod.scenario, start.year, end.year) {
+  # land.use.list <- c('afo', 'alf', 'ccn', 'cex', 'cfo', 'cid', 'cpd', 'for', 'hom', 'hvf',
+  #                    'hwm', 'hyo', 'hyw', 'lwm', 'nal', 'nex', 'nhi', 'nho', 'nhy', 'nid',
+  #                    'nlo', 'npa', 'npd', 'pas', 'rcn', 'rex', 'rid', 'rpd', 'trp', 'urs')
+  land.use.list <- list.dirs(paste0(wdmpath, "/tmp/wdm/land"), full.name = FALSE, recursive = FALSE)
+  dsn.list <- c('111','211','411')
+  
+  # SETTING UP LOOPS TO GENERATE ALL LAND USE UNIT FLOWS
+  counter <- 1
+  total.files <- as.integer(length(land.use.list)*length(dsn.list))
+  
+  for (i in 1:length(dsn.list)) {
+    for (j in 1:length(land.use.list)) {
+      wdm.location <- paste(wdmpath, '/tmp/wdm/land/', land.use.list[j], '/', mod.scenario, sep = '')
+      wdm.name <- paste0(land.use.list[j],land.segment,'.wdm')
+      
+      # SETTING UP AND RUNNING COMMAND LINE COMMANDS
+      setwd(wdm.location)
+      # cd.to.wdms <- paste('cd ', wdm.location, sep = '')
+      # exec_wait(cmd = cd.to.wdms)
+      
+      print(paste("Creating unit flow .csv for ", counter, "of", total.files))
+      
+      quick.wdm.2.txt.inputs <- paste(paste0(land.use.list[j],land.segment,'.wdm'), start.year, end.year, dsn.list[i], sep = ',')
+      run.quick.wdm.2.txt <- paste("echo", quick.wdm.2.txt.inputs, "| /opt/model/p6-devel/p6-4.2018/code/bin/quick_wdm_2_txt_hour_2_hour", sep = ' ')
+      system(command = run.quick.wdm.2.txt)
+      
+      # INCREMENTING COUNTER
+      counter <- counter+1
+    }
+  }
+}

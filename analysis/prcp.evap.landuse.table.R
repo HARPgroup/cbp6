@@ -946,9 +946,9 @@ cor(pct.changes.50$evap.mean, pct.changes.50$prcp.mean)
 cor(pct.changes.90$evap.mean, pct.changes.90$prcp.mean)
 #-0.49 for P90
 
-# pct.changes.10.corr <- merge(pct.changes.10, TEMP.ENS.10.PCT, by.x = 'segment', by.y = 'FIPS_NHL', all.x = TRUE)
-# pct.changes.50.corr <- merge(pct.changes.50, TEMP.ENS.50.PCT, by.x = 'segment', by.y = 'FIPS_NHL', all.x = TRUE)
-# pct.changes.90.corr <- merge(pct.changes.90, TEMP.ENS.90.PCT, by.x = 'segment', by.y = 'FIPS_NHL', all.x = TRUE)
+pct.changes.10.corr <- merge(pct.changes.10, TEMP.ENS.10.PCT, by.x = 'segment', by.y = 'FIPS_NHL', all.x = TRUE)
+pct.changes.50.corr <- merge(pct.changes.50, TEMP.ENS.50.PCT, by.x = 'segment', by.y = 'FIPS_NHL', all.x = TRUE)
+pct.changes.90.corr <- merge(pct.changes.90, TEMP.ENS.90.PCT, by.x = 'segment', by.y = 'FIPS_NHL', all.x = TRUE)
 
 # # Evap and Temp
 # cor(pct.changes.10.corr$evap.mean, pct.changes.10.corr$Total)

@@ -49,7 +49,10 @@ ggplot(for10w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(
 
 for50w <- lm(for.~evap.mean*prcp.mean, data = pct.changes.50.corr)
 summary(for50w)
-ggplot(for50w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+map1 <- ggplot(for50w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+  labs(color = "ET\nChange (%)") +
+  xlab('Precipitation Change (%)') +
+  ylab('Natural Pervious Runoff Change (%)')
 
 for90w <- lm(for.~evap.mean*prcp.mean, data = pct.changes.90.corr)
 summary(for90w)
@@ -67,3 +70,59 @@ ggbiplot(lu.50.pca)
 lu.90.pca <- prcomp(pct.changes.90.corr[,c(4:46)], center = TRUE, scale. = TRUE)
 summary(lu.90.pca)
 ggbiplot(lu.90.pca)
+
+# MLR w/ interaction (pas pasest)
+pas10w <- lm(pas~evap.mean*prcp.mean, data = pct.changes.10.corr)
+summary(pas10w)
+ggplot(pas10w,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+pas50w <- lm(pas~evap.mean*prcp.mean, data = pct.changes.50.corr)
+summary(pas50w)
+ggplot(pas50w,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+pas90w <- lm(pas~evap.mean*prcp.mean, data = pct.changes.90.corr)
+summary(pas90w)
+ggplot(pas90w,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+# MLR w/ interaction (soy soyest)
+soy10w <- lm(soy~evap.mean*prcp.mean, data = pct.changes.10.corr)
+summary(soy10w)
+ggplot(soy10w,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+soy50w <- lm(soy~evap.mean*prcp.mean, data = pct.changes.50.corr)
+summary(soy50w)
+ggplot(soy50w,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+soy90w <- lm(soy~evap.mean*prcp.mean, data = pct.changes.90.corr)
+summary(soy90w)
+ggplot(soy90w,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+# MLR w/ interaction (cch cchest)
+cch10w <- lm(cch~evap.mean*prcp.mean, data = pct.changes.10.corr)
+summary(cch10w)
+ggplot(cch10w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+cch50w <- lm(cch~evap.mean*prcp.mean, data = pct.changes.50.corr)
+summary(cch50w)
+ggplot(cch50w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+cch90w <- lm(cch~evap.mean*prcp.mean, data = pct.changes.90.corr)
+summary(cch90w)
+ggplot(cch90w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+# MLR w/ interaction (cci cciest)
+cci10w <- lm(cci~evap.mean*prcp.mean, data = pct.changes.10.corr)
+summary(cci10w)
+ggplot(cci10w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+
+cci50w <- lm(cci~evap.mean*prcp.mean, data = pct.changes.50.corr)
+summary(cci50w)
+map2 <- ggplot(cci50w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+  labs(color = "ET\nChange (%)") +
+  xlab('Precipitation Change (%)') +
+  ylab('Impervious Runoff Change (%)')
+
+
+cci90w <- lm(cci~evap.mean*prcp.mean, data = pct.changes.90.corr)
+summary(cci90w)
+ggplot(cci90w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)

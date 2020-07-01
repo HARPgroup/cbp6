@@ -55,7 +55,6 @@ source(paste(github_location,"auth.private", sep = "/"));#load rest username and
 source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
 token <- rest_token(site, token, rest_uname, rest_pw);
 options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
-
 if (gage_number == FALSE | is.na(gage_number) == TRUE) {
   gage_number <- '00000000'
 }
@@ -81,7 +80,6 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
       data1 <- model_server_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
     }
   }
-
   if (dat.source2 == 'vahydro') {
     data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
     if (gage.timespan.trimmed == TRUE) {
@@ -100,7 +98,6 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
       data2 <- model_server_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
     }
   }
-
 # TRIMMING DATA TO PROPER WATER YEAR
 data1 <- water_year_trim(data1)
 data2 <- water_year_trim(data2)
@@ -117,7 +114,6 @@ if (dat.source1 == 'vahydro') {
   title.part.1 <- paste('Scenario ', mod.scenario1, sep = '')
   name.part1 <- paste('scen_', mod.scenario1, sep = '')
 }
-
 if (dat.source2 == 'vahydro') {
   title.part.2 <- paste('VA Hydro Run ', run.id2, sep = '')
   name.part2 <- paste('runid_', run.id2, sep = '')
@@ -128,7 +124,6 @@ if (dat.source2 == 'vahydro') {
   title.part.2 <- paste('Scenario ', mod.scenario2, sep = '')
   name.part2 <- paste('scen_', mod.scenario2, sep = '')
 }
-
 dashboard_title <- paste('River Segment ', riv.seg, ': ', title.part.1, ' vs. ', title.part.2, sep = '')
 ```
 
@@ -147,11 +142,8 @@ output:
 # POSTING METRICS TO SCENARIO PROPERTIES ON VA HYDRO
 metrics1 <- vahydro_import_all_metrics_from_scenprop(scenprop1, site, token)
 metrics2 <- vahydro_import_all_metrics_from_scenprop(scenprop2, site, token)
-
 percent_difference <- metrics_compare(metrics1, metrics2, riv.seg)
-
 all_data <- all_data_maker(data1, data2)
-
 ```
 
 ```{r,  include=FALSE}
@@ -162,11 +154,9 @@ if (dat.source1 != 'vahydro') {
 } else {
   run.id <- run.id1
 }
-
 # Downloading local runoff inflow data
   lri.dat <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id, token, site, start.date, end.date);
   lri.dat <- subset(lri.dat, lri.dat$date >= start.date & lri.dat$date <= end.date);
-
 # Creating all tables
 Table1 <- tab1.monthly.low.flows(percent_difference, cn1, cn2)
 Table2 <- tab2.monthly.average.flows(percent_difference, cn1, cn2)
@@ -174,7 +164,6 @@ Table3 <- tab3.monthly.high.flows(percent_difference, cn1, cn2)
 Table4 <- tab4.period.low.flows(percent_difference, cn1, cn2)
 Table5 <- tab5.period.high.flows(percent_difference, cn1, cn2)
 Table6 <- tab6.nonexceedence.flows(percent_difference, cn1, cn2)
-
 for (i in 1:length(cbp6.landunits)) {
   tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
   tmp.data <- tmp.data[complete.cases(tmp.data),]
@@ -207,10 +196,8 @@ for (i in 1:length(cbp6.landunits)) {
   tmp.tab <- tab.zero.day.ratios.by.lrseg.land.use(tmp.data)
   assign(namer, tmp.tab)
 }
-
 wd <- getwd()
 tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
-
 ```
 
 ```{r, include=FALSE}
@@ -233,9 +220,7 @@ description <- try(read_file(paste0(cbp6_link, "/gage_descriptions/", gage_numbe
 if (class(description) == "try-error") {
   description <- ""
 }
-
 description.cont <- paste0(" The average daily discharge change between scenario 1 and scenario 2 for the 20 year timespan was ", OUTPUT_MATRIXsaver[2] ,"%, with ", OUTPUT_MATRIXsaver[1], "% of its rolling three month time spans above 20% difference.")
-
 if (dat.source1 == 'gage' | dat.source2 == 'gage') {
   if (dat.source1 == 'gage') {
     gage.dat <- data1
