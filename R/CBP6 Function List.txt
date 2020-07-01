@@ -1,102 +1,102 @@
 DATA DOWNLOADING AND PROCESSING FUNCTIONS
-model_import_data_cfs (downloads raw CBP6 model data)
-model_server_import_data_cfs (can only be used from R in putty or ubuntu while logged onto deq2 server, downloads far quicker)
-gage_import_data_cfs (downloads historical data from USGS gage)
+model_import_data_cfs (downloads raw CBP6 model data from deq2.bse.vt.edu website)
+model_server_import_data_cfs (downloads raw CBP6 model data from server -- can only be used from R in putty or ubuntu while logged onto deq2 server, downloads far quicker than from the website)
+gage_import_data_cfs (downloads historical data from USGS gage using dataRetrieval package)
 vahydro_import_data_cfs (downloads data from a VA Hydro model run)
 water_year_trim (trims any of the above data frames to the water year)
-vahydro_import_lrseg_all_flows
-vahydro_import_local.runoff.inflows_cfs
-fn_get_runfile_mod (created to solve obscure issue of crashing due to returning empty runfiles?)
+vahydro_import_lrseg_all_flows (downloads flow data associated with a specific land-river segment)
+vahydro_import_local.runoff.inflows_cfs (downloads data from the VA Hydro "Local Runoff Inflows" model property for runoff analyses)
+fn_get_runfile_mod (downloads specific VA Hydro model runfiles, differs from VA Hydro 1.0's "fn_get_runfile" as it was created to solve obscure issue of crashing due to returning empty runfiles in some instances, which in turn would crash any markdown file being knitted)
 metrics_calc_all (calculates all of the dashboard comparison metrics)
-all_data_maker (puts scenario flows and corresponding dates in one data frame)
+all_data_maker (puts scenario flows and corresponding dates in one data frame for future comparison)
 metrics_compare (for two full sets of metrics, calculates percent differences)
-get.gage.timespan
+get.gage.timespan (gets the start date and end date of a USGS gage in a time period, defaulting from 1-1-1984 to 12-31-2014)
 
 SPATIAL FUNCTIONS
-fn_upstream
-fn_ALL.upstream
-fn_downstream
-fn_ALL.downstream
-fn_gage_and_seg_mapper
-fn_gage_and_seg_mapperALT (same as fn_gage_and_seg_mapper but with added token input for use in RMarkdowns?)
-getWatershedDF
+fn_upstream (links a river segment to its immediately upstream river segments)
+fn_ALL.upstream (links a river segment to ALL upstream river segments)
+fn_downstream (links a river segment to its immediately downstream river segment)
+fn_ALL.downstream (links a river segment to ALL downstream river segments)
+fn_gage_and_seg_mapper (creates an map of the river segment, upstream river segments, and an associated gage)
+fn_gage_and_seg_mapperALT (same as fn_gage_and_seg_mapper but with added token input for use in RMarkdowns? There were issues with the token being unable to be passed from the global environment while knitting a file, so this specialty function was created to fix those issues)
+getWatershedDF (converts a spatial object into a data frame for mapping purposes)
 
 METRIC CALCULATION FUNCTIONS
-nse
-average_baseflow
-monthly_max
-monthly_min
-monthly_mean
-flow_exceedance
-sept_10_flow
-overall_mean_flow
-drought_of_record
-seven_q_ten
-num_day_min
-num_day_max
-low_yearly_mean
-fn_iha_7q10
-fn_iha_mlf
-fn_iha_mhf
-fn_iha_DOR
-fn_iha_DOR_Year
+nse (calculates nash-sutcliffe efficiency)
+average_baseflow (calculates the mean baseflow quantity)
+monthly_max (calculates monthly max flows, wrapper of fn_iha_mhf)
+monthly_min (calculates monthly min flows, wrapper of fn_iha_mlf)
+monthly_mean (calculates monthly mean flows)
+flow_exceedance (calculates flows exceeding a certain percent exceedance)
+sept_10_flow (calculates september 10% flow)
+overall_mean_flow (calculates the overall mean of all flow quantities)
+drought_of_record (calculates the drought of record flow, wrapper of fn_iha_DOR_Year)
+seven_q_ten (a wrapper of the fn_iha_7q10 function which preps data for the 7q10 to be calculated)
+num_day_min (calculates the XX day minimum flow -- like l30, l90, etc., key drought flows)
+num_day_max (calculates the XX day maximum flow)
+low_yearly_mean (calculates the mean flow in the drought of record year)
+fn_iha_7q10 (calculates 7q10)
+fn_iha_mlf (calculates monthly low flows)
+fn_iha_mhf (calculates monthly high flows)
+fn_iha_DOR (calculates Drought of Record flow -- deprecated function? replaced by l30, l90, etc?)
+fn_iha_DOR_Year (calculates the year of the drought of record)
 
 DASHBOARD EXCLUSIVES
-fig.gis
-figs11to13.smallest.diff.periods
-figs6to8.largest.diff.periods
-tab6.nonexceedence.flows
-tab5.period.high.flows
-tab4.period.low.flows
-tab3.monthly.high.flows
-tab2.monthly.average.flows
-tab1.monthly.low.flows
-fig10.runit.boxplot
-fig9b.area.weighted.residual.plot
-fig9a.residual.plot
-fig5.combined.hydrograph
-fig4.baseflow.hydrograph
-fig3.flow.exceedance
-fig2.zoomed.hydrograph
-tab.means.by.lrseg.flow
-tab.means.by.lrseg.land.use
-tab.zero.day.ratios.by.lrseg.flow
-tab.zero.day.ratios.by.lrseg.land.use
-tab.iqr.by.lrseg.flow.annual
-tab.iqr.by.lrseg.lri.annual
-fig.boxplot.by.flow
-fig.boxplot.by.flow.for.dash (eliminates need for lrseg name -- calculates based on currently defined lrseg within for loops)
+fig.gis (creates map of segment, upstream segments, and gages, if any.  wrapper of fn_gage_and_seg_mapper functions)
+figs11to13.smallest.diff.periods (creates figures of smallest difference periods)
+figs6to8.largest.diff.periods (creates figures of largest difference periods)
+tab6.nonexceedence.flows (creates tables of nonexceedance flow metrics)
+tab5.period.high.flows (creates tables of XX day high flow metrics)
+tab4.period.low.flows (creates tables of XX day low flow metrics)
+tab3.monthly.high.flows (creates tables of monthly high flow metrics)
+tab2.monthly.average.flows (creates tables of monthly mean flow metrics)
+tab1.monthly.low.flows (creates tables of monthly low flow metrics)
+fig10.runit.boxplot (creates figures of runoff values)
+fig9b.area.weighted.residual.plot (creates figure of area-weighted residuals between different data sources)
+fig9a.residual.plot (creates figure of residuals between different data sources)
+fig5.combined.hydrograph (creates figure of hydrograph and baseflow hydrograph)
+fig4.baseflow.hydrograph (creates figure of baseflow hydrograph)
+fig3.flow.exceedance (creates flow exceedance plot)
+fig2.zoomed.hydrograph (creates figure of hydrograph zoomed to the year of lowest flow)
+tab.means.by.lrseg.flow (creates table of surface runoff, interflow, and activate groundwater outflow in each associated land-river segment)
+tab.means.by.lrseg.land.use (creates table of flows in each associated land-river segment, separated by CBP phase 6 land use)
+tab.zero.day.ratios.by.lrseg.flow (creates table of zero-flow days for surface runoff, interflow, and active groundwater outflow for a land-river segment)
+tab.zero.day.ratios.by.lrseg.land.use (creates table of zero-flow days for each land use for a land-river segment)
+tab.iqr.by.lrseg.flow.annual (creates table of the interquartile range of surface runoff, interflow, and groundwater outflows for each year for a land-river segment)
+tab.iqr.by.lrseg.lri.annual (creates table of the interquartile ranges of each CBP phase 6 land use flow)
+fig.boxplot.by.flow (creates a boxplot of land-river segment flows (yearly?))
+fig.boxplot.by.flow.for.dash (simplified use case of fig.boxplot.by.flow -- eliminates need for lrseg name -- calculates based on currently defined lrseg within for loops)
 
 VA HYDRO POSTING AND PULLING METRIC PROPERTY FUNCTIONS
-vahydro_post_metric
-vahydro_post_scenario
-vahydro_post_metric_to_scenprop
-vahydro_post_all_metrics_to_scenprop
-vahydro_import_metric
-vahydro_import_all_metrics
-vahydro_import_metric_from_scenprop
-vahydro_import_all_metrics_from_scenprop
-vahydro_import_metric_from_scenprop_propname
-automated_metric_2_vahydro
+vahydro_post_metric (posts a metric to a container stored on a watershed feature -- deprecated? vahydro_post_metric_to_scenprop reflects updated posting locations)
+vahydro_post_scenario (checks if a scenario exists, and if not, posts a scenario for future metric storage using vahydro_post_metric function)
+vahydro_post_metric_to_scenprop (posts a metric to a defined scenario property)
+vahydro_post_all_metrics_to_scenprop (posts all dashboard metrics to a defined scenario property)
+vahydro_import_metric (pulls a metric from a container stored on a watershed feature -- deprecated? vahydro_import_metric_from_scenprop reflects modularized and updated posting locations)
+vahydro_import_all_metrics (pulls all dashboard metrics using vahydro_import_metric)
+vahydro_import_metric_from_scenprop (pulls a metric from the scenario property -- the "new", increasingly modularized, more commonly used way of retrieving properties from VA Hydro)
+vahydro_import_all_metrics_from_scenprop (pulls all dashboard metrics using vahydro_import_metric_from_scenprop)
+vahydro_import_metric_from_scenprop_propname (special case of vahydro_import_metric_from_scenprop for when the only unique attribute of a feature being retrieved is its property name -- useful for some of the automatically posted metrics like l30_cc_Qout and l90_cc_Qout which have no defined varkey)
+vahydro_import_om_class_constant_from_scenprop (special case of vahydro_import_metric_from_scenprop which pulls a property of class om_class_constant from the scenario property -- which now that I think about, is probably the EXACT same purpose of "vahydro_import_metric_from_scenprop_propname" -- which goes to show that documentation is important because I'm pretty sure I wasted time developing similar functions for the same purpose after forgetting that I created the first)
+automated_metric_2_vahydro (giant amalgamation of functions which downloads data, trims it to water year and gage timespan, calculates all metrics, and posts them all to VA Hydro -- very useful for quick analysis)
 
 VA HYDRO POSTING AND PULLING SCENARIO PROPERTY FUNCTIONS
-get.overall.vahydro.prop
-get.scen.prop
-vahydro_import_om_class_constant_from_scenprop
-get.cbp.scen.prop
-get.gage.timespan.scen.prop
-post.gage.scen.prop
-get.riv.chan.prop
-link.cbp6.lrseg.hydrocodes
+get.overall.vahydro.prop (gets the unique ID of the "vahydro" property on a watershed feature)
+get.scen.prop (gets the unique ID of a scenario property posted to the "vahydro" property on a watershed feature) 
+get.cbp.scen.prop (gets the unique ID of a scenario property for a container storing metrics of a raw CBP data run)
+get.gage.timespan.scen.prop (gets the unique ID of a scenario property for a container storing metrics of a VA Hydro model run with the timespan trimmed to that of the associated USGS gage)
+post.gage.scen.prop (posts a property to store USGS gage metrics within on a watershed feature -- upon closer examination it looks like I never created a "get.gage.scen.prop" function, but this "post" function only posts a new property if it does not exist, so by checking if the scenario property exists it in effect also "gets" the scen.prop -- so it can also be used in this manner)
+get.riv.chan.prop (gets the unique ID of the "0. River Channel" feature on a "vahydro" property on a watershed feature)
+link.cbp6.lrseg.hydrocodes (links a river segment to the hydrocodes of its associated land-river segments)
 
 BASE VA HYDRO INTERACTION FUNCTIONS
-rest_token
-getProperty
-postProperty
-getFeature
-getPropertyALT (same as getProperty but with added token input for use in RMarkdowns?)
+rest_token (gets a token used for interfacing with VA Hydro from R -- from Rob's VAHydro-1.0)
+getProperty (base level function of getting a property from VA Hydro -- from Rob's VAHydro-1.0)
+postProperty (base level function of posting a property to VA Hydro -- from Rob's VAHydro-1.0)
+getFeature (base level function of getting a feature from VA Hydro -- from Rob's VAHydro-1.0)
+getPropertyALT (same as getProperty but with added token input for use in RMarkdowns, I believe?  Was created in response to an issue where properties were unable to be retrieved when knitting RMarkdowns, crashing the entire RMarkdown)
 
 LAND USE TABLE UTILITY FUNCTIONS
-lutablegen
-land.use.eos.all
-land.use.wdm.export.all
+lutablegen (never seen this function before so I'm not entirely sure -- I'm guessing Rob created it as a utility for generating land-use tables? May not really belong in cbp6 repository...)
+land.use.eos.all (combines edge-of-stream flow timeseries for each land use to later be linked into VA Hydro when setting up a scenario -- used only on the server in the process of prepping a new scenario -- cbp6 repository might not be proper place for this but it's also stored in openmi-om/R/utils with other scenario set-up utility functions)
+land.use.wdm.export.all (also only used on server. exports land use timeseries data from a .wdm file to .csv files so that it can then be combined together using land.use.eos.all function.  cbp6 repository might not be the proper place for this utility -- but it's also stored in openmi-om/R/utils)
