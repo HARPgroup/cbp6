@@ -1,3 +1,6 @@
+# This function gets the unique ID of a scenario property posted to the 
+# vahydro property on a watershed feature
+
 get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token) {
   # GETTING MODEL DATA FROM VA HYDRO
   hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
