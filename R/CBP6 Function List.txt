@@ -1,0 +1,102 @@
+DATA DOWNLOADING AND PROCESSING FUNCTIONS
+model_import_data_cfs (downloads raw CBP6 model data)
+model_server_import_data_cfs (can only be used from R in putty or ubuntu while logged onto deq2 server, downloads far quicker)
+gage_import_data_cfs (downloads historical data from USGS gage)
+vahydro_import_data_cfs (downloads data from a VA Hydro model run)
+water_year_trim (trims any of the above data frames to the water year)
+vahydro_import_lrseg_all_flows
+vahydro_import_local.runoff.inflows_cfs
+fn_get_runfile_mod (created to solve obscure issue of crashing due to returning empty runfiles?)
+metrics_calc_all (calculates all of the dashboard comparison metrics)
+all_data_maker (puts scenario flows and corresponding dates in one data frame)
+metrics_compare (for two full sets of metrics, calculates percent differences)
+get.gage.timespan
+
+SPATIAL FUNCTIONS
+fn_upstream
+fn_ALL.upstream
+fn_downstream
+fn_ALL.downstream
+fn_gage_and_seg_mapper
+fn_gage_and_seg_mapperALT (same as fn_gage_and_seg_mapper but with added token input for use in RMarkdowns?)
+getWatershedDF
+
+METRIC CALCULATION FUNCTIONS
+nse
+average_baseflow
+monthly_max
+monthly_min
+monthly_mean
+flow_exceedance
+sept_10_flow
+overall_mean_flow
+drought_of_record
+seven_q_ten
+num_day_min
+num_day_max
+low_yearly_mean
+fn_iha_7q10
+fn_iha_mlf
+fn_iha_mhf
+fn_iha_DOR
+fn_iha_DOR_Year
+
+DASHBOARD EXCLUSIVES
+fig.gis
+figs11to13.smallest.diff.periods
+figs6to8.largest.diff.periods
+tab6.nonexceedence.flows
+tab5.period.high.flows
+tab4.period.low.flows
+tab3.monthly.high.flows
+tab2.monthly.average.flows
+tab1.monthly.low.flows
+fig10.runit.boxplot
+fig9b.area.weighted.residual.plot
+fig9a.residual.plot
+fig5.combined.hydrograph
+fig4.baseflow.hydrograph
+fig3.flow.exceedance
+fig2.zoomed.hydrograph
+tab.means.by.lrseg.flow
+tab.means.by.lrseg.land.use
+tab.zero.day.ratios.by.lrseg.flow
+tab.zero.day.ratios.by.lrseg.land.use
+tab.iqr.by.lrseg.flow.annual
+tab.iqr.by.lrseg.lri.annual
+fig.boxplot.by.flow
+fig.boxplot.by.flow.for.dash (eliminates need for lrseg name -- calculates based on currently defined lrseg within for loops)
+
+VA HYDRO POSTING AND PULLING METRIC PROPERTY FUNCTIONS
+vahydro_post_metric
+vahydro_post_scenario
+vahydro_post_metric_to_scenprop
+vahydro_post_all_metrics_to_scenprop
+vahydro_import_metric
+vahydro_import_all_metrics
+vahydro_import_metric_from_scenprop
+vahydro_import_all_metrics_from_scenprop
+vahydro_import_metric_from_scenprop_propname
+automated_metric_2_vahydro
+
+VA HYDRO POSTING AND PULLING SCENARIO PROPERTY FUNCTIONS
+get.overall.vahydro.prop
+get.scen.prop
+vahydro_import_om_class_constant_from_scenprop
+get.cbp.scen.prop
+get.gage.timespan.scen.prop
+post.gage.scen.prop
+get.riv.chan.prop
+link.cbp6.lrseg.hydrocodes
+
+BASE VA HYDRO INTERACTION FUNCTIONS
+rest_token
+getProperty
+postProperty
+getFeature
+getPropertyALT (same as getProperty but with added token input for use in RMarkdowns?)
+
+LAND USE TABLE UTILITY FUNCTIONS
+lutablegen
+land.use.eos.all
+land.use.wdm.export.all

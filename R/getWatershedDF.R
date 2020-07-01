@@ -1,5 +1,5 @@
 #' Get Watershed Dataframe Function 
-#' @description Retrieves the dataframe for the watershed
+#' @description Converts a watershed's geometry to dataframe format
 #' @param geom the geometry of interest
 #' @return A dataframe of the watershed
 #' @import rgeos

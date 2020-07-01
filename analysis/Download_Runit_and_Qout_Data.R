@@ -131,19 +131,17 @@ shen.up = append('PS5_4370_4150', fn_ALL.upstream('PS5_4370_4150', AllSegList))
 matt.up = append('YM4_6620_0001', fn_ALL.upstream('YM4_6620_0001', AllSegList))
 pamu.up = append('YP4_6750_0001', fn_ALL.upstream('YP4_6750_0001', AllSegList))
 rapp.up = append('RU5_6030_0001', fn_ALL.upstream('RU5_6030_0001', AllSegList))
-swif.up = append('JA2_7290_0001', fn_ALL.upstream('JA2_7290_0001', AllSegList))
+appo.up = append('JA5_7480_0001', fn_ALL.upstream('JA5_7480_0001', AllSegList))
 jame.up.up = append('JU5_7420_7160', fn_ALL.upstream('JU5_7420_7160', AllSegList))
 jame.up.mid = append('JL7_7070_0001', fn_ALL.upstream('JL7_7070_0001', AllSegList))
 jame.up.mid = jame.up.mid[which(jame.up.mid %nin% jame.up.up)]
 
-start.date <- '1990-01-01'
+start.date <- '1991-01-01'
 end.date <- '2000-12-31'
 
-dir.create('~/Precip_and_Temp_Mapper/Runit_data')
+dir.create('~/Precip_and_Temp_Mapper/Runit_Qout_data')
 
 for (i in 1:length(shen.up)) {
-  namer <- paste0('runit_', shen.up[i])
-  
   # Downloading local runoff inflow data
   rm(lri.dat15)
   lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(shen.up[i], '15', token, site, start.date, end.date);
@@ -152,6 +150,8 @@ for (i in 1:length(shen.up)) {
     colnames(lri.dat15) <- c('date', 'flow.unit')
   }
   lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
+  
+  data15 <- vahydro_import_data_cfs(shen.up[i], 15, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat14)
@@ -162,6 +162,8 @@ for (i in 1:length(shen.up)) {
   }
   lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
   
+  data14 <- vahydro_import_data_cfs(shen.up[i], 14, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat16)
   lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(shen.up[i], '16', token, site, start.date, end.date);
@@ -170,6 +172,8 @@ for (i in 1:length(shen.up)) {
     colnames(lri.dat16) <- c('date', 'flow.unit')
   }
   lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
+  
+  data16 <- vahydro_import_data_cfs(shen.up[i], 16, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat11)
@@ -180,14 +184,19 @@ for (i in 1:length(shen.up)) {
   }
   lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
   
+  data11 <- vahydro_import_data_cfs(shen.up[i], 11, token, site, start.date, end.date)
+  
+  namer <- paste0('runit_', shen.up[i])
   lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
-
-  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_data/', namer, '.csv'))
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', shen.up[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
 }
 
 for (i in 1:length(matt.up)) {
-  namer <- paste0('runit_', matt.up[i])
-  
   # Downloading local runoff inflow data
   rm(lri.dat15)
   lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(matt.up[i], '15', token, site, start.date, end.date);
@@ -196,6 +205,8 @@ for (i in 1:length(matt.up)) {
     colnames(lri.dat15) <- c('date', 'flow.unit')
   }
   lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
+  
+  data15 <- vahydro_import_data_cfs(matt.up[i], 15, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat14)
@@ -206,6 +217,8 @@ for (i in 1:length(matt.up)) {
   }
   lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
   
+  data14 <- vahydro_import_data_cfs(matt.up[i], 14, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat16)
   lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(matt.up[i], '16', token, site, start.date, end.date);
@@ -214,6 +227,8 @@ for (i in 1:length(matt.up)) {
     colnames(lri.dat16) <- c('date', 'flow.unit')
   }
   lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
+  
+  data16 <- vahydro_import_data_cfs(matt.up[i], 16, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat11)
@@ -224,15 +239,19 @@ for (i in 1:length(matt.up)) {
   }
   lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
   
-  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  data11 <- vahydro_import_data_cfs(matt.up[i], 11, token, site, start.date, end.date)
   
-  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_data/', namer, '.csv'))
+  namer <- paste0('runit_', matt.up[i])
+  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', matt.up[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
 }
 
-
 for (i in 1:length(pamu.up)) {
-  namer <- paste0('runit_', pamu.up[i])
-  
   # Downloading local runoff inflow data
   rm(lri.dat15)
   lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(pamu.up[i], '15', token, site, start.date, end.date);
@@ -241,6 +260,8 @@ for (i in 1:length(pamu.up)) {
     colnames(lri.dat15) <- c('date', 'flow.unit')
   }
   lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
+  
+  data15 <- vahydro_import_data_cfs(pamu.up[i], 15, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat14)
@@ -251,6 +272,8 @@ for (i in 1:length(pamu.up)) {
   }
   lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
   
+  data14 <- vahydro_import_data_cfs(pamu.up[i], 14, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat16)
   lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(pamu.up[i], '16', token, site, start.date, end.date);
@@ -259,6 +282,8 @@ for (i in 1:length(pamu.up)) {
     colnames(lri.dat16) <- c('date', 'flow.unit')
   }
   lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
+  
+  data16 <- vahydro_import_data_cfs(pamu.up[i], 16, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat11)
@@ -269,14 +294,19 @@ for (i in 1:length(pamu.up)) {
   }
   lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
   
-  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  data11 <- vahydro_import_data_cfs(pamu.up[i], 11, token, site, start.date, end.date)
   
-  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_data/', namer, '.csv'))
+  namer <- paste0('runit_', pamu.up[i])
+  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', pamu.up[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
 }
 
 for (i in 1:length(rapp.up)) {
-  namer <- paste0('runit_', rapp.up[i])
-  
   # Downloading local runoff inflow data
   rm(lri.dat15)
   lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(rapp.up[i], '15', token, site, start.date, end.date);
@@ -285,6 +315,8 @@ for (i in 1:length(rapp.up)) {
     colnames(lri.dat15) <- c('date', 'flow.unit')
   }
   lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
+  
+  data15 <- vahydro_import_data_cfs(rapp.up[i], 15, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat14)
@@ -295,6 +327,8 @@ for (i in 1:length(rapp.up)) {
   }
   lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
   
+  data14 <- vahydro_import_data_cfs(rapp.up[i], 14, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat16)
   lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(rapp.up[i], '16', token, site, start.date, end.date);
@@ -303,6 +337,8 @@ for (i in 1:length(rapp.up)) {
     colnames(lri.dat16) <- c('date', 'flow.unit')
   }
   lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
+  
+  data16 <- vahydro_import_data_cfs(rapp.up[i], 16, token, site, start.date, end.date)
   
   # Downloading local runoff inflow data
   rm(lri.dat11)
@@ -313,51 +349,179 @@ for (i in 1:length(rapp.up)) {
   }
   lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
   
-  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  data11 <- vahydro_import_data_cfs(rapp.up[i], 11, token, site, start.date, end.date)
   
-  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_data/', namer, '.csv'))
+  namer <- paste0('runit_', rapp.up[i])
+  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', rapp.up[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
 }
 
-for (i in 1:length(swif.up)) {
-  namer <- paste0('runit_', swif.up[i])
-  
+for (i in 1:length(appo.up)) {
   # Downloading local runoff inflow data
   rm(lri.dat15)
-  lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(swif.up[i], '15', token, site, start.date, end.date);
+  lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(appo.up[i], '15', token, site, start.date, end.date);
   if (lri.dat15 == FALSE) {
     lri.dat15 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
     colnames(lri.dat15) <- c('date', 'flow.unit')
   }
   lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
   
+  data15 <- vahydro_import_data_cfs(appo.up[i], 15, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat14)
-  lri.dat14 <- vahydro_import_local.runoff.inflows_cfs(swif.up[i], '14', token, site, start.date, end.date);
+  lri.dat14 <- vahydro_import_local.runoff.inflows_cfs(appo.up[i], '14', token, site, start.date, end.date);
   if (lri.dat14 == FALSE) {
     lri.dat14 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
     colnames(lri.dat14) <- c('date', 'flow.unit')
   }
   lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
   
+  data14 <- vahydro_import_data_cfs(appo.up[i], 14, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat16)
-  lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(swif.up[i], '16', token, site, start.date, end.date);
+  lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(appo.up[i], '16', token, site, start.date, end.date);
   if (lri.dat16 == FALSE) {
     lri.dat16 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
     colnames(lri.dat16) <- c('date', 'flow.unit')
   }
   lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
   
+  data16 <- vahydro_import_data_cfs(appo.up[i], 16, token, site, start.date, end.date)
+  
   # Downloading local runoff inflow data
   rm(lri.dat11)
-  lri.dat11 <- vahydro_import_local.runoff.inflows_cfs(swif.up[i], '11', token, site, start.date, end.date);
+  lri.dat11 <- vahydro_import_local.runoff.inflows_cfs(appo.up[i], '11', token, site, start.date, end.date);
   if (lri.dat11 == FALSE) {
     lri.dat11 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
     colnames(lri.dat11) <- c('date', 'flow.unit')
   }
   lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
   
-  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  data11 <- vahydro_import_data_cfs(appo.up[i], 11, token, site, start.date, end.date)
   
-  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_data/', namer, '.csv'))
+  namer <- paste0('runit_', appo.up[i])
+  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', appo.up[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
+}
+
+for (i in 1:length(jame.up.up)) {
+  # Downloading local runoff inflow data
+  rm(lri.dat15)
+  lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(jame.up.up[i], '15', token, site, start.date, end.date);
+  if (lri.dat15 == FALSE) {
+    lri.dat15 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat15) <- c('date', 'flow.unit')
+  }
+  lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
+  
+  data15 <- vahydro_import_data_cfs(jame.up.up[i], 15, token, site, start.date, end.date)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat14)
+  lri.dat14 <- vahydro_import_local.runoff.inflows_cfs(jame.up.up[i], '14', token, site, start.date, end.date);
+  if (lri.dat14 == FALSE) {
+    lri.dat14 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat14) <- c('date', 'flow.unit')
+  }
+  lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
+  
+  data14 <- vahydro_import_data_cfs(jame.up.up[i], 14, token, site, start.date, end.date)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat16)
+  lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(jame.up.up[i], '16', token, site, start.date, end.date);
+  if (lri.dat16 == FALSE) {
+    lri.dat16 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat16) <- c('date', 'flow.unit')
+  }
+  lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
+  
+  data16 <- vahydro_import_data_cfs(jame.up.up[i], 16, token, site, start.date, end.date)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat11)
+  lri.dat11 <- vahydro_import_local.runoff.inflows_cfs(jame.up.up[i], '11', token, site, start.date, end.date);
+  if (lri.dat11 == FALSE) {
+    lri.dat11 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat11) <- c('date', 'flow.unit')
+  }
+  lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
+  
+  data11 <- vahydro_import_data_cfs(jame.up.up[i], 11, token, site, start.date, end.date)
+  
+  namer <- paste0('runit_', jame.up.up[i])
+  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', jame.up.up[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
+}
+
+for (i in 1:length(jame.up.mid)) {
+  # Downloading local runoff inflow data
+  rm(lri.dat15)
+  lri.dat15 <- vahydro_import_local.runoff.inflows_cfs(jame.up.mid[i], '15', token, site, start.date, end.date);
+  if (lri.dat15 == FALSE) {
+    lri.dat15 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat15) <- c('date', 'flow.unit')
+  }
+  lri.dat15 <- subset(lri.dat15, lri.dat15$date >= start.date & lri.dat15$date <= end.date);
+  
+  data15 <- vahydro_import_data_cfs(jame.up.mid[i], 15, token, site, start.date, end.date)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat14)
+  lri.dat14 <- vahydro_import_local.runoff.inflows_cfs(jame.up.mid[i], '14', token, site, start.date, end.date);
+  if (lri.dat14 == FALSE) {
+    lri.dat14 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat14) <- c('date', 'flow.unit')
+  }
+  lri.dat14 <- subset(lri.dat14, lri.dat14$date >= start.date & lri.dat14$date <= end.date);
+  
+  data14 <- vahydro_import_data_cfs(jame.up.mid[i], 14, token, site, start.date, end.date)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat16)
+  lri.dat16 <- vahydro_import_local.runoff.inflows_cfs(jame.up.mid[i], '16', token, site, start.date, end.date);
+  if (lri.dat16 == FALSE) {
+    lri.dat16 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat16) <- c('date', 'flow.unit')
+  }
+  lri.dat16 <- subset(lri.dat16, lri.dat16$date >= start.date & lri.dat16$date <= end.date);
+  
+  data16 <- vahydro_import_data_cfs(jame.up.mid[i], 16, token, site, start.date, end.date)
+  
+  # Downloading local runoff inflow data
+  rm(lri.dat11)
+  lri.dat11 <- vahydro_import_local.runoff.inflows_cfs(jame.up.mid[i], '11', token, site, start.date, end.date);
+  if (lri.dat11 == FALSE) {
+    lri.dat11 <- data.frame(matrix(data = NA, ncol = 2, nrow = 1))
+    colnames(lri.dat11) <- c('date', 'flow.unit')
+  }
+  lri.dat11 <- subset(lri.dat11, lri.dat11$date >= start.date & lri.dat11$date <= end.date);
+  
+  data11 <- vahydro_import_data_cfs(jame.up.mid[i], 11, token, site, start.date, end.date)
+  
+  namer <- paste0('runit_', jame.up.mid[i])
+  lri.dat <- data.frame(lri.dat11$date, lri.dat11$flow.unit, lri.dat15$flow.unit, lri.dat14$flow.unit, lri.dat16$flow.unit)
+  write.csv(lri.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer, '.csv'))
+  
+  namer2 <- paste0('qout_', jame.up.mid[i])
+  flow.dat <- data.frame(data11$date, data11$flow, data15$flow, data14$flow, data16$flow)
+  write.csv(flow.dat, paste0('~/Precip_and_Temp_Mapper/Runit_Qout_data/', namer2, '.csv'))
+  
 }

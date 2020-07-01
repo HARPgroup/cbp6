@@ -7,8 +7,8 @@ source(paste0(github_location, "/auth.private"));
 source(paste(cbp6_location, "/code/fn_vahydro-1.0.R", sep = ''))
 
 # ESSENTIAL INPUTS
-riv.seg <- 'YP2_6390_6330'
-dat.source1 <- 'gage'
+riv.seg <- 'PS5_4380_4370'
+dat.source1 <- 'gage' # cbp_model
 dat.source2 <- 'vahydro'
 site <- "http://deq2.bse.vt.edu/d.dh"
 token <- rest_token(site, token, rest_uname, rest_pw)
@@ -26,9 +26,9 @@ run.id1 <- '11'
 run.id2 <- run.id1
 
 # Inputs if using USGS gage -- otherwise, can ignore
-gage_number <- '01670400'
+gage_number <- '01636500'
 gage_timespan <- get.gage.timespan(gage_number)
-gage.title <- 'USGS 01670400 NORTH ANNA RIVER NEAR PARTLOW, VA'
+gage.title <- 'USGS 01636500 SHENANDOAH RIVER AT MILLVILLE, WV'
 
 if (dat.source1 == 'gage' || dat.source2 == 'gage') {
   gage.timespan.trimmed <- TRUE #or FALSE
@@ -40,8 +40,8 @@ if (gage.timespan.trimmed == TRUE) {
   start.date <- as.character(gage_timespan[[1]]) #1984-01-01
   end.date <- as.character(gage_timespan[[2]]) #1984-12-31
 } else {
-  start.date <- '1984-01-01' #1984-01-01
-  end.date <- '2014-12-31' #1984-12-31
+  start.date <- '1991-01-01' #1984-01-01
+  end.date <- '2000-12-31' #1984-12-31
 }
 
 # Changes graph labels automatically
