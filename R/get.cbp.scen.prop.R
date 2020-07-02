@@ -1,3 +1,6 @@
+# This function returns the unique ID of a scenario property for a container storing 
+# metrics of a raw CBP data run as a number.
+
 get.cbp.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token) {
   # GETTING MODEL DATA FROM VA HYDRO
   hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
@@ -8,7 +11,7 @@ get.cbp.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.d
     ftype = 'vahydro'
   )
   
-  #property dataframe returned
+  #property dataframe returned for above inputs
   feature = FALSE;
   odata <- getFeature(inputs, token, site, feature);
   
