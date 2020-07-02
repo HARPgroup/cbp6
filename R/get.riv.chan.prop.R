@@ -1,3 +1,6 @@
+#This function gets the unique ID of the "0. River Channel" feature on a
+# "vahydro" property on a watershed feature
+
 riv.seg <- "PS5_5200_4380"
 site <- 'http://deq2.bse.vt.edu/d.dh'
 token <- rest_token(site, token, rest_uname, rest_pw)
