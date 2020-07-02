@@ -1,4 +1,4 @@
-# This functions purpose is to get a specific PID for a certain property of a feature on vahydro.
+# Description: The function gets the unique vahydro-1.0 model property ID for a certain watershed feature such as a river segment.
 # Inputs required:
 #   riv.seg - last portion of certain river segment hydrocode on vahydro. ex: 'TU3_9180_9090'
 #   site - specified vahydro site to be accessed
