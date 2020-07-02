@@ -32,7 +32,7 @@ vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, s
   }
   #property dataframe returned
   feature = FALSE;
-  odata <- getFeature(inputs, token, site, feature);
+  odata <- getFeature(inputs, token, site, feature); # gets features of model or gage run from vahydro
   hydroid <- odata[1,"hydroid"];
   fname <- as.character(odata[1,]$name );
   print(paste("Retrieved hydroid",hydroid,"for", fname,seg.or.gage, sep=' '));
@@ -42,7 +42,7 @@ vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, s
     entity_type = "dh_feature",
     propcode = mod.scenario
   )
-  property <- getProperty(inputs, site, property)
+  property <- getProperty(inputs, site, property) #gets properties from above features so pid can be used
   
   metinfo <- list(
     varkey = met.varkey,
@@ -50,13 +50,13 @@ vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, s
     featureid = as.integer(as.character(property$pid)),
     entity_type = "dh_properties"
   )
-  metprop <- getProperty(metinfo, site, metprop)
+  metprop <- getProperty(metinfo, site, metprop) # gets metric properties from metinfo
+  
   
   if (identical(metprop, FALSE)) {
-    # create
     metprop = metinfo
   }
-  
+  # Assigns and posts metric properties to vahydro
   metprop$propname = met.name
   metprop$varkey = met.varkey
   metprop$propcode = met.propcode
