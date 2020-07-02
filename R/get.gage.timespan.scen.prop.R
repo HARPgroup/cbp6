@@ -1,3 +1,8 @@
+#This function gets the unique ID of a scenario property for a container 
+# storing metrics of a VA Hydro model run with the timespan trimmed to 
+# that of the associated USGS gage
+#It is similar to get.scen.prop.R, with the exception of the trimmed timespan
+
 riv.seg <- "YP3_6330_6700"
 site <- 'http://deq2.bse.vt.edu/d.dh'
 token <- rest_token(site, token, rest_uname, rest_pw)
