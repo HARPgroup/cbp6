@@ -1,5 +1,15 @@
 # This function gets the unique ID of a scenario property posted to the 
 # vahydro property on a watershed feature
+# Inputs: 
+#   riv.seg - last portion of certain river segment hydrocode on vahydro. ex: 'TU3_9180_9090'
+#   mod.scenario - specific model scenario of interest, default mod.scenario is 'vahydro - 1.0'
+#   dat.source - either 'vahydro' or 'cbp_model' 
+#   run.id - unique runid for desired model run. ex: run.id = '11' for runid_11 scenario run
+#   start.date - starting date for analysis, format = 'yyyy-mm-dd'
+#   end.date - ending date for analysis, format = 'yyyy-mm-dd'
+#   site - specified vahydro site to be accessed
+#   token - vahydro token to access this specific site
+# Outputs: Unique ID for scenario property
 
 get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token) {
   # GETTING MODEL DATA FROM VA HYDRO
