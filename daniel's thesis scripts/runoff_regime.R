@@ -1,3 +1,6 @@
+# Downloads land use data from the deq2 server. Creates percent exceedance plots for some select
+# land use runoff timeseries.
+
 lu_harr_base <- read.csv('http://deq2.bse.vt.edu/p6/p6_gb604/out/land/CFBASE30Y20180615/eos/land.use.timeseries_N51660.csv')
 lu_harr_cc10 <- read.csv('http://deq2.bse.vt.edu/p6/p6_gb604/out/land/CBASE1808L55CY55R45P10R45P10Y/eos/land.use.timeseries_N51660.csv')
 

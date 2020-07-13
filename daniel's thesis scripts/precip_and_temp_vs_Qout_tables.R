@@ -1,3 +1,6 @@
+# Creates output .csv files describing GCM precipitation and temperature as well as climate change 
+# scenario precipitation, evapotranspiration, and flow quantity/change from baseline scenario.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 source(paste0(cbp6_location,"/code/cbp6_functions.R"))

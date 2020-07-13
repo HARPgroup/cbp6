@@ -1,3 +1,7 @@
+# Creates boxplots of unit runoff (Runit) values, previously downloaded using the 
+# "Download_Runit_and_Qout_Data" script.  Additionally, calculates median and mean percent 
+# changes and calculates quantiles of percent runoff changes.
+
 setwd('~/Precip_and_Temp_Mapper/Runit_Qout_data')
 
 AllSegList <- c('OR5_7980_8200', 'OR2_8020_8130', 'OR2_8070_8120', 'OR4_8120_7890',

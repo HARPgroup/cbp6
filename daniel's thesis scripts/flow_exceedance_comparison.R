@@ -1,3 +1,7 @@
+# This is an example script to exhibit how to download data for the same river segment for a number
+# of different VA Hydro scenarios, and to then create flow exceedance plots comparing these
+# different scenarios.
+
 # FLOW EXCEEDANCE SCENARIO COMPARISON PLOT
 
 # Setup

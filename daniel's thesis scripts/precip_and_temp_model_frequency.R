@@ -1,3 +1,6 @@
+# Calculates the frequency of GCMs appearing in the tenth, fiftieth, and ninetieth percentile of each
+# model scenario, by land segment.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')

@@ -1,3 +1,6 @@
+# Creates many versions of temperature and precipitation maps, some of which have a more presentable
+# layout for use in reports and presentations.
+
 site <- "http://deq2.bse.vt.edu/d.bet"    #Specify the site of interest, either d.bet OR d.dh
 
 basepath <- '/var/www/R'

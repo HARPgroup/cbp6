@@ -1,3 +1,8 @@
+# Creates boxplots and kable tables (for Overleaf) describing flow per unit area for each of the 
+# river segments and major basins described within this thesis.  Additionally, creates flow
+# exceedance plots describing these climate change scenarios.  Also, calculates flow metrics of 
+# choice and outputs kable tables of raw values and percent changes from baseline scenario.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 source(paste0(cbp6_location,"/code/cbp6_functions.R"))

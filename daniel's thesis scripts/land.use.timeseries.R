@@ -1,3 +1,7 @@
+# For the land uses cursorily investigated in this thesis research, this function will sum SURO,
+# AGWO, and IFWO flows for each land use and create timeseries of these summed data.  This function
+# should be run on the deq2 server.
+
 land.use.timeseries <- function(dirpath, segname) {
   csv.file <- paste0(dirpath, '/', segname, '_0111-0211-0411.csv')
   data <- try(read.csv(csv.file))

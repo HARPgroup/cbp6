@@ -1,3 +1,6 @@
+# Creates plots of changes between GCM temperature and precipitation inputs and resultant VA Hydro 
+# model precipitation, evapotranspiration, and surface runoff (Qout) flows.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 
