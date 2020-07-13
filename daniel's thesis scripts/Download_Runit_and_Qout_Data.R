@@ -1,3 +1,6 @@
+# Downloads Runit and Qout data from VA Hydro for each of the river segments investigated in
+# this thesis.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 source(paste0(cbp6_location,"/code/cbp6_functions.R"))

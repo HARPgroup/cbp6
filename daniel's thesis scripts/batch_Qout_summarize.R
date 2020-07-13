@@ -1,3 +1,7 @@
+# If given the location of a directory containing surface runoff flow files (0111), 
+# this function will create a file containing the mean flows of all the river segments in this
+# directory.  This function should be run on the deq2 server.
+
 batch.Qout.summarize <- function(dirpath) {
   csv.list <- list.files(path = dirpath, pattern = "_0111\\.csv$", recursive = FALSE)
   

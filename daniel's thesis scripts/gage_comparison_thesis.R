@@ -1,3 +1,7 @@
+# For the river segments analyzed in this thesis, this script will link river segments to their
+# associated USGS gages, download data, and compare model fits.  Kable tables, compatible with
+# Overleaf, will also be created.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 source(paste0(cbp6_location,"/code/cbp6_functions.R"))

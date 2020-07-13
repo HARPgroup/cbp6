@@ -1,3 +1,7 @@
+# Using the GCM data now stored in GCM Precipitation Data and GCM Temperature Data directories, this
+# script will determine which model is associated with the tenth, fiftieth, and ninetieth percentiles
+# of precipitation and temperature for each land segment in the area of study.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')

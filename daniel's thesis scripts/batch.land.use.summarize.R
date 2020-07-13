@@ -1,3 +1,7 @@
+# If given the location of a directory containing SURO, AGWO, and IFWO combined land use files,
+# this function will combine the different files and land uses to create one file with all
+# land use data.  This function should be run on the deq2 server.
+
 batch.land.use.summarize <- function(dirpath) {
   csv.list <- list.files(path = dirpath, pattern = "_0111-0211-0411\\.csv$", recursive = FALSE)
   land.use.table <- data.frame(matrix(data = NA, nrow = length(csv.list), ncol = 44))

@@ -1,3 +1,7 @@
+# Creates pct.changes scenario dataframes.  Also, creates plots of evaporation against precipitation,
+# precipitation/evaporation against land use, maps of evaporation/precipitation/land use/temperature change,
+# and longitude/latitude against these changes.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 source(paste0(cbp6_location,"/code/cbp6_functions.R"))

@@ -1,3 +1,6 @@
+# Creates maps of unit runoff (Runit) flows and creates kable tables (for Overleaf) describing these
+# raw runoff values and percent differences from the baseline scenario.
+
 data.location <- 'C:\\Users\\danie\\Documents\\HARP\\GitHub\\cbp6\\Data\\CBP6_Temp_Prcp_Data'
 hydro_tools <- '/Users/danie/Documents/HARP/GitHub/hydro-tools';
 

@@ -1,3 +1,6 @@
+# Following the creation of the pct.changes scenario data frames, this script will create radar
+# charts showing the land use unit flows for each land use group.
+
 min.change.10 <- vector()
 min.change.50 <- vector()
 min.change.90 <- vector()

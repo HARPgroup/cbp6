@@ -1,3 +1,6 @@
+# Using the RCP data stored in the Relative Concentration Pathway Data repository, a line graph of
+# this data over time is created.
+
 rcp26 <- read.csv("C:/Users/danie/Documents/Precip_and_Temp_Mapper/Land_Use_Thesis/rcp26.csv")
 rcp45 <- read.csv("C:/Users/danie/Documents/Precip_and_Temp_Mapper/Land_Use_Thesis/rcp45.csv")
 rcp60 <- read.csv("C:/Users/danie/Documents/Precip_and_Temp_Mapper/Land_Use_Thesis/rcp60.csv")

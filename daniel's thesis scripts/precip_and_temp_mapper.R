@@ -1,3 +1,5 @@
+# Creates monthly maps of temperature and precipitation
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')

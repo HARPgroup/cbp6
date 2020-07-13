@@ -1,3 +1,6 @@
+# Creates plots of temperature/precipitation against latitude/longitude, with the used GCMs designated
+# by color and described in the legends of the generated images.
+
 basepath <- '/var/www/R'
 source(paste(basepath,"config.local.private", sep = "/"))
 data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
