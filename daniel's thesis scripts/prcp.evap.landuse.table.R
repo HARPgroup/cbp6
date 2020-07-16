@@ -1333,3 +1333,37 @@ min(lsegs.df_p90$cci)
 as.character(unique(lsegs.df_p90$FIPS_NHL[which(lsegs.df_p90$cci == min(lsegs.df_p90$cci))]))
 max(lsegs.df_p90$cci)
 as.character(unique(lsegs.df_p90$FIPS_NHL[which(lsegs.df_p90$cci == max(lsegs.df_p90$cci))]))
+
+dat.prcp.base <- read.csv('http://deq2.bse.vt.edu/p6/p6_gb604/out/climate/N20150521J96_and_PRC20170731/N51059_1000-2000.csv')
+dat.prcp.10 <- read.csv('http://deq2.bse.vt.edu/p6/p6_gb604/out/climate/5545HS10CA2_and_55R45KK1095/N51059_1000-2000.csv')
+dat.prcp.50 <- read.csv('http://deq2.bse.vt.edu/p6/p6_gb604/out/climate/5545HS50CA2_and_5545KK50AA/N51059_1000-2000.csv')
+dat.prcp.90 <- read.csv('http://deq2.bse.vt.edu/p6/p6_gb604/out/climate/5545HS90CA2_and_55R45KK9095/N51059_1000-2000.csv')
+
+dat.prcp.base.1996 <- dat.prcp.base[105192:113975]
+dat.prcp.10.1996 <- dat.prcp.10[105192:113975,]
+dat.prcp.50.1996 <- dat.prcp.50[105192:113975,]
+dat.prcp.90.1996 <- dat.prcp.90[105192:113975,]
+
+dat.prcp.base.1996.daily <- aggregate(prcp ~ as.Date(thisdate), dat.prcp.base.1996, sum)
+dat.prcp.10.1996.daily <- aggregate(prcp ~ as.Date(thisdate), dat.prcp.10.1996, sum)
+dat.prcp.50.1996.daily <- aggregate(prcp ~ as.Date(thisdate), dat.prcp.50.1996, sum)
+dat.prcp.90.1996.daily <- aggregate(prcp ~ as.Date(thisdate), dat.prcp.90.1996, sum)
+
+plot(dat.prcp.90.1996.daily$`as.Date(thisdate)`, dat.prcp.90.1996.daily$prcp, type = 'l', col = 'blue',
+     xlab = "Month", ylab = "Precipitation (Inches/Day)", lwd = 2)
+lines(dat.prcp.50.1996.daily$`as.Date(thisdate)`, dat.prcp.50.1996.daily$prcp, type = 'l', col = 'green', lwd = 2)
+lines(dat.prcp.base.1996.daily$`as.Date(thisdate)`, dat.prcp.base.1996.daily$prcp, type = 'l', col = 'black', lwd = 2)
+lines(dat.prcp.10.1996.daily$`as.Date(thisdate)`, dat.prcp.10.1996.daily$prcp, type = 'l', col = 'red', lwd = 2)
+legend('topleft', legend = c('Base', 'ccP10T10', 'ccP50T50', 'ccP90T90'), col = c('black', 'red', 'green', 'blue'), lty = 1, lwd = 2)
+
+dat.prcp.base.1996.daily <- aggregate(evap ~ as.Date(thisdate), dat.prcp.base.1996, sum)
+dat.prcp.10.1996.daily <- aggregate(evap ~ as.Date(thisdate), dat.prcp.10.1996, sum)
+dat.prcp.50.1996.daily <- aggregate(evap ~ as.Date(thisdate), dat.prcp.50.1996, sum)
+dat.prcp.90.1996.daily <- aggregate(evap ~ as.Date(thisdate), dat.prcp.90.1996, sum)
+
+plot(dat.prcp.90.1996.daily$`as.Date(thisdate)`, dat.prcp.90.1996.daily$evap, type = 'l', col = 'blue',
+     xlab = "Month", ylab = "PET (Inches/Day)", lwd = 2)
+lines(dat.prcp.50.1996.daily$`as.Date(thisdate)`, dat.prcp.50.1996.daily$evap, type = 'l', col = 'green', lwd = 2)
+lines(dat.prcp.base.1996.daily$`as.Date(thisdate)`, dat.prcp.base.1996.daily$evap, type = 'l', col = 'black', lwd = 2)
+lines(dat.prcp.10.1996.daily$`as.Date(thisdate)`, dat.prcp.10.1996.daily$evap, type = 'l', col = 'red', lwd = 2)
+legend('topleft', legend = c('Base', 'ccP10T10', 'ccP50T50', 'ccP90T90'), col = c('black', 'red', 'green', 'blue'), lty = 1, lwd = 2)
