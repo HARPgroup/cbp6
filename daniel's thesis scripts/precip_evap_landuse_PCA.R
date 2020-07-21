@@ -48,18 +48,36 @@ ggplot(for90,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(m
 # MLR w/ interaction (for forest)
 for10w <- lm(for.~evap.mean*prcp.mean, data = pct.changes.10.corr)
 summary(for10w)
-ggplot(for10w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+ggplot(for10w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+  labs(color = "ET\nChange (%)") +
+  xlab('Precipitation Change (%)') +
+  ylab('Natural Pervious Runoff Change (%)') +
+  ggtitle(paste0('Runoff Change = ', round(for10w$coefficients[1], 2), ' + ', round(for10w$coefficients[2], 2), 
+                 '*Evap. Change + ', round(for10w$coefficients[3], 2), '*Prcp. Change + ',
+                 round(for10w$coefficients[4], 2), '*Evap. Change*Prcp. Change'))+
+  theme(plot.title = element_text(size=10))
 
 for50w <- lm(for.~evap.mean*prcp.mean, data = pct.changes.50.corr)
 summary(for50w)
-map1 <- ggplot(for50w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+ggplot(for50w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
   labs(color = "ET\nChange (%)") +
   xlab('Precipitation Change (%)') +
-  ylab('Natural Pervious Runoff Change (%)')
+  ylab('Natural Pervious Runoff Change (%)') +
+  ggtitle(paste0('Runoff Change = ', round(for50w$coefficients[1], 2), ' + ', round(for50w$coefficients[2], 2), 
+                 '*Evap. Change + ', round(for50w$coefficients[3], 2), '*Prcp. Change + ',
+                 round(for50w$coefficients[4], 2), '*Evap. Change*Prcp. Change'))+
+  theme(plot.title = element_text(size=10))
 
 for90w <- lm(for.~evap.mean*prcp.mean, data = pct.changes.90.corr)
 summary(for90w)
-ggplot(for90w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+ggplot(for90w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+  labs(color = "ET\nChange (%)") +
+  xlab('Precipitation Change (%)') +
+  ylab('Natural Pervious Runoff Change (%)') +
+  ggtitle(paste0('Runoff Change = ', round(for90w$coefficients[1], 2), ' + ', round(for90w$coefficients[2], 2), 
+                 '*Evap. Change + ', round(for90w$coefficients[3], 2), '*Prcp. Change + ',
+                 round(for90w$coefficients[4], 2), '*Evap. Change*Prcp. Change'))+
+  theme(plot.title = element_text(size=10))
 
 # test: mlr for 30 land uses?
 lu.10.pca <- prcomp(pct.changes.10.corr[,c(4:46)], center = TRUE, scale. = TRUE)
@@ -116,19 +134,37 @@ ggplot(cch90w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(m
 # MLR w/ interaction (cci cciest)
 cci10w <- lm(cci~evap.mean*prcp.mean, data = pct.changes.10.corr)
 summary(cci10w)
-ggplot(cci10w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+ggplot(cci10w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+  labs(color = "ET\nChange (%)") +
+  xlab('Precipitation Change (%)') +
+  ylab('Impervious Runoff Change (%)') +
+  ggtitle(paste0('Runoff Change = ', round(cci10w$coefficients[1], 2), ' + ', round(cci10w$coefficients[2], 2), 
+                 '*Evap. Change + ', round(cci10w$coefficients[3], 2), '*Prcp. Change + ',
+                 round(cci10w$coefficients[4], 2), '*Evap. Change*Prcp. Change'))+
+  theme(plot.title = element_text(size=10))
 
 cci50w <- lm(cci~evap.mean*prcp.mean, data = pct.changes.50.corr)
 summary(cci50w)
-map2 <- ggplot(cci50w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+ggplot(cci50w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
   labs(color = "ET\nChange (%)") +
   xlab('Precipitation Change (%)') +
-  ylab('Impervious Runoff Change (%)')
+  ylab('Impervious Runoff Change (%)') + 
+  ggtitle(paste0('Runoff Change = ', round(cci50w$coefficients[1], 2), ' + ', round(cci50w$coefficients[2], 2), 
+                 '*Evap. Change + ', round(cci50w$coefficients[3], 2), '*Prcp. Change + ',
+                 round(cci50w$coefficients[4], 2), '*Evap. Change*Prcp. Change'))+
+  theme(plot.title = element_text(size=10))
 
 
 cci90w <- lm(cci~evap.mean*prcp.mean, data = pct.changes.90.corr)
 summary(cci90w)
-ggplot(cci90w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)
+ggplot(cci90w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) +
+  labs(color = "ET\nChange (%)") +
+  xlab('Precipitation Change (%)') +
+  ylab('Impervious Runoff Change (%)') +
+  ggtitle(paste0('Runoff Change = ', round(cci90w$coefficients[1], 2), ' + ', round(cci90w$coefficients[2], 2), 
+                 '*Evap. Change + ', round(cci90w$coefficients[3], 2), '*Prcp. Change + ',
+                 round(cci90w$coefficients[4], 2), '*Evap. Change*Prcp. Change'))+
+  theme(plot.title = element_text(size=10))
 
 # testing
 cfr10w <- lm(cfr~evap.mean*prcp.mean, data = pct.changes.10)
@@ -234,3 +270,102 @@ kable(rsqs, "latex", booktabs = T,
   #column_spec(3, width = "5em") %>%
   #column_spec(4, width = "4em") %>%
   cat(., file = paste("~/","rsqs.tex",sep=""))
+
+forbasew <- lm(for.~evap.mean*prcp.mean, data = dat.base)
+ggplot(forbasew,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE) + 
+ggtitle(paste("R-squared = ", format(summary(forbasew)$r.squared, digits = 3)))
+
+for10w <- lm(for.~evap.mean*prcp.mean, data = dat.10)
+summary(for10w)
+ggplot(for10w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(for10w)$r.squared, digits = 3)))
+
+for50w <- lm(for.~evap.mean*prcp.mean, data = dat.50)
+summary(for50w)
+ggplot(for50w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(for50w)$r.squared, digits = 3)))
+
+for90w <- lm(for.~evap.mean*prcp.mean, data = dat.90)
+summary(for90w)
+ggplot(for90w,aes(y=for.,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(for90w)$r.squared, digits = 3)))
+
+pasbasew <- lm(pas~evap.mean*prcp.mean, data = dat.base)
+summary(pasbasew)
+ggplot(pasbasew,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(pasbasew)$r.squared, digits = 3)))
+
+pas10w <- lm(pas~evap.mean*prcp.mean, data = dat.10)
+summary(pas10w)
+ggplot(pas10w,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(pas10w)$r.squared, digits = 3)))
+
+pas50w <- lm(pas~evap.mean*prcp.mean, data = dat.50)
+summary(pas50w)
+ggplot(pas50w,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(pas50w)$r.squared, digits = 3)))
+
+pas90w <- lm(pas~evap.mean*prcp.mean, data = dat.90)
+summary(pas90w)
+ggplot(pas90w,aes(y=pas,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(pas90w)$r.squared, digits = 3)))
+
+soybasew <- lm(soy~evap.mean*prcp.mean, data = dat.base)
+summary(soybasew)
+ggplot(soybasew,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(soybasew)$r.squared, digits = 3)))
+
+soy10w <- lm(soy~evap.mean*prcp.mean, data = dat.10)
+summary(soy10w)
+ggplot(soy10w,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(soy10w)$r.squared, digits = 3)))
+
+soy50w <- lm(soy~evap.mean*prcp.mean, data = dat.50)
+summary(soy50w)
+ggplot(soy50w,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(soy50w)$r.squared, digits = 3)))
+
+soy90w <- lm(soy~evap.mean*prcp.mean, data = dat.90)
+summary(soy90w)
+ggplot(soy90w,aes(y=soy,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(soy90w)$r.squared, digits = 3)))
+
+cchbasew <- lm(cch~evap.mean*prcp.mean, data = dat.base)
+summary(cchbasew)
+ggplot(cchbasew,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cchbasew)$r.squared, digits = 3)))
+
+cch10w <- lm(cch~evap.mean*prcp.mean, data = dat.10)
+summary(cch10w)
+ggplot(cch10w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cch10w)$r.squared, digits = 3)))
+
+cch50w <- lm(cch~evap.mean*prcp.mean, data = dat.50)
+summary(cch50w)
+ggplot(cch50w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cch50w)$r.squared, digits = 3)))
+
+cch90w <- lm(cch~evap.mean*prcp.mean, data = dat.90)
+summary(cch90w)
+ggplot(cch90w,aes(y=cch,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cch90w)$r.squared, digits = 3)))
+
+ccibasew <- lm(cci~evap.mean*prcp.mean, data = dat.base)
+summary(ccibasew)
+ggplot(ccibasew,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(ccibasew)$r.squared, digits = 3)))
+
+cci10w <- lm(cci~evap.mean*prcp.mean, data = dat.10)
+summary(cci10w)
+ggplot(cci10w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cci10w)$r.squared, digits = 3)))
+
+cci50w <- lm(cci~evap.mean*prcp.mean, data = dat.50)
+summary(cci50w)
+ggplot(cci50w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cci50w)$r.squared, digits = 3)))
+
+cci90w <- lm(cci~evap.mean*prcp.mean, data = dat.90)
+summary(cci90w)
+ggplot(cci90w,aes(y=cci,x=prcp.mean,color=evap.mean))+geom_point()+stat_smooth(method="lm",se=TRUE)+
+ggtitle(paste("R-squared = ", format(summary(cci90w)$r.squared, digits = 3)))

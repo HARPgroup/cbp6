@@ -620,3 +620,140 @@ map_p90_temp_overall <- map_p90_temp +
              y = extent$y[1]+(extent$y[1])*0.001
            ))
 ggsave('p90.temp.model.map.v2.png', plot = map_p90_temp_overall, width = 6.18, height = 3.68, units = 'in')
+
+# check to ensure precipitation comes from different models
+
+for (i2 in 1:length(land.seg.info$landseg)) {
+  land.seg <- as.character(land.seg.info$landseg[i2])
+  
+  for (i in 1:31) {
+    tmp.temp.namer <- paste0('prcp.ens.mod.', i)
+    tmp.temp.data <- get(tmp.temp.namer)
+    tmp.temp.landseg.ens.data <- tmp.temp.data[which(tmp.temp.data$FIPS_NHL == land.seg),]
+    landseg.ens.temp.data[i,] <- tmp.temp.landseg.ens.data[]
+  }
+  
+  landseg.quant.temp.data <- data.frame(matrix(NA, nrow = 3, ncol = 15))
+  colnames(landseg.quant.temp.data) <- colnames(PRCP.ENS.50.PCT)
+  landseg.quant.temp.data[1,] <- PRCP.ENS.10.PCT[which(PRCP.ENS.10.PCT$FIPS_NHL == land.seg),]
+  landseg.quant.temp.data[2,] <- PRCP.ENS.50.PCT[which(PRCP.ENS.50.PCT$FIPS_NHL == land.seg),]
+  landseg.quant.temp.data[3,] <- PRCP.ENS.90.PCT[which(PRCP.ENS.90.PCT$FIPS_NHL == land.seg),]
+  
+  # Linking model quantile outputs to their respective models
+  temp.10.mod.num <- as.numeric(which(landseg.ens.temp.data$Total == quantile(landseg.ens.temp.data$Total, 0.10)))
+  temp.50.mod.num <- as.numeric(which(landseg.ens.temp.data$Total == quantile(landseg.ens.temp.data$Total, 0.50)))
+  temp.90.mod.num <- as.numeric(which(landseg.ens.temp.data$Total == quantile(landseg.ens.temp.data$Total, 0.90)))
+  
+  model.name.10$Model[i2] <- mod.names[temp.10.mod.num]
+  model.name.50$Model[i2] <- mod.names[temp.50.mod.num]
+  model.name.90$Model[i2] <- mod.names[temp.90.mod.num]
+}
+
+PRCP.ENS.10.PCT <- merge(PRCP.ENS.10.PCT, model.name.10, by.x = 'FIPS_NHL', by.y = 'Land Segment')
+PRCP.ENS.50.PCT <- merge(PRCP.ENS.50.PCT, model.name.50, by.x = 'FIPS_NHL', by.y = 'Land Segment')
+PRCP.ENS.90.PCT <- merge(PRCP.ENS.90.PCT, model.name.90, by.x = 'FIPS_NHL', by.y = 'Land Segment')
+
+
+
+# precipitation maps
+# P10 PRCP MAPS
+lsegs.df_p10_temp <- merge(lsegs.df, PRCP.ENS.10.PCT, by = 'FIPS_NHL')
+map_p10_temp <- ggplot(data = lsegs.df_p10_temp, aes(x = long, y = lat, group = group))+
+  geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+  geom_polygon(data = VADF, color="gray46", fill = "gray")+
+  geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+
+# INDIVIDUAL METRIC MAP -- OVERALL
+map_p10_temp_overall <- map_p10_temp + 
+  geom_polygon(aes(fill = Model), color = 'black', size = 0.1) +
+  guides(color=guide_colorbar(title="Precipitation GCM")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_discrete() +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave('p10.prcp.model.map.v2.png', plot = map_p10_temp_overall, width = 6.18, height = 3.68, units = 'in')
+
+# P50 PRCP MAPS
+lsegs.df_p50_temp <- merge(lsegs.df, PRCP.ENS.50.PCT, by = 'FIPS_NHL')
+map_p50_temp <- ggplot(data = lsegs.df_p50_temp, aes(x = long, y = lat, group = group))+
+  geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+  geom_polygon(data = VADF, color="gray46", fill = "gray")+
+  geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+
+# INDIVIDUAL METRIC MAP -- OVERALL
+map_p50_temp_overall <- map_p50_temp + 
+  geom_polygon(aes(fill = Model), color = 'black', size = 0.1) +
+  guides(color=guide_colorbar(title="Precipitation GCM")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1), legend.text=element_text(size = 6)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_discrete() +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave('p50.prcp.model.map.v2.png', plot = map_p50_temp_overall, width = 6.18, height = 3.68, units = 'in')
+
+# P90 PRCP MAPS
+lsegs.df_p90_temp <- merge(lsegs.df, PRCP.ENS.90.PCT, by = 'FIPS_NHL')
+map_p90_temp <- ggplot(data = lsegs.df_p90_temp, aes(x = long, y = lat, group = group))+
+  geom_polygon(data = bbDF, color="black", fill = "powderblue",lwd=0.5)+
+  geom_polygon(data = VADF, color="gray46", fill = "gray")+
+  geom_polygon(data = TNDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = NCDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = SCDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = KYDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = WVDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = MDDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = DEDF, color="gray46", fill = "gray", lwd=0.5)+
+  #geom_polygon(data = PADF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = NJDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = OHDF, color="gray46", fill = "gray", lwd=0.5)+
+  geom_polygon(data = DCDF, color="gray46", fill = "gray", lwd=0.5)
+
+# INDIVIDUAL METRIC MAP -- OVERALL
+map_p90_temp_overall <- map_p90_temp + 
+  geom_polygon(aes(fill = Model), color = 'black', size = 0.1) +
+  guides(color=guide_colorbar(title="Precipitation GCM")) + 
+  theme(legend.justification=c(0,1), legend.position=c(0,1)) +
+  xlab('Longitude (deg W)') + ylab('Latitude (deg N)')+
+  scale_fill_discrete() +
+  north(bbDF, location = 'topright', symbol = 12, scale=0.1)+
+  scalebar(bbDF, location = 'bottomleft', dist = 100, dist_unit = 'km', 
+           transform = TRUE, model = 'WGS84',st.bottom=FALSE, 
+           st.size = 3.5, st.dist = 0.0285,
+           anchor = c(
+             x = (((extent$x[2] - extent$x[1])/2)+extent$x[1])-1.1,
+             y = extent$y[1]+(extent$y[1])*0.001
+           ))
+ggsave('p90.prcp.model.map.v2.png', plot = map_p90_temp_overall, width = 6.18, height = 3.68, units = 'in')
