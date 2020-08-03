@@ -1154,54 +1154,54 @@ fn_iha_DOR_Year <- function(flows){
 }
 
 
-rest_token <- function(base_url, token, rest_uname = FALSE, rest_pw = FALSE) {
-  
-  #Cross-site Request Forgery Protection (Token required for POST and PUT operations)
-  csrf_url <- paste(base_url,"restws/session/token/",sep="/");
-  
-  #IF THE OBJECTS 'rest_uname' or 'rest_pw' DONT EXIST, USER INPUT REQUIRED
-  if (!is.character(rest_uname) | !(is.character(rest_pw))){
-    
-    rest_uname <- c() #initialize username object
-    rest_pw <- c()    #initialize password object
-    
-    #currently set up to allow infinite login attempts, but this can easily be restricted to a set # of attempts
-    token <- c("rest_uname","rest_pw") #used in while loop below, "length of 2"
-    login_attempts <- 1
-    if (!is.character(rest_uname)) {
-      print(paste("REST AUTH INFO MUST BE SUPPLIED",sep=""))
-      while(length(token) == 2  && login_attempts <= 5){
-        print(paste("login attempt #",login_attempts,sep=""))
-        
-        rest_uname <- readline(prompt="Enter REST user name: ")
-        rest_pw <- readline(prompt="Password: ")
-        csrf <- GET(url=csrf_url,authenticate(rest_uname,rest_pw));
-        token <- content(csrf);
-        #print(token)
-        
-        if (length(token)==2){
-          print("Sorry, unrecognized username or password")
-        }
-        login_attempts <- login_attempts + 1
-      }
-      if (login_attempts > 5){print(paste("ALLOWABLE NUMBER OF LOGIN ATTEMPTS EXCEEDED"))}
-    }
-    
-  } else {
-    print(paste("REST AUTH INFO HAS BEEN SUPPLIED",sep=""))
-    print(paste("RETRIEVING REST TOKEN",sep=""))
-    csrf <- GET(url=csrf_url,authenticate(rest_uname,rest_pw));
-    token <- content(csrf);
-  }
-  
-  if (length(token)==1){
-    print("Login attempt successful")
-    print(paste("token = ",token,sep=""))
-  } else {
-    print("Login attempt unsuccessful")
-  }
-  token <- token
-} #close function
+# rest_token <- function(base_url, token, rest_uname = FALSE, rest_pw = FALSE) {
+#   
+#   #Cross-site Request Forgery Protection (Token required for POST and PUT operations)
+#   csrf_url <- paste(base_url,"restws/session/token/",sep="/");
+#   
+#   #IF THE OBJECTS 'rest_uname' or 'rest_pw' DONT EXIST, USER INPUT REQUIRED
+#   if (!is.character(rest_uname) | !(is.character(rest_pw))){
+#     
+#     rest_uname <- c() #initialize username object
+#     rest_pw <- c()    #initialize password object
+#     
+#     #currently set up to allow infinite login attempts, but this can easily be restricted to a set # of attempts
+#     token <- c("rest_uname","rest_pw") #used in while loop below, "length of 2"
+#     login_attempts <- 1
+#     if (!is.character(rest_uname)) {
+#       print(paste("REST AUTH INFO MUST BE SUPPLIED",sep=""))
+#       while(length(token) == 2  && login_attempts <= 5){
+#         print(paste("login attempt #",login_attempts,sep=""))
+#         
+#         rest_uname <- readline(prompt="Enter REST user name: ")
+#         rest_pw <- readline(prompt="Password: ")
+#         csrf <- GET(url=csrf_url,authenticate(rest_uname,rest_pw));
+#         token <- content(csrf);
+#         #print(token)
+#         
+#         if (length(token)==2){
+#           print("Sorry, unrecognized username or password")
+#         }
+#         login_attempts <- login_attempts + 1
+#       }
+#       if (login_attempts > 5){print(paste("ALLOWABLE NUMBER OF LOGIN ATTEMPTS EXCEEDED"))}
+#     }
+#     
+#   } else {
+#     print(paste("REST AUTH INFO HAS BEEN SUPPLIED",sep=""))
+#     print(paste("RETRIEVING REST TOKEN",sep=""))
+#     csrf <- GET(url=csrf_url,authenticate(rest_uname,rest_pw));
+#     token <- content(csrf);
+#   }
+#   
+#   if (length(token)==1){
+#     print("Login attempt successful")
+#     print(paste("token = ",token,sep=""))
+#   } else {
+#     print("Login attempt unsuccessful")
+#   }
+#   token <- token
+# } #close function
 
 fn_upstream <- function(riv.seg, AllSegList) {
   library(stringr)
@@ -1277,307 +1277,307 @@ fn_ALL.upstream <- function(riv.seg, AllSegList) {
   return(AllUpstream)
 }
 
-getProperty <- function(inputs, base_url, prop){
-  print(inputs)
-  #Convert varkey to varid - needed for REST operations 
-  if (!is.null(inputs$varkey)) {
-    # this would use REST 
-    # getVarDef(list(varkey = inputs$varkey), token, base_url)
-    # but it is broken for vardef for now metadatawrapper fatal error
-    # EntityMetadataWrapperException: Invalid data value given. Be sure it matches the required data type and format. 
-    # in EntityDrupalWrapper->set() 
-    # (line 736 of /var/www/html/d.dh/modules/entity/includes/entity.wrapper.inc).
-    
-    propdef_url<- paste(base_url,"/?q=vardefs.tsv/",inputs$varkey,sep="")
-    print(paste("Trying", propdef_url))
-    propdef_table <- read.table(propdef_url,header = TRUE, sep = "\t")    
-    varid <- propdef_table[1][which(propdef_table$varkey == inputs$varkey),]
-    print(paste("varid: ",varid,sep=""))
-    if (is.null(varid)) {
-      # we sent a bad variable id so we should return FALSE
-      return(FALSE)
-    }
-    inputs$varid = varid
-  }
-  # now, verify that we have either a proper varid OR a propname
-  if (is.null(inputs$varid) & is.null(inputs$propname)) {
-    # we were sent a bad variable id so we should return FALSE
-    return(FALSE)
-  }
-  
-  pbody = list(
-    #bundle = 'dh_properties',
-    featureid = inputs$featureid,
-    entity_type = inputs$entity_type 
-  );
-  if (!is.null(inputs$varid)) {
-    pbody$varid = inputs$varid
-  }
-  if (!is.null(inputs$bundle)) {
-    pbody$bundle = inputs$bundle
-  }
-  if (!is.null(inputs$propcode)) {
-    pbody$propcode = inputs$propcode
-  }
-  if (!is.null(inputs$propname)) {
-    pbody$propname = inputs$propname
-  }
-  if (!is.null(inputs$pid)) {
-    if (inputs$pid > 0) {
-      # forget about other attributes, just use pid
-      pbody = list(
-        pid = inputs$pid
-      )
-    }
-  }
-  
-  prop <- GET(
-    paste(base_url,"/dh_properties.json",sep=""), 
-    add_headers(HTTP_X_CSRF_TOKEN = token),
-    query = pbody, 
-    encode = "json"
-  );
-  prop_cont <- content(prop);
-  
-  if (length(prop_cont$list) != 0) {
-    print(paste("Number of properties found: ",length(prop_cont$list),sep=""))
-    
-    prop <- data.frame(proptext=character(),
-                       pid=character(),
-                       propname=character(), 
-                       propvalue=character(),
-                       propcode=character(),
-                       startdate=character(),
-                       enddate=character(),
-                       featureid=character(),
-                       modified=character(),
-                       entity_type=character(),
-                       bundle=character(),
-                       varid=character(),
-                       uid=character(),
-                       vid=character(),
-                       status=character(),
-                       module=character(),
-                       field_dh_matrix=character(),
-                       stringsAsFactors=FALSE) 
-    
-    i <- 1
-    for (i in 1:length(prop_cont$list)) {
-      
-      prop_i <- data.frame(
-        "proptext" = if (is.null(prop_cont$list[[i]]$proptext)){""} else {prop_cont$list[[i]]$proptext},
-        "pid" = if (is.null(prop_cont$list[[i]]$pid)){""} else {as.integer(prop_cont$list[[i]]$pid)},
-        "propname" = if (is.null(prop_cont$list[[i]]$propname)){""} else {prop_cont$list[[i]]$propname},
-        "propvalue" = if (is.null(prop_cont$list[[i]]$propvalue)){""} else {as.numeric(prop_cont$list[[i]]$propvalue)},
-        "propcode" = if (is.null(prop_cont$list[[i]]$propcode)){""} else {prop_cont$list[[i]]$propcode},
-        "startdate" = if (is.null(prop_cont$list[[i]]$startdate)){""} else {prop_cont$list[[i]]$startdate},
-        "enddate" = if (is.null(prop_cont$list[[i]]$enddate)){""} else {prop_cont$list[[i]]$enddate},
-        "featureid" = if (is.null(prop_cont$list[[i]]$featureid)){""} else {prop_cont$list[[i]]$featureid},
-        "modified" = if (is.null(prop_cont$list[[i]]$modified)){""} else {prop_cont$list[[i]]$modified},
-        "entity_type" = if (is.null(prop_cont$list[[i]]$entity_type)){""} else {prop_cont$list[[i]]$entity_type},
-        "bundle" = if (is.null(prop_cont$list[[i]]$bundle)){""} else {prop_cont$list[[i]]$bundle},
-        "varid" = if (is.null(prop_cont$list[[i]]$varid)){""} else {prop_cont$list[[i]]$varid},
-        "uid" = if (is.null(prop_cont$list[[i]]$uid)){""} else {prop_cont$list[[i]]$uid},
-        "vid" = if (is.null(prop_cont$list[[i]]$vid)){""} else {prop_cont$list[[i]]$vid},
-        "field_dh_matrix" = "",
-        "status" = if (is.null(prop_cont$list[[i]]$status)){""} else {prop_cont$list[[i]]$status},
-        "module" = if (is.null(prop_cont$list[[i]]$module)){""} else {prop_cont$list[[i]]$module},
-        stringsAsFactors=FALSE
-      )
-      # handle data_matrix
-      if (!is.null(prop_cont$list[[i]]$field_dh_matrix$value)) {
-        dfl = prop_cont$list[[i]]$field_dh_matrix$value
-        df <- data.frame(matrix(unlist(dfl), nrow=length(dfl), byrow=T))
-        prop_i$field_dh_matrix <- jsonlite::serializeJSON(df);
-      }
-      prop  <- rbind(prop, prop_i)
-    }
-  } else {
-    print("This property does not exist")
-    return(FALSE)
-  }
-  prop <- prop
-}
+# getProperty <- function(inputs, base_url, prop){
+#   print(inputs)
+#   #Convert varkey to varid - needed for REST operations 
+#   if (!is.null(inputs$varkey)) {
+#     # this would use REST 
+#     # getVarDef(list(varkey = inputs$varkey), token, base_url)
+#     # but it is broken for vardef for now metadatawrapper fatal error
+#     # EntityMetadataWrapperException: Invalid data value given. Be sure it matches the required data type and format. 
+#     # in EntityDrupalWrapper->set() 
+#     # (line 736 of /var/www/html/d.dh/modules/entity/includes/entity.wrapper.inc).
+#     
+#     propdef_url<- paste(base_url,"/?q=vardefs.tsv/",inputs$varkey,sep="")
+#     print(paste("Trying", propdef_url))
+#     propdef_table <- read.table(propdef_url,header = TRUE, sep = "\t")    
+#     varid <- propdef_table[1][which(propdef_table$varkey == inputs$varkey),]
+#     print(paste("varid: ",varid,sep=""))
+#     if (is.null(varid)) {
+#       # we sent a bad variable id so we should return FALSE
+#       return(FALSE)
+#     }
+#     inputs$varid = varid
+#   }
+#   # now, verify that we have either a proper varid OR a propname
+#   if (is.null(inputs$varid) & is.null(inputs$propname)) {
+#     # we were sent a bad variable id so we should return FALSE
+#     return(FALSE)
+#   }
+#   
+#   pbody = list(
+#     #bundle = 'dh_properties',
+#     featureid = inputs$featureid,
+#     entity_type = inputs$entity_type 
+#   );
+#   if (!is.null(inputs$varid)) {
+#     pbody$varid = inputs$varid
+#   }
+#   if (!is.null(inputs$bundle)) {
+#     pbody$bundle = inputs$bundle
+#   }
+#   if (!is.null(inputs$propcode)) {
+#     pbody$propcode = inputs$propcode
+#   }
+#   if (!is.null(inputs$propname)) {
+#     pbody$propname = inputs$propname
+#   }
+#   if (!is.null(inputs$pid)) {
+#     if (inputs$pid > 0) {
+#       # forget about other attributes, just use pid
+#       pbody = list(
+#         pid = inputs$pid
+#       )
+#     }
+#   }
+#   
+#   prop <- GET(
+#     paste(base_url,"/dh_properties.json",sep=""), 
+#     add_headers(HTTP_X_CSRF_TOKEN = token),
+#     query = pbody, 
+#     encode = "json"
+#   );
+#   prop_cont <- content(prop);
+#   
+#   if (length(prop_cont$list) != 0) {
+#     print(paste("Number of properties found: ",length(prop_cont$list),sep=""))
+#     
+#     prop <- data.frame(proptext=character(),
+#                        pid=character(),
+#                        propname=character(), 
+#                        propvalue=character(),
+#                        propcode=character(),
+#                        startdate=character(),
+#                        enddate=character(),
+#                        featureid=character(),
+#                        modified=character(),
+#                        entity_type=character(),
+#                        bundle=character(),
+#                        varid=character(),
+#                        uid=character(),
+#                        vid=character(),
+#                        status=character(),
+#                        module=character(),
+#                        field_dh_matrix=character(),
+#                        stringsAsFactors=FALSE) 
+#     
+#     i <- 1
+#     for (i in 1:length(prop_cont$list)) {
+#       
+#       prop_i <- data.frame(
+#         "proptext" = if (is.null(prop_cont$list[[i]]$proptext)){""} else {prop_cont$list[[i]]$proptext},
+#         "pid" = if (is.null(prop_cont$list[[i]]$pid)){""} else {as.integer(prop_cont$list[[i]]$pid)},
+#         "propname" = if (is.null(prop_cont$list[[i]]$propname)){""} else {prop_cont$list[[i]]$propname},
+#         "propvalue" = if (is.null(prop_cont$list[[i]]$propvalue)){""} else {as.numeric(prop_cont$list[[i]]$propvalue)},
+#         "propcode" = if (is.null(prop_cont$list[[i]]$propcode)){""} else {prop_cont$list[[i]]$propcode},
+#         "startdate" = if (is.null(prop_cont$list[[i]]$startdate)){""} else {prop_cont$list[[i]]$startdate},
+#         "enddate" = if (is.null(prop_cont$list[[i]]$enddate)){""} else {prop_cont$list[[i]]$enddate},
+#         "featureid" = if (is.null(prop_cont$list[[i]]$featureid)){""} else {prop_cont$list[[i]]$featureid},
+#         "modified" = if (is.null(prop_cont$list[[i]]$modified)){""} else {prop_cont$list[[i]]$modified},
+#         "entity_type" = if (is.null(prop_cont$list[[i]]$entity_type)){""} else {prop_cont$list[[i]]$entity_type},
+#         "bundle" = if (is.null(prop_cont$list[[i]]$bundle)){""} else {prop_cont$list[[i]]$bundle},
+#         "varid" = if (is.null(prop_cont$list[[i]]$varid)){""} else {prop_cont$list[[i]]$varid},
+#         "uid" = if (is.null(prop_cont$list[[i]]$uid)){""} else {prop_cont$list[[i]]$uid},
+#         "vid" = if (is.null(prop_cont$list[[i]]$vid)){""} else {prop_cont$list[[i]]$vid},
+#         "field_dh_matrix" = "",
+#         "status" = if (is.null(prop_cont$list[[i]]$status)){""} else {prop_cont$list[[i]]$status},
+#         "module" = if (is.null(prop_cont$list[[i]]$module)){""} else {prop_cont$list[[i]]$module},
+#         stringsAsFactors=FALSE
+#       )
+#       # handle data_matrix
+#       if (!is.null(prop_cont$list[[i]]$field_dh_matrix$value)) {
+#         dfl = prop_cont$list[[i]]$field_dh_matrix$value
+#         df <- data.frame(matrix(unlist(dfl), nrow=length(dfl), byrow=T))
+#         prop_i$field_dh_matrix <- jsonlite::serializeJSON(df);
+#       }
+#       prop  <- rbind(prop, prop_i)
+#     }
+#   } else {
+#     print("This property does not exist")
+#     return(FALSE)
+#   }
+#   prop <- prop
+# }
 
 
-postProperty <- function(inputs,base_url,prop){
-  
-  #inputs <-prop_inputs
-  #base_url <- site
-  #Search for existing property matching supplied varkey, featureid, entity_type 
-  dataframe <- getProperty(inputs, base_url, prop)
-  if (is.data.frame(dataframe)) {
-    pid <- as.character(dataframe$pid)
-  } else {
-    pid = NULL
-  }
-  if (!is.null(inputs$varkey)) {
-    # this would use REST 
-    # getVarDef(list(varkey = inputs$varkey), token, base_url)
-    # but it is broken for vardef for now metadatawrapper fatal error
-    # EntityMetadataWrapperException: Invalid data value given. Be sure it matches the required data type and format. 
-    # in EntityDrupalWrapper->set() 
-    # (line 736 of /var/www/html/d.dh/modules/entity/includes/entity.wrapper.inc).
-    
-    propdef_url<- paste(base_url,"/?q=vardefs.tsv/",inputs$varkey,sep="")
-    propdef_table <- read.table(propdef_url,header = TRUE, sep = "\t")    
-    varid <- propdef_table[1][which(propdef_table$varkey == inputs$varkey),]
-    print(paste("varid: ",varid,sep=""))
-    if (is.null(varid)) {
-      # we sent a bad variable id so we should return FALSE
-      return(FALSE)
-    }
-  }
-  if (!is.null(inputs$varid)) {
-    varid = inputs$varid
-  }
-  
-  if (is.null(varid)) {
-    print("Variable IS is null - returning.")
-    return(FALSE)
-  }
-  
-  pbody = list(
-    bundle = 'dh_properties',
-    featureid = inputs$featureid,
-    varid = varid,
-    entity_type = inputs$entity_type,
-    proptext = inputs$proptext,
-    propvalue = inputs$propvalue,
-    propcode = inputs$propcode,
-    startdate = inputs$startdate,
-    propname = inputs$propname,
-    enddate = inputs$enddate
-  );
-  
-  if (is.null(pid)){
-    print("Creating Property...")
-    prop <- POST(paste(base_url,"/dh_properties/",sep=""), 
-                 add_headers(HTTP_X_CSRF_TOKEN = token),
-                 body = pbody,
-                 encode = "json"
-    );
-    #content(prop)
-    if (prop$status == 201){prop <- paste("Status ",prop$status,", Property Created Successfully",sep="")
-    } else {prop <- paste("Status ",prop$status,", Error: Property Not Created Successfully",sep="")}
-    
-  } else if (length(dataframe$pid) == 1){
-    print("Single Property Exists, Updating...")
-    print(paste("Posting", pbody$varid )) 
-    print(pbody) 
-    #pbody$pid = pid
-    prop <- PUT(paste(base_url,"/dh_properties/",pid,sep=""), 
-                add_headers(HTTP_X_CSRF_TOKEN = token),
-                body = pbody,
-                encode = "json"
-    );
-    #content(prop)
-    if (prop$status == 200){prop <- paste("Status ",prop$status,", Property Updated Successfully",sep="")
-    } else {prop <- paste("Status ",prop$status,", Error: Property Not Updated Successfully",sep="")}
-  } else {
-    prop <- print("Multiple Properties Exist, Execution Halted")
-  }
-  return(prop)
-}
+# postProperty <- function(inputs,base_url,prop){
+#   
+#   #inputs <-prop_inputs
+#   #base_url <- site
+#   #Search for existing property matching supplied varkey, featureid, entity_type 
+#   dataframe <- getProperty(inputs, base_url, prop)
+#   if (is.data.frame(dataframe)) {
+#     pid <- as.character(dataframe$pid)
+#   } else {
+#     pid = NULL
+#   }
+#   if (!is.null(inputs$varkey)) {
+#     # this would use REST 
+#     # getVarDef(list(varkey = inputs$varkey), token, base_url)
+#     # but it is broken for vardef for now metadatawrapper fatal error
+#     # EntityMetadataWrapperException: Invalid data value given. Be sure it matches the required data type and format. 
+#     # in EntityDrupalWrapper->set() 
+#     # (line 736 of /var/www/html/d.dh/modules/entity/includes/entity.wrapper.inc).
+#     
+#     propdef_url<- paste(base_url,"/?q=vardefs.tsv/",inputs$varkey,sep="")
+#     propdef_table <- read.table(propdef_url,header = TRUE, sep = "\t")    
+#     varid <- propdef_table[1][which(propdef_table$varkey == inputs$varkey),]
+#     print(paste("varid: ",varid,sep=""))
+#     if (is.null(varid)) {
+#       # we sent a bad variable id so we should return FALSE
+#       return(FALSE)
+#     }
+#   }
+#   if (!is.null(inputs$varid)) {
+#     varid = inputs$varid
+#   }
+#   
+#   if (is.null(varid)) {
+#     print("Variable IS is null - returning.")
+#     return(FALSE)
+#   }
+#   
+#   pbody = list(
+#     bundle = 'dh_properties',
+#     featureid = inputs$featureid,
+#     varid = varid,
+#     entity_type = inputs$entity_type,
+#     proptext = inputs$proptext,
+#     propvalue = inputs$propvalue,
+#     propcode = inputs$propcode,
+#     startdate = inputs$startdate,
+#     propname = inputs$propname,
+#     enddate = inputs$enddate
+#   );
+#   
+#   if (is.null(pid)){
+#     print("Creating Property...")
+#     prop <- POST(paste(base_url,"/dh_properties/",sep=""), 
+#                  add_headers(HTTP_X_CSRF_TOKEN = token),
+#                  body = pbody,
+#                  encode = "json"
+#     );
+#     #content(prop)
+#     if (prop$status == 201){prop <- paste("Status ",prop$status,", Property Created Successfully",sep="")
+#     } else {prop <- paste("Status ",prop$status,", Error: Property Not Created Successfully",sep="")}
+#     
+#   } else if (length(dataframe$pid) == 1){
+#     print("Single Property Exists, Updating...")
+#     print(paste("Posting", pbody$varid )) 
+#     print(pbody) 
+#     #pbody$pid = pid
+#     prop <- PUT(paste(base_url,"/dh_properties/",pid,sep=""), 
+#                 add_headers(HTTP_X_CSRF_TOKEN = token),
+#                 body = pbody,
+#                 encode = "json"
+#     );
+#     #content(prop)
+#     if (prop$status == 200){prop <- paste("Status ",prop$status,", Property Updated Successfully",sep="")
+#     } else {prop <- paste("Status ",prop$status,", Error: Property Not Updated Successfully",sep="")}
+#   } else {
+#     prop <- print("Multiple Properties Exist, Execution Halted")
+#   }
+#   return(prop)
+# }
 
-getFeature <- function(inputs, token, base_url, feature){
-  #inputs <-    conveyance_inputs 
-  #base_url <- site
-  #print(inputs)
-  pbody = list(
-    hydroid = inputs$hydroid,
-    bundle = inputs$bundle,
-    ftype = inputs$ftype,
-    hydrocode = inputs$hydrocode
-  );
-  
-  
-  if (!is.null(inputs$hydroid)) {
-    if (inputs$hydroid > 0) {
-      # forget about other attributes, just use hydroid if provided 
-      pbody = list(
-        hydroid = inputs$hydroid
-      )
-    }
-  }
-  
-  feature <- GET(
-    paste(base_url,"/dh_feature.json",sep=""), 
-    add_headers(HTTP_X_CSRF_TOKEN = token),
-    query = pbody, 
-    encode = "json"
-  );
-  feature_cont <- content(feature);
-  
-  if (length(feature_cont$list) != 0) {
-    print(paste("Number of features found: ",length(feature_cont$list),sep=""))
-    
-    feat <- data.frame(hydroid = character(),
-                       bundle = character(),
-                       ftype = character(),
-                       hydrocode = character(),
-                       name = character(),
-                       fstatus = character(),
-                       address1 = character(),
-                       address2 = character(),
-                       city = character(),
-                       state = character(),
-                       postal_code = character(),
-                       description = character(),
-                       uid = character(),
-                       status = character(),
-                       module = character(),
-                       feed_nid = character(),
-                       dh_link_facility_mps = character(),
-                       dh_nextdown_id = character(),
-                       dh_areasqkm = character(),
-                       dh_link_admin_location = character(),
-                       field_dh_from_entity = character(),
-                       field_dh_to_entity = character(),
-                       dh_geofield = character(),
-                       geom = character(),
-                       stringsAsFactors=FALSE) 
-    
-    #i <- 1
-    for (i in 1:length(feature_cont$list)) {
-      
-      feat_i <- data.frame("hydroid" = if (is.null(feature_cont$list[[i]]$hydroid)){""} else {feature_cont$list[[i]]$hydroid},
-                           "bundle" = if (is.null(feature_cont$list[[i]]$bundle)){""} else {feature_cont$list[[i]]$bundle},
-                           "ftype" = if (is.null(feature_cont$list[[i]]$ftype)){""} else {feature_cont$list[[i]]$ftype},
-                           "hydrocode" = if (is.null(feature_cont$list[[i]]$hydrocode)){""} else {feature_cont$list[[i]]$hydrocode},
-                           "name" = if (is.null(feature_cont$list[[i]]$name)){""} else {feature_cont$list[[i]]$name},
-                           "fstatus" = if (is.null(feature_cont$list[[i]]$fstatus)){""} else {feature_cont$list[[i]]$fstatus},
-                           "address1" = if (is.null(feature_cont$list[[i]]$address1)){""} else {feature_cont$list[[i]]$address1},
-                           "address2" = if (is.null(feature_cont$list[[i]]$address2)){""} else {feature_cont$list[[i]]$address2},
-                           "city" = if (is.null(feature_cont$list[[i]]$city)){""} else {feature_cont$list[[i]]$city},
-                           "state" = if (is.null(feature_cont$list[[i]]$state)){""} else {feature_cont$list[[i]]$state},
-                           "postal_code" = if (is.null(feature_cont$list[[i]]$postal_code)){""} else {feature_cont$list[[i]]$postal_code},
-                           "description" = if (is.null(feature_cont$list[[i]]$description)){""} else {feature_cont$list[[i]]$description},
-                           "uid" = if (is.null(feature_cont$list[[i]]$uid)){""} else {feature_cont$list[[i]]$uid},
-                           "status" = if (is.null(feature_cont$list[[i]]$status)){""} else {feature_cont$list[[i]]$status},
-                           "module" = if (is.null(feature_cont$list[[i]]$module)){""} else {feature_cont$list[[i]]$module},
-                           "feed_nid" = if (is.null(feature_cont$list[[i]]$feed_nid)){""} else {feature_cont$list[[i]]$feed_nid},
-                           "dh_link_facility_mps" = if (!length(feature_cont$list[[i]]$dh_link_facility_mps)){""} else {feature_cont$list[[i]]$dh_link_facility_mps[[1]]$id},
-                           "dh_nextdown_id" = if (!length(feature_cont$list[[i]]$dh_nextdown_id)){""} else {feature_cont$list[[i]]$dh_nextdown_id[[1]]$id},
-                           "dh_areasqkm" = if (is.null(feature_cont$list[[i]]$dh_areasqkm)){""} else {feature_cont$list[[i]]$dh_areasqkm},
-                           "dh_link_admin_location" = if (!length(feature_cont$list[[i]]$dh_link_admin_location)){""} else {feature_cont$list[[i]]$dh_link_admin_location[[1]]$id},
-                           "field_dh_from_entity" = if (!length(feature_cont$list[[i]]$field_dh_from_entity)){""} else {feature_cont$list[[i]]$field_dh_from_entity$id},
-                           "field_dh_to_entity" = if (!length(feature_cont$list[[i]]$field_dh_to_entity)){""} else {feature_cont$list[[i]]$field_dh_to_entity$id},
-                           "dh_geofield" = if (is.null(feature_cont$list[[i]]$dh_geofield$geom)){""} else {feature_cont$list[[i]]$dh_geofield$geom},
-                           "geom" = if (is.null(feature_cont$list[[i]]$dh_geofield$geom)){""} else {feature_cont$list[[i]]$dh_geofield$geom}
-      )
-      
-      # "dh_link_admin_location" = if (!length(feature_cont$list[[i]]$dh_link_admin_location)){""} else {feature_cont$list[[i]]$dh_link_admin_location[[1]]$id},
-      
-      
-      feat  <- rbind(feat, feat_i)
-    }
-  } else {
-    print("This Feature does not exist")
-    return(FALSE)
-  }
-  feature <- feat
-}
+# getFeature <- function(inputs, token, base_url, feature){
+#   #inputs <-    conveyance_inputs 
+#   #base_url <- site
+#   #print(inputs)
+#   pbody = list(
+#     hydroid = inputs$hydroid,
+#     bundle = inputs$bundle,
+#     ftype = inputs$ftype,
+#     hydrocode = inputs$hydrocode
+#   );
+#   
+#   
+#   if (!is.null(inputs$hydroid)) {
+#     if (inputs$hydroid > 0) {
+#       # forget about other attributes, just use hydroid if provided 
+#       pbody = list(
+#         hydroid = inputs$hydroid
+#       )
+#     }
+#   }
+#   
+#   feature <- GET(
+#     paste(base_url,"/dh_feature.json",sep=""), 
+#     add_headers(HTTP_X_CSRF_TOKEN = token),
+#     query = pbody, 
+#     encode = "json"
+#   );
+#   feature_cont <- content(feature);
+#   
+#   if (length(feature_cont$list) != 0) {
+#     print(paste("Number of features found: ",length(feature_cont$list),sep=""))
+#     
+#     feat <- data.frame(hydroid = character(),
+#                        bundle = character(),
+#                        ftype = character(),
+#                        hydrocode = character(),
+#                        name = character(),
+#                        fstatus = character(),
+#                        address1 = character(),
+#                        address2 = character(),
+#                        city = character(),
+#                        state = character(),
+#                        postal_code = character(),
+#                        description = character(),
+#                        uid = character(),
+#                        status = character(),
+#                        module = character(),
+#                        feed_nid = character(),
+#                        dh_link_facility_mps = character(),
+#                        dh_nextdown_id = character(),
+#                        dh_areasqkm = character(),
+#                        dh_link_admin_location = character(),
+#                        field_dh_from_entity = character(),
+#                        field_dh_to_entity = character(),
+#                        dh_geofield = character(),
+#                        geom = character(),
+#                        stringsAsFactors=FALSE) 
+#     
+#     #i <- 1
+#     for (i in 1:length(feature_cont$list)) {
+#       
+#       feat_i <- data.frame("hydroid" = if (is.null(feature_cont$list[[i]]$hydroid)){""} else {feature_cont$list[[i]]$hydroid},
+#                            "bundle" = if (is.null(feature_cont$list[[i]]$bundle)){""} else {feature_cont$list[[i]]$bundle},
+#                            "ftype" = if (is.null(feature_cont$list[[i]]$ftype)){""} else {feature_cont$list[[i]]$ftype},
+#                            "hydrocode" = if (is.null(feature_cont$list[[i]]$hydrocode)){""} else {feature_cont$list[[i]]$hydrocode},
+#                            "name" = if (is.null(feature_cont$list[[i]]$name)){""} else {feature_cont$list[[i]]$name},
+#                            "fstatus" = if (is.null(feature_cont$list[[i]]$fstatus)){""} else {feature_cont$list[[i]]$fstatus},
+#                            "address1" = if (is.null(feature_cont$list[[i]]$address1)){""} else {feature_cont$list[[i]]$address1},
+#                            "address2" = if (is.null(feature_cont$list[[i]]$address2)){""} else {feature_cont$list[[i]]$address2},
+#                            "city" = if (is.null(feature_cont$list[[i]]$city)){""} else {feature_cont$list[[i]]$city},
+#                            "state" = if (is.null(feature_cont$list[[i]]$state)){""} else {feature_cont$list[[i]]$state},
+#                            "postal_code" = if (is.null(feature_cont$list[[i]]$postal_code)){""} else {feature_cont$list[[i]]$postal_code},
+#                            "description" = if (is.null(feature_cont$list[[i]]$description)){""} else {feature_cont$list[[i]]$description},
+#                            "uid" = if (is.null(feature_cont$list[[i]]$uid)){""} else {feature_cont$list[[i]]$uid},
+#                            "status" = if (is.null(feature_cont$list[[i]]$status)){""} else {feature_cont$list[[i]]$status},
+#                            "module" = if (is.null(feature_cont$list[[i]]$module)){""} else {feature_cont$list[[i]]$module},
+#                            "feed_nid" = if (is.null(feature_cont$list[[i]]$feed_nid)){""} else {feature_cont$list[[i]]$feed_nid},
+#                            "dh_link_facility_mps" = if (!length(feature_cont$list[[i]]$dh_link_facility_mps)){""} else {feature_cont$list[[i]]$dh_link_facility_mps[[1]]$id},
+#                            "dh_nextdown_id" = if (!length(feature_cont$list[[i]]$dh_nextdown_id)){""} else {feature_cont$list[[i]]$dh_nextdown_id[[1]]$id},
+#                            "dh_areasqkm" = if (is.null(feature_cont$list[[i]]$dh_areasqkm)){""} else {feature_cont$list[[i]]$dh_areasqkm},
+#                            "dh_link_admin_location" = if (!length(feature_cont$list[[i]]$dh_link_admin_location)){""} else {feature_cont$list[[i]]$dh_link_admin_location[[1]]$id},
+#                            "field_dh_from_entity" = if (!length(feature_cont$list[[i]]$field_dh_from_entity)){""} else {feature_cont$list[[i]]$field_dh_from_entity$id},
+#                            "field_dh_to_entity" = if (!length(feature_cont$list[[i]]$field_dh_to_entity)){""} else {feature_cont$list[[i]]$field_dh_to_entity$id},
+#                            "dh_geofield" = if (is.null(feature_cont$list[[i]]$dh_geofield$geom)){""} else {feature_cont$list[[i]]$dh_geofield$geom},
+#                            "geom" = if (is.null(feature_cont$list[[i]]$dh_geofield$geom)){""} else {feature_cont$list[[i]]$dh_geofield$geom}
+#       )
+#       
+#       # "dh_link_admin_location" = if (!length(feature_cont$list[[i]]$dh_link_admin_location)){""} else {feature_cont$list[[i]]$dh_link_admin_location[[1]]$id},
+#       
+#       
+#       feat  <- rbind(feat, feat_i)
+#     }
+#   } else {
+#     print("This Feature does not exist")
+#     return(FALSE)
+#   }
+#   feature <- feat
+# }
 
 getPropertyALT <- function(inputs, base_url, prop, token){
   print(inputs)
