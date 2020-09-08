@@ -48,12 +48,9 @@ cn2 <- params$cn2
 ```
 
 ```{r, include=FALSE}
-cbp6_link <- paste0(github_link, "/cbp6/code");
-source(paste0(cbp6_link,"/cbp6_functions.R"))
-source(paste(github_link,"auth.private", sep = "/"));#load rest username and password, contained in
-source(paste(cbp6_link, "/fn_vahydro-1.0.R", sep = ''))
-token <- rest_token(site, token, rest_uname, rest_pw);
-options(timeout=1200); # set timeout to twice default level to avoid abort due to high traffic
+basepath='/var/www/R';
+source(paste(basepath,'config.R',sep='/'))
+cbp6_link <- paste0(github_location, "/cbp6/code");
 
 if (gage_number == FALSE | is.na(gage_number) == TRUE) {
   gage_number <- '00000000'
