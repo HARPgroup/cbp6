@@ -4459,7 +4459,7 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   
   hydroid <- odata[1,"hydroid"];
   fname <- as.character(odata[1,]$name);
-  print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
+  message(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
   if (dat.source == 'cbp_model') {
     # GETTING SCENARIO MODEL ELEMENT FROM VA HYDRO
@@ -4497,7 +4497,7 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
     } else {
       inputs$propname <- paste(dat.source, 'model for',fname)
     }
-    message("Creating", paste(dat.source, 'model for',fname)
+    message("Creating", paste(dat.source, 'model for',fname))
     postProperty(inputs, site, scenario) 
     # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
     scenario <- getProperty(inputs, site, scenario)
