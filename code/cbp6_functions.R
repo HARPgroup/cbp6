@@ -4492,7 +4492,7 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   scenario <- getProperty(inputs, site, scenario)
   
   if (scenario == FALSE) {
-    postProperty(inputs, site, scenprop) 
+    postProperty(inputs, site, scenario) 
     # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
     scenario <- getProperty(inputs, site, scenario)
   }  
