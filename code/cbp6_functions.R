@@ -4469,6 +4469,14 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
       entity_type = "dh_feature",
       propcode = mod.scenario
     )
+  }  elseeif (dat.source == 'gage') {
+    # GETTING SCENARIO MODEL ELEMENT for a surrogate gage FROM VA HYDRO
+    inputs <- list(
+      varkey = "om_model_element",
+      featureid = hydroid,
+      entity_type = "dh_feature",
+      propcode = mod.scenario
+    )
   } else if (dat.source == 'vahydro') {
     # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
     inputs <- list(
@@ -4478,7 +4486,7 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
       propcode = mod.scenario
     )
   } else {
-    stop('Error: data source is neither "cbp_model" nor "vahydro"')
+    stop('Error: data source is neither "cbp_model". "gage" nor "vahydro"')
   }
   
   scenario <- getProperty(inputs, site, scenario)
@@ -4494,8 +4502,11 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   } else if (dat.source == 'vahydro') {
     scen.propname <- paste0('runid_', run.id)
     scen.propcode <- ''
+  } else if (dat.source == 'gage') {
+    scen.propname <- paste0('runid_', run.id)
+    scen.propcode <- ''
   } else {
-    stop('Error: data source is neither "cbp_model" nor "vahydro"')
+    stop('Error: data source is neither "cbp_model". "gage" nor "vahydro"')
   }
   
   
