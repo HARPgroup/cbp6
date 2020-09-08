@@ -4492,6 +4492,11 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   scenario <- getProperty(inputs, site, scenario)
   
   if (scenario == FALSE) {
+    if (dat.source == 'gage') {
+      inputs$propname <- paste('USGS weighted for ',fname)
+    } else {
+      inputs$propname <- paste(dat.source, 'model for',fname)
+    }
     postProperty(inputs, site, scenario) 
     # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
     scenario <- getProperty(inputs, site, scenario)
