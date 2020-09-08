@@ -60,6 +60,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
 ```{r, include = FALSE}
 # LOADING DATA ------------------------------------------------------------
   if (dat.source1 == 'vahydro') {
+    print("Getting VAHydro data for source 1")
     data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
     if (gage.timespan.trimmed == TRUE) {
       scenprop1 <- get.gage.timespan.scen.prop(riv.seg, run.id1, site, token)
@@ -67,6 +68,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
       scenprop1 <- get.scen.prop(riv.seg, 'vahydro-1.0', dat.source1, run.id1, start.date, end.date, site, token)
     }
   } else if (dat.source1 == 'gage') {
+    print("Getting USGS gage data for source 1")
     data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
     scenprop1 <- get.scen.prop(riv.seg, 'usgs-1.0', 'vahydro', run.id = 'weighted', start.date, end.date, site, token)
   } else if (dat.source1 == 'cbp_model') {
@@ -78,6 +80,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
     }
   }
   if (dat.source2 == 'vahydro') {
+    print("Getting VAHydro data for source 2")
     data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
     if (gage.timespan.trimmed == TRUE) {
       scenprop2 <- get.gage.timespan.scen.prop(riv.seg, run.id2, site, token)
@@ -85,6 +88,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
       scenprop2 <- get.scen.prop(riv.seg, 'vahydro-1.0', dat.source2, run.id2, start.date, end.date, site, token)
     }
   } else if (dat.source2 == 'gage') {
+    print("Getting USGS gage data for source 2")
     data2 <- gage_import_data_cfs(gage_number, start.date, end.date)
     scenprop2 <- get.scen.prop(riv.seg, 'usgs-1.0', 'vahydro', run.id = 'weighted', start.date, end.date, site, token)
   } else if (dat.source2 == 'cbp_model') {
