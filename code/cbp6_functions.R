@@ -4469,7 +4469,7 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
       entity_type = "dh_feature",
       propcode = mod.scenario
     )
-  }  elseif (dat.source == 'gage') {
+  }  else if (dat.source == 'gage') {
     # GETTING SCENARIO MODEL ELEMENT for a surrogate gage FROM VA HYDRO
     inputs <- list(
       varkey = "om_model_element",
