@@ -5183,7 +5183,7 @@ get.gage.timespan.scen.prop <- function(riv.seg, run.id, site, token) {
   
   hydroid <- odata[1,"hydroid"];
   fname <- as.character(odata[1,]$name);
-  print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
+  message(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
   # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
   inputs <- list(
@@ -5221,13 +5221,14 @@ get.gage.timespan.scen.prop <- function(riv.seg, run.id, site, token) {
   
   # POST PROPERTY IF IT IS NOT YET CREATED
   if (identical(scenprop, FALSE)) {
+    message("Creating scenario property to store gage period data")
     # create
     sceninfo$pid = NULL
+    postProperty(sceninfo, site, scenprop) 
   } else {
     sceninfo$pid = scenprop$pid
   }
   
-  postProperty(sceninfo, site, scenprop) 
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
   scenprop <- getProperty(sceninfo, site, scenprop)
