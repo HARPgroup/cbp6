@@ -5225,13 +5225,14 @@ get.gage.timespan.scen.prop <- function(riv.seg, run.id, site, token) {
     # create
     sceninfo$pid = NULL
     postProperty(sceninfo, site, scenprop) 
+    message("Reloading Property to get pid")
+    scenprop <- getProperty(sceninfo, site, scenprop)
   } else {
     sceninfo$pid = scenprop$pid
   }
   
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
-  scenprop <- getProperty(sceninfo, site, scenprop)
   
   if (scenprop == FALSE) {
     return(FALSE)
