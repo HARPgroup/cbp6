@@ -70,7 +70,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
   } else if (dat.source1 == 'gage') {
     message("Getting USGS gage data for source 1")
     data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
-    scenprop1 <- get.cbp.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
+    scenprop1 <- get.scen.prop(riv.seg, 'usgs-1.0', dat.source1, run.id1, start.date, end.date, site, token)
   } else if (dat.source1 == 'cbp_model') {
     scenprop1 <- get.cbp.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
     if (site.or.server == 'site') {
