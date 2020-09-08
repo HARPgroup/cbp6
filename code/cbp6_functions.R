@@ -4492,8 +4492,10 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   scenario <- getProperty(inputs, site, scenario)
   
   if (scenario == FALSE) {
-    return(FALSE)
-  }
+    postProperty(inputs, site, scenprop) 
+    # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
+    scenario <- getProperty(inputs, site, scenario)
+  }  
   
   # DETERMINING PROPNAME AND PROPCODE FOR SCENARIO PROPERTY
   if (dat.source == 'cbp_model') {
