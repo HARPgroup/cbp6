@@ -57,7 +57,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
 }
 ```
 
-```{r, include = FALSE}
+```{r, include = FALSE, message=FALSE}
 # LOADING DATA ------------------------------------------------------------
   if (dat.source1 == 'vahydro') {
     warning("Getting VAHydro data for source 1")
