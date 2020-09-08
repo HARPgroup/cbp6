@@ -41,7 +41,7 @@ get.cbp.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.d
     )
   } else {
     print('Error: data source is neither "cbp_model" nor "vahydro"')
-    return FALSE
+    return(FALSE)
   }
   
   scenario <- getProperty(inputs, site, scenario)
@@ -59,7 +59,7 @@ get.cbp.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.d
     scen.propcode <- ''
   } else {
     print('Error: data source is neither "cbp_model" nor "vahydro"')
-    return FALSE
+    return(FALSE)
   }
   
   return(as.numeric(scenario$pid))
