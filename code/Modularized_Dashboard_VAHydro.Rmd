@@ -47,7 +47,7 @@ mod.scenario2 <- params$mod.scenario2
 cn1 <- params$cn1
 cn2 <- params$cn2
 gage.timespan.trimmed <- params$gage.timespan.trimmed
-export_path_cust <- params$export_path_custom
+export_path_custom <- params$export_path_custom
 ```
 
 ```{r, include=FALSE}
