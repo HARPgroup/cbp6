@@ -2319,8 +2319,7 @@ vahydro_import_local.runoff.inflows_cfs <- function(riv.seg, run.id, token, site
   return(dat.trim)
 }
 
-
-figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   
@@ -2350,7 +2349,7 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
   
   # start loops used for yearly and monthly data  -------------------------------------------------------------
   
-  loop <- as.numeric(round(length(data1$date)/365, digits = 0))-1
+  loop <- as.numeric(round(length(all_data$Date)/365, digits = 0))-1
   for (i in 1:loop){                                # run loop for an entire data series
     year <- all_data[YearStart_Row:YearEnd_Row,] # specify year: 10-01-year1 to 11-30-year2
     m <- 1                                        # counter for nested loop
@@ -2516,8 +2515,8 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
   difference3 <- signif(HighestDifferences$Difference[3], digits=3)
   
   # CREATES OUTPUT MATRIX -------------------------------------------------------
-  avg_scenario1 <- mean(data1$flow)
-  avg_scenario2 <- mean(data2$flow)
+  avg_scenario1 <- mean(all_data$"Scenario 1 Flow")
+  avg_scenario2 <- mean(all_data$"Scenario 2 Flow")
   
   # also want to list the number of timespans that were over 20% difference.
   less20 <- signif(nrow(less20)/nrow(Timespan_Difference)*100, digits=3)
@@ -2567,8 +2566,9 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
     annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
                                                         min(storeplotdata1$Date),': ', max(storeplotdata1$Date)), size=3)+
     labs(y = "Flow (cfs)")
-  ggsave("fig11.png", plot = difference1plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 11: Smallest Difference Period saved at location ', as.character(getwd()), '/fig11.png', sep = ''))
+  outfile <- paste0(export_path,"fig11.png")
+  ggsave(outfile, plot = difference1plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 11: Smallest Difference Period saved at location ', outfile, sep = ''))
   
   # plot for second highest difference 
   # Max/min for y axis scaling
@@ -2605,8 +2605,9 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
     annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
                                                         min(storeplotdata2$Date),': ', max(storeplotdata2$Date)), size=3)+
     labs(y = "Flow (cfs)")
-  ggsave("fig12.png", plot = difference2plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 12: Second Smallest Difference Period saved at location ', as.character(getwd()), '/fig12.png', sep = ''))
+  outfile <- paste0(export_path,"fig12.png")
+  ggsave(outfile, plot = difference2plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 12: Second Smallest Difference Period saved at location ', outfile, sep = ''))
   
   # plot for third highest difference 
   # Max/min for y axis scaling
@@ -2644,15 +2645,14 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
                                                         min(storeplotdata3$Date),': ', max(storeplotdata3$Date)), size=3)+
     labs(y = "Flow (cfs)")
   
-  ggsave("fig13.png", plot = difference3plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 13: Third Smallest Difference Period saved at location ', as.character(getwd()), '/fig13.png', sep = ''))
+  outfile <- paste0(export_path,"fig13.png")
+  ggsave(outfile, plot = difference3plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 13: Third Smallest Difference Period saved at location ', outfile, sep = ''))
 }
 
-
-figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
-  
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is high
   # It does so for the top three highest difference periods
   
@@ -2679,7 +2679,7 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   
   # start loops used for yearly and monthly data  -------------------------------------------------------------
   
-  loop <- as.numeric(round(length(data1$date)/365, digits = 0))-1
+  loop <- as.numeric(round(length(all_data$Date)/365, digits = 0))-1
   for (i in 1:loop){                                # run loop for an entire data series
     year <- all_data[YearStart_Row:YearEnd_Row,] # specify year: 10-01-year1 to 11-30-year2
     m <- 1                                        # counter for nested loop
@@ -2845,8 +2845,8 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   difference3 <- signif(HighestDifferences$Difference[3], digits=3)
   
   # CREATES OUTPUT MATRIX -------------------------------------------------------
-  avg_scenario1 <- mean(data1$flow)
-  avg_scenario2 <- mean(data2$flow)
+  avg_scenario1 <- mean(all_data$"Scenario 1 Flow")
+  avg_scenario2 <- mean(all_data$"Scenario 2 Flow")
   
   # also want to list the number of timespans that were over 20% difference.
   over20 <- signif(nrow(over20)/nrow(Timespan_Difference)*100, digits=3)
@@ -2896,8 +2896,9 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
                                                         min(storeplotdata1$Date),': ', max(storeplotdata1$Date)), size=3)+
     labs(y = "Flow (cfs)")
-  ggsave("fig6.png", plot = difference1plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 6: Highest Difference Period saved at location ', as.character(getwd()), '/fig6.png', sep = ''))
+  outfile <- paste0(export_path,"fig6.png")
+  ggsave(outfile, plot = difference1plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 6: Highest Difference Period saved at location ', outfile, sep = ''))
   
   # plot for second highest difference 
   # Max/min for y axis scaling
@@ -2934,8 +2935,9 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
                                                         min(storeplotdata2$Date),': ', max(storeplotdata2$Date)), size=3)+
     labs(y = "Flow (cfs)")
-  ggsave("fig7.png", plot = difference2plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 7: Second Highest Difference Period saved at location ', as.character(getwd()), '/fig7.png', sep = ''))
+  outfile <- paste0(export_path,"fig7.png")
+  ggsave(outfile, plot = difference2plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 7: Second Highest Difference Period saved at location ', outfile, sep = ''))
   
   # plot for third highest difference 
   # Max/min for y axis scaling
@@ -2973,8 +2975,9 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
                                                         min(storeplotdata3$Date),': ', max(storeplotdata3$Date)), size=3)+
     labs(y = "Flow (cfs)")
   
-  ggsave("fig8.png", plot = difference3plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 8: Third Highest Difference Period saved at location ', as.character(getwd()), '/fig8.png', sep = ''))
+  outfile <- paste0(export_path,"fig8.png")
+  ggsave(outfile, plot = difference3plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 8: Third Highest Difference Period saved at location ', outfile, sep = ''))
   return(OUTPUT_MATRIXsaver)
 }
 
@@ -3124,10 +3127,11 @@ tab1.monthly.low.flows <- function(percent_difference, cn1='Scenario 1', cn2='Sc
   return(Table1)
 }
 
-fig.gis <- function(riv.seg, site_number, site_url, cbp6_link, token) {
+fig.gis <- function(riv.seg, site_number, site_url, cbp6_link, token, export_path = '/tmp/') {
   # Generating gage location maps
   gis_img <- fn_gage_and_seg_mapperALT(riv.seg, site_number, site_url, cbp6_link, token)
-  ggsave("gis.png", plot = gis_img, device = 'png', width = 8, height = 5.5, units = 'in')
+  outfile <- paste0(export_path,"gis.png")
+  ggsave(outfile, plot = gis_img, device = 'png', width = 8, height = 5.5, units = 'in')
 }
 
 all_data_maker <- function(data1, data2) {
@@ -3139,14 +3143,16 @@ all_data_maker <- function(data1, data2) {
   return(all_data)
 }
 
-fig10.runit.boxplot <- function(lri.dat) {
+fig10.runit.boxplot <- function(lri.dat, export_path = '/tmp/') {
   boxplot(as.numeric(lri.dat$flow.unit) ~ year(lri.dat$date), outline = FALSE, ylab = 'Runit Flow (cfs)', xlab = 'Date')
-  dev.copy(png, 'fig10.png')
+  outfile <- paste0(export_path,"fig10.png")
+  dev.copy(png, outfile)
   dev.off()
-  print(paste('Fig. 10: Runit Boxplot saved at location ', as.character(getwd()), '/fig10.png', sep = ''))
+  print(paste('Fig. 10: Runit Boxplot saved at location ', outfile, sep = ''))
 }
 
-fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url, cn1='Scenario 1', cn2='Scenario 2') {
+
+fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   
   hydrocode = paste("vahydrosw_wshed_",riv.seg,sep="");
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
@@ -3214,11 +3220,13 @@ fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url
     scale_colour_manual(values=c("dark green","black"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Area Weighted Flow Difference*10^6 (ft/s)")
-  ggsave("fig9B.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 9b: Area-Weighted Residual Plot saved at location ', as.character(getwd()), '/fig9b.png', sep = ''))
+  outfile <- paste0(export_path,"fig9B.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 9b: Area-Weighted Residual Plot saved at location ', outfile, sep = ''))
 }
 
-fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
+  
   # Setup for Residuals
   data <- all_data[complete.cases(all_data),]
   resid <- (data$`Scenario 2 Flow` - data$`Scenario 1 Flow`)
@@ -3259,11 +3267,12 @@ fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
     scale_colour_manual(values=c("dark green","black"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow Difference (cfs)")
-  ggsave("fig9A.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 9a: Residual Plot saved at location ', as.character(getwd()), '/fig9a.png', sep = ''))
+  outfile <- paste0(export_path,"fig9A.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 9a: Residual Plot saved at location ', outfile, sep = ''))
 }
 
-fig5.combined.hydrograph <- function(all_data) {
+fig5.combined.hydrograph <- function(all_data, export_path = '/tmp/') {
   data1$year <- year(ymd(data1$date))
   data1$month <- month(ymd(data1$date))
   data1$day <- day(ymd(data1$date))
@@ -3354,11 +3363,12 @@ fig5.combined.hydrograph <- function(all_data) {
     scale_colour_manual(values=c("black","red","grey", "light pink"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig5.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 5: Combined Hydrograph saved at location ', as.character(getwd()), '/fig5.png', sep = ''))
+  outfile <- paste0(export_path,"fig5.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 5: Combined Hydrograph saved at location ', outfile, sep = ''))
 }
 
-fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   
@@ -3449,11 +3459,12 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig4.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 4: Baseflow Hydrograph saved at location ', as.character(getwd()), '/fig4.png', sep = ''))
+  outfile <- paste0(export_path,"fig4.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 4: Baseflow Hydrograph saved at location ', outfile, sep = ''))
 }
 
-fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   #Flow exceedance plot -----
@@ -3529,11 +3540,12 @@ fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(x= "Probability of Exceedance (%)", y = "Flow (cfs)")
-  ggsave("fig3.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 3: Flow Exceedance saved at location ', as.character(getwd()), '/fig3.png', sep = ''))
+  outfile <- paste0(export_path,"fig3.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 3: Flow Exceedance saved at location ', outfile, sep = ''))
 }
 
-fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   # Zoomed hydrograph in year of lowest 90-year flow -----
@@ -3608,11 +3620,12 @@ fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2')
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig2.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 2: Zoomed Hydrograph saved at location ', as.character(getwd()), '/fig2.png', sep = ''))
+  outfile <- paste0(export_path,"fig2.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 2: Zoomed Hydrograph saved at location ', outfile, sep = ''))
 }
 
-fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   
@@ -3677,8 +3690,9 @@ fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig1.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 1: Hydrograph saved at location ', as.character(getwd()), '/fig1.png', sep = ''))
+  outfile <- paste0(export_path,"fig1.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 1: Hydrograph saved at location ', outfile, sep = ''))
 }
 
 fn_downstream <- function(riv.seg, AllSegList) {
@@ -4393,28 +4407,28 @@ tab.iqr.by.lrseg.lri.annual = function(lri.data) {
   return(tmp.tab)
 }
 
-
-fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name) {
+fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name, export_path = '/tmp/') {
   flow.names <- grep(flow.abbreviation, colnames(tmp.data), value = TRUE)
   date.names <- grep('thisdate', colnames(tmp.data), value = TRUE)
   flow.cols <- which(colnames(tmp.data) %in% flow.names)
   date.cols <- which(colnames(tmp.data) %in% date.names)
   all.cols <- c(date.cols, flow.cols)
   flow.data <- as.data.frame(tmp.data[,all.cols])
+  
   date.col <- as.Date(flow.data$thisdate)
   flow.matrix <- flow.data[,-1]
   for (i in 1:ncol(flow.matrix)) {
-    #flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
-    flow.matrix[,i] <- as.numeric(paste(flow.matrix[,i]))
-     }
+    flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
+  }
   sum.flow.col <- rowSums(flow.matrix)
   summed.data <- data.frame(date.col, sum.flow.col)
   colnames(summed.data) <- c('date', 'flow')
   
   boxplot(as.numeric(summed.data$flow) ~ year(summed.data$date), outline = FALSE, ylab = 'Unit Flow (cfs)', xlab = 'Date')
-  dev.copy(png, paste0('fig.', flow.abbreviation, '.', lrseg.name, '.png'))
+  outfile <- paste0(export_path, paste0('/fig', flow.abbreviation, '.', lrseg.name, '.png')) 
+  dev.copy(png, outfile)
   dev.off()
-  print(paste('Fig.: ',  flow.abbreviation, ' Boxplot for lrseg ', lrseg.name, ' saved at location ', as.character(getwd()), '/fig', flow.abbreviation, '.', lrseg.name, '.png', sep = ''))
+  print(paste('Fig.: ',  flow.abbreviation, ' Boxplot for lrseg ', lrseg.name, ' saved at location ', outfile, sep = ''))
 }
 
 fig.boxplot.by.flow.for.dash <- function(tmp.data, flow.abbreviation) {
@@ -4428,8 +4442,7 @@ fig.boxplot.by.flow.for.dash <- function(tmp.data, flow.abbreviation) {
   date.col <- as.Date(flow.data$thisdate)
   flow.matrix <- flow.data[,-1]
   for (i in 1:ncol(flow.matrix)) {
-    #flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
-    flow.matrix[,i] <- as.numeric(paste(flow.matrix[,i]))
+    flow.matrix[,i] <- as.numeric(levels(flow.matrix[,i]))[flow.matrix[,i]]
   }
   sum.flow.col <- rowSums(flow.matrix)
   summed.data <- data.frame(date.col, sum.flow.col)
