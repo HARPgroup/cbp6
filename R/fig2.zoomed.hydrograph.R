@@ -1,4 +1,4 @@
-fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   # Zoomed hydrograph in year of lowest 90-year flow -----
@@ -73,6 +73,7 @@ fig2.zoomed.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2')
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig2.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 2: Zoomed Hydrograph saved at location ', as.character(getwd()), '/fig2.png', sep = ''))
+  outfile <- paste0(export_path,"fig2.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 2: Zoomed Hydrograph saved at location ', outfile, sep = ''))
 }

@@ -1,4 +1,4 @@
-fig5.combined.hydrograph <- function(all_data) {
+fig5.combined.hydrograph <- function(all_data, export_path = '/tmp/') {
   data1$year <- year(ymd(data1$date))
   data1$month <- month(ymd(data1$date))
   data1$day <- day(ymd(data1$date))
@@ -89,6 +89,7 @@ fig5.combined.hydrograph <- function(all_data) {
     scale_colour_manual(values=c("black","red","grey", "light pink"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig5.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 5: Combined Hydrograph saved at location ', as.character(getwd()), '/fig5.png', sep = ''))
+  outfile <- paste0(export_path,"fig5.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 5: Combined Hydrograph saved at location ', outfile, sep = ''))
 }

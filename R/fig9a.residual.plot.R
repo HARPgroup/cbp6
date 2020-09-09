@@ -1,4 +1,4 @@
-fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   
   # Setup for Residuals
   data <- all_data[complete.cases(all_data),]
@@ -40,6 +40,7 @@ fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
     scale_colour_manual(values=c("dark green","black"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow Difference (cfs)")
-  ggsave("fig9A.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 9a: Residual Plot saved at location ', as.character(getwd()), '/fig9a.png', sep = ''))
+  outfile <- paste0(export_path,"fig9A.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 9a: Residual Plot saved at location ', outfile, sep = ''))
 }

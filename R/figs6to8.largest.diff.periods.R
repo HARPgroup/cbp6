@@ -1,7 +1,6 @@
-figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
-  
   # This section will create a hydrograph that will zoom in on 3 month segments where difference is high
   # It does so for the top three highest difference periods
   
@@ -28,7 +27,7 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   
   # start loops used for yearly and monthly data  -------------------------------------------------------------
   
-  loop <- as.numeric(round(length(data1$date)/365, digits = 0))-1
+  loop <- as.numeric(round(length(all_data$Date)/365, digits = 0))-1
   for (i in 1:loop){                                # run loop for an entire data series
     year <- all_data[YearStart_Row:YearEnd_Row,] # specify year: 10-01-year1 to 11-30-year2
     m <- 1                                        # counter for nested loop
@@ -194,8 +193,8 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   difference3 <- signif(HighestDifferences$Difference[3], digits=3)
   
   # CREATES OUTPUT MATRIX -------------------------------------------------------
-  avg_scenario1 <- mean(data1$flow)
-  avg_scenario2 <- mean(data2$flow)
+  avg_scenario1 <- mean(all_data$"Scenario 1 Flow")
+  avg_scenario2 <- mean(all_data$"Scenario 2 Flow")
   
   # also want to list the number of timespans that were over 20% difference.
   over20 <- signif(nrow(over20)/nrow(Timespan_Difference)*100, digits=3)
@@ -245,8 +244,9 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
                                                         min(storeplotdata1$Date),': ', max(storeplotdata1$Date)), size=3)+
     labs(y = "Flow (cfs)")
-  ggsave("fig6.png", plot = difference1plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 6: Highest Difference Period saved at location ', as.character(getwd()), '/fig6.png', sep = ''))
+  outfile <- paste0(export_path,"fig6.png")
+  ggsave(outfile, plot = difference1plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 6: Highest Difference Period saved at location ', outfile, sep = ''))
   
   # plot for second highest difference 
   # Max/min for y axis scaling
@@ -283,8 +283,9 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     annotate("text", x=xpos2, y=1.05*max, label= paste0('Date Range: ', '', 
                                                         min(storeplotdata2$Date),': ', max(storeplotdata2$Date)), size=3)+
     labs(y = "Flow (cfs)")
-  ggsave("fig7.png", plot = difference2plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 7: Second Highest Difference Period saved at location ', as.character(getwd()), '/fig7.png', sep = ''))
+  outfile <- paste0(export_path,"fig7.png")
+  ggsave(outfile, plot = difference2plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 7: Second Highest Difference Period saved at location ', outfile, sep = ''))
   
   # plot for third highest difference 
   # Max/min for y axis scaling
@@ -322,7 +323,8 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
                                                         min(storeplotdata3$Date),': ', max(storeplotdata3$Date)), size=3)+
     labs(y = "Flow (cfs)")
   
-  ggsave("fig8.png", plot = difference3plot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 8: Third Highest Difference Period saved at location ', as.character(getwd()), '/fig8.png', sep = ''))
+  outfile <- paste0(export_path,"fig8.png")
+  ggsave(outfile, plot = difference3plot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 8: Third Highest Difference Period saved at location ', outfile, sep = ''))
   return(OUTPUT_MATRIXsaver)
 }

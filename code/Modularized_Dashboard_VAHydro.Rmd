@@ -23,6 +23,7 @@ params:
   gage.timespan.trimmed: TRUE
   cn1: 'VA Hydro: Runid_weighted'
   cn2: 'VA Hydro: Runid_11_gage_timespan'
+  export_path_custom: FALSE
   
 ---
 
@@ -46,12 +47,17 @@ mod.scenario2 <- params$mod.scenario2
 cn1 <- params$cn1
 cn2 <- params$cn2
 gage.timespan.trimmed <- params$gage.timespan.trimmed
+export_path_cust <- params$export_path_custom
 ```
 
 ```{r, include=FALSE}
 basepath='/var/www/R';
 source(paste(basepath,'config.R',sep='/'))
 cbp6_link <- paste0(github_location, "/cbp6/code");
+if (!is.logical(export_path_custom)) {
+  # allow override from command line, otherwise use value from config files
+  export_path <- export_path_custom
+}
 if (gage_number == FALSE | is.na(gage_number) == TRUE) {
   gage_number <- '00000000'
 }
@@ -99,6 +105,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
       data2 <- model_server_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
     }
   }
+
 # TRIMMING DATA TO PROPER WATER YEAR
 data1 <- water_year_trim(data1)
 data2 <- water_year_trim(data2)
@@ -165,37 +172,40 @@ Table3 <- tab3.monthly.high.flows(percent_difference, cn1, cn2)
 Table4 <- tab4.period.low.flows(percent_difference, cn1, cn2)
 Table5 <- tab5.period.high.flows(percent_difference, cn1, cn2)
 Table6 <- tab6.nonexceedence.flows(percent_difference, cn1, cn2)
-for (i in 1:length(cbp6.landunits)) {
-  tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
-  tmp.data <- tmp.data[complete.cases(tmp.data),]
+if (is.data.frame(cbp6.landunits)) {
   
-  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
-  tmp.tab <- tab.means.by.lrseg.flow(tmp.data)
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
-  tmp.tab <- tab.zero.day.ratios.by.lrseg.flow(tmp.data)
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.SURO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
-  tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'suro')
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
-  tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'ifwo')
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
-  tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'agwo')
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
-  tmp.tab <- tab.means.by.lrseg.land.use(tmp.data)
-  assign(namer, tmp.tab)
-  
-  namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
-  tmp.tab <- tab.zero.day.ratios.by.lrseg.land.use(tmp.data)
-  assign(namer, tmp.tab)
+  for (i in 1:length(cbp6.landunits)) {
+    tmp.data <- vahydro_import_lrseg_all_flows(cbp6.landunits[i], run.id, token, site, start.date, end.date)
+    tmp.data <- tmp.data[complete.cases(tmp.data),]
+    
+    namer <- paste0('tab.', cbp6.landunits[i], '.means.by.flow')
+    tmp.tab <- tab.means.by.lrseg.flow(tmp.data)
+    assign(namer, tmp.tab)
+    
+    namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.flow')
+    tmp.tab <- tab.zero.day.ratios.by.lrseg.flow(tmp.data)
+    assign(namer, tmp.tab)
+    
+    namer <- paste0('tab.SURO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+    tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'suro')
+    assign(namer, tmp.tab)
+    
+    namer <- paste0('tab.IFWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+    tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'ifwo')
+    assign(namer, tmp.tab)
+    
+    namer <- paste0('tab.AGWO.', cbp6.landunits[i], '.iqr.by.lrseg.flow.annual')
+    tmp.tab <- tab.iqr.by.lrseg.flow.annual(tmp.data, flow.abbreviation = 'agwo')
+    assign(namer, tmp.tab)
+    
+    namer <- paste0('tab.', cbp6.landunits[i], '.means.by.land.use')
+    tmp.tab <- tab.means.by.lrseg.land.use(tmp.data)
+    assign(namer, tmp.tab)
+    
+    namer <- paste0('tab.', cbp6.landunits[i], '.zero.day.ratios.by.land.use')
+    tmp.tab <- tab.zero.day.ratios.by.lrseg.land.use(tmp.data)
+    assign(namer, tmp.tab)
+  }
 }
 wd <- getwd()
 tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
@@ -203,17 +213,17 @@ tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
 
 ```{r, include=FALSE}
 # Creating all plots
-fig1.hydrograph(all_data, cn1, cn2)
-fig2.zoomed.hydrograph(all_data, cn1, cn2)
-fig3.flow.exceedance(all_data, cn1, cn2)
-fig4.baseflow.hydrograph(all_data, cn1, cn2)
-fig5.combined.hydrograph(all_data)
-OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data, cn1, cn2)
-fig9a.residual.plot(all_data, cn1, cn2)
-fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site, cn1, cn2)
-fig10.runit.boxplot(lri.dat)
-figs11to13.smallest.diff.periods(all_data, cn1, cn2)
-fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token)
+fig1.hydrograph(all_data, cn1, cn2, export_path)
+fig2.zoomed.hydrograph(all_data, cn1, cn2, export_path)
+fig3.flow.exceedance(all_data, cn1, cn2, export_path)
+fig4.baseflow.hydrograph(all_data, cn1, cn2, export_path)
+fig5.combined.hydrograph(all_data, export_path)
+OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data, cn1, cn2, export_path)
+fig9a.residual.plot(all_data, cn1, cn2, export_path)
+fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site, cn1, cn2, export_path)
+fig10.runit.boxplot(lri.dat, export_path)
+figs11to13.smallest.diff.periods(all_data, cn1, cn2, export_path)
+fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token, export_path)
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE, include=FALSE}
@@ -239,7 +249,7 @@ if (dat.source1 == 'gage' | dat.source2 == 'gage') {
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width='95%'}
-include_graphics("gis.png")
+include_graphics(paste0(export_path,"gis.png"))
 ```
 
 ```{r, results = 'asis', echo=FALSE, warning=FALSE, message=FALSE}
@@ -287,57 +297,57 @@ cat('\\pagebreak')
 
 ## Fig. 1: Hydrograph
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig1.png")
+include_graphics(paste0(export_path,"fig1.png"))
 ```
 
 # Fig. 2: Zoomed Hydrograph
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig2.png")
+include_graphics(paste0(export_path,"fig2.png"))
 ```
 
 # Fig. 3: Flow Exceedance
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig3.png")
+include_graphics(paste0(export_path,"fig3.png"))
 ```
 
 # Fig. 4: Baseflow
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig4.png")
+include_graphics(paste0(export_path,"fig4.png"))
 ```
 
 # Fig. 5: Combined Baseflow
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig5.png")
+include_graphics(paste0(export_path,"fig5.png"))
 ```
 
 # Fig. 6: Largest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig6.png")
+include_graphics(paste0(export_path,"fig6.png"))
 ```
 
 # Fig. 7: Second Largest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig7.png")
+include_graphics(paste0(export_path,"fig7.png"))
 ```
 
 # Fig. 8: Third Largest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig8.png")
+include_graphics(paste0(export_path,"fig8.png"))
 ```
 
 # Fig. 9A: Residuals Plot
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig9A.png")
+include_graphics(paste0(export_path,"fig9A.png"))
 ```
 
 # Fig. 9B: Area Weighted Residuals Plot
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig9B.png")
+include_graphics(paste0(export_path,"fig9B.png"))
 ```
 
 # Fig. 10: VA Hydro Scen. 1 Runit Values (Outliers Excluded)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%", results='asis', fig.align='center'}
-include_graphics("fig10.png")
+include_graphics(paste0(export_path,"fig10.png"))
 cat('\n')
 cat(paste0('## Tab: Annual IQR of Local Runoff Inflows'))
 tab.iqr.by.lrseg.lri.annual
@@ -345,17 +355,17 @@ tab.iqr.by.lrseg.lri.annual
 
 # Fig. 11: Smallest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig11.png")
+include_graphics(paste0(export_path,"fig11.png"))
 ```
 
 # Fig. 12: Second Smallest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig12.png")
+include_graphics(paste0(export_path,"fig12.png"))
 ```
 
 # Fig. 13: Third Smallest Difference Period
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics("fig13.png")
+include_graphics(paste0(export_path,"fig13.png"))
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, results="asis", out.width="150%", fig.align='center'}

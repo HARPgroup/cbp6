@@ -1,4 +1,4 @@
-fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   #Flow exceedance plot -----
@@ -74,6 +74,7 @@ fig3.flow.exceedance <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(x= "Probability of Exceedance (%)", y = "Flow (cfs)")
-  ggsave("fig3.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 3: Flow Exceedance saved at location ', as.character(getwd()), '/fig3.png', sep = ''))
+  outfile <- paste0(export_path,"fig3.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 3: Flow Exceedance saved at location ', outfile, sep = ''))
 }

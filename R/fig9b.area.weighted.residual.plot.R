@@ -1,4 +1,4 @@
-fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url, cn1='Scenario 1', cn2='Scenario 2') {
+fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   
   hydrocode = paste("vahydrosw_wshed_",riv.seg,sep="");
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
@@ -66,6 +66,7 @@ fig9b.area.weighted.residual.plot <- function(all_data, riv.seg, token, site_url
     scale_colour_manual(values=c("dark green","black"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Area Weighted Flow Difference*10^6 (ft/s)")
-  ggsave("fig9B.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 9b: Area-Weighted Residual Plot saved at location ', as.character(getwd()), '/fig9b.png', sep = ''))
+  outfile <- paste0(export_path,"fig9B.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 9b: Area-Weighted Residual Plot saved at location ', outfile, sep = ''))
 }

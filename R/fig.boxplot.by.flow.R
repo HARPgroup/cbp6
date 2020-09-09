@@ -1,4 +1,4 @@
-fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name) {
+fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name, export_path = '/tmp') {
   flow.names <- grep(flow.abbreviation, colnames(tmp.data), value = TRUE)
   date.names <- grep('thisdate', colnames(tmp.data), value = TRUE)
   flow.cols <- which(colnames(tmp.data) %in% flow.names)
@@ -16,7 +16,8 @@ fig.boxplot.by.flow <- function(tmp.data, flow.abbreviation, lrseg.name) {
   colnames(summed.data) <- c('date', 'flow')
   
   boxplot(as.numeric(summed.data$flow) ~ year(summed.data$date), outline = FALSE, ylab = 'Unit Flow (cfs)', xlab = 'Date')
-  dev.copy(png, paste0('fig.', flow.abbreviation, '.', lrseg.name, '.png'))
+  outfile <- paste(export_path, paste0('/fig', flow.abbreviation, '.', lrseg.name, '.png'),sep='/') 
+  dev.copy(png, outfile)
   dev.off()
-  print(paste('Fig.: ',  flow.abbreviation, ' Boxplot for lrseg ', lrseg.name, ' saved at location ', as.character(getwd()), '/fig', flow.abbreviation, '.', lrseg.name, '.png', sep = ''))
+  print(paste('Fig.: ',  flow.abbreviation, ' Boxplot for lrseg ', lrseg.name, ' saved at location ', outfile, sep = ''))
 }

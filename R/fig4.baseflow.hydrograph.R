@@ -1,4 +1,4 @@
-fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2') {
+fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   
@@ -89,6 +89,7 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
     scale_colour_manual(values=c("black","red"))+
     guides(colour = guide_legend(override.aes = list(size=5)))+
     labs(y = "Flow (cfs)")
-  ggsave("fig4.png", plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
-  print(paste('Fig. 4: Baseflow Hydrograph saved at location ', as.character(getwd()), '/fig4.png', sep = ''))
+  outfile <- paste0(export_path,"fig4.png")
+  ggsave(outfile, plot = myplot, device = 'png', width = 8, height = 5.5, units = 'in')
+  print(paste('Fig. 4: Baseflow Hydrograph saved at location ', outfile, sep = ''))
 }
