@@ -49,8 +49,17 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
       entity_type = "dh_feature",
       propcode = 'vahydro-1.0'
     )
+  } else if (dat.source == 'gage') {
+    # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
+    #varkey = "om_model_element",
+    inputs <- list(
+      featureid = hydroid,
+      varkey = "om_model_element",
+      entity_type = "dh_feature",
+      propcode = 'usgs-1.0'
+    )
   } else {
-    print('Error: data source is neither "cbp_model" nor "vahydro"')
+    print('Error: data source is neither "cbp_model", "gage" nor "vahydro"')
     return(FALSE)
   }
   
@@ -65,6 +74,9 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
     scen.propname <- mod.scenario
     scen.propcode <- mod.scenario
   } else if (dat.source == 'vahydro') {
+    scen.propname <- paste0('runid_', run.id)
+    scen.propcode <- ''
+  } else if (dat.source == 'gage') {
     scen.propname <- paste0('runid_', run.id)
     scen.propcode <- ''
   } else {
@@ -93,12 +105,12 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   # POST PROPERTY IF IT IS NOT YET CREATED
   if (identical(scenprop, FALSE)) {
     # create
-    sceninfo$pid = NULL
+    message("Creating scenario property")
+    inputs$pid = NULL
+    postProperty(sceninfo, site, scenprop) 
   } else {
-    sceninfo$pid = scenprop$pid
+    inputs$pid = scenario$pid
   }
-  
-  postProperty(sceninfo, site, scenprop) 
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
   scenprop <- getProperty(sceninfo, site, scenprop)

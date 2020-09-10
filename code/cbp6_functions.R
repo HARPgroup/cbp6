@@ -88,7 +88,7 @@ gage_import_data_cfs <- function(site_number, start.date, end.date) {
 #' @import hydroTSM
 #' @export vahydro_import_data_cfs
 
-vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
+vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date = '2005-12-31') {
   hydrocode = paste0("vahydrosw_wshed_", riv.seg);
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
   inputs <- list (
@@ -132,16 +132,7 @@ vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.
   # Manual elid
   elid = as.numeric(as.character(prop[1,]$propvalue))
   
-  wshed_summary_tbl = data.frame(
-    "Run ID" = character(), 
-    "Segment Name (D. Area)" = character(), 
-    "7Q10/ALF/LF-90" = character(), 
-    "WD (mean/max)" = character(), 
-    stringsAsFactors = FALSE) ;
-  #pander(odata);
-  #pander(odata);
-  
-  omsite = site <- "http://deq2.bse.vt.edu"
+  omsite <- "http://deq2.bse.vt.edu"
   dat <- fn_get_runfile(elid, run.id, site = omsite,  cached = FALSE);
   
   dat.date <- as.Date(as.character(dat$thisdate))
@@ -150,11 +141,36 @@ vahydro_import_data_cfs <- function(riv.seg, run.id, token, site = "http://deq2.
   dat.trim <- data.frame(dat.date, dat.flow, row.names = NULL)
   colnames(dat.trim) <- c('date','flow')
   
+  
   start.line <- as.numeric(which(dat.trim$date == start.date))
   end.line <- as.numeric(which(dat.trim$date == end.date))
   dat.trim <- dat.trim[start.line:end.line,]
   
+  #dat.trim <- zoo(dat.trim, order.by = dat.trim$date)
+  #dat.trim <- window(dat.trim, start = start.date, end = end.date);
   return(dat.trim)
+}
+
+vahydro_format_flow_cfs <- function(dat) {
+  
+  dat.date <- as.Date(as.character(dat$thisdate))
+  dat.flow <- as.numeric(dat$Qout)
+  
+  dat.trim <- data.frame(dat.date, dat.flow, row.names = NULL)
+  colnames(dat.trim) <- c('date','flow')
+  
+  return(dat.trim)
+}
+
+vahydro_trim_for_iha <- function(dat, start.date, end.date) {
+  # a helper function that uses zoo to filter by date range, but still returns an iha OK format
+  dat_formatted <- zoo(dat, order.by = dat$date)
+  dat_formatted <- window(dat_formatted, start = start.date, end = end.date)
+  ddf.date <- as.Date(as.character(dat_formatted$date))
+  ddf.flow <- as.numeric(dat_formatted$flow)
+  ddf.trim <- data.frame(ddf.date, ddf.flow, row.names = NULL)
+  colnames(ddf.trim) <- c('date','flow')
+  return(ddf.trim)
 }
 
 vahydro_post_metric <- function(met.varkey, met.propcode, met.name, met.value, seg.or.gage, mod.scenario = "p532cal_062211", token, site) {
@@ -4452,7 +4468,20 @@ fig.boxplot.by.flow.for.dash <- function(tmp.data, flow.abbreviation) {
   return(plot)
 }
 
-get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run.id, start.date, end.date, site, token) {
+# This function gets the unique ID of a scenario property posted to the 
+# vahydro property on a watershed feature
+# Inputs: 
+#   riv.seg - last portion of certain river segment hydrocode on vahydro. ex: 'TU3_9180_9090'
+#   mod.scenario - specific model scenario of interest, default mod.scenario is 'vahydro - 1.0'
+#   dat.source - either 'vahydro' or 'cbp_model' 
+#   run.id - unique runid for desired model run. ex: run.id = '11' for runid_11 scenario run
+#   start.date - starting date for analysis, format = 'yyyy-mm-dd'
+#   end.date - ending date for analysis, format = 'yyyy-mm-dd'
+#   site - specified vahydro site to be accessed
+#   token - vahydro token to access this specific site
+# Outputs: Unique ID for scenario property
+
+get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token) {
   # GETTING MODEL DATA FROM VA HYDRO
   hydrocode = paste("vahydrosw_wshed_", riv.seg, sep="");
   ftype = 'vahydro'; # nhd_huc8, nhd_huc10, vahydro
@@ -4472,18 +4501,10 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   
   hydroid <- odata[1,"hydroid"];
   fname <- as.character(odata[1,]$name);
-  message(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
+  print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
   if (dat.source == 'cbp_model') {
     # GETTING SCENARIO MODEL ELEMENT FROM VA HYDRO
-    inputs <- list(
-      varkey = "om_model_element",
-      featureid = hydroid,
-      entity_type = "dh_feature",
-      propcode = mod.scenario
-    )
-  }  else if (dat.source == 'gage') {
-    # GETTING SCENARIO MODEL ELEMENT for a surrogate gage FROM VA HYDRO
     inputs <- list(
       varkey = "om_model_element",
       featureid = hydroid,
@@ -4496,25 +4517,27 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
       varkey = "om_water_model_node",
       featureid = hydroid,
       entity_type = "dh_feature",
-      propcode = mod.scenario
+      propcode = 'vahydro-1.0'
+    )
+  } else if (dat.source == 'gage') {
+    # GETTING VA HYDRO MODEL ELEMENT FROM VA HYDRO
+    #varkey = "om_model_element",
+    inputs <- list(
+      featureid = hydroid,
+      varkey = "om_model_element",
+      entity_type = "dh_feature",
+      propcode = 'usgs-1.0'
     )
   } else {
-    stop('Error: data source is neither "cbp_model". "gage" nor "vahydro"')
+    print('Error: data source is neither "cbp_model", "gage" nor "vahydro"')
+    return(FALSE)
   }
   
   scenario <- getProperty(inputs, site, scenario)
   
   if (scenario == FALSE) {
-    if (dat.source == 'gage') {
-      inputs$propname <- paste('USGS weighted for ',fname)
-    } else {
-      inputs$propname <- paste(dat.source, 'model for',fname)
-    }
-    message("Creating", paste(dat.source, 'model for',fname))
-    postProperty(inputs, site, scenario) 
-    # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
-    scenario <- getProperty(inputs, site, scenario)
-  }  
+    return(FALSE)
+  }
   
   # DETERMINING PROPNAME AND PROPCODE FOR SCENARIO PROPERTY
   if (dat.source == 'cbp_model') {
@@ -4527,7 +4550,8 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
     scen.propname <- paste0('runid_', run.id)
     scen.propcode <- ''
   } else {
-    stop('Error: data source is neither "cbp_model". "gage" nor "vahydro"')
+    print('Error: data source is neither "cbp_model" nor "vahydro"')
+    return(FALSE)
   }
   
   
@@ -4551,12 +4575,12 @@ get.scen.prop <- function(riv.seg, mod.scenario = 'vahydro-1.0', dat.source, run
   # POST PROPERTY IF IT IS NOT YET CREATED
   if (identical(scenprop, FALSE)) {
     # create
-    sceninfo$pid = NULL
+    message("Creating scenario property")
+    inputs$pid = NULL
+    postProperty(sceninfo, site, scenprop) 
   } else {
-    sceninfo$pid = scenprop$pid
+    inputs$pid = scenario$pid
   }
-  
-  postProperty(sceninfo, site, scenprop) 
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
   scenprop <- getProperty(sceninfo, site, scenprop)
@@ -5347,7 +5371,7 @@ automated_metric_2_vahydro <- function(dat.source, riv.seg, gage_number, run.id,
     }
   } else if (dat.source == 'gage') {
     data <- gage_import_data_cfs(gage_number, start.date, end.date)
-    scenprop.pid <- get.scen.prop(riv.seg, 'usgs-1.0', 'vahydro', run.id = 'weighted', start.date, end.date, site, token)
+    scenprop.pid <- get.scen.prop(riv.seg, 'usgs-1.0', 'gage', run.id, start.date, end.date, site, token)
   } else if (dat.source == 'cbp_model') {
     scenprop.pid <- get.cbp.scen.prop(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token)
     if (site.or.server == 'site') {
@@ -5429,7 +5453,6 @@ automated_metric_2_vahydro <- function(dat.source, riv.seg, gage_number, run.id,
   vahydro_post_metric_to_scenprop(scenprop.pid, 'dor_mean', '', 'Drought of Record Year Mean Flow', signif(metrics$lowest.yearly.mean, digits = 3), site, token)
   vahydro_post_metric_to_scenprop(scenprop.pid, 'baseflow', '', 'Mean Baseflow', signif(metrics$avg.baseflow, digits =3), site, token)
 }
-
 get.gage.timespan <- function(gage_number, start.date = '1984-01-01', end.date = '2014-12-31') {
   temp.dat <- gage_import_data_cfs(site_number = gage_number, start.date = start.date, end.date = end.date)
   
@@ -5462,9 +5485,9 @@ post.gage.scen.prop <- function(riv.seg, gage.title, site, token) {
   print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
   inputs <- list(
-    varkey = "om_water_model_node",
     featureid = hydroid,
     entity_type = "dh_feature",
+    propname = gage.title,
     propcode = 'usgs-1.0'
   )
   
@@ -5474,12 +5497,12 @@ post.gage.scen.prop <- function(riv.seg, gage.title, site, token) {
   if (identical(scenario, FALSE)) {
     # create
     inputs$pid = NULL
+    inputs$varkey = "om_model_element"
+    postProperty(inputs, site, scenprop) 
   } else {
     inputs$pid = scenario$pid
   }
   
-  inputs$propname = gage.title
-  postProperty(inputs, site, scenprop) 
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
   scenprop <- getProperty(inputs, site, scenprop)
@@ -5490,6 +5513,7 @@ post.gage.scen.prop <- function(riv.seg, gage.title, site, token) {
   
   return(as.numeric(scenprop$pid))
 }
+
 
 vahydro_import_om_class_constant_from_scenprop <- function(scenprop.pid, met.varkey, met.propcode, met.propname, site, token) {
   hydroid = scenprop.pid

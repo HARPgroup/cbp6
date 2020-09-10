@@ -21,9 +21,9 @@ post.gage.scen.prop <- function(riv.seg, gage.title, site, token) {
   print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
   inputs <- list(
-    varkey = "om_water_model_node",
     featureid = hydroid,
     entity_type = "dh_feature",
+    propname = gage.title,
     propcode = 'usgs-1.0'
   )
   
@@ -33,12 +33,12 @@ post.gage.scen.prop <- function(riv.seg, gage.title, site, token) {
   if (identical(scenario, FALSE)) {
     # create
     inputs$pid = NULL
+    inputs$varkey = "om_model_element"
+    postProperty(inputs, site, scenprop) 
   } else {
     inputs$pid = scenario$pid
   }
   
-  inputs$propname = gage.title
-  postProperty(inputs, site, scenprop) 
   
   # RETRIEVING PROPERTY ONE LAST TIME TO RETURN HYDROID OF PROP
   scenprop <- getProperty(inputs, site, scenprop)

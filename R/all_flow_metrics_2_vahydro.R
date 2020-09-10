@@ -1,24 +1,4 @@
-automated_metric_2_vahydro <- function(dat.source, riv.seg, gage_number, run.id, gage.timespan.trimmed, mod.phase, mod.scenario, start.date, end.date, github_link, site, site.or.server = 'site', token) {
-  
-  # LOADING DATA ------------------------------------------------------------
-  if (dat.source == 'vahydro') {
-    data <- vahydro_import_data_cfs(riv.seg, run.id, token, site, start.date, end.date)
-    if (gage.timespan.trimmed == TRUE) {
-      scenprop.pid <- get.gage.timespan.scen.prop(riv.seg, run.id, site, token)
-    } else if (gage.timespan.trimmed == FALSE) {
-      scenprop.pid <- get.scen.prop(riv.seg, 'vahydro-1.0', dat.source, run.id, start.date, end.date, site, token)
-    }
-  } else if (dat.source == 'gage') {
-    data <- gage_import_data_cfs(gage_number, start.date, end.date)
-    scenprop.pid <- get.scen.prop(riv.seg, 'usgs-1.0', 'gage', run.id, start.date, end.date, site, token)
-  } else if (dat.source == 'cbp_model') {
-    scenprop.pid <- get.cbp.scen.prop(riv.seg, mod.scenario, dat.source, run.id, start.date, end.date, site, token)
-    if (site.or.server == 'site') {
-      data <- model_import_data_cfs(riv.seg, mod.phase, mod.scenario, start.date, end.date)
-    } else if (site.or.server == 'server') {
-      data <- model_server_import_data_cfs(riv.seg, mod.phase, mod.scenario, start.date, end.date)
-    }
-  }
+all_flow_metrics_2_vahydro <- function(scenprop.pid, data, token) {
   
   data <- water_year_trim(data)
   metrics <- metrics_calc_all(data) #calculate metrics into a matrix
