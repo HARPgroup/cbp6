@@ -27,7 +27,7 @@ params:
 
 ---
   
-  ```{r, include=FALSE}
+```{r, include=FALSE}
 library(knitr)
 riv.seg <- params$riv.seg
 dat.source1 <- params$dat.source1
