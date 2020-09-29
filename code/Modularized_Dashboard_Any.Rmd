@@ -65,6 +65,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
 
 ```{r, include = FALSE, message=FALSE}
 # LOADING DATA ------------------------------------------------------------
+# Get baseline data set
   if (dat.source1 == 'vahydro') {
     message("Getting VAHydro data for source 1")
     data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
@@ -85,6 +86,7 @@ if (gage_number == FALSE | is.na(gage_number) == TRUE) {
       data1 <- model_server_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
     }
   }
+# Now get data set to compare against
   if (dat.source2 == 'vahydro') {
     message("Getting VAHydro data for source 2")
     data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
@@ -291,10 +293,7 @@ Table5
 Table6
 ```
 
-```{r pagebreak, results='asis', eval=is_latex_output(), echo = FALSE, warning=FALSE, message = FALSE}
-cat('\\pagebreak')
-```
-
+\pagebreak
 ## Fig. 1: Hydrograph
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
 include_graphics(paste0(export_path,"fig1.png"))
