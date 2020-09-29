@@ -1,29 +1,29 @@
 ---
-  header-includes: \pagenumbering{gobble}
+header-includes: \pagenumbering{gobble}
 output: pdf_document 
 pdf_document: default 
 word_document: default
 html_document: default
 params: 
   riv.seg: 'YP3_6700_6670'
-dat.source1: 'gage' #'vahydro', 'gage', or 'cbp_model'
-dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
-start.date: '2004-06-29' #YYYY-MM-DD
-end.date: '2014-12-31' #YYYY-MM-DD
-github_location: "C:\\Users\\danie\\Documents\\HARP\\Github"
-site: 'http://deq2.bse.vt.edu/d.dh'
-site.or.server: 'site'
-run.id1: 'weighted'
-run.id2: '11'
-gage_number: '01671025'
-mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
-mod.scenario1: 'usgs-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
-mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
-mod.scenario2: 'vahydro-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
-gage.timespan.trimmed: TRUE
-cn1: 'VA Hydro: Runid_weighted'
-cn2: 'VA Hydro: Runid_11_gage_timespan'
-export_path_custom: FALSE
+  dat.source1: 'gage' #'vahydro', 'gage', or 'cbp_model'
+  dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
+  start.date: '2004-06-29' #YYYY-MM-DD
+  end.date: '2014-12-31' #YYYY-MM-DD
+  github_location: "C:\\Users\\danie\\Documents\\HARP\\Github"
+  site: 'http://deq2.bse.vt.edu/d.dh'
+  site.or.server: 'site'
+  run.id1: 'weighted'
+  run.id2: '11'
+  gage_number: '01671025'
+  mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
+  mod.scenario1: 'usgs-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
+  mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
+  mod.scenario2: 'vahydro-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
+  gage.timespan.trimmed: TRUE
+  cn1: 'VA Hydro: Runid_weighted'
+  cn2: 'VA Hydro: Runid_11_gage_timespan'
+  export_path_custom: FALSE
 
 ---
   
