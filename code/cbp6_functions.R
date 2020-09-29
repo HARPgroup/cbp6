@@ -2666,6 +2666,62 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
   print(paste('Fig. 13: Third Smallest Difference Period saved at location ', outfile, sep = ''))
 }
 
+findDiffPeriodSQL <- function(all_data) {
+  # an alternative using sqldf
+  
+  adata <- all_data
+  names(adata) <- c('thisdate', 'Qa', 'Qb', 'idx')
+  #adata$thisdate <- as.POSIXct(adata$thisdate)
+  # we do this using R instead of sqlite because we were unable to figure out 
+  # correct date syntax with these dates stored as numbers in R
+  adata$thisyear <- year(adata$thisdate)
+  diff90 <- sqldf(
+    "select a.thisdate, a.thisyear,
+      avg(b.Qa) as Qa, 
+      avg(b.Qb) as Qb,
+      count(b.Qb) as numdays,
+      avg(b.Qb - b.Qa) as dQ,
+      CASE WHEN avg(b.Qa) > 0 THEN (avg(b.Qb - b.Qa) / avg(b.Qa)) 
+      ELSE NULL 
+      END as dQ_pct
+    from adata as a 
+    left outer join adata as b 
+    on (
+      b.idx >= a.idx 
+      and b.idx < a.idx + 90
+    ) 
+    group by a.thisdate 
+    order by a.thisdate
+    "
+  )
+  
+  D90 <- sqldf(
+    "select a.*
+     from diff90 as a 
+     left outer join (
+       select max(abs(dQ_pct)) as dQ_pct from 
+       diff90
+     ) as b
+     on (abs(a.dQ_pct) = b.dQ_pct)
+     where abs(a.dQ_pct) = b.dQ_pct
+    "
+  )
+  d90_year <- year(D90$thisdate[1])
+  D90second <- sqldf(
+    paste0("select a.* 
+     from diff90 as a 
+     left outer join (
+       select max(abs(diff90.dQ_pct)) as dQ_pct 
+       from diff90 
+       WHERE diff90.thisyear <> ", d90_year,
+           ") as b
+     on (a.dQ_pct = b.dQ_pct)
+     where abs(a.dQ_pct) = b.dQ_pct
+    ")
+  )
+  
+}
+
 figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export_path = '/tmp/') {
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
