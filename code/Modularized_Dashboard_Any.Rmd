@@ -5,24 +5,24 @@ pdf_document: default
 word_document: default
 html_document: default
 params: 
-  riv.seg: 'YP3_6700_6670'
+  riv.seg: 'PM7_4290_4200'
   dat.source1: 'gage' #'vahydro', 'gage', or 'cbp_model'
-  dat.source2: 'vahydro' #'vahydroR', 'gage', or 'cbp_model'
-  start.date: '2004-06-29' #YYYY-MM-DD
+  dat.source2: 'cbp_model' #'vahydroR', 'gage', or 'cbp_model'
+  start.date: '1984-10-01' #YYYY-MM-DD
   end.date: '2014-12-31' #YYYY-MM-DD
-  github_location: "C:\\Users\\danie\\Documents\\HARP\\Github"
+  github_location: "/usr/local/home/git"
   site: 'http://deq2.bse.vt.edu/d.dh'
   site.or.server: 'site'
-  run.id1: 'weighted'
-  run.id2: '11'
-  gage_number: '01671025'
+  run.id1: '1'
+  run.id2: '1'
+  gage_number: '01638500'
   mod.phase1: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
   mod.scenario1: 'usgs-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or   p532cal_062211"
   mod.phase2: 'p6/p6_gb604' # 'p6/p6_gb604' (phase 6) or "p532c-sova" (phase 5)
-  mod.scenario2: 'vahydro-1.0' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
+  mod.scenario2: 'CFBASE30Y20180615' #'CFBASE30Y20180615' or 'CBASE1808L55CY55R45P50R45P50Y' or p532cal_062211"
   gage.timespan.trimmed: TRUE
-  cn1: 'VA Hydro: Runid_weighted'
-  cn2: 'VA Hydro: Runid_11_gage_timespan'
+  cn1: 'USGS 01638500'
+  cn2: 'CBP Phase 6'
   export_path_custom: FALSE
   
 ---
@@ -165,8 +165,10 @@ if (dat.source1 != 'vahydro') {
   run.id <- run.id1
 }
 # Downloading local runoff inflow data
-  lri.dat <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id, token, site, start.date, end.date);
+lri.dat <- vahydro_import_local.runoff.inflows_cfs(riv.seg, run.id, token, site, start.date, end.date);
+if (!is.logical(lri.dat)) {
   lri.dat <- subset(lri.dat, lri.dat$date >= start.date & lri.dat$date <= end.date);
+}  
 # Creating all tables
 Table1 <- tab1.monthly.low.flows(percent_difference, cn1, cn2)
 Table2 <- tab2.monthly.average.flows(percent_difference, cn1, cn2)
@@ -210,7 +212,10 @@ if (is.data.frame(cbp6.landunits)) {
   }
 }
 wd <- getwd()
-tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
+if (!is.logical(lri.dat)) {
+  tab.iqr.by.lrseg.lri.annual <- tab.iqr.by.lrseg.lri.annual(lri.dat)
+}
+
 ```
 
 ```{r, include=FALSE}
@@ -223,7 +228,9 @@ fig5.combined.hydrograph(all_data, export_path)
 OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data, cn1, cn2, export_path)
 fig9a.residual.plot(all_data, cn1, cn2, export_path)
 fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site, cn1, cn2, export_path)
-fig10.runit.boxplot(lri.dat, export_path)
+if (!is.logical(lri.dat)) {
+  fig10.runit.boxplot(lri.dat, export_path)
+}
 figs11to13.smallest.diff.periods(all_data, cn1, cn2, export_path)
 fig.gis(riv.seg, site_number = gage_number, site_url = site, cbp6_link, token, export_path)
 ```
