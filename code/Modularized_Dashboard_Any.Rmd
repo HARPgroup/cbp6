@@ -356,7 +356,11 @@ include_graphics(paste0(export_path,"fig9B.png"))
 include_graphics(paste0(export_path,"fig10.png"))
 cat('\n')
 cat(paste0('## Tab: Annual IQR of Local Runoff Inflows'))
-tab.iqr.by.lrseg.lri.annual
+if (!is.logical(lri.dat)) {
+  tab.iqr.by.lrseg.lri.annual
+} else {
+  cat("Land Use Runoff data not available")
+}
 ```
 
 # Fig. 11: Smallest Difference Period
