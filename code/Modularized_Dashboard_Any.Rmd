@@ -353,12 +353,13 @@ include_graphics(paste0(export_path,"fig9B.png"))
 
 # Fig. 10: VA Hydro Scen. 1 Runit Values (Outliers Excluded)
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%", results='asis', fig.align='center'}
-include_graphics(paste0(export_path,"fig10.png"))
 cat('\n')
-cat(paste0('## Tab: Annual IQR of Local Runoff Inflows'))
 if (!is.logical(lri.dat)) {
+include_graphics(paste0(export_path,"fig10.png"))
   tab.iqr.by.lrseg.lri.annual
+  cat(paste0('## Tab: Annual IQR of Local Runoff Inflows'))
 } else {
+  cat(paste0('## Tab: Annual IQR of Local Runoff Inflows'))
   cat("Land Use Runoff data not available")
 }
 ```
