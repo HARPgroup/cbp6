@@ -12,6 +12,7 @@ monthly_min <- function(data, num.month) {
   data$month <- month(ymd(data$date))
   data$day <- day(ymd(data$date))
   monthly_mins <- zoo(data$flow, order.by = data$date)
-  min_flows <- fn_iha_mlf(monthly_mins,num.month);
+  moname = month.name[num.month]
+  min_flows <- fn_iha_mlf(monthly_mins,moname);
   return(min_flows)
 }
