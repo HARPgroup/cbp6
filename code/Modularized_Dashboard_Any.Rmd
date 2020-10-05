@@ -61,52 +61,46 @@ if (!is.logical(export_path_custom)) {
 if (gage_number == FALSE | is.na(gage_number) == TRUE) {
   gage_number <- '00000000'
 }
+mrun_name1 <- paste0('runid_', run.id1)
+mrun_name2 <- paste0('runid_', run.id2)
 ```
 
 ```{r, include = FALSE, message=FALSE}
 # LOADING DATA ------------------------------------------------------------
-# Get baseline data set
-  if (dat.source1 == 'vahydro') {
-    message("Getting VAHydro data for source 1")
-    data1 <- vahydro_import_data_cfs(riv.seg, run.id1, token, site, start.date, end.date)
-    if (gage.timespan.trimmed == TRUE) {
-      scenprop1 <- get.gage.timespan.scen.prop(riv.seg, run.id1, site, token)
-    } else if (gage.timespan.trimmed == FALSE) {
-      scenprop1 <- get.scen.prop(riv.seg, 'vahydro-1.0', dat.source1, run.id1, start.date, end.date, site, token)
-    }
-  } else if (dat.source1 == 'gage') {
-    message("Getting USGS gage data for source 1")
-    data1 <- gage_import_data_cfs(gage_number, start.date, end.date)
-    scenprop1 <- get.scen.prop(riv.seg, 'usgs-1.0', dat.source1, run.id1, start.date, end.date, site, token)
-  } else if (dat.source1 == 'cbp_model') {
-    scenprop1 <- get.cbp.scen.prop(riv.seg, mod.scenario1, dat.source1, run.id1, start.date, end.date, site, token)
-    if (site.or.server == 'site') {
-      data1 <- model_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
-    } else if (site.or.server == 'server') {
-      data1 <- model_server_import_data_cfs(riv.seg, mod.phase1, mod.scenario1, start.date, end.date)
-    }
+# Load feature
+hydrocode = paste0("vahydrosw_wshed_", riv.seg);
+feature = om_get_feature(site, hydrocode, 'watershed', 'vahydro')
+hydroid = feature$hydroid
+if (dat.source1 == 'gage') {
+  id1 <- gage_number
+} else {
+  id1 <- riv.seg
+  if (gage.timespan.trimmed == TRUE) {
+    mrun_name1 <- paste0(mrun_name1,'_gage_weighted')
   }
+}
+data1 <- om_get_watershed_model_data(dat.source1, id1, run.id1, 
+  mod.phase1, mod.scenario1, start.date, end.date
+)
+m1 <- om_get_model(site, hydroid, 'dh_feature', mod.scenario1, 'any')
+model_run1 <- om_get_set_model_run(m1$pid, mrun_name1, site, token)
+scenprop1 <- model_run1$pid
+
 # Now get data set to compare against
-  if (dat.source2 == 'vahydro') {
-    message("Getting VAHydro data for source 2")
-    data2 <- vahydro_import_data_cfs(riv.seg, run.id2, token, site, start.date, end.date)
-    if (gage.timespan.trimmed == TRUE) {
-      scenprop2 <- get.gage.timespan.scen.prop(riv.seg, run.id2, site, token)
-    } else if (gage.timespan.trimmed == FALSE) {
-      scenprop2 <- get.scen.prop(riv.seg, 'vahydro-1.0', dat.source2, run.id2, start.date, end.date, site, token)
-    }
-  } else if (dat.source2 == 'gage') {
-    message("Getting USGS gage data for source 2")
-    data2 <- gage_import_data_cfs(gage_number, start.date, end.date)
-    scenprop2 <- get.scen.prop(riv.seg, 'usgs-1.0', dat.source, run.id =  run.id2, start.date, end.date, site, token)
-  } else if (dat.source2 == 'cbp_model') {
-    scenprop2 <- get.cbp.scen.prop(riv.seg, mod.scenario2, dat.source2, run.id2, start.date, end.date, site, token)
-    if (site.or.server == 'site') {
-      data2 <- model_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
-    } else if (site.or.server == 'server') {
-      data2 <- model_server_import_data_cfs(riv.seg, mod.phase2, mod.scenario2, start.date, end.date)
-    }
+if (dat.source2 == 'gage') {
+  id2 <- gage_number
+} else {
+  id2 <- riv.seg
+  if (gage.timespan.trimmed == TRUE) {
+    mrun_name2 <- paste0(mrun_name2,'_gage_weighted')
   }
+}
+data2 <- om_get_watershed_model_data(dat.source2, id2, run.id2, 
+  mod.phase2, mod.scenario2, start.date, end.date
+)
+m2 <- om_get_model(site, hydroid, 'dh_feature', mod.scenario2, 'any')
+model_run2 <- om_get_set_model_run(m2$pid, mrun_name2, site, token)
+scenprop2 <- model_run2$pid
 
 # TRIMMING DATA TO PROPER WATER YEAR
 data1 <- water_year_trim(data1)

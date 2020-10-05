@@ -423,7 +423,8 @@ monthly_max <- function(data, num.month) {
   data$month <- month(ymd(data$date))
   data$day <- day(ymd(data$date))
   monthly_maxs <- zoo(data$flow, order.by = data$date)
-  max_flows <- fn_iha_mhf(monthly_maxs,num.month);
+  moname = month.name[num.month]
+  max_flows <- fn_iha_mhf(monthly_maxs,moname);
   return(max_flows)
 }
 
@@ -4560,6 +4561,9 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
   fname <- as.character(odata[1,]$name);
   print(paste("Retrieved hydroid", hydroid, "for", fname, riv.seg, sep=' '));
   
+  # @todo: all of this logic needs to go, the request should understand
+  #        the data model sufficiently to prevent this necessity.
+  #        similarly, all models should share the same structure.
   if (dat.source == 'cbp_model') {
     # GETTING SCENARIO MODEL ELEMENT FROM VA HYDRO
     inputs <- list(
@@ -4610,8 +4614,6 @@ get.scen.prop <- function(riv.seg, mod.scenario, dat.source, run.id, start.date,
     print('Error: data source is neither "cbp_model" nor "vahydro"')
     return(FALSE)
   }
-  
-  
   
   # GETTING SCENARIO PROPERTY FROM VA HYDRO
   sceninfo <- list(
