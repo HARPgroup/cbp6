@@ -26,7 +26,6 @@ model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date =
   riv.segStr1 <- strsplit(riv.seg, "\\+")
   riv.segStr1 <- riv.segStr1[[1]]
   num.segs1 <- length(riv.segStr1)
-  model_days1 <- length(seq(as.Date(start.date):as.Date(end.date)))
   # Converting hourly to daily data and exporting daily data
   model_hourly <- model_hourly[-1,]
   model_hourly$V1 <- trimws(model_hourly$V1, which = "both")
@@ -54,7 +53,6 @@ model_server_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start
   riv.segStr1 <- strsplit(riv.seg, "\\+")
   riv.segStr1 <- riv.segStr1[[1]]
   num.segs1 <- length(riv.segStr1)
-  model_days1 <- length(seq(as.Date(start.date):as.Date(end.date)))
   # Converting hourly to daily data and exporting daily data
   model_hourly <- model_hourly[-1,]
   model_hourly$V1 <- trimws(model_hourly$V1, which = "both")
