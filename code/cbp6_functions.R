@@ -3470,7 +3470,9 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
   
   # Baseflow Indiviuda[l Graph -----
   data1 <- all_data[,c('Date','Scenario 1 Flow')]
+  names(data1) <- c('date', 'flow')
   data2 <- all_data[,c('Date','Scenario 2 Flow')]
+  names(data2) <- c('date', 'flow')
   
   data1$year <- year(ymd(data1$date))
   data1$month <- month(ymd(data1$date))
