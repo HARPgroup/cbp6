@@ -2738,6 +2738,7 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   # and a date that is roughly one year and two months past the first date
   YearStart <- as.character(as.Date(all_data$Date[1]))     
   fixer <- as.numeric(which(all_data$Date == paste0((year(YearStart)+1),"-11-30")))
+  fixer <- fixer[1,] # in case we are sub-daily timestep
   YearEnd <- as.character(as.Date(all_data$Date[fixer]))
   
   # YearStart_Row and YearEnd_Row are the rows corresponding the the YearStart and YearEnd dates
@@ -3351,6 +3352,10 @@ fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', ex
 }
 
 fig5.combined.hydrograph <- function(all_data, export_path = '/tmp/') {
+  data1 <- all_data[,c('Date','Scenario 1 Flow')]
+  names(data1) <- c('date', 'flow')
+  data2 <- all_data[,c('Date','Scenario 2 Flow')]
+  names(data2) <- c('date', 'flow')
   data1$year <- year(ymd(data1$date))
   data1$month <- month(ymd(data1$date))
   data1$day <- day(ymd(data1$date))
