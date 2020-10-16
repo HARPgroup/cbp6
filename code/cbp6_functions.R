@@ -2738,7 +2738,7 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   # and a date that is roughly one year and two months past the first date
   YearStart <- as.character(as.Date(all_data$Date[1]))     
   fixer <- as.numeric(which(all_data$Date == paste0((year(YearStart)+1),"-11-30")))
-  fixer <- fixer[1,] # in case we are sub-daily timestep
+  fixer <- fixer[1] # in case we are sub-daily timestep
   YearEnd <- as.character(as.Date(all_data$Date[fixer]))
   
   # YearStart_Row and YearEnd_Row are the rows corresponding the the YearStart and YearEnd dates
