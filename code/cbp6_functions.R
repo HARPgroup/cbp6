@@ -2352,11 +2352,13 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
   # and a date that is roughly one year and two months past the first date
   YearStart <- as.character(as.Date(all_data$Date[1]))     
   fixer <- as.numeric(which(all_data$Date == paste0((year(YearStart)+1),"-11-30")))
+  fixer <- fixer[1] # in case we are sub-daily timestep
   YearEnd <- as.character(as.Date(all_data$Date[fixer]))
   
   # YearStart_Row and YearEnd_Row are the rows corresponding the the YearStart and YearEnd dates
-  YearStart_Row <- as.numeric(which(all_data$Date==YearStart)) 
-  YearEnd_Row <- as.numeric(which(all_data$Date==YearEnd))
+  YearStart_Row <- as.numeric(min(which(all_data$Date==YearStart)) )
+  YearEnd_Row <- as.numeric(max(which(all_data$Date==YearEnd)))
+  
   
   # initalize dataframes and counters, assign names for dataframe columns
   #AvgMonthlyDifference: used within nested for loop to create a 1x12 matrix that holds 1 year of 3 month difference segments
@@ -2371,7 +2373,7 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
   
   # start loops used for yearly and monthly data  -------------------------------------------------------------
   
-  loop <- as.numeric(round(length(all_data$Date)/365, digits = 0))-1
+  loop <- as.numeric(round(length(unique(all_data$Date) )/365, digits = 0))-1
   for (i in 1:loop){                                # run loop for an entire data series
     year <- all_data[YearStart_Row:YearEnd_Row,] # specify year: 10-01-year1 to 11-30-year2
     m <- 1                                        # counter for nested loop
@@ -2388,14 +2390,14 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
     # (technically specifies 01 of month 4)
     
     # row numbers corresponding with start and end dates, as a number. See note below 
-    MonthStart_Row <- as.numeric(which(as.Date(all_data$Date)==as.Date(MonthStart)))
-    MonthEnd_Row <- as.numeric(which(as.Date(all_data$Date)==as.Date(MonthEnd)))
+    MonthStart_Row <- min(as.numeric(which(as.Date(all_data$Date)==as.Date(MonthStart))))
+    MonthEnd_Row <- max(as.numeric(which(as.Date(all_data$Date)==as.Date(MonthEnd))) )
     
     # Note: Counter column is used here to specify which row starts MonthStart and MonthEnd_Row.
     # When rows are pulled from year row numbers are also pulled, 
     # so a counter must be used for proper row numbers.
-    Start_new <- as.numeric(which(year$Counter==MonthStart_Row))
-    End_new <- as.numeric(which(year$Counter==MonthEnd_Row))
+    Start_new <- as.numeric(min(which(year$Counter==MonthStart_Row)))
+    End_new <- as.numeric(max(which(year$Counter==MonthEnd_Row)))
     
     # begin nested loop
     for (m in 1:12){
@@ -2425,10 +2427,13 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
       MonthEnd <- MonthEnd+1
       MonthEnd <- next.month(MonthEnd)
       MonthEnd <- MonthEnd-1
-      StartMonth_Row <- which(as.Date(all_data$Date)==as.Date(MonthStart));     
+      StartMonth_Row <- min(which(as.Date(all_data$Date)==as.Date(MonthStart)) )
       StartMonth_Row <- as.numeric(StartMonth_Row)
-      EndMonth_Row <- which(as.Date(all_data$Date)==as.Date(MonthEnd));     
+      EndMonth_Row <- max(which(as.Date(all_data$Date)==as.Date(MonthEnd)) )
       EndMonth_Row <- as.numeric(EndMonth_Row)
+      if (!(EndMonth_Row > 0)) {
+        EndMonth_Row <- max(index(all_data$Date))
+      }
       Start_new <- which(year$Counter==StartMonth_Row)
       End_new <- which(year$Counter==EndMonth_Row)
       m <- m + 1
@@ -2455,8 +2460,11 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
     YearEndCheck <- as.Date(paste0(YearEndyear,'-11-30'))
     if (YearEnd != YearEndCheck)     
       YearEnd <- as.Date(paste0(YearEndyear,'-11-30'))
-    YearStart_Row <- which(as.Date(all_data$Date)== as.Date(YearStart))
-    YearEnd_Row <- which(as.Date(all_data$Date) == as.Date(YearEnd))
+    YearStart_Row <- min(which(as.Date(all_data$Date)== as.Date(YearStart)) )
+    YearEnd_Row <- max(which(as.Date(all_data$Date) == as.Date(YearEnd)) )
+    if (!(YearEnd_Row > 0)) {
+      YearEnd_Row <- max(index(all_data$Date))
+    }
     
     i <- i + 1
   }
@@ -2516,8 +2524,8 @@ figs11to13.smallest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Sc
     
     differencedates[q,1]<- as.character(differenceyear$startdate[q])
     differencedates[q,2]<- as.character(differenceyear$enddate[q]-1)
-    differencedates[q,3]<- which(as.Date(all_data$Date)==as.Date(differencedates$`start date row`[q]))
-    differencedates[q,4]<- which(as.Date(all_data$Date)==as.Date(differencedates$`end date row`[q]))
+    differencedates[q,3]<- min(which(as.Date(all_data$Date)==as.Date(differencedates$`start date row`[q])))
+    differencedates[q,4]<- max(which(as.Date(all_data$Date)==as.Date(differencedates$`end date row`[q])))
     
     plot1<-all_data[differencedates$V3[q]:differencedates$V4[q],]
     if (q==1){
@@ -2738,11 +2746,12 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   # and a date that is roughly one year and two months past the first date
   YearStart <- as.character(as.Date(all_data$Date[1]))     
   fixer <- as.numeric(which(all_data$Date == paste0((year(YearStart)+1),"-11-30")))
+  fixer <- fixer[1] # in case we are sub-daily timestep
   YearEnd <- as.character(as.Date(all_data$Date[fixer]))
   
   # YearStart_Row and YearEnd_Row are the rows corresponding the the YearStart and YearEnd dates
-  YearStart_Row <- as.numeric(which(all_data$Date==YearStart)) 
-  YearEnd_Row <- as.numeric(which(all_data$Date==YearEnd))
+  YearStart_Row <- as.numeric(min(which(all_data$Date==YearStart)) )
+  YearEnd_Row <- as.numeric(max(which(all_data$Date==YearEnd)))
   
   # initalize dataframes and counters, assign names for dataframe columns
   #AvgMonthlyDifference: used within nested for loop to create a 1x12 matrix that holds 1 year of 3 month difference segments
@@ -2757,7 +2766,7 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
   
   # start loops used for yearly and monthly data  -------------------------------------------------------------
   
-  loop <- as.numeric(round(length(all_data$Date)/365, digits = 0))-1
+  loop <- as.numeric(round(length(unique(all_data$Date) )/365, digits = 0))-1
   for (i in 1:loop){                                # run loop for an entire data series
     year <- all_data[YearStart_Row:YearEnd_Row,] # specify year: 10-01-year1 to 11-30-year2
     m <- 1                                        # counter for nested loop
@@ -2774,14 +2783,14 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     # (technically specifies 01 of month 4)
     
     # row numbers corresponding with start and end dates, as a number. See note below 
-    MonthStart_Row <- as.numeric(which(as.Date(all_data$Date)==as.Date(MonthStart)))
-    MonthEnd_Row <- as.numeric(which(as.Date(all_data$Date)==as.Date(MonthEnd)))
+    MonthStart_Row <- min(as.numeric(which(as.Date(all_data$Date)==as.Date(MonthStart))))
+    MonthEnd_Row <- max(as.numeric(which(as.Date(all_data$Date)==as.Date(MonthEnd))) )
     
     # Note: Counter column is used here to specify which row starts MonthStart and MonthEnd_Row.
     # When rows are pulled from year row numbers are also pulled, 
     # so a counter must be used for proper row numbers.
-    Start_new <- as.numeric(which(year$Counter==MonthStart_Row))
-    End_new <- as.numeric(which(year$Counter==MonthEnd_Row))
+    Start_new <- as.numeric(min(which(year$Counter==MonthStart_Row)))
+    End_new <- as.numeric(max(which(year$Counter==MonthEnd_Row)))
     
     # begin nested loop
     for (m in 1:12){
@@ -2811,10 +2820,13 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
       MonthEnd <- MonthEnd+1
       MonthEnd <- next.month(MonthEnd)
       MonthEnd <- MonthEnd-1
-      StartMonth_Row <- which(as.Date(all_data$Date)==as.Date(MonthStart));     
+      StartMonth_Row <- min(which(as.Date(all_data$Date)==as.Date(MonthStart)) )
       StartMonth_Row <- as.numeric(StartMonth_Row)
-      EndMonth_Row <- which(as.Date(all_data$Date)==as.Date(MonthEnd));     
+      EndMonth_Row <- max(which(as.Date(all_data$Date)==as.Date(MonthEnd)) )
       EndMonth_Row <- as.numeric(EndMonth_Row)
+      if (!(EndMonth_Row > 0)) {
+        EndMonth_Row <- max(index(all_data$Date))
+      }
       Start_new <- which(year$Counter==StartMonth_Row)
       End_new <- which(year$Counter==EndMonth_Row)
       m <- m + 1
@@ -2841,9 +2853,11 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     YearEndCheck <- as.Date(paste0(YearEndyear,'-11-30'))
     if (YearEnd != YearEndCheck)     
       YearEnd <- as.Date(paste0(YearEndyear,'-11-30'))
-    YearStart_Row <- which(as.Date(all_data$Date)== as.Date(YearStart))
-    YearEnd_Row <- which(as.Date(all_data$Date) == as.Date(YearEnd))
-    
+    YearStart_Row <- min(which(as.Date(all_data$Date)== as.Date(YearStart)) )
+    YearEnd_Row <- max(which(as.Date(all_data$Date) == as.Date(YearEnd)) )
+    if (!(YearEnd_Row > 0)) {
+      YearEnd_Row <- max(index(all_data$Date))
+    }
     i <- i + 1
   }
   
@@ -2902,8 +2916,8 @@ figs6to8.largest.diff.periods <- function(all_data, cn1='Scenario 1', cn2='Scena
     
     differencedates[q,1]<- as.character(differenceyear$startdate[q])
     differencedates[q,2]<- as.character(differenceyear$enddate[q]-1)
-    differencedates[q,3]<- which(as.Date(all_data$Date)==as.Date(differencedates$`start date row`[q]))
-    differencedates[q,4]<- which(as.Date(all_data$Date)==as.Date(differencedates$`end date row`[q]))
+    differencedates[q,3]<- min(which(as.Date(all_data$Date)==as.Date(differencedates$`start date row`[q])))
+    differencedates[q,4]<- max(which(as.Date(all_data$Date)==as.Date(differencedates$`end date row`[q])))
     
     plot1<-all_data[differencedates$V3[q]:differencedates$V4[q],]
     if (q==1){
@@ -3351,6 +3365,10 @@ fig9a.residual.plot <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', ex
 }
 
 fig5.combined.hydrograph <- function(all_data, export_path = '/tmp/') {
+  data1 <- all_data[,c('Date','Scenario 1 Flow')]
+  names(data1) <- c('date', 'flow')
+  data2 <- all_data[,c('Date','Scenario 2 Flow')]
+  names(data2) <- c('date', 'flow')
   data1$year <- year(ymd(data1$date))
   data1$month <- month(ymd(data1$date))
   data1$day <- day(ymd(data1$date))
@@ -3450,7 +3468,9 @@ fig4.baseflow.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2
   cn1 <- paste0('1: ', cn1)
   cn2 <- paste0('2: ', cn2)
   
-  # Baseflow Indiviudal Graph -----
+  # Baseflow Indiviuda[l Graph -----
+  data1 <- all_data[,c('Date','Scenario 1 Flow')]
+  data2 <- all_data[,c('Date','Scenario 2 Flow')]
   
   data1$year <- year(ymd(data1$date))
   data1$month <- month(ymd(data1$date))
