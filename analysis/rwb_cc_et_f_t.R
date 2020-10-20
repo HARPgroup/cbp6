@@ -1,3 +1,6 @@
+# TO run this first
+# you must include pcrp.evap.landuse.table.R
+
 precp_ens_10_pct <- PRCP.ENS.10.PCT
 temp_ens_10_pct <- TEMP.ENS.10.PCT
 pct_changes_10 <- pct.changes.10
@@ -75,7 +78,6 @@ decall
 plot(decall$dec_dpre ~ decall$dec_dtmp)
 plot(decall$evap ~ decall$dtmp)
 plot(decall$dpre ~ decall$dtmp)
-# include pcrp.evap.landuse.table.R
 plot(pct.changes.10$evap.mean ~ pct.changes.10$prcp.mean, ylim = c(0,20), xlim = c(-10, 30))
 points(pct.changes.50$evap.mean ~ pct.changes.50$prcp.mean, col = 'red')
 points(pct.changes.90$evap.mean ~ pct.changes.90$prcp.mean, col = 'blue')
