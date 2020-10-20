@@ -76,7 +76,7 @@ if (dat.source1 == 'gage') {
 } else {
   id1 <- riv.seg
   if (gage.timespan.trimmed == TRUE) {
-    mrun_name1 <- paste0(mrun_name1,'_gage_weighted')
+    mrun_name1 <- paste0(mrun_name1,'_gage_timespan')
   }
 }
 data1 <- om_get_watershed_model_data(dat.source1, id1, run.id1, 
