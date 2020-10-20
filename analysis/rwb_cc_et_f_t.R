@@ -77,6 +77,7 @@ decall <- sqldf(
 decall
 plot(decall$dec_dpre ~ decall$dec_dtmp)
 plot(decall$evap ~ decall$dtmp)
+plot(dec10$evap ~ dec10$dtmp)
 plot(decall$dpre ~ decall$dtmp)
 plot(pct.changes.10$evap.mean ~ pct.changes.10$prcp.mean, ylim = c(0,20), xlim = c(-10, 30))
 points(pct.changes.50$evap.mean ~ pct.changes.50$prcp.mean, col = 'red')
