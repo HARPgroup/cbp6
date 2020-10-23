@@ -1,6 +1,16 @@
 all_flow_metrics_2_vahydro <- function(scenprop.pid, data, token) {
   
   data <- water_year_trim(data)
+  data <- aggregate(
+    data,
+    as.POSIXct(
+      format(
+        time(data), 
+        format='%Y/%m/%d'),
+      tz='UTC'
+    ),
+    'mean'
+  )
   metrics <- metrics_calc_all(data) #calculate metrics into a matrix
   
   #posts metrics to vahydro

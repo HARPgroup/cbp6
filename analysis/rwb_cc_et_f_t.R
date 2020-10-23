@@ -20,7 +20,8 @@ names(pct_changes_90) <- pct_names
 
 dec10 <- sqldf(
   ' select a.FIPS, a.Dec as dec_dpre, b.Dec as dec_dtmp, 
-      a.Total as dtmp, b.Total as dpre, c.evap_mean as evap
+      b.Jul as jul_dtmp, 
+      a.Total as dpre, b.Total as dtmp, c.evap_mean as evap
     from precp_ens_10_pct as a
     left outer join temp_ens_10_pct as b 
     on (
@@ -36,7 +37,7 @@ plot(dec10$dec_dpre ~ dec10$dec_dtmp)
 
 dec50 <- sqldf(
   ' select a.FIPS, a.Dec as dec_dpre, b.Dec as dec_dtmp, 
-      a.Total as dtmp, b.Total as dpre, c.evap_mean as evap
+      a.Total as dpre, b.Total as dtmp, c.evap_mean as evap
     from precp_ens_50_pct as a
     left outer join temp_ens_50_pct as b 
     on (
@@ -52,7 +53,7 @@ plot(dec50$dec_dpre ~ dec50$dec_dtmp)
 
 dec90 <- sqldf(
   ' select a.FIPS, a.Dec as dec_dpre, b.Dec as dec_dtmp, 
-      a.Total as dtmp, b.Total as dpre, c.evap_mean as evap
+      a.Total as dpre, b.Total as dtmp, c.evap_mean as evap
     from precp_ens_90_pct as a
     left outer join temp_ens_90_pct as b 
     on (
@@ -76,7 +77,13 @@ decall <- sqldf(
 )
 decall
 plot(decall$dec_dpre ~ decall$dec_dtmp)
-plot(decall$evap ~ decall$dtmp)
+# change in evap = f(overall change in temp)
+plot(
+  decall$evap ~ decall$dtmp, 
+  xlab = 'Modeled Change in Temperature (%)',
+  ylab = 'Modeled Change in Evaporation (%)'
+)
+# plot the decreasers in p10
 plot(dec10$evap ~ dec10$dtmp)
 plot(decall$dpre ~ decall$dtmp)
 plot(pct.changes.10$evap.mean ~ pct.changes.10$prcp.mean, ylim = c(0,20), xlim = c(-10, 30))
