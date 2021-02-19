@@ -1,9 +1,14 @@
 # Creates plots of temperature/precipitation against latitude/longitude, with the used GCMs designated
 # by color and described in the legends of the generated images.
+#----------------------------------------------
+site <- "http://deq2.bse.vt.edu/d.dh"    #Specify the site of interest, either d.bet OR d.dh
+#----------------------------------------------
+# Load Libraries
+basepath='/var/www/R';
+source(paste(basepath,'config.R',sep='/'))
+cbp6_location <- 'https://raw.githubusercontent.com/HARPgroup/cbp6/master'
+data.location <- paste0(cbp6_location,'/Data/CBP6_Temp_Prcp_Data/')
 
-basepath <- '/var/www/R'
-source(paste(basepath,"config.local.private", sep = "/"))
-data.location <- paste0(cbp6_location, '\\Data\\CBP6_Temp_Prcp_Data')
 va.or.cbw <- 'va'
 
 # CREATING DIRECTORY TO STORE DATA AND OUTPUTS
@@ -12,9 +17,9 @@ dir.location <- '~/Precip_and_Temp_Mapper'
 setwd('/var/www/R')
 
 if (va.or.cbw == 'va') {
-  lseg.loc <- paste0(data.location, '\\P6_LSegs_VA')
+  lseg.loc <- paste0(data.location, 'P6_LSegs_VA')
 } else if (va.or.cbw == 'cbw') {
-  lseg.loc <- paste0(data.location, '\\P6_LSegs')
+  lseg.loc <- paste0(data.location, 'P6_LSegs')
 } else {
   print(paste('ERROR: Neither VA nor CBW selected'))
 }
@@ -131,14 +136,14 @@ PRCP.ENS.90.PCT <- merge(PRCP.ENS.90.PCT, model.name.90, by.x = 'FIPS_NHL', by.y
 
 
 library(randomcoloR)
-cols <- distinctColorPalette(k = length(unique(PRCP.ENS.10.PCT$Model)), altCol = FALSE, runTsne = FALSE)
-mods <- unique(PRCP.ENS.10.PCT$Model)
+cols <- distinctColorPalette(k = length(unique(PRCP.ENS.10.PCT$Model.x)), altCol = FALSE, runTsne = FALSE)
+mods <- unique(PRCP.ENS.10.PCT$Model.x)
 modcols <- data.frame(cols, mods)
 
 PRCP.ENS.10.PCT$Colors <- NA
 
-for (i in 1:length(PRCP.ENS.10.PCT$Model)) {
-  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(PRCP.ENS.10.PCT$Model[i]))])
+for (i in 1:length(PRCP.ENS.10.PCT$Model.x)) {
+  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(PRCP.ENS.10.PCT$Model.x[i]))])
   PRCP.ENS.10.PCT$Colors[i] <- test
 }
 
@@ -154,14 +159,14 @@ legend('bottomright', legend = unique(p10.prcp.lsegs$Model), fill = unique(p10.p
 dev.off()
 
 # P50
-cols <- distinctColorPalette(k = length(unique(PRCP.ENS.50.PCT$Model)), altCol = FALSE, runTsne = FALSE)
-mods <- unique(PRCP.ENS.50.PCT$Model)
+cols <- distinctColorPalette(k = length(unique(PRCP.ENS.50.PCT$Model.x)), altCol = FALSE, runTsne = FALSE)
+mods <- unique(PRCP.ENS.50.PCT$Model.x)
 modcols <- data.frame(cols, mods)
 
 PRCP.ENS.50.PCT$Colors <- NA
 
-for (i in 1:length(PRCP.ENS.50.PCT$Model)) {
-  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(PRCP.ENS.50.PCT$Model[i]))])
+for (i in 1:length(PRCP.ENS.50.PCT$Model.x)) {
+  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(PRCP.ENS.50.PCT$Model.x[i]))])
   PRCP.ENS.50.PCT$Colors[i] <- test
 }
 
@@ -177,14 +182,14 @@ legend('bottomright', legend = unique(p50.prcp.lsegs$Model), fill = unique(p50.p
 dev.off()
 
 # P90
-cols <- distinctColorPalette(k = length(unique(PRCP.ENS.90.PCT$Model)), altCol = FALSE, runTsne = FALSE)
-mods <- unique(PRCP.ENS.90.PCT$Model)
+cols <- distinctColorPalette(k = length(unique(PRCP.ENS.90.PCT$Model.x)), altCol = FALSE, runTsne = FALSE)
+mods <- unique(PRCP.ENS.90.PCT$Model.x)
 modcols <- data.frame(cols, mods)
 
 PRCP.ENS.90.PCT$Colors <- NA
 
-for (i in 1:length(PRCP.ENS.90.PCT$Model)) {
-  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(PRCP.ENS.90.PCT$Model[i]))])
+for (i in 1:length(PRCP.ENS.90.PCT$Model.x)) {
+  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(PRCP.ENS.90.PCT$Model.x[i]))])
   PRCP.ENS.90.PCT$Colors[i] <- test
 }
 
@@ -295,14 +300,14 @@ TEMP.ENS.90.PCT <- merge(TEMP.ENS.90.PCT, model.name.90, by.x = 'FIPS_NHL', by.y
 
 
 library(randomcoloR)
-cols <- distinctColorPalette(k = length(unique(TEMP.ENS.10.PCT$Model)), altCol = FALSE, runTsne = FALSE)
-mods <- unique(TEMP.ENS.10.PCT$Model)
+cols <- distinctColorPalette(k = length(unique(TEMP.ENS.10.PCT$Model.x)), altCol = FALSE, runTsne = FALSE)
+mods <- unique(TEMP.ENS.10.PCT$Model.x)
 modcols <- data.frame(cols, mods)
 
 TEMP.ENS.10.PCT$Colors <- NA
 
-for (i in 1:length(TEMP.ENS.10.PCT$Model)) {
-  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(TEMP.ENS.10.PCT$Model[i]))])
+for (i in 1:length(TEMP.ENS.10.PCT$Model.x)) {
+  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(TEMP.ENS.10.PCT$Model.x[i]))])
   TEMP.ENS.10.PCT$Colors[i] <- test
 }
 
@@ -318,14 +323,14 @@ legend('bottomright', legend = unique(p10.temp.lsegs$Model), fill = unique(p10.t
 dev.off()
 
 # P50
-cols <- distinctColorPalette(k = length(unique(TEMP.ENS.50.PCT$Model)), altCol = FALSE, runTsne = FALSE)
-mods <- unique(TEMP.ENS.50.PCT$Model)
+cols <- distinctColorPalette(k = length(unique(TEMP.ENS.50.PCT$Model.x)), altCol = FALSE, runTsne = FALSE)
+mods <- unique(TEMP.ENS.50.PCT$Model.x)
 modcols <- data.frame(cols, mods)
 
 TEMP.ENS.50.PCT$Colors <- NA
 
-for (i in 1:length(TEMP.ENS.50.PCT$Model)) {
-  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(TEMP.ENS.50.PCT$Model[i]))])
+for (i in 1:length(TEMP.ENS.50.PCT$Model.x)) {
+  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(TEMP.ENS.50.PCT$Model.x[i]))])
   TEMP.ENS.50.PCT$Colors[i] <- test
 }
 
@@ -341,14 +346,14 @@ legend('bottomright', legend = unique(p50.temp.lsegs$Model), fill = unique(p50.t
 dev.off()
 
 # P90
-cols <- distinctColorPalette(k = length(unique(TEMP.ENS.90.PCT$Model)), altCol = FALSE, runTsne = FALSE)
-mods <- unique(TEMP.ENS.90.PCT$Model)
+cols <- distinctColorPalette(k = length(unique(TEMP.ENS.90.PCT$Model.x)), altCol = FALSE, runTsne = FALSE)
+mods <- unique(TEMP.ENS.90.PCT$Model.x)
 modcols <- data.frame(cols, mods)
 
 TEMP.ENS.90.PCT$Colors <- NA
 
-for (i in 1:length(TEMP.ENS.90.PCT$Model)) {
-  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(TEMP.ENS.90.PCT$Model[i]))])
+for (i in 1:length(TEMP.ENS.90.PCT$Model.x)) {
+  test <- as.character(modcols$cols[which(as.character(modcols$mods) == as.character(TEMP.ENS.90.PCT$Model.x[i]))])
   TEMP.ENS.90.PCT$Colors[i] <- test
 }
 
