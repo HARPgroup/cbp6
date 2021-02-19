@@ -94,9 +94,26 @@ lu_nott_cc90_soy <- lu_nott_cc90$soy[order(lu_nott_cc90$soy, decreasing = TRUE)]
 png(filename = 'cci.png', width = 1400, height = 700)
 par(mfrow=c(2,3))
 par(mar = c(5.1, 5.4, 4.1, 2.1))
-plot(as.numeric(1:length(lu_amhe_base_cci[1:1000])*100/length(lu_amhe_base_cci)), lu_amhe_base_cci[1:1000], type = 'l',
-     xlab = "Percent Exceedance (%)", ylab = "Runoff (in/day/acre)", lwd = 2, main = 'Amherst', cex.lab = 2, cex.axis = 2, cex.main = 2, log = 'y')
-lines(as.numeric(1:length(lu_amhe_cc10_cci[1:1000])*100/length(lu_amhe_base_cci)), lu_amhe_cc10_cci[1:1000], type = 'l', col = 'chocolate2', lwd = 2, log = 'y')
+par(mfrow=c(1,1))
+plot(
+    as.numeric(1:length(lu_amhe_base_cci[1:1000])*100/length(lu_amhe_base_cci)), 
+    lu_amhe_base_cci[1:1000], 
+    type = 'l',
+     xlab = "Percent Exceedance (%)", 
+    ylab = "Runoff (in/day/acre)", 
+    lwd = 2, 
+    main = 'Amherst', 
+#    cex.lab = 2, 
+#    cex.axis = 2, 
+#    cex.main = 2, 
+    log = 'y')
+lines(
+    as.numeric(1:length(lu_amhe_cc10_cci[1:1000])*100/length(lu_amhe_base_cci)), 
+    lu_amhe_cc10_cci[1:1000], 
+    type = 'l', 
+    col = 'chocolate2', 
+    lwd = 2
+)
 legend('topright', legend = c('Base Scenario', 'ccP10T10 Scenario'), col = c('black', 'chocolate2'), lwd = 2, lty = 1, cex = 2)
 plot(as.numeric(1:length(lu_gile_base_cci[1:1000])*100/length(lu_gile_base_cci)), lu_gile_base_cci[1:1000], type = 'l',
      xlab = "Percent Exceedance (%)", ylab = "Runoff (in/day/acre)", lwd = 2, main = 'Giles', cex.lab = 2, cex.axis = 2, cex.main = 2, log = 'y')
