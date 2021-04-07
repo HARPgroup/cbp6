@@ -1229,8 +1229,8 @@ fn_upstream <- function(riv.seg, AllSegList) {
   library(stringr)
   library(rapportools)
   # Create dataframe for upstream and downstream segments based on code in string
-  ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 5))
-  colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'Downstream', 'Upstream')
+  ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 6))
+  colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'AdditionalName', 'Downstream', 'Upstream')
   ModelSegments$RiverSeg <- AllSegList
   
   # Pull out 4 digit codes in middle and end for upstream/downstream segments
@@ -1238,18 +1238,30 @@ fn_upstream <- function(riv.seg, AllSegList) {
   for (i in 1:nrow(ModelSegments)){
     
     ModelSegments[i,2]<- str_sub(ModelSegments[i,1], start=5L, end=8L)
-    ModelSegments[i,3]<- str_sub(ModelSegments[i,1], start=10L, end=-1L)
+    ModelSegments[i,3]<- str_sub(ModelSegments[i,1], start=10L, end=13L)
+    ModelSegments[i,4]<- str_sub(ModelSegments[i,1], start=15L, end=-1L)
     i <- i + 1
   }
   
   # Determine Downstream Segment ----------
   j <- 1
   for (j in 1:nrow(ModelSegments)){
-    Downstream <- which(ModelSegments$Middle==ModelSegments$Last[j])
-    if (length(Downstream)==0){
-      ModelSegments[j,4]  <- 'NA'
-    }else if (length(Downstream)!=0){
-      ModelSegments[j,4] <- as.character(ModelSegments[Downstream,1])
+    if (ModelSegments[j,4] != ""){
+      Downstream <- which((ModelSegments$Middle==ModelSegments$Middle[j]) & (ModelSegments$Last==ModelSegments$Last[j]) & (ModelSegments$AdditionalName==""))
+      if (length(Downstream)==0){
+        ModelSegments[j,5]  <- 'NA'
+      }else if (length(Downstream)==1){
+        ModelSegments[j,5] <- as.character(ModelSegments[Downstream,1])
+      }
+    }else if (ModelSegments[j,4]==""){
+      Downstream <- which((ModelSegments$Middle==ModelSegments$Last[j]) & (ModelSegments$AdditionalName==""))
+      if (length(Downstream)==0){
+        ModelSegments[j,5]  <- 'NA'
+      }else if (length(Downstream)==1){
+        ModelSegments[j,5] <- as.character(ModelSegments[Downstream,1])
+      }else if (length(Downstream)>1){
+        ModelSegments[j,5] <- 'NA'
+      }
     }
     j<-j+1
   }
@@ -1258,9 +1270,9 @@ fn_upstream <- function(riv.seg, AllSegList) {
   for (k in 1:nrow(ModelSegments)){
     Upstream <- which(as.character(ModelSegments$Downstream)==as.character(ModelSegments$RiverSeg[k]))
     NumUp <- ModelSegments$RiverSeg[Upstream]
-    ModelSegments[k,5]<- paste(NumUp, collapse = '+')
-    if (is.empty(ModelSegments[k,5])==TRUE){
-      ModelSegments[k,5]<- 'NA'
+    ModelSegments[k,6]<- paste(NumUp, collapse = '+')
+    if (is.empty(ModelSegments[k,6])==TRUE){
+      ModelSegments[k,6]<- 'NA'
     } 
     k<-k+1
   }
@@ -3799,8 +3811,8 @@ fn_downstream <- function(riv.seg, AllSegList) {
   library(stringr)
   library(rapportools)
   # Create dataframe for upstream and downstream segments based on code in string
-  ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 5))
-  colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'Downstream', 'Upstream')
+  ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 6))
+  colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'AdditionalName', 'Downstream', 'Upstream')
   ModelSegments$RiverSeg <- AllSegList
   
   # Pull out 4 digit codes in middle and end for upstream/downstream segments
@@ -3808,18 +3820,30 @@ fn_downstream <- function(riv.seg, AllSegList) {
   for (i in 1:nrow(ModelSegments)){
     
     ModelSegments[i,2]<- str_sub(ModelSegments[i,1], start=5L, end=8L)
-    ModelSegments[i,3]<- str_sub(ModelSegments[i,1], start=10L, end=-1L)
+    ModelSegments[i,3]<- str_sub(ModelSegments[i,1], start=10L, end=13L)
+    ModelSegments[i,4]<- str_sub(ModelSegments[i,1], start=15L, end=-1L)
     i <- i + 1
   }
   
   # Determine Downstream Segment ----------
   j <- 1
   for (j in 1:nrow(ModelSegments)){
-    Downstream <- which(ModelSegments$Middle==ModelSegments$Last[j])
-    if (length(Downstream)==0){
-      ModelSegments[j,4]  <- 'NA'
-    }else if (length(Downstream)!=0){
-      ModelSegments[j,4] <- as.character(ModelSegments[Downstream,1])
+    if (ModelSegments[j,4] != ""){
+      Downstream <- which((ModelSegments$Middle==ModelSegments$Middle[j]) & (ModelSegments$Last==ModelSegments$Last[j]) & (ModelSegments$AdditionalName==""))
+      if (length(Downstream)==0){
+        ModelSegments[j,5]  <- 'NA'
+      }else if (length(Downstream)==1){
+        ModelSegments[j,5] <- as.character(ModelSegments[Downstream,1])
+      }
+    }else if (ModelSegments[j,4]==""){
+      Downstream <- which((ModelSegments$Middle==ModelSegments$Last[j]) & (ModelSegments$AdditionalName==""))
+      if (length(Downstream)==0){
+        ModelSegments[j,5]  <- 'NA'
+      }else if (length(Downstream)==1){
+        ModelSegments[j,5] <- as.character(ModelSegments[Downstream,1])
+      }else if (length(Downstream)>1){
+        ModelSegments[j,5] <- 'NA'
+      }
     }
     j<-j+1
   }
@@ -3828,9 +3852,9 @@ fn_downstream <- function(riv.seg, AllSegList) {
   for (k in 1:nrow(ModelSegments)){
     Upstream <- which(as.character(ModelSegments$Downstream)==as.character(ModelSegments$RiverSeg[k]))
     NumUp <- ModelSegments$RiverSeg[Upstream]
-    ModelSegments[k,5]<- paste(NumUp, collapse = '+')
-    if (is.empty(ModelSegments[k,5])==TRUE){
-      ModelSegments[k,5]<- 'NA'
+    ModelSegments[k,6]<- paste(NumUp, collapse = '+')
+    if (is.empty(ModelSegments[k,6])==TRUE){
+      ModelSegments[k,6]<- 'NA'
     } 
     k<-k+1
   }
@@ -3843,6 +3867,7 @@ fn_downstream <- function(riv.seg, AllSegList) {
   }
   return(SegDownstream)
 }
+
 
 fn_ALL.downstream <- function(riv.seg, AllSegList) {
   downstreamSeg <- fn_downstream(riv.seg, AllSegList)
