@@ -5181,16 +5181,29 @@ vahydro_import_metric_from_scenprop <- function(scenprop.pid, met.varkey, met.pr
 all_flow_metrics_2_vahydro <- function(scenprop.pid, data, token) {
   
   data <- water_year_trim(data)
-  data <- aggregate(
-    data,
-    as.POSIXct(
-      format(
-        time(data), 
-        format='%Y/%m/%d'),
-      tz='UTC'
-    ),
-    'mean'
-  )
+  
+  # All of this is because this routine does handle sub-daily simulations.
+  # and none of this works reliably.
+  # Latest testing code does not work:
+  #data1 <- zoo(data$flow, order.by = data$date)
+  #data2 <- aggregate(data1,as.Date(time(data1)), 'mean')
+  #data_dates <- as.character(index(data2))
+  #data2 <- as.data.frame(data2)
+  #data2$date <- data_dates 
+  #names(data2) <- c('flow', 'date')
+  #data <- as.zoo(data2, order.by = as.Date(data2$dat))
+  #data <- as.zoo(data2, order.by = data2$dat)
+  # Previous rtesting code *seemed* to work with hourly data, but fails with daily:
+  #data <- aggregate(
+  #  data,
+  #  as.POSIXct(
+  #    format(
+  #      time(data), 
+  #      format='%Y/%m/%d'),
+  #    tz='UTC'
+  #  ),
+  #  'mean'
+  #)
   metrics <- metrics_calc_all(data) #calculate metrics into a matrix
   
   #posts metrics to vahydro
