@@ -69,6 +69,7 @@ mrun_name2 <- paste0('runid_', run.id2)
 # LOADING DATA ------------------------------------------------------------
 # Load feature
 hydrocode = paste0("vahydrosw_wshed_", riv.seg);
+message(paste("Calling om_get_feature(",site, ", ", hydrocode, ', watershed', ', vahydro'))
 feature = om_get_feature(site, hydrocode, 'watershed', 'vahydro')
 hydroid = feature$hydroid
 if (dat.source1 == 'gage') {
