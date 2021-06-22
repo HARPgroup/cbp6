@@ -18,10 +18,14 @@ prefix = .
 SRC	= .
 # THIS IS WHERE YOU CHANGE THE GDAL INSTALL DIRECTORY
 GDAL	= /Library/Frameworks/GDAL.framework
+# default linux
 #GDAL_INC	= -I/usr/local/include/
 #GDAL_LIB	= -L/usr/local/lib/
-GDAL_INC        = -I/home/bgb/tools/gdal-1.10.1/include
-GDAL_LIB        = -L/home/bgb/tools/gdal-1.10.1/lib
+# Ubtuntu 20.04 - uncomment
+GDAL_INC	= -I/usr/include/gdal/
+GDAL_LIB	= -L/usr/lib/
+#GDAL_INC        = -I/home/bgb/tools/gdal-1.10.1/include
+#GDAL_LIB        = -L/home/bgb/tools/gdal-1.10.1/lib
 
 CPP	= /usr/bin/c++
 CFLAGS	= -c
@@ -34,6 +38,10 @@ all: NLDAS2_GRIB_to_ASCII
 
 NLDAS2_GRIB_to_ASCII: $(OBJS)
 	$(CPP) $(OBJS) -o NLDAS2_GRIB_to_ASCII $(GDAL_LIB) $(LIBS)
+	@ echo
+
+NLDAS2_ASCII_to_LSegs: NLDAS2_ASCII_to_LSegs.o
+	$(CPP) NLDAS2_ASCII_to_LSegs.o -o NLDAS2_ASCII_to_LSegs $(GDAL_LIB) $(LIBS)
 	@ echo
 
 #pickGridVal.o: pickGridVal.h pickGridVal.cpp

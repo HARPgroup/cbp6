@@ -2,3 +2,8 @@
 *.log
 .Rproj.user
 *.Rhistory
+*.a
+*.o
+NLDAS2_GRIB_to_ASCII
+NLDAS2_ASCII_to_LSegs
+pickGridVal
