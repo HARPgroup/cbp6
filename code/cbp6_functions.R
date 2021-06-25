@@ -19,9 +19,9 @@ library(sp)
 library(rlist)
 
 
-model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date = NULL, end.date = NULL) {
+model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date = NULL, end.date = NULL, site = "http://deq2.bse.vt.edu/") {
   # Downloading and exporting hourly model data
-  model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/out/river/", mod.scenario, "/stream/", 
+  model_hourly <- read.csv(paste0(site, mod.phase, "/out/river/", mod.scenario, "/stream/", 
                                   riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
   riv.segStr1 <- strsplit(riv.seg, "\\+")
   riv.segStr1 <- riv.segStr1[[1]]
