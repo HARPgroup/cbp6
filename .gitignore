@@ -1,5 +1,6 @@
 *.private
 *.log
+*.out
 .Rproj.user
 *.Rhistory
 *.a
