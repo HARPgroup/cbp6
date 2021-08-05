@@ -29,6 +29,7 @@ params:
 
 ```{r, include=FALSE}
 library(knitr)
+library("hydrotools")
 riv.seg <- params$riv.seg
 dat.source1 <- params$dat.source1
 dat.source2 <- params$dat.source2
