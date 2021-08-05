@@ -96,16 +96,32 @@ if (dat.source2 == 'gage') {
     mrun_name2 <- paste0(mrun_name2,'_gage_weighted')
   }
 }
-data2 <- om_get_watershed_model_data(dat.source2, id2, run.id2, 
-  mod.phase2, mod.scenario2, start.date, end.date
-)
+
 m2 <- om_get_model(site, hydroid, 'dh_feature', mod.scenario2, 'any')
 model_run2 <- om_get_set_model_run(m2$pid, mrun_name2, site, token)
 scenprop2 <- model_run2$pid
 
+if (dat.source2 == 'vahydro') {
+  elid2 = om_get_model_elementid(site, m2$pid) 
+  data2 <- om_get_rundata(elid = elid2, runid = run.id2, site = omsite, FALSE, TRUE)
+  data2$thisdate <- as.character(as.Date(index(data2)))
+  dat.date <- as.Date(as.character(data2$thisdate))
+  dat.flow <- as.numeric(data2$Qout)
+  data2 <- data.frame(dat.date, dat.flow, row.names = NULL)
+  colnames(data2) <- c('date','flow')
+} else {
+  # we still use the old plumbing for this
+  data2 <- om_get_watershed_model_data(
+    dat.source2, id2, run.id2, 
+    mod.phase2, mod.scenario2, 
+    start.date, end.date, 
+    token = token, site = omsite
+  )
+}
 # TRIMMING DATA TO PROPER WATER YEAR
 data1 <- water_year_trim(data1)
 data2 <- water_year_trim(data2)
+
 ```
 
 ```{r, include = FALSE}
@@ -222,7 +238,8 @@ fig4.baseflow.hydrograph(all_data, cn1, cn2, export_path)
 fig5.combined.hydrograph(all_data, export_path)
 OUTPUT_MATRIXsaver <- figs6to8.largest.diff.periods(all_data, cn1, cn2, export_path)
 fig9a.residual.plot(all_data, cn1, cn2, export_path)
-fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site, cn1, cn2, export_path)
+# commented out due to retrieving data inside the function which breaks.
+#fig9b.area.weighted.residual.plot(all_data, riv.seg, token, site, cn1, cn2, export_path)
 if (!is.logical(lri.dat)) {
   fig10.runit.boxplot(lri.dat, export_path)
 }
@@ -343,7 +360,8 @@ include_graphics(paste0(export_path,"fig9A.png"))
 
 # Fig. 9B: Area Weighted Residuals Plot
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="95%"}
-include_graphics(paste0(export_path,"fig9B.png"))
+#include_graphics(paste0(export_path,"fig9B.png"))
+cat("Area-weighed residual plot disabled.")
 ```
 
 # Fig. 10: VA Hydro Scen. 1 Runit Values (Outliers Excluded)

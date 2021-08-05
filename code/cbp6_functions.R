@@ -370,6 +370,17 @@ vahydro_import_all_metrics <- function(seg.or.gage, mod.scenario, token, site) {
 }
 
 water_year_trim <- function(data) {
+  if (is.zoo(data)) {
+    # use zoo window functions
+    syear <- year(min(index(data)))
+    eyear <- year(max(index(data)))
+    data <- window(
+      data,
+      start = paste0(syear,'-10-01'),
+      end = paste0(eyear,'-09-30')
+    )
+    return(data)
+  }
   library(lubridate)
   data.length <- length(data$date)
   start.month <- month(data$date[1])
