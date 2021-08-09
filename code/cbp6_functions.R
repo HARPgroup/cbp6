@@ -2179,8 +2179,6 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   return(map)
 }
 
-library(dplyr)
-
 vahydro_import_lrseg_all_flows <- function(lr.seg.hydrocode, run.id, token, site = "http://deq2.bse.vt.edu/d.dh", start.date = '1984-01-01', end.date) {
   #set hydrocode equal to the ith hydrocode in the lrseg list
   hydrocode = lr.seg.hydrocode
