@@ -28,8 +28,6 @@ params:
 ---
 
 ```{r, include=FALSE}
-library(knitr)
-library("hydrotools")
 riv.seg <- params$riv.seg
 dat.source1 <- params$dat.source1
 dat.source2 <- params$dat.source2
@@ -54,6 +52,8 @@ export_path_custom <- params$export_path_custom
 ```{r, include=FALSE}
 basepath='/var/www/R';
 source(paste(basepath,'config.R',sep='/'))
+library("knitr")
+library("hydrotools")
 cbp6_link <- paste0(github_location, "/cbp6/code");
 if (!is.logical(export_path_custom)) {
   # allow override from command line, otherwise use value from config files
