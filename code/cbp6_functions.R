@@ -17,6 +17,8 @@ library(ggmap)
 library(ggsn)
 library(sp)
 library(rlist)
+library(dataRetrieval)
+library(rapportools)
 
 
 model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date = NULL, end.date = NULL, site = "http://deq2.bse.vt.edu/") {
@@ -381,7 +383,6 @@ water_year_trim <- function(data) {
     )
     return(data)
   }
-  library(lubridate)
   data.length <- length(data$date)
   start.month <- month(data$date[1])
   end.month <- month(data$date[data.length])
@@ -1060,7 +1061,6 @@ fn_gage_and_seg_mapper <- function(riv.seg, site_number, site_url, cbp6_link) {
   geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
   #################################################################################
   # Create gage dataframe (gage_linked?) ---------------------
-  library(dataRetrieval)
   
   gage <- try(readNWISsite(site_number))
   if (class(gage) == "try-error") {
@@ -1242,8 +1242,6 @@ fn_iha_DOR_Year <- function(flows){
 # } #close function
 
 fn_upstream <- function(riv.seg, AllSegList) {
-  library(stringr)
-  library(rapportools)
   # Create dataframe for upstream and downstream segments based on code in string
   ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 6))
   colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'AdditionalName', 'Downstream', 'Upstream')
@@ -2112,7 +2110,6 @@ fn_gage_and_seg_mapperALT <- function(riv.seg, site_number, site_url, cbp6_link,
   geom_point(data = WBDF, aes(x = long, y = lat), color="steelblue1", size=0.09)
   #################################################################################
   # Create gage dataframe (gage_linked?) ---------------------
-  library(dataRetrieval)
   
   gage <- try(readNWISsite(site_number))
   if (class(gage) == "try-error") {
@@ -3822,8 +3819,6 @@ fig1.hydrograph <- function(all_data, cn1='Scenario 1', cn2='Scenario 2', export
 }
 
 fn_downstream <- function(riv.seg, AllSegList) {
-  library(stringr)
-  library(rapportools)
   # Create dataframe for upstream and downstream segments based on code in string
   ModelSegments <- data.frame(matrix(nrow = length(AllSegList), ncol = 6))
   colnames(ModelSegments)<- c('RiverSeg', 'Middle', 'Last', 'AdditionalName', 'Downstream', 'Upstream')
