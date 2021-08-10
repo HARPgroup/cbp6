@@ -1,7 +1,7 @@
 vahydro_post_metric_to_scenprop <- function(scenprop.pid, met.varkey, met.propcode, met.name, met.value, ds = FALSE) {
-   if (is.logical(ds)) {
+  if (is.logical(ds)) {
     stop("Error: This function has been modified to require a ds (RomDataSource) argument.")
-   }
+  }
   if (is.null(met.propcode)) {
     met.propcode <- ''
   }
@@ -14,6 +14,7 @@ vahydro_post_metric_to_scenprop <- function(scenprop.pid, met.varkey, met.propco
   )
   metprop <- RomProperty$new( ds, metinfo, TRUE)
   metprop$propcode <- met.propcode
-  metprop$propvalue <- met.value
+  metprop$propvalue <- as.numeric(met.value)
   metprop$save(TRUE)
 }
+
