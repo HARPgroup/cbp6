@@ -1,0 +1,23 @@
+LND WDM
+
+STR EOS WDM - edge of stream WDM 
+STR INP WDM - sum of EOS and upstream OUT WDM
+STR OUT WDM - output stream WDM 
+
+IND stream  - an individual stream reach 
+GRP streams - a group of streams 
+
+0. Assimilate execution sequence of IND and GRP streams -- write out a new topology file 
+1. For each NHD stream -- sum EOS and write STR EOS WDM (wdm/river/*/eos/)
+	*** should be run in parallel for all COMID *** 
+2. For each IND or GRP stream -- 
+	*** should be run as per the IND and GRP stream topology 
+	(a) sum EOS and UPSTREAM and write STR INP WDM  (wdm/river/*/stream/ INP DSN)
+	(b) generate OUT WDM and write STR OUT WDM      (wdm/river/*/stream/ OUT DSN)
+
+Note: COMID of upstream of GRP should be based on NHD topology (and not P6 topology) 
+	-- Upstream of IND stream is straightforward 
+	-- Upstream of GRP stream should be done by looping over each COMID in the GRP
+		(a) If UP COMID is part of the GRP streams then CYCLE
+		(b) Else If UP COMID is part of a different GRP streams then use STR OUT WDM of the UP GRP
+		(c) Else use STR OUT WDM of the UP COMID 

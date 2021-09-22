@@ -1,0 +1,20 @@
+#!/bin/csh
+
+echo ""
+echo "**************************************************************************************"
+echo ">>> testing 20210601_DyHM EM2_009406422"
+csh ../_str_sum_upstream/sum_upstream.csh 20210601_DyHM EM2_009405936;
+csh stream.csh 20210601_DyHM EM2_009405936; 
+
+echo ""
+echo "**************************************************************************************"
+echo ">>> testing 20210601_DyHM EM2_009406424"
+csh ../_str_sum_upstream/sum_upstream.csh 20210601_DyHM EM2_009405938;
+csh stream.csh 20210601_DyHM EM2_009405938;
+
+echo ""
+echo "**************************************************************************************"
+echo ">>> testing 20210601_DyHM EM2_009406428"
+csh ../_str_sum_upstream/sum_upstream.csh 20210601_DyHM EM2_009406430;
+csh stream.csh 20210601_DyHM EM2_009406430;
+

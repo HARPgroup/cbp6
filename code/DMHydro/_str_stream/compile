@@ -1,0 +1,38 @@
+#!/bin/csh
+
+pwd; users
+
+source ../../../../set_wdmlibdir
+set wdmlibdir = ../../../$wdmlibdir
+set wdmlib1   = $wdmlibdir/wdmlib.a
+set wdmlib2   = $wdmlibdir/adwdmlib.a
+set wdmlib3   = $wdmlibdir/utillib.a
+
+echo ""
+date
+echo "... compiling src"
+f77 -mcmodel=medium -fbounds-check -c ../comidsdb.f
+f77 -mcmodel=medium -fbounds-check -c ../streamtopologydb.f 
+#f77 -mcmodel=medium -fbounds-check -c ../landuse.f
+
+f77 -mcmodel=medium -fbounds-check -c cbpm.f
+f77 -mcmodel=medium -fbounds-check -c stream.f
+f77 -mcmodel=medium -fbounds-check -c main_stream.f
+
+echo "... linking objects"
+f77 -o stream.exe main_stream.o stream.o cbpm.o streamtopologydb.o comidsdb.o ../../../lib/util_lib.a ../../../lib/dsn/dsn_utils.o $wdmlib1 $wdmlib2 $wdmlib3
+#f77 -o stream.exe main_stream.o stream.o streamtopologydb.o ../../../lib/util_lib.a ../../../lib/dsn/dsn_utils.o $wdmlib1 $wdmlib2 $wdmlib3
+#f77 -o stream.exe main_stream.o stream.o streamtopologydb.o comidsdb.o ../../../lib/util_lib.a
+
+echo "... cleaning up"
+rm cbpm.o
+rm stream.o
+rm main_stream.o
+
+rm comidsdb.o
+rm streamtopologydb.o
+
+ls -altr *.exe
+
+echo "... done compiling"
+echo ""

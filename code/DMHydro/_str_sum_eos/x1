@@ -1,0 +1,180 @@
+EM2_009405936.wdm
+‘/modeling/gb605/config/blank_wdm/river.wdm’ -> ‘EM2_009405936.wdm’
+ ... loading STREAM BASIN DB
+ EM2_009405936
+           2
+ N24011
+ N24035
+ 20210601_DyHM                                     
+          13
+ # modules =            3
+ HYDR  
+ ADCALC
+ HTRCH 
+ CalCAST01
+ nRvar =            2
+ WATR
+ ...           3           3           1           1           3           3           1           3           3           0           3           3
+ HEAT
+ ...           3           3           1           1           3           3           1           3           3           0           3           3
+ ... loadlctable: land covers and indices
+ CRP           1 gwm
+ FOR           2 for
+ INR           3 mnr
+ IRX           4 mir
+ MOX           5 osp
+ PAS           6 pas
+ TCI           7 mci
+ TCT           8 mch
+ TGX           9 mtg
+ WAT          10 wat
+ WLF          11 for
+ WLO          12 for
+ ../../../config/catalog/geo/CalCAST01/20191009_P6_LandSeg_NHDv2_LandCover.csv                                                                                                                           
+ WATR
+ HEAT
+ ... ...CRP . CRP . gwm
+ ../../../tmp/wdm/land/gwm/CFBASE30Y20180615/gwmN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/gwm/CFBASE30Y20180615/gwmN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...FOR . FOR . for
+ ../../../tmp/wdm/land/for/CFBASE30Y20180615/forN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/for/CFBASE30Y20180615/forN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...INR . INR . mnr
+ ../../../tmp/wdm/land/mnr/CFBASE30Y20180615/mnrN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...HEAT SOHT         131
+ ../../../tmp/wdm/land/mnr/CFBASE30Y20180615/mnrN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...HEAT SOHT         131
+ ... ...IRX . IRX . mir
+ ../../../tmp/wdm/land/mir/CFBASE30Y20180615/mirN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...HEAT SOHT         131
+ ../../../tmp/wdm/land/mir/CFBASE30Y20180615/mirN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...HEAT SOHT         131
+ ... ...MOX . MOX . osp
+ ../../../tmp/wdm/land/osp/CFBASE30Y20180615/ospN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/osp/CFBASE30Y20180615/ospN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...PAS . PAS . pas
+ ../../../tmp/wdm/land/pas/CFBASE30Y20180615/pasN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/pas/CFBASE30Y20180615/pasN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...TCI . TCI . mci
+ ../../../tmp/wdm/land/mci/CFBASE30Y20180615/mciN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...HEAT SOHT         131
+ ../../../tmp/wdm/land/mci/CFBASE30Y20180615/mciN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...HEAT SOHT         131
+ ... ...TCT . TCT . mch
+ ../../../tmp/wdm/land/mch/CFBASE30Y20180615/mchN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/mch/CFBASE30Y20180615/mchN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...TGX . TGX . mtg
+ ../../../tmp/wdm/land/mtg/CFBASE30Y20180615/mtgN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/mtg/CFBASE30Y20180615/mtgN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...WAT . WAT . wat
+ ... ...WLF . WLF . for
+ ../../../tmp/wdm/land/for/CFBASE30Y20180615/forN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/for/CFBASE30Y20180615/forN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... ...WLO . WLO . for
+ ../../../tmp/wdm/land/for/CFBASE30Y20180615/forN24011.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ../../../tmp/wdm/land/for/CFBASE30Y20180615/forN24035.wdm                                                                                                                                               
+ ... ... ...WATR SURO         111
+ ... ... ...WATR IFWO         211
+ ... ... ...WATR AGWO         411
+ ... ... ...HEAT SOHT         131
+ ... ... ...HEAT IOHT         231
+ ... ... ...HEAT AOHT         431
+ ... writing edge of stream WDM DSN           11
+ ... writing edge of stream WDM DSN           12
+‘EM2_009405936.wdm’ -> ‘/modeling/gb605/tmp/wdm/river/20210601_DyHM/eos/EM2_009405936.wdm’
