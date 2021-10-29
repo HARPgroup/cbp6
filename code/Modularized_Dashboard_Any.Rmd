@@ -87,7 +87,7 @@ if (dat.source1 == 'gage') {
 data1 <- om_get_watershed_model_data(dat.source1, id1, run.id1, 
   mod.phase1, mod.scenario1, start.date, end.date
 )
-m1 <- om_get_model(site, hydroid, 'dh_feature', mod.scenario1, 'any')
+m1 <- RomProperty$new(ds, list(hydroid = hydroid, entity_type = 'dh_feature', propcode = mod.scenario1))
 model_run1 <- om_get_set_model_run(m1$pid, mrun_name1, site, token)
 scenprop1 <- model_run1$pid
 
