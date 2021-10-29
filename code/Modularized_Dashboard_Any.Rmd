@@ -107,8 +107,17 @@ if (dat.source2 == 'gage') {
   }
 }
 
-m2 <- om_get_model(site, hydroid, 'dh_feature', mod.scenario2, 'any')
-model_run2 <- om_get_set_model_run(m2$pid, mrun_name2, site, token)
+message("Getting 2nd Model")
+m2 <- RomProperty$new(
+  ds, 
+  list(
+    featureid = hydroid, entity_type = 'dh_feature', propcode = mod.scenario2
+  )
+)
+message("Getting 2nd Scenario element")
+model_run2 <- RomProperty$new(
+  ds, list(featureid = m2$pid, entity_type = 'dh_properties', propname = mrun_name1)
+)
 scenprop2 <- model_run2$pid
 
 if (dat.source2 == 'vahydro') {
