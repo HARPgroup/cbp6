@@ -54,6 +54,9 @@ basepath='/var/www/R';
 source(paste(basepath,'config.R',sep='/'))
 library("knitr")
 library("hydrotools")
+ds <- RomDataSource$new("http://deq1.bse.vt.edu/d.dh", rest_uname)
+ds$get_token(rest_pw)
+
 cbp6_link <- paste0(github_location, "/cbp6/code");
 if (!is.logical(export_path_custom)) {
   # allow override from command line, otherwise use value from config files
@@ -71,7 +74,7 @@ mrun_name2 <- paste0('runid_', run.id2)
 # Load feature
 hydrocode = paste0("vahydrosw_wshed_", riv.seg);
 message(paste("Calling om_get_feature(",site, ", ", hydrocode, ', watershed', ', vahydro'))
-feature = om_get_feature(site, hydrocode, 'watershed', 'vahydro')
+feature <- RomFeature$new(ds,list(hydrocode=hydrocode, bundle='watershed', ftype='vahydro'),TRUE)
 hydroid = feature$hydroid
 if (dat.source1 == 'gage') {
   id1 <- gage_number
