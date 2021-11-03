@@ -44,6 +44,11 @@ NLDAS2_ASCII_to_LSegs: NLDAS2_ASCII_to_LSegs.o
 	$(CPP) NLDAS2_ASCII_to_LSegs.o -o NLDAS2_ASCII_to_LSegs $(GDAL_LIB) $(LIBS)
 	@ echo
 
+LongTermAvgRNMax: LongTermAvgRNMax.o
+	$(CPP) LongTermAvgRNMax.o -o LongTermAvgRNMax $(GDAL_LIB) $(LIBS)
+	@ echo
+
+
 #pickGridVal.o: pickGridVal.h pickGridVal.cpp
 #	$(CPP) $(CFLAGS) $(DEBUG) $(GDAL_INC) pickGridVal.cpp\
 
