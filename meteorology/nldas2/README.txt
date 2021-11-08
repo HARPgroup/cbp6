@@ -9,9 +9,9 @@ Install instructions
   )
 
 - create a shared executable so users can just type NLDAS2_GRIB_to_ASCII
-  sudo ln [path to nldas2]/NLDAS2_GRIB_to_ASCII /usr/local/bin/NLDAS2_GRIB_to_ASCII
+  mv [path to nldas2]/NLDAS2_GRIB_to_ASCII /usr/local/bin/
 for example:
-  sudo ln /opt/model/cbp6/meteorology/nldas2/NLDAS2_GRIB_to_ASCII /usr/local/bin/NLDAS2_GRIB_to_ASCII
+  mv /opt/model/cbp6/meteorology/nldas2/NLDAS2_GRIB_to_ASCII /usr/local/bin/
 
 
 COMPILE 
