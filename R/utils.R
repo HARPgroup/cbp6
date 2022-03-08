@@ -59,7 +59,7 @@ wdm_export_land_flow <- function(land.segment, wdmpath, mod.scenario, start.year
 # LOADING LIBRARIES ----------
 library(lubridate)
 
-wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath) {
+wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath, clean = TRUE) {
   # INPUTS ----------
   land.use.list <- list.dirs(paste0(wdmpath, "/tmp/wdm/land"), full.name = FALSE, recursive = FALSE)
   dsn.list <- data.frame(dsn = c('0111', '0211', '0411'), dsn.label = c('suro', 'ifwo', 'agwo'))
@@ -82,8 +82,10 @@ wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath) {
       colnames(temp.data.formatter) <- c('thisdate', colnames(temp.data.input[5]))
       assign(input.data.namer,temp.data.formatter)
       # Deleting read in file:
-      command <- paste0('rm ', wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")
-      system(command)
+      if (clean == TRUE) {
+        command <- paste0('rm ', wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")
+        system(command)
+      }
     }
   }
   
