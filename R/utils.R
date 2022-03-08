@@ -72,7 +72,12 @@ wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath, cl
       input.data.namer <- paste0(land.segment,land.use.list[j],dsn.list$dsn[i])
       print(paste("Downloading", counter, "of", total.files))
       counter <- counter+1
-      temp.data.input <- try(read.csv(paste0(wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")))
+      tfname = paste0(wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")
+      if (use_fread == TRUE) {
+        temp.data.input <- try(data.table::fread(tfname))
+      } else {     
+        temp.data.input <- try(read.csv(tfname))
+      }
       if (class(temp.data.input) == 'try-error') {
         stop(paste0("ERROR: Missing land use .csv files (including ", wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv", ")"))
       }
