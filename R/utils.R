@@ -109,8 +109,5 @@ wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath) {
       counter <- counter + 1
     }
   }
-  assign(overall.data.namer,overall.data.builder)
-  saved.file <- paste0(outpath, "/", overall.data.namer, ".csv")
-  write.csv(overall.data.builder, saved.file, row.names = FALSE)
-  return(saved.file)
+  return(overall.data.builder)
 }
