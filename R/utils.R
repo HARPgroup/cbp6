@@ -79,6 +79,7 @@ wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath, us
       } else {     
         temp.data.input <- try(read.csv(tfname))
       }
+      message(paste("read", tfname))
       if (class(temp.data.input) == 'try-error') {
         stop(paste0("ERROR: Missing land use .csv files (including ", wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv", ")"))
       }
