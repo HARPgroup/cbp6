@@ -59,7 +59,7 @@ wdm_export_land_flow <- function(land.segment, wdmpath, mod.scenario, start.year
 # LOADING LIBRARIES ----------
 library(lubridate)
 
-wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath, clean = TRUE) {
+wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath, use_fread = TRUE, clean = TRUE) {
   # INPUTS ----------
   land.use.list <- list.dirs(paste0(wdmpath, "/tmp/wdm/land"), full.name = FALSE, recursive = FALSE)
   dsn.list <- data.frame(dsn = c('0111', '0211', '0411'), dsn.label = c('suro', 'ifwo', 'agwo'))
