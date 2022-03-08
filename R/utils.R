@@ -75,6 +75,7 @@ wdm_merge_land_flow <- function(land.segment, wdmpath, mod.scenario, outpath, us
       tfname = paste0(wdmpath, "/tmp/wdm/land/",land.use.list[j],"/",mod.scenario,"/",land.use.list[j],land.segment,"_",dsn.list$dsn[i],".csv")
       if (use_fread == TRUE) {
         temp.data.input <- try(data.table::fread(tfname))
+        temp.data.input <= as.data.frame(temp.data.input)
       } else {     
         temp.data.input <- try(read.csv(tfname))
       }
