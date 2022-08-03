@@ -1,5 +1,5 @@
 source("./fn_lutablegen.R")
-basepath <- '/opt/model/p532/p532c-sova'
+basepath <- '/opt/model/p53/p532c-sova'
 outpath = '/media/model/p532'
 model.scenario = 'CFBASE30Y20180615'# [scenario name].con from config/control/river/
 lu.scenario = 'CALIBN032411' # csv name string from config/control/river/[model.scenario].con LAND USE block
