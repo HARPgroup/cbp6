@@ -10,10 +10,11 @@
 #' @import utils
 #' @export model_import_data_cfs
 
-model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date) {
+model_import_data_cfs <- function(riv.seg, mod.phase, mod.scenario, start.date, end.date, urlbase=omsite) {
   # Downloading and exporting hourly model data
-  model_hourly <- read.csv(paste0("http://deq2.bse.vt.edu/", mod.phase, "/river/", mod.scenario, "/stream/", 
-                                  riv.seg, "_0111.csv"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
+  fname = paste0(riv.seg, "_0111.csv")
+  model_hourly <- read.csv(paste(urlbase, mod.phase, "river", mod.scenario, "stream", 
+                                  fname, "/"), header = FALSE, sep = ",", stringsAsFactors = FALSE); 
   RivSegStr1 <- strsplit(riv.seg, "\\+")
   RivSegStr1 <- RivSegStr1[[1]]
   num.segs1 <- length(RivSegStr1)
