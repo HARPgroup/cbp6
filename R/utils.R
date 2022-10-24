@@ -20,7 +20,7 @@ wdm_export_land_flow <- function(land.segment, wdmpath, mod.scenario, start.year
     for (j in 1:length(land.use.list)) {
       wdm.location <- paste(wdmpath, '/tmp/wdm/land/', land.use.list[j], '/', mod.scenario, sep = '')
       wdm.name <- paste0(land.use.list[j],land.segment,'.wdm')
-      
+      message(paste("setwd", wdm.location))
       # SETTING UP AND RUNNING COMMAND LINE COMMANDS
       setwd(wdm.location)
       # cd.to.wdms <- paste('cd ', wdm.location, sep = '')
